@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-role-teacher-bg: var(--color-emerald-50);
+  --color-role-teacher-badge: var(--color-emerald-100);
+  --color-role-teacher-text: var(--color-emerald-700);
+
+  --color-role-parent-bg: var(--color-amber-50);
+  --color-role-parent-badge: var(--color-amber-100);
+  --color-role-parent-text: var(--color-amber-700);
+
+  --color-role-admin-bg: var(--color-purple-50);
+  --color-role-admin-badge: var(--color-purple-100);
+  --color-role-admin-text: var(--color-purple-700);
+
+  --color-role-student-bg: var(--color-blue-50);
+  --color-role-student-badge: var(--color-blue-100);
+  --color-role-student-text: var(--color-blue-700);
+}
+
+/* All-ages accessibility: text size is controlled by setting the root
+   font-size in AccessibilityContext — since Tailwind's spacing/typography
+   scale is rem-based, this single line scales the entire app consistently. */
+html {
+  font-size: 16px; /* default; overridden inline by AccessibilityContext */
+}
+
+/* High-contrast mode: boosts text/border contrast and thickens focus rings
+   for users who need stronger visual differentiation (low vision, bright
+   environments, older users). Toggled via Settings. */
+.high-contrast {
+  --tw-text-opacity: 1;
+}
+.high-contrast body,
+.high-contrast p,
+.high-contrast span,
+.high-contrast h1,
+.high-contrast h2,
+.high-contrast h3,
+.high-contrast h4 {
+  color: #000 !important;
+}
+.high-contrast .bg-white {
+  background-color: #ffffff !important;
+}
+.high-contrast .bg-neutral-50,
+.high-contrast .bg-neutral-100 {
+  background-color: #ffffff !important;
+}
+.high-contrast * {
+  border-color: #000 !important;
+}
+.high-contrast a,
+.high-contrast button {
+  outline-offset: 2px;
+}
+.high-contrast a:focus-visible,
+.high-contrast button:focus-visible,
+.high-contrast input:focus-visible {
+  outline: 3px solid #000 !important;
+}
+
+@media print {
+  aside, nav {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+}
