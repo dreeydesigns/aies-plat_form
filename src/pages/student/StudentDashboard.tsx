@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { studentMetrics, gamification } from '../../data/mockData';
-import { Trophy, Star, Zap, Headset, PlayCircle, CheckCircle, Clock, Search, Loader2 } from 'lucide-react';
+import { Trophy, Star, Zap, Headset, PlayCircle, CheckCircle, Clock, Search, Loader2, BookOpen } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
 import VoiceInput from '../../components/shared/VoiceInput';
