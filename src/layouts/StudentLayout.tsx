@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Library, Award, MessageSquare, Box, Settings } from 'lucide-react';
+import { LayoutDashboard, Library, Award, MessageSquare, Box, Settings, CircleHelp } from 'lucide-react';
 import SidebarLayout from './SidebarLayout';
 
 export default function StudentLayout() {
@@ -10,6 +10,7 @@ export default function StudentLayout() {
     { name: 'Messages', path: '/student/messages', icon: MessageSquare },
     { name: 'VR Lab (Coming Soon)', path: '/student/labs', icon: Box },
     { name: 'Settings', path: '/student/settings', icon: Settings },
+    { name: 'Setup Guide', path: '/student/guide', icon: CircleHelp },
   ];
 
   return <SidebarLayout role="student" navLinks={navLinks} />;

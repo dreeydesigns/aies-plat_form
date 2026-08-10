@@ -68,6 +68,7 @@ const TeacherRoster = React.lazy(() => import('./pages/teacher/TeacherRoster'));
 const ParentChildren = React.lazy(() => import('./pages/parent/ParentChildren'));
 const TeacherReports = React.lazy(() => import('./pages/teacher/TeacherReports'));
 const AdminReports = React.lazy(() => import('./pages/admin/AdminReports'));
+const SetupGuide = React.lazy(() => import('./pages/shared/SetupGuide'));
 
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
   const { currentUser, userProfile } = useAppContext();
@@ -120,6 +121,7 @@ function AppContent() {
         <Route path="messages" element={<MessagesPage />} />
         <Route path="labs" element={<VRLabs />} />
         <Route path="settings" element={<StudentSettings />} />
+        <Route path="guide" element={<SetupGuide />} />
       </Route>
 
       {/* Teacher Routes */}
@@ -131,6 +133,7 @@ function AppContent() {
         <Route path="messages" element={<MessagesPage />} />
         <Route path="reports" element={<TeacherReports />} />
         <Route path="settings" element={<TeacherSettings />} />
+        <Route path="guide" element={<SetupGuide />} />
       </Route>
 
       {/* Parent Routes */}
@@ -141,6 +144,7 @@ function AppContent() {
         <Route path="messages" element={<MessagesPage />} />
         <Route path="resources" element={<div className="pt-6"><EmptyState icon={FolderX} title="Parent Resources" description="No content available." /></div>} />
         <Route path="settings" element={<ParentSettings />} />
+        <Route path="guide" element={<SetupGuide />} />
       </Route>
 
       {/* Admin Routes */}
@@ -179,4 +183,3 @@ export default function App() {
     </ErrorBoundary>
   );
 }
-

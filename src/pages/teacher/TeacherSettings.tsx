@@ -1,6 +1,5 @@
 import React from 'react';
 import PreferencesPanel from '../../components/PreferencesPanel';
-import DeviceSync from '../../components/DeviceSync';
 import ProfilePictureCapture from '../../components/shared/ProfilePictureCapture';
 
 export default function TeacherSettings() {
@@ -12,7 +11,6 @@ export default function TeacherSettings() {
       </div>
       <ProfilePictureCapture />
       <PreferencesPanel />
-      <DeviceSync />
     </div>
   );
 }

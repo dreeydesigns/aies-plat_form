@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Camera, RefreshCw, Save, X } from 'lucide-react';
+import { Camera, FolderUp, RefreshCw, Save } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import { storage } from '../../lib/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useToast } from '../../context/ToastContext';
 
 export default function ProfilePictureCapture() {
@@ -10,6 +12,7 @@ export default function ProfilePictureCapture() {
   const { addToast } = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -44,23 +47,35 @@ export default function ProfilePictureCapture() {
         canvasRef.current.height = videoRef.current.videoHeight;
         context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
         
-        const imageData = canvasRef.current.toDataURL('image/jpeg');
+        const imageData = canvasRef.current.toDataURL('image/jpeg', 0.85);
         setCapturedImage(imageData);
         stopCamera();
       }
     }
   };
 
+  const chooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) return addToast('error', 'Choose an image file (JPG, PNG, or WebP).');
+    if (file.size > 5_000_000) return addToast('error', 'Choose an image smaller than 5 MB.');
+    const reader = new FileReader();
+    reader.onerror = () => addToast('error', 'Could not read the selected image.');
+    reader.onload = () => setCapturedImage(String(reader.result));
+    reader.readAsDataURL(file);
+  };
+
   const savePhoto = async () => {
     if (!userProfile || !capturedImage) return;
     
     try {
-      // In a real app we'd upload to Firebase Storage and save the URL.
-      // For this MVP with limited setup, saving the Data URL string to Firestore is possible,
-      // but let's just save it to Firestore directly. Note: Firestore has a 1MB limit.
+      const imageBlob = await (await fetch(capturedImage)).blob();
+      const imageRef = ref(storage, `profile-images/${userProfile.id}/${Date.now()}.jpg`);
+      await uploadBytes(imageRef, imageBlob, { contentType: imageBlob.type || 'image/jpeg' });
+      const photoURL = await getDownloadURL(imageRef);
       const userRef = doc(db, 'users', userProfile.id);
-      await updateDoc(userRef, { photoURL: capturedImage });
-      setUserProfile({ ...userProfile, photoURL: capturedImage });
+      await updateDoc(userRef, { photoURL });
+      setUserProfile({ ...userProfile, photoURL } as any);
       addToast('success', 'Profile picture updated successfully!');
       setCapturedImage(null);
     } catch (err) {
@@ -91,13 +106,15 @@ export default function ProfilePictureCapture() {
         
         <div className="flex-1 w-full">
           {!isCameraOpen && !capturedImage && (
-            <button
-              onClick={startCamera}
-              className="px-6 py-3 bg-neutral-100 text-neutral-700 font-medium rounded-xl hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 w-full md:w-auto"
-            >
-              <Camera className="w-5 h-5" />
-              Capture from Camera
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button onClick={startCamera} className="px-5 py-3 bg-neutral-100 text-neutral-700 font-medium rounded-xl hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2">
+                <Camera className="w-5 h-5" /> Use camera
+              </button>
+              <button onClick={() => fileInputRef.current?.click()} className="px-5 py-3 bg-neutral-100 text-neutral-700 font-medium rounded-xl hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2">
+                <FolderUp className="w-5 h-5" /> Upload a file
+              </button>
+              <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={chooseFile} className="hidden" />
+            </div>
           )}
 
           {isCameraOpen && (

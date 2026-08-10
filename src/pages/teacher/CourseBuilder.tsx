@@ -45,7 +45,7 @@ function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }
 }
 
 export default function CourseBuilder() {
-  const { courses, addLesson, addQuiz } = useAppContext();
+  const { courses, addLesson, addQuiz, currentUser } = useAppContext();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [newLessonTitle, setNewLessonTitle, clearLessonTitle] = useAutoSave('aies_draft_lesson_title', '');
   const [newLessonContent, setNewLessonContent, clearLessonContent] = useAutoSave('aies_draft_lesson_content', '');
@@ -176,7 +176,8 @@ export default function CourseBuilder() {
     setGenerationError('');
     setIsGenerating(true);
     try {
-      const generated = await generateCourseFromDocument(sourceFile, brief);
+      if (!currentUser) throw new Error('Please sign in again before generating a course.');
+      const generated = await generateCourseFromDocument(sourceFile, brief, currentUser.uid);
       const generatedQuizzes: Record<string, any> = {};
       const lessons: Lesson[] = generated.lessons.map((lesson, index) => {
         const quizId = lesson.quiz ? `q_${Date.now()}_${index}` : undefined;
@@ -385,7 +386,7 @@ export default function CourseBuilder() {
         <p className="mt-1 text-sm text-neutral-500">Upload a PDF, DOCX, or PPTX, then answer seven questions. AIES creates sequenced lessons and a final assessment from your source material.</p>
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
           <label className="md:col-span-2 block">
-            <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 3.5 MB)</span>
+            <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 10 MB)</span>
             <input type="file" accept=".pdf,.docx,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation" onChange={event => setSourceFile(event.target.files?.[0] || null)} className="block w-full text-sm" />
           </label>
           {curriculumQuestions.map(question => <label key={question.key} className="block"><span className="block text-sm font-medium text-neutral-700 mb-1">{question.label}</span><input value={brief[question.key]} onChange={event => setBrief(current => ({ ...current, [question.key]: event.target.value }))} placeholder={question.placeholder} className="w-full px-3 py-2 rounded-lg border border-neutral-300" /></label>)}

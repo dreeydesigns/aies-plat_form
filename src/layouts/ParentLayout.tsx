@@ -1,6 +1,6 @@
 import React from 'react';
 import SidebarLayout from './SidebarLayout';
-import { LayoutDashboard, Users, MessageSquare, BookOpen, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, BookOpen, Settings, CircleHelp } from 'lucide-react';
 
 export default function ParentLayout() {
   const navLinks = [
@@ -9,6 +9,7 @@ export default function ParentLayout() {
     { name: 'Messages', path: '/parent/messages', icon: MessageSquare },
     { name: 'Resources', path: '/parent/resources', icon: BookOpen },
     { name: 'Settings', path: '/parent/settings', icon: Settings },
+    { name: 'Setup Guide', path: '/parent/guide', icon: CircleHelp },
   ];
   return <SidebarLayout role="parent" navLinks={navLinks} />;
 }

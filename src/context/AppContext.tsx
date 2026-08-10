@@ -12,6 +12,7 @@ export interface User {
   name: string;
   role: Role;
   avatar?: string;
+  photoURL?: string;
   points?: number;
   level?: number;
   streak?: number;
