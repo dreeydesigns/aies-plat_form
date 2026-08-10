@@ -35,6 +35,8 @@ export interface Course {
   title: string;
   description: string;
   lessons: Lesson[];
+  quizzes?: Record<string, Quiz>;
+  sourceDocument?: string;
 }
 
 export interface QuizQuestion {
@@ -99,6 +101,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   
   const users = useFirestoreUsers(!!currentUser);
   const courses = useFirestoreCourses(!!currentUser);
+
+  useEffect(() => {
+    const storedQuizzes = courses.flatMap(course => Object.values(course.quizzes || {}));
+    if (storedQuizzes.length) {
+      setQuizzes(current => ({ ...current, ...Object.fromEntries(storedQuizzes.map(quiz => [quiz.id, quiz])) }));
+    }
+  }, [courses]);
 
   useEffect(() => {
     const unsubscribeAuth = initAuth(

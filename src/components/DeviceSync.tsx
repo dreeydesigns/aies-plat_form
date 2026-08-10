@@ -27,7 +27,7 @@ import { useLanguage } from '../context/LanguageContext';
 type ConnStatus = 'idle' | 'connecting' | 'connected' | 'unsupported' | 'error';
 
 export default function DeviceSync() {
-  const { currentUser } = useAppContext();
+  const { currentUser, userProfile } = useAppContext();
   const { t } = useLanguage();
   const [btStatus, setBtStatus] = useState<ConnStatus>('idle');
   const [btDeviceName, setBtDeviceName] = useState<string>('');
@@ -36,10 +36,10 @@ export default function DeviceSync() {
   const [error, setError] = useState('');
 
   const logDeviceData = async (source: string, payload: Record<string, any>) => {
-    if (!currentUser) return;
+    if (!currentUser || !userProfile?.id) return;
     try {
       await addDoc(collection(db, 'deviceData'), {
-        userId: currentUser.id,
+        userId: userProfile.id,
         source,
         payload,
         recordedAt: serverTimestamp(),

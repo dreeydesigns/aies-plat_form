@@ -8,6 +8,17 @@ import { CSS } from '@dnd-kit/utilities';
 
 import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import { CurriculumBrief, generateCourseFromDocument } from '../../lib/courseAi';
+
+const curriculumQuestions: Array<{ key: keyof CurriculumBrief; label: string; placeholder: string }> = [
+  { key: 'learnerAge', label: '1. Learner age range', placeholder: 'e.g. 13-15 years' },
+  { key: 'learnerLevel', label: '2. Current level', placeholder: 'e.g. Grade 8, beginner' },
+  { key: 'subject', label: '3. Subject / curriculum', placeholder: 'e.g. Biology, CBC' },
+  { key: 'learningGoals', label: '4. Learning outcomes', placeholder: 'What should learners know or do?' },
+  { key: 'duration', label: '5. Course duration', placeholder: 'e.g. 4 lessons across 2 weeks' },
+  { key: 'deliveryStyle', label: '6. Preferred delivery style', placeholder: 'e.g. visual, practical, collaborative' },
+  { key: 'accessibilityNeeds', label: '7. Accessibility and language needs', placeholder: 'e.g. simple English, captions, none' },
+];
 
 function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: lesson.id });
@@ -42,6 +53,10 @@ export default function CourseBuilder() {
   
   // Quiz Builder State
   const [quizQuestions, setQuizQuestions, clearQuizQuestions] = useAutoSave('aies_draft_quiz_questions', [{ text: '', options: ['', '', '', ''], correctAnswer: 0 }]);
+  const [sourceFile, setSourceFile] = useState<File | null>(null);
+  const [brief, setBrief] = useState<CurriculumBrief>({ learnerAge: '', learnerLevel: '', subject: '', learningGoals: '', duration: '', deliveryStyle: '', accessibilityNeeds: '' });
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationError, setGenerationError] = useState('');
 
   useEffect(() => {
     setSelectedCourse((current) => courses.find((course) => course.id === current?.id) || courses[0] || null);
@@ -150,6 +165,35 @@ export default function CourseBuilder() {
       setSelectedCourse({ id: courseRef.id, ...courseData });
     } catch (error) {
       console.error('Failed to create course:', error);
+    }
+  };
+
+  const handleGenerateCourse = async () => {
+    if (!sourceFile || (Object.values(brief) as string[]).some(value => !value.trim())) {
+      setGenerationError('Upload a document and answer all seven curriculum questions.');
+      return;
+    }
+    setGenerationError('');
+    setIsGenerating(true);
+    try {
+      const generated = await generateCourseFromDocument(sourceFile, brief);
+      const generatedQuizzes: Record<string, any> = {};
+      const lessons: Lesson[] = generated.lessons.map((lesson, index) => {
+        const quizId = lesson.quiz ? `q_${Date.now()}_${index}` : undefined;
+        if (lesson.quiz && quizId) {
+          generatedQuizzes[quizId] = { id: quizId, ...lesson.quiz, questions: lesson.quiz.questions.map((question, questionIndex) => ({ ...question, id: `${quizId}_${questionIndex}` })) };
+        }
+        return { id: `l_${Date.now()}_${index}`, title: lesson.title, content: lesson.content, type: lesson.type, quizId };
+      });
+      const courseData = { title: generated.title, description: generated.description, lessons, quizzes: generatedQuizzes, sourceDocument: sourceFile.name };
+      const ref = await addDoc(collection(db, 'courses'), courseData);
+      Object.entries(generatedQuizzes).forEach(([id, quiz]) => addQuiz(id, quiz as any));
+      setSelectedCourse({ id: ref.id, ...courseData });
+      setSourceFile(null);
+    } catch (error: any) {
+      setGenerationError(error?.message || 'Could not generate the course.');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -335,6 +379,20 @@ export default function CourseBuilder() {
           </div>
         </div>
       </div>
+
+      <section className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
+        <h2 className="text-lg font-bold text-neutral-900">Create a complete course with AI</h2>
+        <p className="mt-1 text-sm text-neutral-500">Upload a PDF, DOCX, or PPTX, then answer seven questions. AIES creates sequenced lessons and a final assessment from your source material.</p>
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label className="md:col-span-2 block">
+            <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 3.5 MB)</span>
+            <input type="file" accept=".pdf,.docx,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation" onChange={event => setSourceFile(event.target.files?.[0] || null)} className="block w-full text-sm" />
+          </label>
+          {curriculumQuestions.map(question => <label key={question.key} className="block"><span className="block text-sm font-medium text-neutral-700 mb-1">{question.label}</span><input value={brief[question.key]} onChange={event => setBrief(current => ({ ...current, [question.key]: event.target.value }))} placeholder={question.placeholder} className="w-full px-3 py-2 rounded-lg border border-neutral-300" /></label>)}
+        </div>
+        {generationError && <p className="mt-4 text-sm text-red-600">{generationError}</p>}
+        <button onClick={handleGenerateCourse} disabled={isGenerating} className="mt-5 px-5 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-50">{isGenerating ? 'Building course…' : 'Generate complete course'}</button>
+      </section>
     </div>
   );
 }
