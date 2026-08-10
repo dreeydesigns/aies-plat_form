@@ -18,6 +18,9 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+// Do not leave users waiting for the SDK's default multi-minute retry period
+// when Storage has not yet been enabled or the network is unavailable.
+storage.maxUploadRetryTime = 20_000;
 let analyticsInstance = null;
 export const analytics = analyticsInstance;
 

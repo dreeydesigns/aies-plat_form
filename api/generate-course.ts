@@ -14,7 +14,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { document, brief } = req.body ?? {};
-  if (!document?.sourceUrl || !document?.mimeType || !document?.name || !brief) {
+  if ((!document?.sourceUrl && !document?.base64) || !document?.mimeType || !document?.name || !brief) {
     return res.status(400).json({ error: 'A document and all curriculum brief answers are required.' });
   }
   if (!allowedMimeTypes.has(document.mimeType)) {
@@ -28,13 +28,18 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const prompt = `You are an expert curriculum designer. Read the supplied source document and create a complete, accurate course. Do not invent facts that are not supported by the source. Adapt language, examples, pacing, assessment complexity, and activities to this brief:\n${JSON.stringify(brief)}\n\nReturn ONLY valid JSON matching this exact schema:\n{"title":"string","description":"string","lessons":[{"title":"string","content":"string","type":"reading"|"video"|"vr"|"quiz","quiz":null|{"title":"string","questions":[{"text":"string","options":["string","string","string","string"],"correctAnswer":0}]} }]}\n\nCreate 4-8 sequenced lessons. Include an introductory lesson, at least one activity or applied lesson, and a final quiz with 5-10 questions. Lesson content must be useful and ready for a student to read.`;
 
   try {
-    const source = new URL(document.sourceUrl);
-    if (!['firebasestorage.googleapis.com', 'storage.googleapis.com'].includes(source.hostname)) {
-      return res.status(400).json({ error: 'Invalid document storage location.' });
+    let bytes: Buffer;
+    if (document.sourceUrl) {
+      const source = new URL(document.sourceUrl);
+      if (!['firebasestorage.googleapis.com', 'storage.googleapis.com'].includes(source.hostname)) {
+        return res.status(400).json({ error: 'Invalid document storage location.' });
+      }
+      const sourceResponse = await fetch(document.sourceUrl);
+      if (!sourceResponse.ok) throw new Error('Could not retrieve the uploaded document.');
+      bytes = Buffer.from(await sourceResponse.arrayBuffer());
+    } else {
+      bytes = Buffer.from(document.base64, 'base64');
     }
-    const sourceResponse = await fetch(document.sourceUrl);
-    if (!sourceResponse.ok) throw new Error('Could not retrieve the uploaded document.');
-    const bytes = Buffer.from(await sourceResponse.arrayBuffer());
     if (bytes.length > MAX_DOCUMENT_BYTES) return res.status(413).json({ error: 'The document is too large. Upload a file smaller than 10 MB.' });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
