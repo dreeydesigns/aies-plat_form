@@ -5,32 +5,44 @@ import { db } from '../../lib/firebase';
 import { useAppContext } from '../../context/AppContext';
 
 export default function NotificationsSidebar() {
-  const { currentUser } = useAppContext();
+  const { userProfile } = useAppContext();
   const [notifications, setNotifications] = useState<any[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!userProfile?.id) {
+      setNotifications([]);
+      setUnreadCount(0);
+      return;
+    }
 
     const q = query(
       collection(db, 'notifications'),
-      where('recipientId', '==', currentUser.id),
+      where('recipientId', '==', userProfile.id),
       orderBy('createdAt', 'desc')
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const notifs = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as any[];
-      setNotifications(notifs);
-      setUnreadCount(notifs.filter(n => !n.read).length);
-    });
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const notifs = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as any[];
+        setNotifications(notifs);
+        setUnreadCount(notifs.filter(n => !n.read).length);
+      },
+      (error) => {
+        console.error('Unable to load notifications:', error);
+        setNotifications([]);
+        setUnreadCount(0);
+      }
+    );
 
     return () => unsubscribe();
-  }, [currentUser]);
+  }, [userProfile?.id]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

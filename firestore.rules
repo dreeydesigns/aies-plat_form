@@ -48,6 +48,14 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.recipientId == request.auth.uid;
+      allow update: if isSignedIn()
+        && resource.data.recipientId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow create, delete: if false;
+    }
+
     match /deviceData/{entryId} {
       // Wearable/sensor sync entries — a user can only write and read their own.
       allow read: if isOwner(resource.data.userId);
