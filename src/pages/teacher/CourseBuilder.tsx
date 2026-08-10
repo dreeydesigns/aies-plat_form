@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useAppContext, Lesson } from '../../context/AppContext';
+import React, { useEffect, useState } from 'react';
+import { useAppContext, Course, Lesson } from '../../context/AppContext';
 import { Plus, Save, PlayCircle, FileText, HelpCircle, CheckCircle, Trash2, GripVertical } from 'lucide-react';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
 function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }) {
@@ -35,13 +35,17 @@ function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }
 
 export default function CourseBuilder() {
   const { courses, addLesson, addQuiz } = useAppContext();
-  const [selectedCourse, setSelectedCourse] = useState(courses[0]);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [newLessonTitle, setNewLessonTitle, clearLessonTitle] = useAutoSave('aies_draft_lesson_title', '');
   const [newLessonContent, setNewLessonContent, clearLessonContent] = useAutoSave('aies_draft_lesson_content', '');
   const [newLessonType, setNewLessonType, clearLessonType] = useAutoSave('aies_draft_lesson_type', 'text');
   
   // Quiz Builder State
   const [quizQuestions, setQuizQuestions, clearQuizQuestions] = useAutoSave('aies_draft_quiz_questions', [{ text: '', options: ['', '', '', ''], correctAnswer: 0 }]);
+
+  useEffect(() => {
+    setSelectedCourse((current) => courses.find((course) => course.id === current?.id) || courses[0] || null);
+  }, [courses]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -56,6 +60,7 @@ export default function CourseBuilder() {
     if (over && active.id !== over.id) {
       let updatedCourseLessons: Lesson[] = [];
       setSelectedCourse((course) => {
+        if (!course) return course;
         const oldIndex = course.lessons.findIndex(l => l.id === active.id);
         const newIndex = course.lessons.findIndex(l => l.id === over.id);
         
@@ -124,15 +129,41 @@ export default function CourseBuilder() {
     addLesson(selectedCourse.id, newLesson);
     
     // Update local selected course state so the UI reflects the change immediately
-    setSelectedCourse(prev => ({
+    setSelectedCourse(prev => prev ? ({
       ...prev,
       lessons: [...prev.lessons, newLesson]
-    }));
+    }) : prev);
 
     clearLessonTitle();
     clearLessonContent();
     clearQuizQuestions();
   };
+
+  const handleCreateCourse = async () => {
+    try {
+      const courseData: Omit<Course, 'id'> = {
+        title: 'Untitled Course',
+        description: 'Add a description and lessons to begin building this course.',
+        lessons: [],
+      };
+      const courseRef = await addDoc(collection(db, 'courses'), courseData);
+      setSelectedCourse({ id: courseRef.id, ...courseData });
+    } catch (error) {
+      console.error('Failed to create course:', error);
+    }
+  };
+
+  if (!selectedCourse) {
+    return (
+      <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm text-center">
+        <h1 className="text-3xl font-bold text-neutral-900 mb-2">Create your first course</h1>
+        <p className="text-neutral-500 mb-6">Start with an empty course, then add lessons and quizzes for your students.</p>
+        <button onClick={handleCreateCourse} className="px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700">
+          Create Course
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

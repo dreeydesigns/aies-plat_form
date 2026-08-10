@@ -12,6 +12,12 @@ service cloud.firestore {
     function isOwner(userId) {
       return isSignedIn() && request.auth.uid == userId;
     }
+
+    function hasRole(role) {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
     
     match /users/{userId} {
       allow read: if isSignedIn();
@@ -30,7 +36,7 @@ service cloud.firestore {
     
     match /courses/{courseId} {
       allow read: if isSignedIn();
-      allow write: if false; 
+      allow create, update, delete: if hasRole('teacher') || hasRole('admin');
     }
 
     match /messages/{messageId} {

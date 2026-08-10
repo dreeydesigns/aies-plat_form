@@ -11,15 +11,22 @@ export function useFirestoreUsers(shouldSubscribe: boolean = true) {
       setUsers([]);
       return;
     }
-    const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
-      const usersData: User[] = [];
-      snapshot.forEach((doc) => {
-        usersData.push({ id: doc.id, ...doc.data() } as User);
-      });
-      setUsers(usersData);
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, 'users'),
+      (snapshot) => {
+        const usersData: User[] = [];
+        snapshot.forEach((doc) => {
+          usersData.push({ id: doc.id, ...doc.data() } as User);
+        });
+        setUsers(usersData);
+      },
+      (error) => {
+        console.error('Unable to load users:', error);
+        setUsers([]);
+      }
+    );
     return () => unsubscribe();
-  }, []);
+  }, [shouldSubscribe]);
 
   return users;
 }
@@ -32,15 +39,22 @@ export function useFirestoreCourses(shouldSubscribe: boolean = true) {
       setCourses([]);
       return;
     }
-    const unsubscribe = onSnapshot(collection(db, 'courses'), (snapshot) => {
-      const coursesData: Course[] = [];
-      snapshot.forEach((doc) => {
-        coursesData.push({ id: doc.id, ...doc.data() } as Course);
-      });
-      setCourses(coursesData);
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, 'courses'),
+      (snapshot) => {
+        const coursesData: Course[] = [];
+        snapshot.forEach((doc) => {
+          coursesData.push({ id: doc.id, ...doc.data() } as Course);
+        });
+        setCourses(coursesData);
+      },
+      (error) => {
+        console.error('Unable to load courses:', error);
+        setCourses([]);
+      }
+    );
     return () => unsubscribe();
-  }, []);
+  }, [shouldSubscribe]);
 
   return courses;
 }
