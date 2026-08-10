@@ -33,7 +33,7 @@ const roleThemeMap: Record<UserRole, { badge: string; active: string; border: st
 };
 
 export default function SidebarLayout({ role, navLinks }: { role: string, navLinks: any[] }) {
-  const { currentUser, setCurrentUser } = useAppContext();
+  const { currentUser, userProfile, setCurrentUser } = useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -85,11 +85,11 @@ export default function SidebarLayout({ role, navLinks }: { role: string, navLin
         <div className="p-4 border-t border-neutral-200 dark:border-neutral-700">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-full flex items-center justify-center font-bold text-neutral-600 dark:text-neutral-300">
-              {currentUser?.name?.charAt(0) || 'U'}
+              {userProfile?.photoURL || userProfile?.avatar ? <img src={userProfile.photoURL || userProfile.avatar} alt="Profile" className="w-full h-full rounded-full object-cover" /> : (userProfile?.name?.charAt(0) || 'U')}
             </div>
             <div>
-              <p className="text-sm font-bold text-neutral-800 dark:text-white">{currentUser?.name}</p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 capitalize">{currentUser?.role}</p>
+              <p className="text-sm font-bold text-neutral-800 dark:text-white">{userProfile?.name}</p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 capitalize">{userProfile?.role}</p>
             </div>
           </div>
           <button 
