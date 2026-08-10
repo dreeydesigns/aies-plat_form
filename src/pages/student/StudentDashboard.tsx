@@ -50,6 +50,26 @@ export default function StudentDashboard() {
 
   // Find the first course for the demo
   const course = courses[0];
+
+  // New accounts may not have any Firestore courses yet. Do not attempt to
+  // access lessons until a teacher has published a course.
+  if (!course || !course.lessons?.length) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-neutral-800">Welcome back, {currentUser?.displayName?.split(' ')[0] || 'Learner'}!</h2>
+          <p className="text-neutral-500">Your learning space is ready.</p>
+        </div>
+        <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm text-center">
+          <BookOpen className="w-10 h-10 text-blue-600 mx-auto mb-4" />
+          <h3 className="text-lg font-bold text-neutral-800">Courses are coming soon</h3>
+          <p className="text-neutral-500 mt-2 max-w-md mx-auto">
+            There are no published courses available yet. Please check back after your teacher adds one.
+          </p>
+        </div>
+      </div>
+    );
+  }
   
   // Calculate progress
   const totalLessons = course.lessons.length;
