@@ -22,11 +22,7 @@ export default function StudentCourses() {
           description="You are not enrolled in any courses yet."
         />
       ) : (
-      {courses.length === 0 ? (
-        <div className="bg-white p-8 rounded-2xl border border-neutral-200 text-center text-neutral-500">
-          No courses have been published yet. Please check back soon.
-        </div>
-      ) : <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {courses.map(course => {
           const completedCount = course.lessons.filter(l => completedLessons.includes(l.id)).length;
           const progress = course.lessons.length ? Math.round((completedCount / course.lessons.length) * 100) : 0;
@@ -61,7 +57,7 @@ export default function StudentCourses() {
               </div>
             );
         })}
-      </div>}
+        </div>
       )}
     </div>
   );
