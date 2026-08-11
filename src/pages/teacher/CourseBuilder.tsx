@@ -19,6 +19,14 @@ const curriculumQuestions: Array<{ key: keyof CurriculumBrief; label: string; pl
   { key: 'deliveryStyle', label: '6. Preferred delivery style', placeholder: 'e.g. visual, practical, collaborative' },
   { key: 'accessibilityNeeds', label: '7. Accessibility and language needs', placeholder: 'e.g. simple English, captions, none' },
 ];
+const briefSuggestions: Partial<Record<keyof CurriculumBrief, string[]>> = {
+  learnerAge: ['6-8 years', '9-11 years', '12-14 years', '15-18 years', 'Adult learners'],
+  learnerLevel: ['Beginner', 'Foundation level', 'Grade-level standard', 'Advanced', 'Mixed ability class'],
+  learningGoals: ['Understand the basics', 'Apply ideas to real problems', 'Prepare for an exam', 'Build confidence', 'Master challenging questions'],
+  duration: ['One 40-minute lesson', '3 lessons across 1 week', '5 lessons across 2 weeks', '1 month unit', 'Self-paced revision'],
+  deliveryStyle: ['Simple English', 'Visual and step-by-step', 'Practical activities', 'Gamified missions', 'Collaborative learning'],
+  accessibilityNeeds: ['Simple English', 'Short instructions', 'Extra worked examples', 'Captions and transcripts', 'Screen-reader friendly'],
+};
 
 function SortableLessonItem({ lesson, onDelete }: { lesson: Lesson; onDelete: (lesson: Lesson) => void; key?: React.Key }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: lesson.id });
@@ -427,7 +435,7 @@ export default function CourseBuilder() {
             <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 4 MB)</span>
             <input type="file" accept=".pdf,.docx,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation" onChange={event => setSourceFile(event.target.files?.[0] || null)} className="block w-full text-sm" />
           </label>
-          {curriculumQuestions.map(question => <label key={question.key} className="block"><span className="block text-sm font-medium text-neutral-700 mb-1">{question.label}</span><input value={brief[question.key]} onChange={event => setBrief(current => ({ ...current, [question.key]: event.target.value }))} placeholder={question.placeholder} className="w-full px-3 py-2 rounded-lg border border-neutral-300" /></label>)}
+          {curriculumQuestions.map(question => <label key={question.key} className="block"><span className="block text-sm font-medium text-neutral-700 mb-1">{question.label}</span><input value={brief[question.key]} onChange={event => setBrief(current => ({ ...current, [question.key]: event.target.value }))} placeholder={question.placeholder} className="w-full px-3 py-2 rounded-lg border border-neutral-300" />{question.key !== 'subject' && <div className="mt-2 flex flex-wrap gap-1.5">{briefSuggestions[question.key]?.map(option => <button type="button" key={option} onClick={() => setBrief(current => ({ ...current, [question.key]: option }))} className="px-2 py-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full hover:bg-emerald-100">{option}</button>)}</div>}</label>)}
         </div>
         {generationError && <p className="mt-4 text-sm text-red-600">{generationError}</p>}
         <button onClick={handleGenerateCourse} disabled={isGenerating} className="mt-5 px-5 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-50">{isGenerating ? 'Building course…' : 'Generate complete course'}</button>

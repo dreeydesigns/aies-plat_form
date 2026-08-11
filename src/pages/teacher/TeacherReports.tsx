@@ -1,101 +1,23 @@
-import React, { useRef, useState } from 'react';
-import { FileBarChart, Download, Loader2 } from 'lucide-react';
-import EmptyState from '../../components/shared/EmptyState';
-import jsPDF from 'jspdf';
+import React, { useMemo, useRef, useState } from 'react';
+import { Download, FileBarChart, ImageDown } from 'lucide-react';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { useAppContext } from '../../context/AppContext';
 
 export default function TeacherReports() {
-  const [showReport, setShowReport] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
+  const { users, courses } = useAppContext();
   const reportRef = useRef<HTMLDivElement>(null);
-
-  const handleDownloadPDF = async () => {
-    if (!reportRef.current) return;
-    setIsExporting(true);
-    try {
-      const canvas = await html2canvas(reportRef.current, { scale: 2 });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('Class_Performance_Report.pdf');
-    } catch (error) {
-      console.error('Error generating PDF', error);
-    } finally {
-      setIsExporting(false);
-    }
+  const [focusAreas, setFocusAreas] = useState('');
+  const [exporting, setExporting] = useState(false);
+  const students = users.filter(user => user.role === 'student');
+  const rows = useMemo(() => students.map(student => {
+    const completed = student.completedLessons || [];
+    const total = courses.flatMap(course => course.lessons).length;
+    return { name: student.name, completed: completed.length, total, progress: total ? Math.round((completed.length / total) * 100) : 0, points: student.points || 0 };
+  }), [students, courses]);
+  const exportReport = async (kind: 'pdf' | 'jpg') => {
+    if (!reportRef.current) return; setExporting(true);
+    try { const canvas = await html2canvas(reportRef.current, { scale: 2, backgroundColor: '#ffffff' }); const image = canvas.toDataURL('image/jpeg', 0.92); if (kind === 'jpg') { const link = document.createElement('a'); link.href = image; link.download = 'AIES_Class_Report.jpg'; link.click(); return; } const pdf = new jsPDF('p', 'mm', 'a4'); const width = pdf.internal.pageSize.getWidth(); const height = pdf.internal.pageSize.getHeight(); const renderedHeight = canvas.height * width / canvas.width; for (let offset = 0; offset < renderedHeight; offset += height) { if (offset) pdf.addPage(); pdf.addImage(image, 'JPEG', 0, -offset, width, renderedHeight); } pdf.save('AIES_Class_Report.pdf'); } finally { setExporting(false); }
   };
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Class Performance Reports</h1>
-        {showReport && (
-          <button 
-            onClick={handleDownloadPDF}
-            disabled={isExporting}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-          >
-            {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />} 
-            {isExporting ? 'Generating PDF...' : 'Export PDF'}
-          </button>
-        )}
-      </div>
-
-      {!showReport ? (
-        <EmptyState
-          title="No reports generated yet"
-          description="Select a course and student cohort to generate real-time analytics and progress reports."
-          icon={FileBarChart}
-          action={{
-            label: 'Generate Report',
-            onClick: () => setShowReport(true),
-          }}
-        />
-      ) : (
-        <div ref={reportRef} className="bg-white p-8 md:p-12 rounded-2xl border border-neutral-200 shadow-sm print:border-none print:shadow-none print:p-0">
-          <div className="border-b border-neutral-200 pb-8 mb-8">
-            <h1 className="text-4xl font-bold text-neutral-900 mb-2">Class Performance Report</h1>
-            <p className="text-lg text-neutral-500">AIES Platform - Generated {new Date().toLocaleDateString()}</p>
-          </div>
-          
-          <div className="space-y-6">
-            <div className="p-6 bg-neutral-50 rounded-xl border border-neutral-100">
-              <h3 className="text-xl font-bold text-neutral-800 mb-4">Summary</h3>
-              <p className="text-neutral-600">The overall class performance has been steady this month. Students have completed 85% of assigned modules, and the average quiz score is 82%. Excellent engagement observed in science topics.</p>
-            </div>
-            
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-neutral-200">
-                  <th className="py-4 font-bold text-neutral-600">Student Name</th>
-                  <th className="py-4 font-bold text-neutral-600">Modules Completed</th>
-                  <th className="py-4 font-bold text-neutral-600">Average Score</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-100">
-                <tr>
-                  <td className="py-4">Alice Johnson</td>
-                  <td className="py-4">12 / 15</td>
-                  <td className="py-4 font-bold text-green-600">92%</td>
-                </tr>
-                <tr>
-                  <td className="py-4">Bob Smith</td>
-                  <td className="py-4">15 / 15</td>
-                  <td className="py-4 font-bold text-green-600">95%</td>
-                </tr>
-                <tr>
-                  <td className="py-4">Charlie Brown</td>
-                  <td className="py-4">8 / 15</td>
-                  <td className="py-4 font-bold text-amber-600">74%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return <div className="space-y-6"><div className="flex flex-col md:flex-row gap-4 justify-between"><div><h1 className="text-2xl font-bold text-neutral-900">Evidence-based class reports</h1><p className="text-neutral-500">Only recorded course completion and points are shown. Quiz scores and wearable engagement appear when those readings are actually collected.</p></div><div className="flex gap-2"><button disabled={exporting} onClick={() => exportReport('pdf')} className="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg"><Download className="inline w-4 h-4 mr-1" />PDF</button><button disabled={exporting} onClick={() => exportReport('jpg')} className="px-4 py-2 border font-bold rounded-lg"><ImageDown className="inline w-4 h-4 mr-1" />JPG</button></div></div><label className="block bg-white p-5 rounded-2xl border"><span className="font-bold">Teacher focus areas and recommended support</span><textarea value={focusAreas} onChange={event => setFocusAreas(event.target.value)} rows={4} placeholder="Example: Practise multi-step algebra; use worked examples twice weekly; contact guardian if progress remains below 50%." className="mt-3 w-full p-3 border rounded-xl" /></label><div ref={reportRef} className="bg-white p-8 space-y-10"><section className="min-h-[700px]"><h1 className="text-3xl font-bold">Class Learning Report</h1><p className="text-neutral-500">Generated {new Date().toLocaleDateString()} · AIES</p><div className="grid grid-cols-3 gap-4 mt-8"><div className="p-4 bg-blue-50 rounded-xl"><b>{students.length}</b><br/>Students</div><div className="p-4 bg-emerald-50 rounded-xl"><b>{courses.length}</b><br/>Courses</div><div className="p-4 bg-amber-50 rounded-xl"><b>{courses.flatMap(course => course.lessons).length}</b><br/>Available lessons</div></div><h2 className="text-xl font-bold mt-10">What this report measures</h2><p className="mt-2 text-neutral-700">Completion and points are taken from AIES records. No estimated attention, quiz score, or medical conclusion is displayed when no verified data exists.</p></section><section className="min-h-[700px]"><h2 className="text-2xl font-bold">Learner progress</h2><table className="mt-5 w-full text-left"><thead><tr className="border-b"><th className="p-2">Learner</th><th>Completed</th><th>Progress</th><th>Points</th></tr></thead><tbody>{rows.map(row => <tr key={row.name} className="border-b"><td className="p-2">{row.name}</td><td>{row.completed} / {row.total}</td><td>{row.progress}%</td><td>{row.points}</td></tr>)}</tbody></table></section><section className="min-h-[700px]"><h2 className="text-2xl font-bold">Focus areas and next steps</h2><p className="mt-4 whitespace-pre-wrap text-neutral-700">{focusAreas || 'No focus areas have been recorded by the teacher yet.'}</p><h3 className="font-bold mt-10">Family conversation prompts</h3><ul className="list-disc pl-6 mt-3 space-y-2"><li>Ask the learner to explain one completed lesson in their own words.</li><li>Agree on a regular short study time and review course progress together.</li><li>Contact the teacher if the learner needs a different pace or additional examples.</li></ul></section></div></div>;
 }
