@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { studentMetrics, gamification } from '../../data/mockData';
-import { Trophy, Star, Zap, Headset, PlayCircle, CheckCircle, Clock, Search, Loader2, BookOpen } from 'lucide-react';
+import { Trophy, Star, Zap, Headset, PlayCircle, CheckCircle, Clock, Search, Loader2, BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
 import VoiceInput from '../../components/shared/VoiceInput';
@@ -14,12 +14,15 @@ const progressData = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 export default function StudentDashboard() {
-  const { currentUser, userProfile, courses, completedLessons, earnedBadges } = useAppContext();
+  const { currentUser, userProfile, courses, completedLessons, earnedBadges, retakePrompts } = useAppContext();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState('');
   const [searchSources, setSearchSources] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  const pendingPrompts = retakePrompts.filter(p => p.studentId === userProfile?.id && p.status === 'pending');
+
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
@@ -99,7 +102,56 @@ export default function StudentDashboard() {
         </div>
       </div>
 
+      {/* Teacher Retake Requests / Action Required Card */}
+      {pendingPrompts.length > 0 && (
+        <div className="bg-amber-50 rounded-2xl border border-amber-200 p-6 shadow-sm space-y-4">
+          <div className="flex items-center gap-2 text-amber-900 font-bold text-lg">
+            <AlertCircle className="w-5 h-5 text-amber-600" />
+            Action Required: Teacher Retake Requests ({pendingPrompts.length})
+          </div>
+          <div className="space-y-3">
+            {pendingPrompts.map(prompt => {
+              const targetCourse = courses.find(c => c.id === prompt.courseId || c.lessons.some(l => l.id === prompt.lessonId || l.quizId === prompt.targetId));
+              const targetLesson = targetCourse?.lessons.find(l => l.id === prompt.lessonId || l.quizId === prompt.targetId);
+
+              return (
+                <div key={prompt.id} className="bg-white p-4 rounded-xl border border-amber-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-bold text-neutral-900">{prompt.targetTitle}</span>
+                      <span className="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">
+                        Requested by Teacher {prompt.teacherName}
+                      </span>
+                    </div>
+                    {prompt.note && (
+                      <p className="text-sm text-neutral-600 italic mt-1">"{prompt.note}"</p>
+                    )}
+                  </div>
+                  {targetCourse && targetLesson ? (
+                    <button
+                      onClick={() => navigate(`/student/courses/${targetCourse.id}/lessons/${targetLesson.id}?retakePromptId=${prompt.id}&mode=quiz`)}
+                      className="px-5 py-2 bg-amber-600 text-white font-bold text-sm rounded-xl hover:bg-amber-700 transition-colors flex items-center gap-2 flex-shrink-0"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      Retake Exam Now
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate('/student/courses')}
+                      className="px-5 py-2 bg-amber-600 text-white font-bold text-sm rounded-xl hover:bg-amber-700 transition-colors flex items-center gap-2 flex-shrink-0"
+                    >
+                      Go to Courses
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
+
         <h3 className="text-lg font-bold text-neutral-800 mb-4">Search Educational Resources</h3>
         <div className="flex items-center gap-2 mb-4">
           <div className="flex-1 relative">

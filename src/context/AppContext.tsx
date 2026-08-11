@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { checkBadges } from '../utils/badge-manager';
 import { initAuth, db } from '../lib/firebase';
-import { collection, doc, getDoc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-import { useFirestoreUsers, useFirestoreCourses } from '../hooks/useFirestore';
+import { collection, doc, getDoc, updateDoc, setDoc, addDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { useFirestoreUsers, useFirestoreCourses, useFirestoreSubmissions, useFirestoreRetakePrompts } from '../hooks/useFirestore';
 import { User as FirebaseAuthUser } from 'firebase/auth';
 
 export type Role = 'student' | 'teacher' | 'parent' | 'admin' | null;
@@ -11,6 +11,8 @@ export interface User {
   id: string;
   name: string;
   role: Role;
+  email?: string;
+  grade?: string;
   avatar?: string;
   photoURL?: string;
   points?: number;
@@ -24,6 +26,7 @@ export interface User {
   learningRecords?: Array<{ lessonId: string; completedAt: string; quizScore?: number }>;
   teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
 }
+
 
 export interface Lesson {
   id: string;
@@ -55,6 +58,53 @@ export interface Quiz {
   questions: QuizQuestion[];
 }
 
+export interface DetailedQuestionResult {
+  id: string;
+  text: string;
+  options: string[];
+  selectedAnswer: number;
+  correctAnswer: number;
+  isCorrect: boolean;
+  explanation?: string;
+}
+
+export interface QuizSubmission {
+  id: string;
+  studentId: string;
+  studentName: string;
+  courseId: string;
+  lessonId: string;
+  quizId: string;
+  quizTitle: string;
+  score: number;
+  correctCount: number;
+  totalQuestions: number;
+  answers: Record<string, number>;
+  questionDetails: DetailedQuestionResult[];
+  adaptivePath: 'remedial' | 'standard' | 'advanced';
+  pointsEarned: number;
+  submittedAt: string;
+  attemptNumber?: number;
+  retakeStatus?: 'none' | 'prompted' | 'completed';
+  retakeNote?: string;
+  teacherFeedback?: string;
+}
+
+export interface RetakePrompt {
+  id: string;
+  studentId: string;
+  teacherId: string;
+  teacherName: string;
+  type: 'quiz' | 'lesson' | 'course';
+  targetId: string; // quizId, lessonId, or courseId
+  courseId?: string;
+  lessonId?: string;
+  targetTitle: string;
+  note?: string;
+  createdAt: string;
+  status: 'pending' | 'completed';
+}
+
 export interface AppContextType {
   currentUser: FirebaseAuthUser | null;
   setCurrentUser: (user: FirebaseAuthUser | null) => void;
@@ -77,6 +127,12 @@ export interface AppContextType {
   messages: any[];
   addLesson: (courseId: string, lesson: Lesson) => void;
   addQuiz: (quizId: string, quiz: Quiz) => void;
+  submissions: QuizSubmission[];
+  retakePrompts: RetakePrompt[];
+  saveQuizSubmission: (submission: Omit<QuizSubmission, 'id'>) => Promise<string>;
+  promptRetake: (prompt: Omit<RetakePrompt, 'id'>) => Promise<void>;
+  updateSubmissionFeedback: (submissionId: string, teacherFeedback: string) => Promise<void>;
+  markRetakeCompleted: (promptId: string) => Promise<void>;
 }
 
 const mockQuizzes: Record<string, Quiz> = {
@@ -104,6 +160,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   
   const users = useFirestoreUsers(!!currentUser);
   const courses = useFirestoreCourses(!!currentUser);
+  const submissions = useFirestoreSubmissions(!!currentUser);
+  const retakePrompts = useFirestoreRetakePrompts(!!currentUser);
 
   useEffect(() => {
     const storedQuizzes = courses.flatMap(course => Object.values(course.quizzes || {}));
@@ -144,7 +202,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Update userProfile if it changed in Firestore
     if (userProfile) {
       const updatedMe = users.find(u => u.id === userProfile.id);
       if (updatedMe && JSON.stringify(updatedMe) !== JSON.stringify(userProfile)) {
@@ -213,8 +270,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         points: updatedPoints,
         level: updatedLevel,
         completedLessons: newCompleted,
-        earnedBadges: newBadges
-        ,learningRecords: arrayUnion({ lessonId, completedAt: new Date().toISOString(), ...(quizScore !== undefined ? { quizScore } : {}) })
+        earnedBadges: newBadges,
+        learningRecords: arrayUnion({ lessonId, completedAt: new Date().toISOString(), ...(quizScore !== undefined ? { quizScore } : {}) })
       });
     }
   };
@@ -224,6 +281,40 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       await updateDoc(doc(db, 'users', userProfile.id), {
         earnedBadges: [...earnedBadges, badgeId]
       });
+    }
+  };
+
+  const saveQuizSubmission = async (submissionData: Omit<QuizSubmission, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'quizSubmissions'), submissionData);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving quiz submission:', e);
+      return '';
+    }
+  };
+
+  const promptRetake = async (promptData: Omit<RetakePrompt, 'id'>) => {
+    try {
+      await addDoc(collection(db, 'retakePrompts'), promptData);
+    } catch (e) {
+      console.error('Error adding retake prompt:', e);
+    }
+  };
+
+  const updateSubmissionFeedback = async (submissionId: string, teacherFeedback: string) => {
+    try {
+      await updateDoc(doc(db, 'quizSubmissions', submissionId), { teacherFeedback });
+    } catch (e) {
+      console.error('Error updating submission feedback:', e);
+    }
+  };
+
+  const markRetakeCompleted = async (promptId: string) => {
+    try {
+      await updateDoc(doc(db, 'retakePrompts', promptId), { status: 'completed' });
+    } catch (e) {
+      console.error('Error marking retake completed:', e);
     }
   };
 
@@ -253,7 +344,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       leaderboard,
       messages: [],
       addLesson,
-      addQuiz
+      addQuiz,
+      submissions,
+      retakePrompts,
+      saveQuizSubmission,
+      promptRetake,
+      updateSubmissionFeedback,
+      markRetakeCompleted,
     }}>
       {children}
     </AppContext.Provider>

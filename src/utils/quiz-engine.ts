@@ -1,19 +1,54 @@
 import { Quiz } from '../context/AppContext';
 
+export interface DetailedQuestionResult {
+  id: string;
+  text: string;
+  options: string[];
+  selectedAnswer: number;
+  correctAnswer: number;
+  isCorrect: boolean;
+  explanation: string;
+}
+
 export interface QuizResult {
   score: number; // 0 to 100
   correctCount: number;
   totalQuestions: number;
   adaptivePath: 'remedial' | 'standard' | 'advanced';
   pointsEarned: number;
+  questionDetails: DetailedQuestionResult[];
 }
 
 export const evaluateQuiz = (quiz: Quiz, answers: Record<string, number>): QuizResult => {
   let correct = 0;
+  const questionDetails: DetailedQuestionResult[] = [];
+
   quiz.questions.forEach((q) => {
-    if (answers[q.id] === q.correctAnswer) {
+    const selected = answers[q.id] !== undefined ? answers[q.id] : -1;
+    const isCorrect = selected === q.correctAnswer;
+    if (isCorrect) {
       correct++;
     }
+
+    const selectedText = selected >= 0 ? q.options[selected] : 'No answer selected';
+    const correctText = q.options[q.correctAnswer] || 'Correct answer';
+
+    let explanation = '';
+    if (isCorrect) {
+      explanation = `Correct! You correctly identified '${correctText}'. Excellent understanding!`;
+    } else {
+      explanation = `Incorrect. You chose '${selectedText}', but the correct answer is '${correctText}'. Review the lesson notes on this concept to reinforce your understanding.`;
+    }
+
+    questionDetails.push({
+      id: q.id,
+      text: q.text,
+      options: q.options,
+      selectedAnswer: selected,
+      correctAnswer: q.correctAnswer,
+      isCorrect,
+      explanation,
+    });
   });
 
   const totalQuestions = quiz.questions.length;
@@ -39,5 +74,6 @@ export const evaluateQuiz = (quiz: Quiz, answers: Record<string, number>): QuizR
     totalQuestions,
     adaptivePath,
     pointsEarned,
+    questionDetails,
   };
 };
