@@ -14,6 +14,16 @@ export interface User {
   role: Role;
   email?: string;
   grade?: string;
+  dateOfBirth?: string; // YYYY-MM-DD
+  age?: number;
+  parentId?: string | null;
+  isParentManaged?: boolean;
+  consent?: {
+    deviceSync: boolean;
+    cameraWellness: boolean;
+    whatsappNotifications: boolean;
+    updatedAt: string;
+  };
   avatar?: string;
   photoURL?: string;
   points?: number;
@@ -27,6 +37,19 @@ export interface User {
   learningRecords?: Array<{ lessonId: string; completedAt: string; quizScore?: number }>;
   teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
 }
+
+export function computeAge(dob: string): number {
+  if (!dob) return 18;
+  const birthDate = new Date(dob);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
+
 
 
 export interface Lesson {
@@ -158,7 +181,11 @@ export interface AppContextType {
   retakePrompts: RetakePrompt[];
   agentEvents: AgentEvent[];
   misconceptionCases: MisconceptionCase[];
+  isMinor: boolean;
+  canAccessSettings: boolean;
+  canAccessVR: boolean;
   saveQuizSubmission: (submission: Omit<QuizSubmission, 'id'>) => Promise<string>;
+
   promptRetake: (prompt: Omit<RetakePrompt, 'id'>) => Promise<void>;
   updateSubmissionFeedback: (submissionId: string, teacherFeedback: string) => Promise<void>;
   markRetakeCompleted: (promptId: string) => Promise<void>;
@@ -377,6 +404,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     .filter(u => u.role === 'student')
     .sort((a, b) => (b.points || 0) - (a.points || 0));
 
+  const userAge = userProfile?.dateOfBirth ? computeAge(userProfile.dateOfBirth) : (userProfile?.age || 18);
+  const isMinor = userProfile?.role === 'student' && userAge < 14;
+  const hasLinkedParent = (userProfile?.parentIds?.length || 0) > 0 || !!userProfile?.parentId;
+  const canAccessSettings = !isMinor || (isMinor && hasLinkedParent);
+  const canAccessVR = !isMinor || (isMinor && hasLinkedParent && userProfile?.consent?.deviceSync === true);
+
   return (
     <AppContext.Provider value={{
       currentUser,
@@ -404,6 +437,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       retakePrompts,
       agentEvents,
       misconceptionCases,
+      isMinor,
+      canAccessSettings,
+      canAccessVR,
       saveQuizSubmission,
       promptRetake,
       updateSubmissionFeedback,
@@ -411,6 +447,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       logAgentEvent,
       saveMisconceptionCase,
     }}>
+
 
       {children}
     </AppContext.Provider>

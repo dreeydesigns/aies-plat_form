@@ -81,21 +81,43 @@ export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
 
-export const emailSignUp = async (email: string, password: string, role: string, linkCode?: string): Promise<{user: User, userData: any}> => {
+export const emailSignUp = async (email: string, password: string, role: string, linkCode?: string, dateOfBirth?: string): Promise<{user: User, userData: any}> => {
   const result = await createUserWithEmailAndPassword(auth, email, password);
   const uid = result.user.uid;
-  const userData = {
+
+  let age: number | undefined = undefined;
+  if (dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+  }
+
+  const userData: any = {
     name: 'New User',
     role: role,
+    email: email,
+    dateOfBirth: dateOfBirth || undefined,
+    age: age,
+    isParentManaged: role === 'student' && age !== undefined && age < 14,
+    consent: {
+      deviceSync: false,
+      cameraWellness: false,
+      whatsappNotifications: false,
+      updatedAt: new Date().toISOString()
+    },
     avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${uid}`,
     points: role === 'student' ? 0 : undefined,
     level: role === 'student' ? 1 : undefined,
     streak: role === 'student' ? 0 : undefined,
     linkCode: role === 'student' ? (linkCode || Math.random().toString(36).substring(2, 8).toUpperCase()) : undefined,
+    parentIds: [],
+    childIds: []
   };
-  
-  
+
   await setDoc(doc(db, 'users', uid), userData);
-  
+
   return { user: result.user, userData };
 };
+

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../context/AppContext';
-import { Copy, Link, Settings } from 'lucide-react';
+import { Copy, Link, Settings, ShieldAlert } from 'lucide-react';
 import PreferencesPanel from '../../components/PreferencesPanel';
 import DeviceSync from '../../components/DeviceSync';
 import ProfilePictureCapture from '../../components/shared/ProfilePictureCapture';
 
 export default function StudentSettings() {
-  const { currentUser, userProfile } = useAppContext();
+  const { currentUser, userProfile, isMinor, canAccessSettings } = useAppContext();
   const [copied, setCopied] = useState(false);
 
   if (!currentUser || !userProfile) return null;
@@ -28,6 +28,18 @@ export default function StudentSettings() {
         </div>
       </div>
 
+      {isMinor && !canAccessSettings && (
+        <div className="bg-purple-50 border border-purple-200 p-6 rounded-3xl shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-purple-900 font-bold text-lg">
+            <ShieldAlert className="w-6 h-6 text-purple-600" />
+            Parent-Managed Settings Notice (Under 14)
+          </div>
+          <p className="text-sm text-purple-800 leading-relaxed">
+            In compliance with student privacy laws, advanced device settings and VR features for learners under 14 are managed by a linked parent or guardian. Please share your Link Code below with your parent so they can configure your device permissions.
+          </p>
+        </div>
+      )}
+
       <ProfilePictureCapture />
 
       <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm max-w-2xl">
@@ -36,8 +48,8 @@ export default function StudentSettings() {
             <Link className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-neutral-900">Parent / Guardian Link</h3>
-            <p className="text-neutral-500 text-sm">Share this code with your parents so they can track your progress.</p>
+            <h3 className="text-xl font-bold text-neutral-900">Parent / Guardian Link Code</h3>
+            <p className="text-neutral-500 text-sm">Share this code with your parents so they can manage settings and track your progress.</p>
           </div>
         </div>
 
@@ -60,16 +72,15 @@ export default function StudentSettings() {
 
         {userProfile.parentIds && userProfile.parentIds.length > 0 && (
           <div className="mt-8 pt-8 border-t border-neutral-100">
-            <h4 className="font-bold text-neutral-900 mb-4">Linked Accounts</h4>
+            <h4 className="font-bold text-neutral-900 mb-4">Linked Parent Accounts</h4>
             <div className="space-y-2">
               {userProfile.parentIds.map((pid, i) => (
                 <div key={pid} className="flex items-center gap-3 p-3 bg-neutral-50 border border-neutral-100 rounded-lg">
                   <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center font-bold text-neutral-600">
-                    {/* Just placeholder for parent name if we don't have it joined, or we can fetch it. For now just show ID or index */}
                     {i + 1}
                   </div>
                   <div>
-                    <p className="font-bold text-neutral-900">Parent Account</p>
+                    <p className="font-bold text-neutral-900">Parent Account Verified</p>
                     <p className="text-xs text-neutral-500">ID: {pid.substring(0,8)}</p>
                   </div>
                 </div>
@@ -79,8 +90,17 @@ export default function StudentSettings() {
         )}
       </div>
 
-      <PreferencesPanel />
-      <DeviceSync />
+      {/* Render Preferences & Device Sync only if permitted */}
+      {canAccessSettings ? (
+        <>
+          <PreferencesPanel />
+          <DeviceSync />
+        </>
+      ) : (
+        <div className="p-6 bg-white rounded-2xl border border-neutral-200 text-center text-neutral-500 text-sm">
+          Device Sync & Sensor settings are locked for student accounts under 14 until verified by a linked parent account.
+        </div>
+      )}
     </div>
   );
 }
