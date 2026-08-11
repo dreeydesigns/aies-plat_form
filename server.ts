@@ -67,6 +67,15 @@ async function startServer() {
     }
   });
 
+  app.post("/api/gemini/tutor", async (req, res) => {
+    try {
+      const handler = (await import("./api/gemini/tutor.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Gemini tutor error:", err);
+      res.status(500).json({ error: err.message || "Tutor API error" });
+    }
+  });
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {

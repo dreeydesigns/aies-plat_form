@@ -166,6 +166,8 @@ function AppContent() {
   );
 }
 
+import { AgeTierProvider } from './context/AgeTierContext';
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -174,10 +176,12 @@ export default function App() {
           <KeyboardShortcutsProvider>
             <ToastProvider>
               <AppProvider>
-                <NetworkBanner />
-                <Router>
-                  <AppContent />
-                </Router>
+                <AgeTierProvider>
+                  <NetworkBanner />
+                  <Router>
+                    <AppContent />
+                  </Router>
+                </AgeTierProvider>
               </AppProvider>
             </ToastProvider>
           </KeyboardShortcutsProvider>
@@ -186,3 +190,4 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { CheckCircle, XCircle, Trophy, ArrowRight, BookOpen, AlertTriangle, HelpCircle, History, Sparkles, RefreshCw } from 'lucide-react';
+import { CheckCircle, XCircle, Trophy, ArrowRight, BookOpen, AlertTriangle, HelpCircle, History, Sparkles, RefreshCw, Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { evaluateQuiz, QuizResult } from '../../utils/quiz-engine';
 import LessonContent from '../../components/shared/LessonContent';
+import { AiTutorPanel } from '../../components/student/AiTutorPanel';
 
 export default function LessonView() {
   const { courseId, lessonId } = useParams();
@@ -28,6 +29,8 @@ export default function LessonView() {
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTutorOpen, setIsTutorOpen] = useState(false);
+
 
   const course = courses.find(c => c.id === courseId);
   const lesson = course?.lessons.find(l => l.id === lessonId);
@@ -390,6 +393,27 @@ export default function LessonView() {
           </div>
         </motion.div>
       )}
+
+      {/* Floating AI Tutor Toggle Button */}
+      {!isTutorOpen && (
+        <button
+          onClick={() => setIsTutorOpen(true)}
+          className="fixed bottom-6 right-6 z-40 px-5 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-full shadow-2xl flex items-center gap-2.5 text-sm ring-4 ring-purple-100 transition-all hover:scale-105"
+        >
+          <Bot className="w-5 h-5 text-yellow-300" />
+          <span>Ask AI Tutor Hadithi</span>
+          <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
+        </button>
+      )}
+
+      {/* Mounted AI Tutor Panel */}
+      <AiTutorPanel
+        lessonTitle={lesson.title}
+        lessonContent={lesson.content}
+        isOpen={isTutorOpen}
+        onClose={() => setIsTutorOpen(false)}
+      />
     </div>
   );
 }
+
