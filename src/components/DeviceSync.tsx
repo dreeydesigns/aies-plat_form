@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Bluetooth, Glasses, Watch, CircleDot, Wifi, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Bluetooth, Glasses, Watch, CircleDot, Wifi, CheckCircle2, AlertCircle, FileUp } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -20,8 +20,8 @@ import { useLanguage } from '../context/LanguageContext';
  *
  * Smart glasses and proprietary smart-ring apps (e.g. Oura) do not expose a
  * public browser API — those require a native mobile app and the vendor's
- * own SDK, which is a real Phase 2 build, not something fakeable here. They
- * are shown as "Coming soon" rather than pretending to connect.
+ * own SDK. This app supports importing a companion-app activity export rather
+ * than pretending it can directly pair with proprietary glasses.
  */
 
 type ConnStatus = 'idle' | 'connecting' | 'connected' | 'unsupported' | 'error';
@@ -35,9 +35,17 @@ export default function DeviceSync() {
   const [lastReadingAt, setLastReadingAt] = useState<Date | null>(null);
   const [xrStatus, setXrStatus] = useState<ConnStatus>('idle');
   const [error, setError] = useState('');
+  const [glassesStatus, setGlassesStatus] = useState('');
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
   const disconnectRef = useRef<(() => void) | null>(null);
+  const glassesFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => () => disconnectRef.current?.(), []);
+  useEffect(() => {
+    const updateStatus = () => setIsOnline(navigator.onLine);
+    window.addEventListener('online', updateStatus); window.addEventListener('offline', updateStatus);
+    return () => { window.removeEventListener('online', updateStatus); window.removeEventListener('offline', updateStatus); };
+  }, []);
 
   const logDeviceData = async (source: string, payload: Record<string, any>) => {
     if (!currentUser || !userProfile?.id) return;
@@ -135,6 +143,20 @@ export default function DeviceSync() {
     }
   };
 
+  const importGlassesSession = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setError(''); setGlassesStatus('Reading companion-app export...');
+    try {
+      if (file.size > 1_000_000) throw new Error('Choose a JSON export smaller than 1 MB.');
+      const data = JSON.parse(await file.text());
+      const session = { sessionId: String(data.sessionId || data.id || file.name), activityTitle: String(data.activityTitle || data.title || 'Smart glasses activity'), startedAt: data.startedAt || null, endedAt: data.endedAt || null };
+      await logDeviceData('smart_glasses_session_import', { ...session, importedFrom: file.name });
+      setGlassesStatus(`Imported ${session.activityTitle}.`);
+    } catch (e: any) { setGlassesStatus(''); setError(e?.message || 'That file is not a valid smart-glasses activity export.'); }
+    finally { if (glassesFileRef.current) glassesFileRef.current.value = ''; }
+  };
+
   return (
     <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm max-w-2xl">
       <div className="flex items-center gap-4 mb-2">
@@ -205,27 +227,28 @@ export default function DeviceSync() {
           )}
         </div>
 
-        {/* Honest roadmap items — no public web API exists for these yet */}
-        <div className="flex items-center justify-between p-4 border border-dashed border-neutral-200 rounded-xl opacity-60">
+        <div className="flex items-center justify-between gap-4 p-4 border border-neutral-200 rounded-xl">
           <div className="flex items-center gap-3">
-            <Glasses className="w-5 h-5 text-neutral-400" />
+            <Glasses className="w-5 h-5 text-neutral-500" />
             <div>
-              <p className="font-semibold text-neutral-600">Smart Glasses</p>
-              <p className="text-xs text-neutral-400">Requires a native companion app and vendor SDK — Phase 2 roadmap.</p>
+              <p className="font-semibold text-neutral-800">Smart Glasses companion import</p>
+              <p className="text-xs text-neutral-500">Import a JSON activity export from the glasses companion app. Direct browser pairing is not provided by proprietary glasses SDKs.</p>
+              {glassesStatus && <p className="text-xs text-emerald-700 mt-1">{glassesStatus}</p>}
             </div>
           </div>
-          <span className="text-xs font-bold text-neutral-400 uppercase">Coming soon</span>
+          <input ref={glassesFileRef} onChange={importGlassesSession} accept="application/json,.json" type="file" className="hidden" id="glasses-session-import" />
+          <label htmlFor="glasses-session-import" className="px-4 py-2 bg-neutral-900 text-white text-sm font-bold rounded-lg cursor-pointer whitespace-nowrap"><FileUp className="inline w-4 h-4 mr-1" />Import JSON</label>
         </div>
 
-        <div className="flex items-center justify-between p-4 border border-dashed border-neutral-200 rounded-xl opacity-60">
+        <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-xl">
           <div className="flex items-center gap-3">
-            <Wifi className="w-5 h-5 text-neutral-400" />
+            <Wifi className={`w-5 h-5 ${isOnline ? 'text-emerald-600' : 'text-amber-600'}`} />
             <div>
-              <p className="font-semibold text-neutral-600">Wi-Fi Sync</p>
-              <p className="text-xs text-neutral-400">Already on — this app syncs live over your network via Firebase whenever you're online.</p>
+              <p className="font-semibold text-neutral-800">AIES cloud sync</p>
+              <p className="text-xs text-neutral-500">{isOnline ? 'Online - device activity and learning records sync automatically through AIES.' : 'Offline - new device activity will not sync until this browser reconnects.'}</p>
             </div>
           </div>
-          <CheckCircle2 className="w-5 h-5 text-neutral-300" />
+          {isOnline ? <CheckCircle2 className="w-5 h-5 text-emerald-600" /> : <AlertCircle className="w-5 h-5 text-amber-600" />}
         </div>
       </div>
     </div>
