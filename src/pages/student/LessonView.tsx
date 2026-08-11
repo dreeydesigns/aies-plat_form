@@ -88,11 +88,36 @@ export default function LessonView() {
       retakeStatus: retakePromptId ? 'completed' : 'none'
     });
 
+    // Log misconception events to Collective Intelligence (Pillar K)
+    const { recordStudentMisconception, logRemediationOutcome } = await import('../../utils/collective-intelligence');
+
+    for (const qDetail of result.questionDetails) {
+      if (!qDetail.isCorrect) {
+        await recordStudentMisconception({
+          studentId: userProfile.id,
+          studentName: userProfile.name,
+          concept: lesson.title,
+          subject: course.title,
+          misconceptionDescription: `Selected incorrect option "${qDetail.options[qDetail.selectedAnswer]}" instead of correct "${qDetail.options[qDetail.correctAnswer]}" on: "${qDetail.text}"`
+        });
+      }
+    }
+
+    if (attemptNumber > 1 && result.score >= 60) {
+      await logRemediationOutcome({
+        studentId: userProfile.id,
+        concept: lesson.title,
+        improved: true,
+        strategyUsed: 'Socratic Step-by-Step Breakdown'
+      });
+    }
+
     if (retakePromptId) {
       await markRetakeCompleted(retakePromptId);
     }
 
     if (result.score >= 60 && !isCompleted) {
+
       completeLesson(lesson.id, result.pointsEarned, result.score);
     }
 

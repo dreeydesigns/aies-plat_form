@@ -77,6 +77,17 @@ async function startServer() {
     }
   });
 
+  app.post("/api/gemini/orchestrator", async (req, res) => {
+    try {
+      const handler = (await import("./api/gemini/orchestrator.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Gemini orchestrator error:", err);
+      res.status(500).json({ error: err.message || "Orchestrator API error" });
+    }
+  });
+
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

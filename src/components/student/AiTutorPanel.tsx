@@ -58,24 +58,42 @@ export function AiTutorPanel({ lessonTitle, lessonContent, isOpen, onClose }: Ai
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/gemini/tutor', {
+      // 1. Fetch best remediation from Collective Case-Memory
+      const { getBestRemediationStrategy, logBlackboardEvent } = await import('../../utils/collective-intelligence');
+      const caseMemory = await getBestRemediationStrategy(lessonTitle);
+
+      // 2. Call Orchestrator API
+      const response = await fetch('/api/gemini/orchestrator', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          query,
+          eventType: 'question_asked',
+          studentName: 'Learner',
+          concept: lessonTitle,
+          userQuery: query,
           lessonTitle,
           lessonContent,
-          history: messages.slice(-6).map(m => ({ role: m.sender, text: m.text }))
+          priorCaseMemory: caseMemory
         })
       });
 
       const data = await response.json();
       if (data.error) throw new Error(data.error);
 
+      // 3. Log event to Shared Blackboard
+      await logBlackboardEvent({
+        type: 'tutor_response',
+        studentId: 'current_student',
+        payload: { concept: lessonTitle, strategy: data.recommendedStrategy, confidence: data.confidenceScore },
+        producedBy: 'tutor',
+        confidenceScore: data.confidenceScore || 0.85,
+        createdAt: new Date().toISOString()
+      });
+
       const tutorMsg: ChatMessage = {
         id: `t-${Date.now()}`,
         sender: 'tutor',
-        text: data.answer || 'I am thinking about this concept. Let us look back at the lesson key ideas.',
+        text: data.response || 'I am thinking about this concept. Let us look back at the lesson key ideas.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
@@ -94,6 +112,7 @@ export function AiTutorPanel({ lessonTitle, lessonContent, isOpen, onClose }: Ai
       setIsLoading(false);
     }
   };
+
 
   const suggestions = isKids ? [
     'Explain this in a fun story!',

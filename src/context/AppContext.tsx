@@ -2,8 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { checkBadges } from '../utils/badge-manager';
 import { initAuth, db } from '../lib/firebase';
 import { collection, doc, getDoc, updateDoc, setDoc, addDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-import { useFirestoreUsers, useFirestoreCourses, useFirestoreSubmissions, useFirestoreRetakePrompts } from '../hooks/useFirestore';
+import { useFirestoreUsers, useFirestoreCourses, useFirestoreSubmissions, useFirestoreRetakePrompts, useFirestoreAgentEvents, useFirestoreMisconceptionCases } from '../hooks/useFirestore';
 import { User as FirebaseAuthUser } from 'firebase/auth';
+
 
 export type Role = 'student' | 'teacher' | 'parent' | 'admin' | null;
 
@@ -105,6 +106,32 @@ export interface RetakePrompt {
   status: 'pending' | 'completed';
 }
 
+export interface AgentEvent {
+  id: string;
+  type: 'misconception_flagged' | 'remediation_attempted' | 'outcome_logged' | 'question_asked' | 'tutor_response';
+  studentId: string;
+  studentName?: string;
+  payload: Record<string, any>;
+  producedBy: 'orchestrator' | 'tutor' | 'diagnostician' | 'pedagogyResearch' | 'contentCurator' | 'grading';
+  consumedBy?: string[];
+  confidenceScore?: number; // 0.0 to 1.0
+  createdAt: string;
+}
+
+export interface MisconceptionCase {
+  id: string;
+  concept: string;
+  subject: string;
+  gradeLevel: string;
+  misconceptionDescription: string;
+  remediationsAttempted: Array<{
+    strategy: string;
+    attempts: number;
+    successCount: number;
+  }>;
+  updatedAt: string;
+}
+
 export interface AppContextType {
   currentUser: FirebaseAuthUser | null;
   setCurrentUser: (user: FirebaseAuthUser | null) => void;
@@ -129,11 +156,16 @@ export interface AppContextType {
   addQuiz: (quizId: string, quiz: Quiz) => void;
   submissions: QuizSubmission[];
   retakePrompts: RetakePrompt[];
+  agentEvents: AgentEvent[];
+  misconceptionCases: MisconceptionCase[];
   saveQuizSubmission: (submission: Omit<QuizSubmission, 'id'>) => Promise<string>;
   promptRetake: (prompt: Omit<RetakePrompt, 'id'>) => Promise<void>;
   updateSubmissionFeedback: (submissionId: string, teacherFeedback: string) => Promise<void>;
   markRetakeCompleted: (promptId: string) => Promise<void>;
+  logAgentEvent: (event: Omit<AgentEvent, 'id'>) => Promise<string>;
+  saveMisconceptionCase: (c: Omit<MisconceptionCase, 'id'>) => Promise<string>;
 }
+
 
 const mockQuizzes: Record<string, Quiz> = {
   'q1': {
@@ -162,6 +194,29 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const courses = useFirestoreCourses(!!currentUser);
   const submissions = useFirestoreSubmissions(!!currentUser);
   const retakePrompts = useFirestoreRetakePrompts(!!currentUser);
+  const agentEvents = useFirestoreAgentEvents(!!currentUser);
+  const misconceptionCases = useFirestoreMisconceptionCases(!!currentUser);
+
+  const logAgentEvent = async (eventData: Omit<AgentEvent, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'agentEvents'), eventData);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error logging agent event:', e);
+      return '';
+    }
+  };
+
+  const saveMisconceptionCase = async (caseData: Omit<MisconceptionCase, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'misconceptionCases'), caseData);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving misconception case:', e);
+      return '';
+    }
+  };
+
 
   useEffect(() => {
     const storedQuizzes = courses.flatMap(course => Object.values(course.quizzes || {}));
@@ -347,11 +402,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addQuiz,
       submissions,
       retakePrompts,
+      agentEvents,
+      misconceptionCases,
       saveQuizSubmission,
       promptRetake,
       updateSubmissionFeedback,
       markRetakeCompleted,
+      logAgentEvent,
+      saveMisconceptionCase,
     }}>
+
       {children}
     </AppContext.Provider>
   );

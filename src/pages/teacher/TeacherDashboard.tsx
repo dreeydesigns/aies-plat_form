@@ -11,7 +11,8 @@ type Reading = { userId: string; bpm: number; recordedAt?: Timestamp; clientReco
 
 export default function TeacherDashboard() {
   const navigate = useNavigate();
-  const { users, courses, submissions, retakePrompts } = useAppContext();
+  const { users, courses, submissions, retakePrompts, agentEvents = [], misconceptionCases = [] } = useAppContext();
+
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState('');
   const [searchSources, setSearchSources] = useState<any[]>([]);
@@ -144,6 +145,90 @@ export default function TeacherDashboard() {
           </div>
         )}
       </div>
+
+      {/* MULTI-AGENT SHARED BLACKBOARD & COLLECTIVE CASE-MEMORY FEED */}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Shared Blackboard Real-time Event Stream */}
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+              <Activity className="w-5 h-5 text-indigo-600" />
+              Shared Blackboard Event Stream (`agentEvents`)
+            </h3>
+            <span className="text-xs font-bold text-indigo-700 bg-indigo-100 px-2.5 py-0.5 rounded-full">
+              Pillar K Substrate
+            </span>
+          </div>
+
+          {agentEvents.length === 0 ? (
+            <p className="text-xs text-neutral-400 italic py-4">No agent blackboard events logged yet today.</p>
+          ) : (
+            <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+              {agentEvents.slice(0, 5).map((evt) => (
+                <div key={evt.id} className="p-3 rounded-2xl border border-neutral-200 bg-neutral-50/70 flex items-start justify-between text-xs">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-indigo-900 capitalize">{evt.producedBy} Agent</span>
+                      <span className="text-[10px] bg-neutral-200 text-neutral-700 font-mono px-2 py-0.5 rounded">
+                        {evt.type}
+                      </span>
+                    </div>
+                    <p className="text-neutral-700 mt-1 font-medium">{evt.payload?.concept || evt.payload?.query || 'Agent interaction logged'}</p>
+                    {evt.payload?.strategy && <p className="text-[10px] text-neutral-500 italic mt-0.5">Strategy: {evt.payload.strategy}</p>}
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${
+                    (evt.confidenceScore || 1) < 0.70 ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'
+                  }`}>
+                    {(evt.confidenceScore || 1) < 0.70 ? 'Low Confidence Alert' : `Conf: ${Math.round((evt.confidenceScore || 0.85) * 100)}%`}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Collective Case-Memory Store */}
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-purple-600" />
+              Collective Case-Memory (`misconceptionCases`)
+            </h3>
+            <span className="text-xs font-bold text-purple-700 bg-purple-100 px-2.5 py-0.5 rounded-full">
+              Cross-Student Memory
+            </span>
+          </div>
+
+          {misconceptionCases.length === 0 ? (
+            <p className="text-xs text-neutral-400 italic py-4">Case-memory store initialized. Remediation success records will accumulate here.</p>
+          ) : (
+            <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+              {misconceptionCases.slice(0, 5).map((mc) => {
+                const topRem = mc.remediationsAttempted?.[0];
+                const successPct = topRem ? Math.round((topRem.successCount / Math.max(1, topRem.attempts)) * 100) : 0;
+                return (
+                  <div key={mc.id} className="p-3 rounded-2xl border border-neutral-200 bg-neutral-50/70 space-y-1 text-xs">
+                    <div className="flex justify-between items-start">
+                      <span className="font-bold text-neutral-900">{mc.concept}</span>
+                      <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">
+                        Success Rate: {successPct}%
+                      </span>
+                    </div>
+                    <p className="text-neutral-600">{mc.misconceptionDescription}</p>
+                    {topRem && (
+                      <p className="text-[10px] text-purple-900 font-semibold mt-1">
+                        Top Strategy: "{topRem.strategy}" ({topRem.successCount}/{topRem.attempts} resolved)
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
 
       {/* Educational Grounded Search Assistant */}
       <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm">
