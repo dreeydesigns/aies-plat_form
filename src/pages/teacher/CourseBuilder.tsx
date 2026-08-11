@@ -184,7 +184,13 @@ export default function CourseBuilder() {
         if (lesson.quiz && quizId) {
           generatedQuizzes[quizId] = { id: quizId, ...lesson.quiz, questions: lesson.quiz.questions.map((question, questionIndex) => ({ ...question, id: `${quizId}_${questionIndex}` })) };
         }
-        return { id: `l_${Date.now()}_${index}`, title: lesson.title, content: lesson.content, type: lesson.type, quizId };
+        return {
+          id: `l_${Date.now()}_${index}`,
+          title: lesson.title,
+          content: lesson.content,
+          type: lesson.type,
+          ...(quizId ? { quizId } : {}),
+        };
       });
       const courseData = { title: generated.title, description: generated.description, lessons, quizzes: generatedQuizzes, sourceDocument: sourceFile.name };
       const ref = await addDoc(collection(db, 'courses'), courseData);
