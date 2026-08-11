@@ -19,33 +19,12 @@ export interface GeneratedCourse {
   lessons: Array<{ title: string; content: string; type: 'reading' | 'video' | 'vr' | 'quiz'; quiz: GeneratedQuiz | null }>;
 }
 
-export async function generateCourseFromDocument(file: File, brief: CurriculumBrief, userId: string): Promise<GeneratedCourse> {
-  if (file.size > 10_000_000) throw new Error('Upload a document smaller than 10 MB.');
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  let documentPayload: { name: string; mimeType: string; sourceUrl?: string; base64?: string } = { name: file.name, mimeType: file.type };
-  try {
-    const storageRef = ref(storage, `course-sources/${userId}/${Date.now()}_${safeName}`);
-    await uploadBytes(storageRef, file, { contentType: file.type });
-    documentPayload.sourceUrl = await getDownloadURL(storageRef);
-  } catch (storageError: any) {
-    // A small document can still be processed when a project's Storage bucket
-    // is temporarily unavailable. Larger files need Storage to avoid Vercel's
-    // request-size limit.
-    if (file.size > 2_500_000) {
-      throw new Error('Firebase Storage is unavailable. Enable Firebase Storage for this project, then try again.');
-    }
-    const base64 = await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = () => reject(new Error('Could not read the selected document.'));
-      reader.onload = () => resolve(String(reader.result).split(',')[1]);
-      reader.readAsDataURL(file);
-    });
-    documentPayload.base64 = base64;
-  }
-  const response = await fetch('/api/generate-course', {
+export async function generateCourseFromDocument(file: File, brief: CurriculumBrief, _userId: string): Promise<GeneratedCourse> {
+  if (file.size > 4_000_000) throw new Error('Upload a document smaller than 4 MB. This free route does not require Firebase Storage.');
+  const response = await fetch('/api/generate-course-upload', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ document: documentPayload, brief }),
+    headers: { 'Content-Type': 'application/octet-stream', 'x-document-mime': file.type, 'x-curriculum-brief': btoa(unescape(encodeURIComponent(JSON.stringify(brief)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') },
+    body: file,
   });
   const raw = await response.text();
   let data: any;
@@ -53,5 +32,3 @@ export async function generateCourseFromDocument(file: File, brief: CurriculumBr
   if (!response.ok) throw new Error(data.error || 'Course generation failed.');
   return data as GeneratedCourse;
 }
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from './firebase';

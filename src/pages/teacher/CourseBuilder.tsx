@@ -386,7 +386,7 @@ export default function CourseBuilder() {
         <p className="mt-1 text-sm text-neutral-500">Upload a PDF, DOCX, or PPTX, then answer seven questions. AIES creates sequenced lessons and a final assessment from your source material.</p>
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
           <label className="md:col-span-2 block">
-            <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 10 MB)</span>
+            <span className="block text-sm font-medium text-neutral-700 mb-2">Source document (PDF, DOCX, or PPTX; max 4 MB)</span>
             <input type="file" accept=".pdf,.docx,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation" onChange={event => setSourceFile(event.target.files?.[0] || null)} className="block w-full text-sm" />
           </label>
           {curriculumQuestions.map(question => <label key={question.key} className="block"><span className="block text-sm font-medium text-neutral-700 mb-1">{question.label}</span><input value={brief[question.key]} onChange={event => setBrief(current => ({ ...current, [question.key]: event.target.value }))} placeholder={question.placeholder} className="w-full px-3 py-2 rounded-lg border border-neutral-300" /></label>)}
