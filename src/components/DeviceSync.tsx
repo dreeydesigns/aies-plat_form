@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Bluetooth, Glasses, Watch, CircleDot, Wifi, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { db } from '../lib/firebase';
@@ -32,8 +32,12 @@ export default function DeviceSync() {
   const [btStatus, setBtStatus] = useState<ConnStatus>('idle');
   const [btDeviceName, setBtDeviceName] = useState<string>('');
   const [btHeartRate, setBtHeartRate] = useState<number | null>(null);
+  const [lastReadingAt, setLastReadingAt] = useState<Date | null>(null);
   const [xrStatus, setXrStatus] = useState<ConnStatus>('idle');
   const [error, setError] = useState('');
+  const disconnectRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => () => disconnectRef.current?.(), []);
 
   const logDeviceData = async (source: string, payload: Record<string, any>) => {
     if (!currentUser || !userProfile?.id) return;
@@ -42,6 +46,7 @@ export default function DeviceSync() {
         userId: userProfile.id,
         source,
         payload,
+        clientRecordedAt: new Date().toISOString(),
         recordedAt: serverTimestamp(),
       });
     } catch (e) {
@@ -67,15 +72,32 @@ export default function DeviceSync() {
       const service = await server.getPrimaryService('heart_rate');
       const characteristic = await service.getCharacteristic('heart_rate_measurement');
       await characteristic.startNotifications();
-      characteristic.addEventListener('characteristicvaluechanged', (event: any) => {
+      const onHeartRateChanged = (event: any) => {
         const value = event.target.value;
         // Standard BLE heart-rate measurement parsing (flags byte + uint8/uint16 bpm)
+        if (!value || value.byteLength < 2) return;
         const flags = value.getUint8(0);
         const rate16 = (flags & 0x1) !== 0;
+        if (rate16 && value.byteLength < 3) return;
         const bpm = rate16 ? value.getUint16(1, true) : value.getUint8(1);
+        // Reject malformed packets rather than turning them into classroom data.
+        if (!Number.isFinite(bpm) || bpm < 20 || bpm > 240) return;
         setBtHeartRate(bpm);
-        logDeviceData('bluetooth_heart_rate', { bpm, deviceName: device.name });
-      });
+        setLastReadingAt(new Date());
+        logDeviceData('bluetooth_heart_rate', {
+          bpm,
+          deviceName: device.name || 'Paired device',
+          measurementFormat: rate16 ? 'uint16' : 'uint8',
+        });
+      };
+      characteristic.addEventListener('characteristicvaluechanged', onHeartRateChanged);
+      const onDisconnected = () => setBtStatus('idle');
+      device.addEventListener('gattserverdisconnected', onDisconnected);
+      disconnectRef.current = () => {
+        characteristic.removeEventListener('characteristicvaluechanged', onHeartRateChanged);
+        device.removeEventListener('gattserverdisconnected', onDisconnected);
+        if (device.gatt?.connected) device.gatt.disconnect();
+      };
       setBtStatus('connected');
     } catch (e: any) {
       console.error(e);
@@ -141,7 +163,7 @@ export default function DeviceSync() {
               <p className="font-semibold text-neutral-800">Smartwatch / Smart Ring (Bluetooth)</p>
               <p className="text-xs text-neutral-500">
                 {btStatus === 'connected'
-                  ? `Connected: ${btDeviceName}${btHeartRate ? ` — ${btHeartRate} bpm` : ''}`
+                  ? `Connected: ${btDeviceName}${btHeartRate ? ` - ${btHeartRate} bpm` : ''}${lastReadingAt ? ` (received ${lastReadingAt.toLocaleTimeString()})` : ''}`
                   : 'Pairs with any BLE device broadcasting a standard Heart Rate service.'}
               </p>
             </div>

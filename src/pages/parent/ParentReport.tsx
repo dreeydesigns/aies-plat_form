@@ -24,7 +24,8 @@ export default function ParentReport() {
 
   const completed = student.completedLessons || [];
   
-  // Calculate some dummy history
+  // Each row is based only on a completed-lesson record. Completion timestamps
+  // and quiz results are not stored in this schema, so the report does not invent them.
   const history = completed.map((lessonId, i) => {
     // Find the course
     const course = courses.find(c => c.lessons.some(l => l.id === lessonId));
@@ -32,10 +33,8 @@ export default function ParentReport() {
     
     return {
       id: lessonId,
-      date: new Date(Date.now() - (completed.length - i) * 86400000).toLocaleDateString(),
       course: course?.title || 'Unknown Course',
       lesson: lesson?.title || 'Unknown Module',
-      score: 80 + Math.floor(Math.random() * 20),
     };
   }).reverse();
 
@@ -126,8 +125,8 @@ export default function ParentReport() {
                     <p className="text-sm text-neutral-500">{h.course}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-neutral-900">{h.score}% Score</p>
-                    <p className="text-sm text-neutral-500">{h.date}</p>
+                    <p className="font-bold text-emerald-700">Completed</p>
+                    <p className="text-sm text-neutral-500">Completion date and quiz score were not recorded.</p>
                   </div>
                 </div>
               ))}
