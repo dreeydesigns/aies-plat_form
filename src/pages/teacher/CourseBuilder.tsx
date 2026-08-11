@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext, Course, Lesson } from '../../context/AppContext';
-import { Plus, Save, PlayCircle, FileText, HelpCircle, CheckCircle, Trash2, GripVertical, Layers, Video, BookOpen } from 'lucide-react';
+import { Plus, Save, PlayCircle, FileText, HelpCircle, CheckCircle, Trash2, GripVertical, Layers, Video, BookOpen, Eye } from 'lucide-react';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
@@ -9,6 +9,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { addDoc, collection, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { CurriculumBrief, generateCourseFromDocument } from '../../lib/courseAi';
+import LessonContent from '../../components/shared/LessonContent';
+
 
 const curriculumQuestions: Array<{ key: keyof CurriculumBrief; label: string; placeholder: string }> = [
   { key: 'learnerAge', label: '1. Learner age range', placeholder: 'e.g. 13-15 years' },
@@ -59,6 +61,7 @@ export default function CourseBuilder() {
   const [newLessonTitle, setNewLessonTitle, clearLessonTitle] = useAutoSave('aies_draft_lesson_title', '');
   const [newLessonContent, setNewLessonContent, clearLessonContent] = useAutoSave('aies_draft_lesson_content', '');
   const [newLessonType, setNewLessonType, clearLessonType] = useAutoSave('aies_draft_lesson_type', 'text');
+  const [editorMode, setEditorMode] = useState<'write' | 'preview'>('write');
   
   // Quiz Builder State
   const [quizQuestions, setQuizQuestions, clearQuizQuestions] = useAutoSave('aies_draft_quiz_questions', [{ text: '', options: ['', '', '', ''], correctAnswer: 0 }]);
@@ -140,6 +143,7 @@ export default function CourseBuilder() {
       quizId = `q${Date.now()}`;
       addQuiz(quizId, {
         id: quizId,
+        title: newLessonTitle || 'Knowledge Check',
         questions: quizQuestions.map((q, i) => ({
           id: `q${i}`,
           text: q.text || `Question ${i + 1}`,
@@ -343,15 +347,48 @@ export default function CourseBuilder() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">{newLessonType === 'video' ? 'Video URL or viewing instructions' : newLessonType === 'quiz' ? 'Quiz introduction for students' : 'Article content (headings and bullet lists supported)'}</label>
-              <textarea 
-                rows={8}
-                value={newLessonContent}
-                onChange={e => setNewLessonContent(e.target.value)}
-                placeholder={newLessonType === 'video' ? 'Paste a secure video URL or write clear viewing instructions...' : newLessonType === 'quiz' ? 'Explain what learners will demonstrate in this quiz...' : 'Start with ## What you will learn, then use short paragraphs and bullet lists...'}
-                className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-neutral-50"
-              ></textarea>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium text-neutral-700">
+                  {newLessonType === 'video' ? 'Video URL or viewing instructions' : newLessonType === 'quiz' ? 'Quiz introduction for students' : 'Article content (headings, lists, and LaTeX math supported)'}
+                </label>
+                <div className="flex items-center gap-1 bg-neutral-100 p-1 rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => setEditorMode('write')}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${editorMode === 'write' ? 'bg-white text-emerald-700 shadow-xs' : 'text-neutral-600 hover:text-neutral-900'}`}
+                  >
+                    Write
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditorMode('preview')}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-colors flex items-center gap-1 ${editorMode === 'preview' ? 'bg-white text-emerald-700 shadow-xs' : 'text-neutral-600 hover:text-neutral-900'}`}
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    Preview
+                  </button>
+                </div>
+              </div>
+
+              {editorMode === 'write' ? (
+                <textarea 
+                  rows={8}
+                  value={newLessonContent}
+                  onChange={e => setNewLessonContent(e.target.value)}
+                  placeholder={newLessonType === 'video' ? 'Paste a secure video URL or write clear viewing instructions...' : newLessonType === 'quiz' ? 'Explain what learners will demonstrate in this quiz...' : 'Start with ## What you will learn, then use short paragraphs, bullet lists, and LaTeX math ($x = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$)...'}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-neutral-50"
+                ></textarea>
+              ) : (
+                <div className="p-4 rounded-xl border border-neutral-200 bg-white min-h-[200px]">
+                  {newLessonContent.trim() ? (
+                    <LessonContent content={newLessonContent} />
+                  ) : (
+                    <p className="text-neutral-400 italic text-sm">Nothing to preview yet. Switch back to Write mode to enter lesson content.</p>
+                  )}
+                </div>
+              )}
             </div>
+
 
             {newLessonType === 'quiz' && (
               <div className="space-y-6 pt-4 border-t border-neutral-100">

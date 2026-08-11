@@ -5,27 +5,27 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
 export default function MessagesPage() {
-  const { currentUser } = useAppContext();
+  const { currentUser, userProfile } = useAppContext();
   const [contacts, setContacts] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchContacts = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !userProfile) return;
 
       const usersRef = collection(db, 'users');
       let fetchedContacts: any[] = [];
 
       try {
-        if (currentUser.role === 'student') {
+        if (userProfile.role === 'student') {
           const q = query(usersRef, where('role', '==', 'teacher'));
           const snapshot = await getDocs(q);
           fetchedContacts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        } else if (currentUser.role === 'parent') {
+        } else if (userProfile.role === 'parent') {
           // Parents to their linked children's teachers (assuming all teachers for now)
           const q = query(usersRef, where('role', '==', 'teacher'));
           const snapshot = await getDocs(q);
           fetchedContacts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        } else if (currentUser.role === 'teacher') {
+        } else if (userProfile.role === 'teacher') {
           const studentsQ = query(usersRef, where('role', '==', 'student'));
           const studentsSnap = await getDocs(studentsQ);
           const students = studentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as any));
@@ -52,7 +52,7 @@ export default function MessagesPage() {
         }
 
         // Remove self
-        fetchedContacts = fetchedContacts.filter(c => c.id !== currentUser.id);
+        fetchedContacts = fetchedContacts.filter(c => c.id !== currentUser.uid);
         
         setContacts(fetchedContacts.map(c => ({ id: c.id, name: c.name, role: c.role })));
       } catch (error) {
@@ -61,7 +61,7 @@ export default function MessagesPage() {
     };
 
     fetchContacts();
-  }, [currentUser]);
+  }, [currentUser, userProfile]);
 
   return (
     <div className="space-y-6 flex flex-col h-[calc(100vh-8rem)]">

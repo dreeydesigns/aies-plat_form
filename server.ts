@@ -47,6 +47,27 @@ async function startServer() {
     }
   });
 
+  app.post("/api/generate-course", async (req, res) => {
+    try {
+      const handler = (await import("./api/generate-course.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Generate course error:", err);
+      res.status(500).json({ error: err.message || "Course generation failed" });
+    }
+  });
+
+  app.post("/api/generate-course-upload", express.raw({ type: '*/*', limit: '10mb' }), async (req, res) => {
+    try {
+      const handler = (await import("./api/generate-course-upload.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Generate course upload error:", err);
+      res.status(500).json({ error: err.message || "Course generation failed" });
+    }
+  });
+
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

@@ -6,14 +6,14 @@ import DeviceSync from '../../components/DeviceSync';
 import ProfilePictureCapture from '../../components/shared/ProfilePictureCapture';
 
 export default function StudentSettings() {
-  const { currentUser } = useAppContext();
+  const { currentUser, userProfile } = useAppContext();
   const [copied, setCopied] = useState(false);
 
-  if (!currentUser) return null;
+  if (!currentUser || !userProfile) return null;
 
   const handleCopyCode = () => {
-    if (currentUser.linkCode) {
-      navigator.clipboard.writeText(currentUser.linkCode);
+    if (userProfile.linkCode) {
+      navigator.clipboard.writeText(userProfile.linkCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -45,11 +45,11 @@ export default function StudentSettings() {
           <label className="text-sm font-bold text-neutral-700">Your Link Code</label>
           <div className="flex items-center gap-4">
             <div className="bg-neutral-100 px-6 py-3 rounded-xl border border-neutral-200 font-mono text-xl font-bold tracking-widest text-neutral-800 flex-1">
-              {currentUser.linkCode || 'Not generated'}
+              {userProfile.linkCode || 'Not generated'}
             </div>
             <button 
               onClick={handleCopyCode}
-              disabled={!currentUser.linkCode}
+              disabled={!userProfile.linkCode}
               className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2 font-bold"
             >
               <Copy className="w-5 h-5" />
@@ -58,11 +58,11 @@ export default function StudentSettings() {
           </div>
         </div>
 
-        {currentUser.parentIds && currentUser.parentIds.length > 0 && (
+        {userProfile.parentIds && userProfile.parentIds.length > 0 && (
           <div className="mt-8 pt-8 border-t border-neutral-100">
             <h4 className="font-bold text-neutral-900 mb-4">Linked Accounts</h4>
             <div className="space-y-2">
-              {currentUser.parentIds.map((pid, i) => (
+              {userProfile.parentIds.map((pid, i) => (
                 <div key={pid} className="flex items-center gap-3 p-3 bg-neutral-50 border border-neutral-100 rounded-lg">
                   <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center font-bold text-neutral-600">
                     {/* Just placeholder for parent name if we don't have it joined, or we can fetch it. For now just show ID or index */}

@@ -14,7 +14,7 @@ const progressData = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 export default function StudentDashboard() {
-  const { currentUser, courses, completedLessons, earnedBadges } = useAppContext();
+  const { currentUser, userProfile, courses, completedLessons, earnedBadges } = useAppContext();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState('');
@@ -83,18 +83,18 @@ export default function StudentDashboard() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-neutral-800">Welcome back, {currentUser?.name?.split(' ')[0]}!</h2>
+          <h2 className="text-2xl font-bold text-neutral-800">Welcome back, {userProfile?.name?.split(' ')[0]}!</h2>
           <p className="text-neutral-500">Here's your learning progress today.</p>
         </div>
         <div className="flex items-center gap-4 bg-white p-3 rounded-xl border border-neutral-200 shadow-sm">
           <div className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-yellow-500" />
-            <span className="font-bold text-neutral-700">{currentUser?.points || 0} pts</span>
+            <span className="font-bold text-neutral-700">{userProfile?.points || 0} pts</span>
           </div>
           <div className="w-px h-6 bg-neutral-200"></div>
           <div className="flex items-center gap-2">
             <Star className="w-5 h-5 text-blue-500" />
-            <span className="font-bold text-neutral-700">Lvl {currentUser?.level || 1}</span>
+            <span className="font-bold text-neutral-700">Lvl {userProfile?.level || 1}</span>
           </div>
         </div>
       </div>

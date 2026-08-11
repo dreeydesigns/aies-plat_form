@@ -1,40 +1,11 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { CheckCircle, PlayCircle, Trophy, ArrowRight, BookOpen } from 'lucide-react';
+import { CheckCircle, Trophy, ArrowRight, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { evaluateQuiz, QuizResult } from '../../utils/quiz-engine';
+import LessonContent from '../../components/shared/LessonContent';
 
-function InlineText({ text }: { text: string }) {
-  return <>{text.split(/(\*\*[^*]+\*\*)/g).map((part, index) => part.startsWith('**') && part.endsWith('**') ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</>;
-}
-
-function LessonContent({ content }: { content: string }) {
-  // Older generated lessons sometimes placed headings on the same line. Split
-  // those safely so they become readable while new lessons follow the prompt.
-  const lines = content.replace(/\s+(#{1,3}\s+)/g, '\n$1').split('\n').map(line => line.trim()).filter(Boolean);
-  const blocks: React.ReactNode[] = [];
-  let list: string[] = [];
-  const flushList = () => {
-    if (list.length) blocks.push(<ul key={`list-${blocks.length}`} className="my-4 space-y-2 list-disc pl-6 text-neutral-700">{list.map((item, index) => <li key={index}><InlineText text={item} /></li>)}</ul>);
-    list = [];
-  };
-  lines.forEach((line, index) => {
-    const heading = line.match(/^(#{1,3})\s+(.+)$/);
-    const bullet = line.match(/^[-*]\s+(.+)$/);
-    if (bullet) { list.push(bullet[1]); return; }
-    flushList();
-    if (heading) {
-      const level = heading[1].length;
-      const styles = level === 1 ? 'text-2xl' : level === 2 ? 'text-xl' : 'text-lg';
-      blocks.push(<h2 key={index} className={`${styles} font-bold text-neutral-900 mt-8 mb-3 first:mt-0`}><InlineText text={heading[2]} /></h2>);
-    } else {
-      blocks.push(<p key={index} className="text-lg leading-8 text-neutral-700 mb-4"><InlineText text={line.replace(/\$/g, '')} /></p>);
-    }
-  });
-  flushList();
-  return <div>{blocks}</div>;
-}
 
 export default function LessonView() {
   const { courseId, lessonId } = useParams();
