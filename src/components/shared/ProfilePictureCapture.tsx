@@ -3,8 +3,6 @@ import { Camera, FolderUp, RefreshCw, Save } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { storage } from '../../lib/firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useToast } from '../../context/ToastContext';
 
 export default function ProfilePictureCapture() {
@@ -65,14 +63,26 @@ export default function ProfilePictureCapture() {
     reader.readAsDataURL(file);
   };
 
+  const compressForProfile = (dataUrl: string) => new Promise<string>((resolve, reject) => {
+    const image = new Image();
+    image.onerror = () => reject(new Error('Could not prepare this image.'));
+    image.onload = () => {
+      const scale = Math.min(1, 512 / Math.max(image.width, image.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      canvas.getContext('2d')?.drawImage(image, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/jpeg', 0.78));
+    };
+    image.src = dataUrl;
+  });
+
   const savePhoto = async () => {
     if (!userProfile || !capturedImage) return;
     
     try {
-      const imageBlob = await (await fetch(capturedImage)).blob();
-      const imageRef = ref(storage, `profile-images/${userProfile.id}/${Date.now()}.jpg`);
-      await uploadBytes(imageRef, imageBlob, { contentType: imageBlob.type || 'image/jpeg' });
-      const photoURL = await getDownloadURL(imageRef);
+      const photoURL = await compressForProfile(capturedImage);
+      if (photoURL.length > 700_000) throw new Error('This image is still too large. Choose another image.');
       const userRef = doc(db, 'users', userProfile.id);
       await updateDoc(userRef, { photoURL });
       setUserProfile({ ...userProfile, photoURL } as any);
