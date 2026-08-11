@@ -69,6 +69,7 @@ const ParentChildren = React.lazy(() => import('./pages/parent/ParentChildren'))
 const TeacherReports = React.lazy(() => import('./pages/teacher/TeacherReports'));
 const AdminReports = React.lazy(() => import('./pages/admin/AdminReports'));
 const AdminDataManager = React.lazy(() => import('./pages/admin/AdminDataManager'));
+const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
 const SetupGuide = React.lazy(() => import('./pages/shared/SetupGuide'));
 
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
@@ -155,7 +156,7 @@ function AppContent() {
         <Route path="courses" element={<AdminDataManager />} />
         <Route path="gamification" element={<div className="pt-6"><EmptyState icon={Settings} title="Gamification Config" description="Settings panel is under construction." /></div>} />
         <Route path="reports" element={<AdminReports />} />
-        <Route path="settings" element={<div className="pt-6"><EmptyState icon={Settings} title="System Settings" description="Settings panel is under construction." /></div>} />
+        <Route path="settings" element={<AdminSettings />} />
       </Route>
       
       <Route path="*" element={<Navigate to="/" replace />} />

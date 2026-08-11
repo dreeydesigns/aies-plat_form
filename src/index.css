@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+.settings-input {
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  background: #fafafa;
+  outline: none;
+}
+.settings-input:focus { border-color: #9333ea; box-shadow: 0 0 0 2px #f3e8ff; }
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
