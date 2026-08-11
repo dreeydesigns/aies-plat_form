@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MessageSquare, AlertCircle, CheckCircle, Clock, Users } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import EmptyState from '../../components/shared/EmptyState';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../lib/firebase';
 
 export default function StudentDetail() {
   const { id } = useParams();
@@ -10,6 +12,10 @@ export default function StudentDetail() {
   const { users } = useAppContext();
   
   const student = users.find(s => s.id === id && s.role === 'student');
+  const [strengths, setStrengths] = useState(student?.teacherReport?.strengths || '');
+  const [supportNeeds, setSupportNeeds] = useState(student?.teacherReport?.supportNeeds || '');
+  const [remarks, setRemarks] = useState(student?.teacherReport?.remarks || '');
+  const [isSaving, setIsSaving] = useState(false);
 
   if (!student) {
     return (
@@ -24,6 +30,13 @@ export default function StudentDetail() {
       />
     );
   }
+
+  const saveTeacherReport = async () => {
+    setIsSaving(true);
+    try {
+      await updateDoc(doc(db, 'users', student.id), { teacherReport: { strengths, supportNeeds, remarks, updatedAt: new Date().toISOString() } });
+    } finally { setIsSaving(false); }
+  };
 
   return (
     <div className="space-y-6">
@@ -99,6 +112,17 @@ export default function StudentDetail() {
           </button>
         </div>
       </div>
+
+      <section className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
+        <h3 className="text-lg font-bold text-neutral-800">Guardian report notes</h3>
+        <p className="mt-1 text-sm text-neutral-500">These teacher-entered observations appear in the guardian's interactive report and in its generated static export.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+          <label className="block text-sm font-medium text-neutral-700">Strengths<textarea value={strengths} onChange={event => setStrengths(event.target.value)} rows={4} placeholder="Examples: explains ideas clearly; completes reading independently..." className="mt-2 w-full p-3 border rounded-xl font-normal" /></label>
+          <label className="block text-sm font-medium text-neutral-700">Areas to strengthen<textarea value={supportNeeds} onChange={event => setSupportNeeds(event.target.value)} rows={4} placeholder="Examples: practise multi-step problems; complete revision tasks..." className="mt-2 w-full p-3 border rounded-xl font-normal" /></label>
+        </div>
+        <label className="block text-sm font-medium text-neutral-700 mt-4">Teacher remarks from class<textarea value={remarks} onChange={event => setRemarks(event.target.value)} rows={5} placeholder="Record specific, constructive classroom observations and agreed next steps." className="mt-2 w-full p-3 border rounded-xl font-normal" /></label>
+        <button onClick={saveTeacherReport} disabled={isSaving} className="mt-4 px-5 py-2 bg-blue-600 text-white font-bold rounded-lg disabled:opacity-50">{isSaving ? 'Saving...' : 'Save guardian report notes'}</button>
+      </section>
     </div>
   );
 }

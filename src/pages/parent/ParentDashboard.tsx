@@ -14,10 +14,10 @@ const mockActivityData = [
 ];
 
 export default function ParentDashboard() {
-  const { currentUser, users } = useAppContext();
+  const { linkedStudents } = useAppContext();
   const navigate = useNavigate();
   
-  const children = users.filter(u => currentUser?.childIds?.includes(u.id));
+  const children = linkedStudents;
 
   return (
     <div className="space-y-6">

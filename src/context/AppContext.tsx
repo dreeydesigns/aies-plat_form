@@ -21,6 +21,8 @@ export interface User {
   linkCode?: string;
   completedLessons?: string[];
   earnedBadges?: string[];
+  learningRecords?: Array<{ lessonId: string; completedAt: string; quizScore?: number }>;
+  teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
 }
 
 export interface Lesson {
@@ -212,6 +214,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         level: updatedLevel,
         completedLessons: newCompleted,
         earnedBadges: newBadges
+        ,learningRecords: arrayUnion({ lessonId, completedAt: new Date().toISOString(), ...(quizScore !== undefined ? { quizScore } : {}) })
       });
     }
   };
