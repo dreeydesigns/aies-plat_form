@@ -68,5 +68,9 @@ service cloud.firestore {
     match /systemSettings/{settingId} {
       allow read, write: if hasRole('admin');
     }
+
+    match /gamification/{configId} {
+      allow read, write: if hasRole('admin');
+    }
   }
 }
