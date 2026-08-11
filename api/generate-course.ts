@@ -42,12 +42,12 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
     if (bytes.length > MAX_DOCUMENT_BYTES) return res.status(413).json({ error: 'The document is too large. Upload a file smaller than 10 MB.' });
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.6-flash',
       contents: [{ role: 'user', parts: [
         { inlineData: { mimeType: document.mimeType, data: bytes.toString('base64') } },
         { text: prompt },
       ] }],
-      config: { responseMimeType: 'application/json', temperature: 0.3 },
+      config: { responseMimeType: 'application/json' },
     });
     const parsed = JSON.parse(response.text ?? '{}');
     if (!parsed.title || !Array.isArray(parsed.lessons) || parsed.lessons.length === 0) {
