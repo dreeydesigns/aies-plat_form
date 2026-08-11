@@ -330,6 +330,7 @@ export default function AuthScreen() {
             {isSignUp ? 'Sign In' : 'Sign Up'}
           </button>
         </p>
+        <button type="button" onClick={() => navigate('/admin-console')} className="mt-3 text-xs text-neutral-400 hover:text-neutral-700">Administrator sign in</button>
       </div>
     </div>
   );

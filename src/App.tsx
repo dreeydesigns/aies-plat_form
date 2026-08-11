@@ -68,6 +68,7 @@ const TeacherRoster = React.lazy(() => import('./pages/teacher/TeacherRoster'));
 const ParentChildren = React.lazy(() => import('./pages/parent/ParentChildren'));
 const TeacherReports = React.lazy(() => import('./pages/teacher/TeacherReports'));
 const AdminReports = React.lazy(() => import('./pages/admin/AdminReports'));
+const AdminDataManager = React.lazy(() => import('./pages/admin/AdminDataManager'));
 const SetupGuide = React.lazy(() => import('./pages/shared/SetupGuide'));
 
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
@@ -150,8 +151,8 @@ function AppContent() {
       {/* Admin Routes */}
       <Route path="/admin" element={<ProtectedRoute allowedRole="admin"><AdminLayout /></ProtectedRoute>}>
         <Route index element={<AdminDashboard />} />
-        <Route path="users" element={<div className="pt-6"><EmptyState icon={Users} title="User Management" description="No students assigned yet." /></div>} />
-        <Route path="courses" element={<div className="pt-6"><EmptyState icon={BookOpen} title="Course Oversight" description="You do not have any courses available right now." /></div>} />
+        <Route path="users" element={<AdminDataManager />} />
+        <Route path="courses" element={<AdminDataManager />} />
         <Route path="gamification" element={<div className="pt-6"><EmptyState icon={Settings} title="Gamification Config" description="Settings panel is under construction." /></div>} />
         <Route path="reports" element={<AdminReports />} />
         <Route path="settings" element={<div className="pt-6"><EmptyState icon={Settings} title="System Settings" description="Settings panel is under construction." /></div>} />

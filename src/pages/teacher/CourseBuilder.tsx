@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext, Course, Lesson } from '../../context/AppContext';
-import { Plus, Save, PlayCircle, FileText, HelpCircle, CheckCircle, Trash2, GripVertical } from 'lucide-react';
+import { Plus, Save, PlayCircle, FileText, HelpCircle, CheckCircle, Trash2, GripVertical, Layers, Video, BookOpen } from 'lucide-react';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { CurriculumBrief, generateCourseFromDocument } from '../../lib/courseAi';
 
@@ -20,7 +20,7 @@ const curriculumQuestions: Array<{ key: keyof CurriculumBrief; label: string; pl
   { key: 'accessibilityNeeds', label: '7. Accessibility and language needs', placeholder: 'e.g. simple English, captions, none' },
 ];
 
-function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }) {
+function SortableLessonItem({ lesson, onDelete }: { lesson: Lesson; onDelete: (lesson: Lesson) => void; key?: React.Key }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: lesson.id });
 
   const style = {
@@ -36,10 +36,11 @@ function SortableLessonItem({ lesson, key }: { lesson: Lesson, key?: React.Key }
       <div className="mt-1 text-emerald-600 flex-shrink-0">
         <CheckCircle className="w-4 h-4" />
       </div>
-      <div>
+      <div className="flex-1 min-w-0">
         <h4 className="font-semibold text-neutral-800 text-sm">{lesson.title}</h4>
         <p className="text-xs text-neutral-500 capitalize">{lesson.type}</p>
       </div>
+      <button onClick={() => onDelete(lesson)} className="p-2 text-neutral-400 hover:text-red-600 hover:bg-red-50 rounded-lg" title={`Delete ${lesson.title}`}><Trash2 className="w-4 h-4" /></button>
     </div>
   );
 }
@@ -57,10 +58,17 @@ export default function CourseBuilder() {
   const [brief, setBrief] = useState<CurriculumBrief>({ learnerAge: '', learnerLevel: '', subject: '', learningGoals: '', duration: '', deliveryStyle: '', accessibilityNeeds: '' });
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationError, setGenerationError] = useState('');
+  const [courseTitle, setCourseTitle] = useState('');
+  const [courseDescription, setCourseDescription] = useState('');
 
   useEffect(() => {
     setSelectedCourse((current) => courses.find((course) => course.id === current?.id) || courses[0] || null);
   }, [courses]);
+
+  useEffect(() => {
+    setCourseTitle(selectedCourse?.title || '');
+    setCourseDescription(selectedCourse?.description || '');
+  }, [selectedCourse?.id]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -138,7 +146,7 @@ export default function CourseBuilder() {
       title: newLessonTitle,
       content: newLessonContent || (newLessonType === 'quiz' ? 'Take the quiz to test your knowledge.' : 'No content provided.'),
       type: newLessonType as any,
-      quizId
+      ...(quizId ? { quizId } : {})
     };
 
     addLesson(selectedCourse.id, newLesson);
@@ -152,6 +160,24 @@ export default function CourseBuilder() {
     clearLessonTitle();
     clearLessonContent();
     clearQuizQuestions();
+  };
+
+  const saveCourseDetails = async () => {
+    if (!selectedCourse || !courseTitle.trim()) return;
+    await updateDoc(doc(db, 'courses', selectedCourse.id), { title: courseTitle.trim(), description: courseDescription.trim() });
+    setSelectedCourse(current => current ? { ...current, title: courseTitle.trim(), description: courseDescription.trim() } : current);
+  };
+
+  const deleteLesson = async (lesson: Lesson) => {
+    if (!selectedCourse || !window.confirm(`Delete “${lesson.title}”? This cannot be undone.`)) return;
+    const lessons = selectedCourse.lessons.filter(item => item.id !== lesson.id);
+    await updateDoc(doc(db, 'courses', selectedCourse.id), { lessons });
+    setSelectedCourse({ ...selectedCourse, lessons });
+  };
+
+  const deleteCourse = async () => {
+    if (!selectedCourse || !window.confirm(`Delete the course “${selectedCourse.title}” and all its lessons? This cannot be undone.`)) return;
+    await deleteDoc(doc(db, 'courses', selectedCourse.id));
   };
 
   const handleCreateCourse = async () => {
@@ -221,10 +247,10 @@ export default function CourseBuilder() {
       <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-neutral-900 mb-2">Course Builder</h1>
-          <p className="text-neutral-500">Create and publish new lessons instantly.</p>
+          <p className="text-neutral-500">Choose a course, organize its lessons, and publish content with confidence.</p>
         </div>
         <div className="flex items-center gap-4">
-          <select 
+          <select aria-label="Current course"
             className="bg-neutral-50 border border-neutral-200 text-neutral-700 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
             value={selectedCourse.id}
             onChange={(e) => setSelectedCourse(courses.find(c => c.id === e.target.value) || courses[0])}
@@ -233,12 +259,18 @@ export default function CourseBuilder() {
               <option key={c.id} value={c.id}>{c.title}</option>
             ))}
           </select>
+          <button onClick={handleCreateCourse} className="px-4 py-2 text-sm font-bold text-emerald-700 bg-emerald-50 rounded-xl hover:bg-emerald-100"><Plus className="w-4 h-4 inline mr-1" />New course</button>
         </div>
       </div>
 
+      <section className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
+        <div className="flex items-start gap-3 mb-4"><div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg"><Layers className="w-5 h-5" /></div><div><h2 className="font-bold text-neutral-900">Current course details</h2><p className="text-sm text-neutral-500">Students will see this title and summary in My Courses.</p></div></div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-3"><input value={courseTitle} onChange={event => setCourseTitle(event.target.value)} placeholder="Course title" className="px-4 py-3 rounded-xl border border-neutral-200" /><input value={courseDescription} onChange={event => setCourseDescription(event.target.value)} placeholder="Short course description" className="px-4 py-3 rounded-xl border border-neutral-200" /><button onClick={saveCourseDetails} disabled={!courseTitle.trim()} className="px-5 py-3 bg-neutral-900 text-white font-bold rounded-xl disabled:opacity-50"><Save className="w-4 h-4 inline mr-1" />Save</button></div>
+      </section>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm overflow-y-auto max-h-[600px]">
-          <h3 className="text-lg font-bold text-neutral-800 mb-4">Existing Lessons</h3>
+          <div className="flex items-center justify-between mb-1"><div><h3 className="text-lg font-bold text-neutral-800">Lessons in this course</h3><p className="text-sm text-neutral-500">{selectedCourse.title} · {selectedCourse.lessons.length} lesson{selectedCourse.lessons.length === 1 ? '' : 's'}</p></div><button onClick={deleteCourse} className="p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Delete course"><Trash2 className="w-5 h-5" /></button></div>
           <div className="space-y-3">
             <DndContext 
               sensors={sensors}
@@ -250,7 +282,7 @@ export default function CourseBuilder() {
                 strategy={verticalListSortingStrategy}
               >
                 {selectedCourse.lessons.map(lesson => (
-                  <SortableLessonItem key={lesson.id} lesson={lesson} />
+                  <SortableLessonItem key={lesson.id} lesson={lesson} onDelete={deleteLesson} />
                 ))}
               </SortableContext>
             </DndContext>
@@ -303,12 +335,12 @@ export default function CourseBuilder() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">Lesson Content (Markdown Supported)</label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">{newLessonType === 'video' ? 'Video URL or viewing instructions' : newLessonType === 'quiz' ? 'Quiz introduction for students' : 'Article content (headings and bullet lists supported)'}</label>
               <textarea 
                 rows={8}
                 value={newLessonContent}
                 onChange={e => setNewLessonContent(e.target.value)}
-                placeholder="Write your lesson content here..."
+                placeholder={newLessonType === 'video' ? 'Paste a secure video URL or write clear viewing instructions...' : newLessonType === 'quiz' ? 'Explain what learners will demonstrate in this quiz...' : 'Start with ## What you will learn, then use short paragraphs and bullet lists...'}
                 className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-neutral-50"
               ></textarea>
             </div>

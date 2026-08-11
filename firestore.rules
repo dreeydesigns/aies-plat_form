@@ -31,7 +31,9 @@ service cloud.firestore {
                       isSignedIn() 
                       && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['parentIds'])
                       && request.resource.data.parentIds.hasAll([request.auth.uid])
-                    );
+                    )
+                    || hasRole('admin');
+      allow delete: if hasRole('admin');
     }
     
     match /courses/{courseId} {
