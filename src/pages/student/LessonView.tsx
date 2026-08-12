@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { evaluateQuiz, QuizResult } from '../../utils/quiz-engine';
 import LessonContent from '../../components/shared/LessonContent';
 import { AiTutorPanel } from '../../components/student/AiTutorPanel';
+import EmpathyBreakModal from '../../components/student/EmpathyBreakModal';
+
 
 export default function LessonView() {
   const { courseId, lessonId } = useParams();
@@ -21,7 +23,9 @@ export default function LessonView() {
     submissions,
     retakePrompts,
     saveQuizSubmission,
-    markRetakeCompleted
+    markRetakeCompleted,
+    logEmotionalState,
+    saveInterventionRecord
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -30,7 +34,9 @@ export default function LessonView() {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTutorOpen, setIsTutorOpen] = useState(false);
-
+  const [quizStartTime, setQuizStartTime] = useState<number | null>(null);
+  const [showEmpathyBreak, setShowEmpathyBreak] = useState(false);
+  const [activeAnalogy, setActiveAnalogy] = useState<string | null>(null);
 
   const course = courses.find(c => c.id === courseId);
   const lesson = course?.lessons.find(l => l.id === lessonId);
@@ -39,8 +45,10 @@ export default function LessonView() {
   useEffect(() => {
     if (retakePromptId || searchParams.get('mode') === 'quiz') {
       setShowQuiz(true);
+      setQuizStartTime(Date.now());
     }
   }, [retakePromptId, searchParams]);
+
 
   if (!course || !lesson) return <div className="p-8 text-center text-neutral-500">Lesson not found</div>;
 
@@ -67,6 +75,33 @@ export default function LessonView() {
     setQuizResult(result);
 
     const attemptNumber = studentQuizSubmissions.length + 1;
+    const latencyMs = quizStartTime ? Date.now() - quizStartTime : 15000;
+
+    // Evaluate Emotional & Cognitive State
+    const { evaluateEmotionalState } = await import('../../utils/empathy-engine');
+    const emotionalState = evaluateEmotionalState({
+      latencyMs,
+      expectedMs: (quiz.questions.length || 2) * 15000,
+      isCorrect: result.score >= 70,
+      retryCount: attemptNumber - 1,
+      recentScoreAvg: result.score
+    });
+
+    await logEmotionalState({
+      studentId: userProfile.id,
+      courseId: course.id,
+      lessonId: lesson.id,
+      emotionalValence: emotionalState.emotionalValence,
+      cognitiveLoad: emotionalState.cognitiveLoad,
+      flowState: emotionalState.flowState,
+      latencyMs,
+      retryCount: attemptNumber - 1,
+      timestamp: new Date().toISOString()
+    });
+
+    if (emotionalState.emotionalValence === 'frustrated' || result.score < 50) {
+      setShowEmpathyBreak(true);
+    }
 
     // Save detailed submission to Firestore
     await saveQuizSubmission({
@@ -87,6 +122,7 @@ export default function LessonView() {
       attemptNumber,
       retakeStatus: retakePromptId ? 'completed' : 'none'
     });
+
 
     // Log misconception events to Collective Intelligence (Pillar K)
     const { recordStudentMisconception, logRemediationOutcome } = await import('../../utils/collective-intelligence');
@@ -401,6 +437,7 @@ export default function LessonView() {
                 setQuizResult(null);
                 setSelectedAnswers({});
                 setShowQuiz(true);
+                setQuizStartTime(Date.now());
               }}
               className="px-6 py-3 bg-white border border-neutral-300 text-neutral-700 font-bold rounded-xl hover:bg-neutral-50 transition-colors flex items-center gap-2"
             >
@@ -418,6 +455,17 @@ export default function LessonView() {
           </div>
         </motion.div>
       )}
+
+      {/* Empathy Micro-Break Reset Modal */}
+      <EmpathyBreakModal
+        isOpen={showEmpathyBreak}
+        onClose={() => setShowEmpathyBreak(false)}
+        onSelectAlternativeAnalogy={(type) => {
+          setActiveAnalogy(type);
+          setIsTutorOpen(true);
+        }}
+      />
+
 
       {/* Floating AI Tutor Toggle Button */}
       {!isTutorOpen && (

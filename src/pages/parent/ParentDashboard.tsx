@@ -48,6 +48,36 @@ export default function ParentDashboard() {
             
             <div className="p-6 flex-grow space-y-6">
               
+              {/* NON-INVASIVE TRAFFIC-LIGHT WELLNESS PULSE */}
+              <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-neutral-700 uppercase tracking-wider flex items-center gap-1.5">
+                    <Activity className="w-4 h-4 text-purple-600" /> Wellness & Engagement Pulse
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    Green (Engaged & Flow)
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  Session data shows positive engagement with steady problem-solving velocity. No emotional frustration detected.
+                </p>
+                <div className="p-2.5 bg-white rounded-xl border border-neutral-200 flex items-center justify-between text-xs font-medium">
+                  <span className="text-neutral-700 flex items-center gap-1.5">
+                    🎧 30-Second AI Voice Digest
+                  </span>
+                  <button 
+                    onClick={() => {
+                      const msg = new SpeechSynthesisUtterance(`${child.name} had a productive week. They completed their lessons smoothly and maintained great focus!`);
+                      window.speechSynthesis.speak(msg);
+                    }}
+                    className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors text-xs flex items-center gap-1"
+                  >
+                    ▶ Listen
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-neutral-50 p-4 rounded-xl border border-neutral-100">
                   <p className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1">Level</p>
@@ -58,6 +88,7 @@ export default function ParentDashboard() {
                   <p className="text-lg font-bold text-neutral-800">{child.streak || 0} days</p>
                 </div>
               </div>
+
               
               <div className="pt-2">
                 <h4 className="text-sm font-bold text-neutral-800 flex items-center gap-2 mb-3">

@@ -6,6 +6,8 @@ import { useFirestoreUsers, useFirestoreCourses, useFirestoreSubmissions, useFir
 import { User as FirebaseAuthUser } from 'firebase/auth';
 
 
+import { SensoryProfile, SocialPersonality, TransientEmotionalState, EmotionalStateLog, InterventionRecord } from '../types';
+
 export type Role = 'student' | 'teacher' | 'parent' | 'admin' | null;
 
 export interface User {
@@ -18,6 +20,9 @@ export interface User {
   age?: number;
   parentId?: string | null;
   isParentManaged?: boolean;
+  sensoryProfile?: SensoryProfile;
+  socialPersonality?: SocialPersonality;
+  transientEmotionalState?: TransientEmotionalState;
   consent?: {
     deviceSync: boolean;
     cameraWellness: boolean;
@@ -37,6 +42,7 @@ export interface User {
   learningRecords?: Array<{ lessonId: string; completedAt: string; quizScore?: number }>;
   teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
 }
+
 
 export function computeAge(dob: string): number {
   if (!dob) return 18;
@@ -191,7 +197,10 @@ export interface AppContextType {
   markRetakeCompleted: (promptId: string) => Promise<void>;
   logAgentEvent: (event: Omit<AgentEvent, 'id'>) => Promise<string>;
   saveMisconceptionCase: (c: Omit<MisconceptionCase, 'id'>) => Promise<string>;
+  logEmotionalState: (log: EmotionalStateLog) => Promise<string>;
+  saveInterventionRecord: (record: InterventionRecord) => Promise<string>;
 }
+
 
 
 const mockQuizzes: Record<string, Quiz> = {
@@ -400,6 +409,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const logEmotionalState = async (logData: EmotionalStateLog): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'emotionalStateLogs'), logData);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error logging emotional state:', e);
+      return '';
+    }
+  };
+
+  const saveInterventionRecord = async (recordData: InterventionRecord): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'interventionHistory'), recordData);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving intervention record:', e);
+      return '';
+    }
+  };
+
   const leaderboard = users
     .filter(u => u.role === 'student')
     .sort((a, b) => (b.points || 0) - (a.points || 0));
@@ -446,7 +475,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       markRetakeCompleted,
       logAgentEvent,
       saveMisconceptionCase,
+      logEmotionalState,
+      saveInterventionRecord,
     }}>
+
 
 
       {children}

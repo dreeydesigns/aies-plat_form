@@ -138,11 +138,68 @@ export default function ParentChildren() {
                         </button>
                       </div>
                     </div>
+
+                    {/* NEURODIVERGENT & COGNITIVE ACCOMMODATION OVERRIDES */}
+                    <div className="pt-2 border-t border-purple-100 space-y-2">
+                      <p className="text-[10px] font-bold text-purple-800 uppercase tracking-wider">Cognitive & Neurodivergent Accommodations</p>
+                      
+                      <div className="flex items-center justify-between p-2 bg-white rounded-xl border border-purple-100 text-xs">
+                        <span>⚡ ADHD Monotasking & Sprint Mode</span>
+                        <button
+                          onClick={async () => {
+                            const cur = child.sensoryProfile?.neurodivergentFlags?.adhd || false;
+                            await updateDoc(doc(db, 'users', child.id), {
+                              'sensoryProfile.neurodivergentFlags.adhd': !cur
+                            });
+                          }}
+                          className={`px-2.5 py-1 rounded font-bold text-[11px] ${
+                            child.sensoryProfile?.neurodivergentFlags?.adhd ? 'bg-amber-500 text-white' : 'bg-neutral-100 text-neutral-600'
+                          }`}
+                        >
+                          {child.sensoryProfile?.neurodivergentFlags?.adhd ? 'Active' : 'Off'}
+                        </button>
+                      </div>
+
+                      <div className="flex items-center justify-between p-2 bg-white rounded-xl border border-purple-100 text-xs">
+                        <span>📖 Dyslexia-Friendly Fonts & Spacing</span>
+                        <button
+                          onClick={async () => {
+                            const cur = child.sensoryProfile?.neurodivergentFlags?.dyslexia || false;
+                            await updateDoc(doc(db, 'users', child.id), {
+                              'sensoryProfile.neurodivergentFlags.dyslexia': !cur
+                            });
+                          }}
+                          className={`px-2.5 py-1 rounded font-bold text-[11px] ${
+                            child.sensoryProfile?.neurodivergentFlags?.dyslexia ? 'bg-amber-500 text-white' : 'bg-neutral-100 text-neutral-600'
+                          }`}
+                        >
+                          {child.sensoryProfile?.neurodivergentFlags?.dyslexia ? 'Active' : 'Off'}
+                        </button>
+                      </div>
+
+                      <div className="flex items-center justify-between p-2 bg-white rounded-xl border border-purple-100 text-xs">
+                        <span>🔢 Dyscalculia Visual Math Scaffold</span>
+                        <button
+                          onClick={async () => {
+                            const cur = child.sensoryProfile?.neurodivergentFlags?.dyscalculia || false;
+                            await updateDoc(doc(db, 'users', child.id), {
+                              'sensoryProfile.neurodivergentFlags.dyscalculia': !cur
+                            });
+                          }}
+                          className={`px-2.5 py-1 rounded font-bold text-[11px] ${
+                            child.sensoryProfile?.neurodivergentFlags?.dyscalculia ? 'bg-amber-500 text-white' : 'bg-neutral-100 text-neutral-600'
+                          }`}
+                        >
+                          {child.sensoryProfile?.neurodivergentFlags?.dyscalculia ? 'Active' : 'Off'}
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               
               <div className="p-4 bg-neutral-50 border-t border-neutral-100 flex justify-end gap-2">
+
                 <button 
                   onClick={() => navigate('/parent/messages')}
                   className="px-4 py-2 bg-white border border-neutral-200 text-neutral-700 text-sm font-bold rounded-lg hover:bg-neutral-50 transition-colors flex items-center gap-2"

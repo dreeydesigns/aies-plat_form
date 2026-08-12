@@ -25,8 +25,11 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const prompt = `You are an expert curriculum designer. Read the supplied source document and create a complete, accurate course. Do not invent facts that are not supported by the source. Adapt language, examples, pacing, assessment complexity, and activities to this brief:
+  const prompt = `You are an expert curriculum designer building an AIES 3.0 AI-native course. Read the supplied source document and create a complete, accurate course with tiered differentiation and multi-analogy explanations. Adapt language, examples, pacing, assessment complexity, and activities to this brief:
 ${JSON.stringify(brief)}
+
+DIFFERENTIATION & MULTI-ANALOGY INSTRUCTIONS:
+- Include multiple cognitive representations (e.g. food/pizza analogy, gaming/quest analogy, sports analogy) to support diverse learners (sensory explorers, ADHD dynamos, slow mappers, geniuses).
 
 LANGUAGE & ACCESSIBILITY INSTRUCTIONS:
 - Recognize and respect any language requested in the brief or present in the source document (native, local, regional, or international languages such as Swahili, Amharic, Yoruba, Zulu, French, Spanish, Portuguese, Arabic, Hindi, Chinese, English, etc.). Write all titles, descriptions, and content in that language.
@@ -42,6 +45,7 @@ Return ONLY valid JSON matching this exact schema:
 {"title":"string","description":"string","lessons":[{"title":"string","content":"string","type":"reading"|"video"|"vr"|"quiz","quiz":null|{"title":"string","questions":[{"text":"string","options":["string","string","string","string"],"correctAnswer":0}]} }]}
 
 Create 4-8 sequenced lessons. Include an introductory lesson, at least one activity or applied lesson, and a final quiz with 5-10 questions. Lesson content must be useful, comprehensive, and ready for a student to read.`;
+
 
   try {
     let bytes: Buffer;

@@ -252,16 +252,37 @@ export default function TeacherRoster() {
                             )}
                           </td>
                           <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
                               <button 
-                                onClick={(e) => { 
-                                  e.stopPropagation(); 
-                                  navigate(`/teacher/students/${student.id}`);
-                                }}
-                                className="text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                                onClick={() => navigate(`/teacher/students/${student.id}`)}
+                                className="text-xs bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold px-3 py-1.5 rounded-lg transition-colors"
                               >
-                                View Report & Analytics
+                                View Profile
                               </button>
+                              <button
+                                onClick={async () => {
+                                  const isLeader = student.socialPersonality?.isSquadLeader || false;
+                                  const { doc, updateDoc } = await import('firebase/firestore');
+                                  await updateDoc(doc(db, 'users', student.id), {
+                                    'socialPersonality.isSquadLeader': !isLeader,
+                                    'socialPersonality.leadershipDrive': !isLeader ? 'high' : 'medium'
+                                  });
+                                }}
+                                className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
+                                  student.socialPersonality?.isSquadLeader 
+                                    ? 'bg-purple-600 text-white' 
+                                    : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'
+                                }`}
+                                title="Assign high-responsibility peer mentor role to direct leadership positively"
+                              >
+                                <Sparkles className="w-3.5 h-3.5" />
+                                {student.socialPersonality?.isSquadLeader ? 'Squad Leader ✓' : '+ Make Squad Leader'}
+                              </button>
+                            </div>
+                          </td>
+
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
                               {student.parentIds && student.parentIds.length > 0 && (
                                 <button 
                                   onClick={(e) => { 

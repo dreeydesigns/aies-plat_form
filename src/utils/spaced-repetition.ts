@@ -1,6 +1,6 @@
 /**
- * SuperMemo SM-2 Spaced Repetition Algorithm
- * Calculates the next optimal review interval based on student recall performance.
+ * SuperMemo SM-2 Spaced Repetition Algorithm 2.0
+ * Calculates the next optimal review interval based on student recall performance & response latency confidence.
  */
 
 export interface ReviewScheduleItem {
@@ -14,6 +14,7 @@ export interface ReviewScheduleItem {
   intervalDays: number;
   easeFactor: number;
   lastReviewScore: number;
+  lastLatencyMs?: number;
   nextReviewDate: string; // ISO string
 }
 
@@ -56,11 +57,22 @@ export function calculateSM2NextReview(
   };
 }
 
-export function scoreToSM2Quality(score: number): number {
-  if (score >= 90) return 5;
-  if (score >= 75) return 4;
-  if (score >= 60) return 3;
-  if (score >= 40) return 2;
-  if (score >= 20) return 1;
-  return 0;
+/**
+ * Converts accuracy score AND response latency confidence into SM-2 quality (0 to 5).
+ */
+export function scoreToSM2Quality(score: number, latencyMs?: number): number {
+  let q = 0;
+  if (score >= 90) q = 5;
+  else if (score >= 75) q = 4;
+  else if (score >= 60) q = 3;
+  else if (score >= 40) q = 2;
+  else if (score >= 20) q = 1;
+  else q = 0;
+
+  // Latency confidence adjustment:
+  // Long latency (>25s) indicates hesitant recall -> dock 1 quality point
+  if (latencyMs && latencyMs > 25000 && q > 1) {
+    q -= 1;
+  }
+  return q;
 }

@@ -3,6 +3,8 @@ import MessageInbox from '../../components/MessageInbox';
 import { useAppContext } from '../../context/AppContext';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import SafeReportModal from '../../components/shared/SafeReportModal';
+
 
 export default function MessagesPage() {
   const { currentUser, userProfile } = useAppContext();
@@ -63,15 +65,30 @@ export default function MessagesPage() {
     fetchContacts();
   }, [currentUser, userProfile]);
 
+  const [isReportOpen, setIsReportOpen] = useState(false);
+
   return (
     <div className="space-y-6 flex flex-col h-[calc(100vh-8rem)]">
-      <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex-shrink-0">
-        <h1 className="text-2xl font-bold text-neutral-900 mb-1">Messages</h1>
-        <p className="text-sm text-neutral-500">Communicate securely within the AIES platform.</p>
+      <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex-shrink-0 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-neutral-900 mb-1">Messages & Welfare Support</h1>
+          <p className="text-sm text-neutral-500">Communicate securely within the AIES platform.</p>
+        </div>
+        <button
+          onClick={() => setIsReportOpen(true)}
+          className="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-xl border border-red-200 text-xs transition-colors flex items-center gap-2"
+        >
+          🛡️ Confidential Safe Report
+        </button>
       </div>
+
       <div className="flex-1 bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden flex flex-col">
         <MessageInbox currentUser={currentUser} contacts={contacts} />
       </div>
+
+      <SafeReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
     </div>
   );
 }
+
+

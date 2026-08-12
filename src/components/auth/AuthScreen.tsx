@@ -16,12 +16,17 @@ export default function AuthScreen() {
   const [message, setMessage] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 1.5 | 2>(1);
   const [selectedRole, setSelectedRole] = useState<'student' | 'teacher' | 'parent'>('student');
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
+  
+  // Psychometric & Sensory Onboarding State
+  const [sensoryPrimary, setSensoryPrimary] = useState<'visual' | 'auditory' | 'kinesthetic' | 'reading'>('visual');
+  const [pacingPref, setPacingPref] = useState<'fast' | 'medium' | 'slow'>('medium');
+  const [collabPref, setCollabPref] = useState<'solo' | 'pairs' | 'groups'>('pairs');
 
   useEffect(() => {
     if (userProfile) {
@@ -38,6 +43,18 @@ export default function AuthScreen() {
       name: displayName || email.split('@')[0] || 'User',
       role: role,
       avatar: photoURL || undefined,
+      sensoryProfile: {
+        primary: sensoryPrimary,
+        pacing: pacingPref,
+        complexityTolerance: 3,
+        rewardSensitivity: 3,
+        neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
+      },
+      socialPersonality: {
+        leadershipDrive: 'medium',
+        anxietyTendency: 'low',
+        collaborationPreference: collabPref
+      }
     };
     if (role === 'student') {
       newUser.points = 0;
@@ -70,7 +87,19 @@ export default function AuthScreen() {
       
       let user;
       if (isSignUp) {
-        const signupResult = await emailSignUp(email, password, selectedRole, generateLinkCode(), dateOfBirth);
+        const sensoryProfile = {
+          primary: sensoryPrimary,
+          pacing: pacingPref,
+          complexityTolerance: 3,
+          rewardSensitivity: 3,
+          neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
+        };
+        const socialPersonality = {
+          leadershipDrive: 'medium',
+          anxietyTendency: 'low',
+          collaborationPreference: collabPref
+        };
+        const signupResult = await emailSignUp(email, password, selectedRole, generateLinkCode(), dateOfBirth, sensoryProfile, socialPersonality);
         setUserProfile({ ...signupResult.userData, id: signupResult.user.uid } as any);
         navigate('/onboarding');
       } else {
@@ -176,7 +205,7 @@ export default function AuthScreen() {
     return (
       <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4 font-sans text-neutral-900">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-800 tracking-tight mb-2">Welcome to AIES</h1>
+          <h1 className="text-3xl font-bold text-neutral-800 tracking-tight mb-2">Welcome to AIES 3.0</h1>
           <p className="text-neutral-500 max-w-md mx-auto">How will you be using the platform?</p>
         </div>
         <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm w-full max-w-2xl">
@@ -223,10 +252,98 @@ export default function AuthScreen() {
               Back to Login
             </button>
             <button 
-              onClick={() => setStep(2)}
+              onClick={() => setStep(selectedRole === 'student' ? 1.5 : 2)}
               className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors"
             >
               Continue as {selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isSignUp && step === 1.5) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4 font-sans text-neutral-900">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold text-neutral-800 tracking-tight">Personalized Cognitive & Sensory Profile</h1>
+          <p className="text-neutral-500 text-sm max-w-md mx-auto mt-1">Help AIES adapt lessons to your exact cognitive & sensory style.</p>
+        </div>
+        <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm w-full max-w-xl space-y-6">
+          <div>
+            <label className="block text-sm font-bold text-neutral-800 mb-2">1. How do you learn best?</label>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { id: 'visual', label: '🎨 Visual & Diagrams' },
+                { id: 'auditory', label: '🎧 Listening & Audio' },
+                { id: 'kinesthetic', label: '🧪 Interactive 3D Labs' },
+                { id: 'reading', label: '📖 Structured Reading' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => setSensoryPrimary(opt.id as any)}
+                  className={`p-3 text-sm font-bold rounded-xl border transition-all text-left ${sensoryPrimary === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-neutral-800 mb-2">2. What learning pace feels comfortable?</label>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { id: 'fast', label: '🚀 Rapid Sprint' },
+                { id: 'medium', label: '⚖️ Steady Flow' },
+                { id: 'slow', label: '🌀 Step-by-Step' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => setPacingPref(opt.id as any)}
+                  className={`p-3 text-xs font-bold rounded-xl border transition-all text-center ${pacingPref === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-neutral-800 mb-2">3. Preferred collaboration style?</label>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { id: 'solo', label: '👤 Solo Explorer' },
+                { id: 'pairs', label: '👥 Study Buddy' },
+                { id: 'groups', label: '🤝 Team Squad' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => setCollabPref(opt.id as any)}
+                  className={`p-3 text-xs font-bold rounded-xl border transition-all text-center ${collabPref === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex gap-4 pt-4 border-t border-neutral-100">
+            <button
+              onClick={() => setStep(1)}
+              className="flex-1 py-3 px-4 bg-white border border-neutral-300 text-neutral-700 font-bold rounded-xl hover:bg-neutral-50 transition-colors"
+            >
+              Back
+            </button>
+            <button
+              onClick={() => setStep(2)}
+              className="flex-1 py-3 px-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-colors"
+            >
+              Continue to Credentials
             </button>
           </div>
         </div>

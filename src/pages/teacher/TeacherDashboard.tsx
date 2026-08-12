@@ -105,6 +105,54 @@ export default function TeacherDashboard() {
         <Metric icon={<Activity className="w-6 h-6 text-purple-600" />} label="Wearable Check-Ins" value={liveSession ? `${checkedIn.length}/${students.length}` : 'Session Off'} />
       </div>
 
+      {/* CLASSROOM COGNITIVE & EMOTIONAL DISTRIBUTION RADAR */}
+      <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+            <Activity className="w-5 h-5 text-purple-600" />
+            Classroom Cognitive & Emotional Distribution (Flow vs Overwhelmed)
+          </h3>
+          <span className="text-xs font-bold text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+            Empathy Engine Real-time
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 flex flex-col justify-between">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Flow State (ZPD Sweet Spot)</span>
+              <span className="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+            </div>
+            <p className="text-3xl font-extrabold text-emerald-900 mt-2">
+              {Math.max(0, students.length - lowScoreSubmissions.length)} <span className="text-xs font-normal text-emerald-700">students</span>
+            </p>
+            <p className="text-[11px] text-emerald-800 mt-1">Challenge matched to skill level (4-6% ZPD margin).</p>
+          </div>
+
+          <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 flex flex-col justify-between">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">Boredom Risk (Needs Challenge)</span>
+              <Sparkles className="w-4 h-4 text-amber-600" />
+            </div>
+            <p className="text-3xl font-extrabold text-amber-900 mt-2">
+              {students.filter(s => (s.points || 0) > 300).length} <span className="text-xs font-normal text-amber-700">students</span>
+            </p>
+            <p className="text-[11px] text-amber-800 mt-1">High accuracy + rapid response latency. Offer Feynman creation challenges.</p>
+          </div>
+
+          <div className="p-4 bg-red-50 rounded-2xl border border-red-200 flex flex-col justify-between">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold text-red-800 uppercase tracking-wider">Anxiety / Overwhelm Alert</span>
+              <AlertCircle className="w-4 h-4 text-red-600" />
+            </div>
+            <p className="text-3xl font-extrabold text-red-900 mt-2">
+              {lowScoreSubmissions.length} <span className="text-xs font-normal text-red-700">students</span>
+            </p>
+            <p className="text-[11px] text-red-800 mt-1">Repeated hesitation or low scores. One-click remediation ready.</p>
+          </div>
+        </div>
+      </div>
+
       {/* AI DIAGNOSTICS & PREDICTIVE INSIGHTS PANEL */}
       <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
         <div className="flex justify-between items-center">
@@ -145,6 +193,7 @@ export default function TeacherDashboard() {
           </div>
         )}
       </div>
+
 
       {/* MULTI-AGENT SHARED BLACKBOARD & COLLECTIVE CASE-MEMORY FEED */}
 

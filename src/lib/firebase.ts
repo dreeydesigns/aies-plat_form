@@ -81,7 +81,15 @@ export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
 
-export const emailSignUp = async (email: string, password: string, role: string, linkCode?: string, dateOfBirth?: string): Promise<{user: User, userData: any}> => {
+export const emailSignUp = async (
+  email: string, 
+  password: string, 
+  role: string, 
+  linkCode?: string, 
+  dateOfBirth?: string,
+  sensoryProfile?: any,
+  socialPersonality?: any
+): Promise<{user: User, userData: any}> => {
   const result = await createUserWithEmailAndPassword(auth, email, password);
   const uid = result.user.uid;
 
@@ -101,6 +109,18 @@ export const emailSignUp = async (email: string, password: string, role: string,
     dateOfBirth: dateOfBirth || undefined,
     age: age,
     isParentManaged: role === 'student' && age !== undefined && age < 14,
+    sensoryProfile: sensoryProfile || {
+      primary: 'visual',
+      pacing: 'medium',
+      complexityTolerance: 3,
+      rewardSensitivity: 3,
+      neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
+    },
+    socialPersonality: socialPersonality || {
+      leadershipDrive: 'medium',
+      anxietyTendency: 'low',
+      collaborationPreference: 'pairs'
+    },
     consent: {
       deviceSync: false,
       cameraWellness: false,
@@ -108,6 +128,7 @@ export const emailSignUp = async (email: string, password: string, role: string,
       updatedAt: new Date().toISOString()
     },
     avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${uid}`,
+
     points: role === 'student' ? 0 : undefined,
     level: role === 'student' ? 1 : undefined,
     streak: role === 'student' ? 0 : undefined,

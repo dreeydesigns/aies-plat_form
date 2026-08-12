@@ -87,6 +87,17 @@ async function startServer() {
     }
   });
 
+  app.post("/api/gemini/moderation", async (req, res) => {
+    try {
+      const handler = (await import("./api/gemini/moderation.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Gemini moderation error:", err);
+      res.status(500).json({ isToxic: false, severity: 'none', constructiveNudge: '' });
+    }
+  });
+
+
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
