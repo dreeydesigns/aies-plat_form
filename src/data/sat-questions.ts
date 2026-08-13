@@ -273,6 +273,236 @@ export const initialSatQuestions: SatQuestion[] = [
   // READING & WRITING — INFORMATION & IDEAS
   // ==========================================
   {
+    id: '3543e6e2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from Jane Austen’s 1811 novel Sense and Sensibility. Elinor lives with her younger sisters and her mother, Mrs. Dashwood.\n\nElinor, this eldest daughter, whose advice was so effectual, possessed a strength of understanding, and coolness of judgment, which qualified her, though only nineteen, to be the counsellor of her mother, and enabled her frequently to counteract, to the advantage of them all, that eagerness of mind in Mrs. Dashwood which must generally have led to imprudence. She had an excellent heart;—her disposition was affectionate, and her feelings were strong; but she knew how to govern them: it was a knowledge which her mother had yet to learn; and which one of her sisters had resolved never to be taught.\n\nAccording to the text, what is true about Elinor?',
+    options: [
+      'Elinor often argues with her mother but fails to change her mind.',
+      'Elinor can be overly sensitive with regard to family matters.',
+      'Elinor thinks her mother is a bad role model.',
+      'Elinor is remarkably mature for her age.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because it provides a detail about Elinor that is established in the text. The text indicates that although Elinor is "only nineteen," she gives good advice and exhibits such a high level of understanding and judgment that she serves as "the counsellor of her mother." Thus, Elinor is mature beyond her years.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'cf956802',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'When fashion designer Lloyd Henri Kiva New opened his store in Scottsdale, Arizona, in 1945, he quickly became known for creating delicately crafted leather goods, like belts and hats. He was perhaps most renowned for his colorful handbags, which he made by hand using a long and painstaking process. As he gained more customers, New began using sewing machines and other tools to help him produce bags more efficiently, though he continued to handcraft the crucial details that made each bag unique.\n\nBased on the text, what would have been the most likely consequence if New had not begun using sewing machines?',
+    options: [
+      'He would have been unable to ensure that each bag included unique, handcrafted details.',
+      'He would have struggled to meet the increasing demand for his bags.',
+      'He would have had to individually design each bag he produced.',
+      'He would not have been able to generate as much interest in his bags.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because it presents the most likely consequence if New had not begun using sewing machines. The text states that New gained new customers and that sewing machines allowed him to make bags more efficiently, or in less time than he could when sewing by hand. It’s reasonable to conclude that if New hadn’t reduced the time it took to make each bag by starting to use sewing machines, it would have been hard for him to keep up with the increased demand.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'An answer choice is valid only if it directly substantiates the specific claim'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '714e4c10',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Ruth Asawa was an accomplished artist who worked in many art forms, including her unique tied-wire sculptures, but she was dedicated to more than the creation of art. Asawa also wanted to bring art to children in her hometown of San Francisco, California. To that end, in 1968 she cofounded the Alvarado School Arts Workshop, which brought works of art and artists into public schools, and in 1982 she helped found a San Francisco public arts high school, which was later named after her.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Asawa inspired many other artists to share their work with students in public schools.',
+      'Asawa’s unique sculptures were appreciated more by local art communities than they were nationwide.',
+      'Asawa’s interest in art education prompted her to create art programs for students in San Francisco.',
+      'Asawa left a promising career as a sculptor to work as an art teacher in San Francisco schools.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer because it most accurately states the main idea of the text. The text begins by establishing Ruth Asawa as an artist who worked in several art forms but emphasizes that she was interested in art for reasons other than her desire to create it. The text mentions two ways in which Asawa brought art to children through public schools: cofounding the Alvarado School Arts Workshop in 1968 and helping found a public arts high school in 1982.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a biographical passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '57485f5e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Johanna Spyri’s 1881 novel Heidi (translated by Elisabeth Stork in 1915). Eight-year-old Heidi and her friend’s grandmother are looking at some illustrated books.\n\nHeidi had come and was looking with wondering eyes at the splendid pictures in the large books, that Grandmama was showing her. Suddenly she screamed aloud, for there on the picture she saw a peaceful flock grazing on a green pasture. In the middle a shepherd was standing, leaning on his crook. The setting sun was shedding a golden light over everything. With glowing eyes Heidi devoured the scene.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Heidi is upset until she sees a serene image of a pasture in one of Grandmama’s books.',
+      'Heidi is delighted and fascinated by an image she sees in one of Grandmama’s books.',
+      'Heidi is initially frightened by an image in one of Grandmama’s books but quickly comes to appreciate its beauty.',
+      'Heidi is inspecting an image in one of Grandmama’s books because she has never seen a shepherd with his sheep before.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because it most effectively states the main idea of the text, which is that Heidi is delighted and fascinated by an image she sees in one of Grandmama’s books. In the text, Heidi screams upon first seeing the picture of the green pasture with "glowing eyes" and "devoured the scene," indicating she is thrilled and intrigued by the image.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e677fa6c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Edgar Allan Poe’s 1849 story “Landor’s Cottage.”\n\nDuring a pedestrian trip last summer, through one or two of the river counties of New York, I found myself, as the day declined, somewhat embarrassed about the road I was pursuing. The land undulated very remarkably; and my path, for the last hour, had wound about and about so confusedly, in its effort to keep in the valleys, that I no longer knew in what direction lay the sweet village of B——, where I had determined to stop for the night.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'The narrator remembers a trip he took and admits to getting lost.',
+      'The narrator recalls fond memories of a journey that he took through some beautiful river counties.',
+      'The narrator describes what he saw during a long trip through a frequently visited location.',
+      'The narrator explains the difficulties he encountered on a trip and how he overcame them.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The narrator is "embarrassed" about the route he took, which ends up leaving him lost and confused about how to get to his destination for the evening.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '8a8236e1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Scent is tightly interwoven with our daily lives, often evoking significant memories and important social events. This connection is of growing interest to archaeologists who hope to use it to better understand ancient rituals, trade, social hierarchies, and medicine. Although the speed at which odor molecules dissipate makes identifying ancient scents challenging, advancements in biomolecular technologies show promise in unlocking ancient aromas from preserved artifacts. Archaeological studies making use of these advancements may provide new insights into past societies.\n\nAccording to the text, what is one reason some archaeologists are interested in recovering scents from ancient artifacts?',
+    options: [
+      'They are investigating whether people’s sense of smell has declined in recent centuries.',
+      'They believe the scents could illuminate important aspects of ancient life.',
+      'They think that ancient scents would be enjoyable to people today.',
+      'They hope to develop new medicines using ancient scent molecules.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text states that archaeologists are interested in using scents to better understand "ancient rituals, trade, social hierarchies, and medicine," all of which are important aspects of ancient life.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a scientific passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c6d7dc78',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Stores often play background music to create a pleasant shopping experience. Based on a survey, Amir Manzoor found that such music was linked to reduced enjoyment among customers. Manzoor thinks that one explanation for this result is that the surveyed customers may have wanted to finish their shopping as quickly as possible. They therefore weren’t focused on enjoying the experience. It’s possible that background music could improve the experience of other customers whose main goal is to have a good time while they shop.\n\nBased on the text, which research question was Manzoor’s study most likely intended to answer?',
+    options: [
+      'Does the volume of a store’s background music affect how much time customers spend in the store?',
+      'How does the use of background music in stores affect customers’ shopping experience?',
+      'Do customers spend more money when shopping for music in stores or online?',
+      'What genres of music do customers prefer to listen to while they are shopping?'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because it presents a research question that is clearly addressed by Manzoor’s study as described in the text. The text indicates that Manzoor surveyed customers and found that background music was linked to reduced enjoyment while shopping.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating research studies and experimental designs'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c228bd45',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Edith Nesbit’s 1906 novel The Railway Children.\n\nMother did not spend all her time in paying dull [visits] to dull ladies, and sitting dully at home waiting for dull ladies to pay [visits] to her. She was almost always there, ready to play with the children, and read to them, and help them to do their home-lessons. Besides this she used to write stories for them while they were at school, and read them aloud after tea, and she always made up funny pieces of poetry for their birthdays and for other great occasions.\n\nAccording to the text, what is true about Mother?',
+    options: [
+      'She wishes that more ladies would visit her.',
+      'Birthdays are her favorite special occasion.',
+      'She creates stories and poems for her children.',
+      'Reading to her children is her favorite activity.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer because it describes something that is true of Mother, as presented in the text. The text indicates that in addition to other activities, Mother writes stories for her children while they are at school and makes up "funny pieces of poetry" for certain occasions.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '82d2436a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from Laila Lalami’s 2019 novel The Other Americans. The narrator is a member of her middle school’s jazz band.\n\nOne day the jazz band was invited to perform at the Summer Festival in Palm Springs. Walking across the stage to the piano, I did what my teacher had advised. Pretend you’re only playing for one person. That way you won’t be so nervous. I glanced at my father, who sat in the front row, leaning his head just so, waiting. Then I closed my eyes, and began to play.\n\nAccording to the text, what does the narrator do as she walks across the stage?',
+    options: [
+      'She thinks about the differences between playing the piano alone and playing in a band.',
+      'She feels excitement about playing in a music festival for the first time.',
+      'She remembers how hard she has practiced for the performance.',
+      'She follows her teacher’s advice about managing her nervousness.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because it presents a statement about what the narrator is doing that is directly supported by the text. According to the text, as the narrator walks across the stage to her piano, she recalls her teacher’s advice to pretend that she is playing for only one person to help manage performance nerves.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'baef99a5',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Oscar Wilde’s 1891 novel The Picture of Dorian Gray. Dorian Gray is taking his first look at a portrait that Hallward has painted of him.\n\nDorian passed listlessly in front of his picture and turned towards it. When he saw it he drew back, and his cheeks flushed for a moment with pleasure. A look of joy came into his eyes, as if he had recognized himself for the first time. He stood there motionless and in wonder, dimly conscious that Hallward was speaking to him, but not catching the meaning of his words. The sense of his own beauty came on him like a revelation. He had never felt it before.\n\nAccording to the text, what is true about Dorian?',
+    options: [
+      'He wants to know Hallward’s opinion of the portrait.',
+      'He is delighted by what he sees in the portrait.',
+      'He prefers portraits to other types of paintings.',
+      'He is uncertain of Hallward’s talent as an artist.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because it presents a statement about Dorian that is directly supported by the text. The narrator of the text says that when Dorian sees his portrait, "his cheeks flushed for a moment with pleasure" and "a look of joy came into his eyes," indicating he is thoroughly delighted with the portrait.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
     id: 'sat-rw-inf-001',
     section: 'reading-writing',
     domain: 'information-ideas',
