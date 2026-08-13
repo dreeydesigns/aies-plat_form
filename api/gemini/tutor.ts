@@ -37,7 +37,7 @@ INSTRUCTIONS:
     const fullPrompt = `${systemInstruction}\n\nRecent Conversation:\n${formattedHistory}\n\nStudent Question: ${query}\n\nTutor Answer:`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
     });
 

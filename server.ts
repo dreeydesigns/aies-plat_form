@@ -16,34 +16,11 @@ async function startServer() {
 
   app.post("/api/gemini/grounding", async (req, res) => {
     try {
-      const { query } = req.body;
-      if (!query) {
-        return res.status(400).json({ error: "Query is required" });
-      }
-
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        return res.status(500).json({ error: "GEMINI_API_KEY environment variable is missing" });
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: query,
-        config: {
-          tools: [{ googleSearch: {} }],
-        }
-      });
-
-      const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
-      const sources = groundingChunks
-        .map(chunk => chunk.web)
-        .filter(web => web && web.uri && web.title);
-
-      res.json({ result: response.text, sources });
-    } catch (error: any) {
-      console.error("Gemini API Error:", error);
-      res.status(500).json({ error: error.message || "An error occurred during Gemini request" });
+      const handler = (await import("./api/gemini/grounding.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Grounding error:", err);
+      res.status(500).json({ error: err.message || "Grounding failed" });
     }
   });
 
