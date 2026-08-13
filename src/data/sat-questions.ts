@@ -270,7 +270,7 @@ export const initialSatQuestions: SatQuestion[] = [
   },
 
   // ==========================================
-  // READING & WRITING — INFORMATION & IDEAS
+  // READING & WRITING — INFORMATION & IDEAS (41 CENTRAL IDEAS & DETAILS)
   // ==========================================
   {
     id: '3543e6e2',
@@ -494,6 +494,719 @@ export const initialSatQuestions: SatQuestion[] = [
     ],
     correctAnswer: 1,
     explanation: 'Choice B is the best answer because it presents a statement about Dorian that is directly supported by the text. The narrator of the text says that when Dorian sees his portrait, "his cheeks flushed for a moment with pleasure" and "a look of joy came into his eyes," indicating he is thoroughly delighted with the portrait.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '78b265b2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In 2014, Amelia Quon and her team at NASA set out to build a helicopter capable of flying on Mars. Because Mars’s atmosphere is only one percent as dense as Earth’s, the air of Mars would not provide enough resistance to the rotating blades of a standard helicopter for the aircraft to stay aloft. For five years, Quon’s team tested designs in a lab that mimicked Mars’s atmospheric conditions. The craft the team ultimately designed can fly on Mars because its blades are longer and rotate faster than those of a helicopter of the same size built for Earth.\n\nAccording to the text, why would a helicopter built for Earth be unable to fly on Mars?',
+    options: [
+      'Because Mars and Earth have different atmospheric conditions',
+      'Because the blades of helicopters built for Earth are too large to work on Mars',
+      'Because the gravity of Mars is much weaker than the gravity of Earth',
+      'Because helicopters built for Earth are too small to handle the conditions on Mars'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer because it presents an explanation about a helicopter that is directly supported by the text. The text states that Mars’s atmosphere is much less dense than Earth’s, and as a result, the air on Mars doesn’t provide the resistance required to support the blades of a helicopter built for Earth and to keep the helicopter aloft.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a scientific passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '487a05f8',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Sylvia Acevedo’s 2018 memoir Path to the Stars: My Journey from Girl Scout to Rocket Scientist. The narrator is traveling by car with her family to Mexico City. Mario and Laura are her brother and sister.\n\nMario and I played games to see how many different license plates we could spot, and Laura liked to look for children in the back seats of the cars we passed. We were used to the forty-five-minute drive to El Paso and familiar with the six-hour ride to Chihuahua, but I wondered what the long journey to Mexico City would be like.\n\nAccording to the text, what did the narrator and Mario do while riding in the car?',
+    options: [
+      'They read books.',
+      'They sang songs.',
+      'They went to sleep.',
+      'They played games.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because it most accurately describes what the narrator and Mario did while riding in the car. The text states that during the car ride, the narrator and Mario "played games" to see how many different license plates they could spot.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a biographical passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '40630cef',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from David Barclay Moore’s 2022 novel Holler of the Fireflies. The narrator has just arrived at summer camp, which is far away from his home.\n\nThis place was different than I thought it would be. I’d never been somewhere like this before. I did feel scared, but also excited.\n\nAccording to the text, how does the narrator feel about being at summer camp?',
+    options: [
+      'He feels overjoyed.',
+      'He feels peaceful.',
+      'He feels both scared and excited.',
+      'He feels both angry and jealous.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer because it most accurately states how the narrator feels about being at summer camp. In the text, the narrator states that after arriving at the camp, he found it to be different than he’d expected and that as a result, he felt "scared, but also excited."',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '14189fbb',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Having written the impassioned call to arms “Letter to the Spanish Americans” in 1791, Peruvian intellectual Juan Pablo Viscardo y Guzmán is often considered a forerunner for the independence movements in Latin America. But Viscardo’s role in history would have remained insignificant were it not for Venezuelan revolutionary Francisco de Miranda, who was handed the unpublished letter after Viscardo’s death. Miranda not only helped circulate the letter, but his edits and footnotes to the text position Miranda as a central figure in the text’s creation.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'The original authorship of “Letter to the Spanish Americans” is disputed by contemporary historians.',
+      'The majority of the most eloquently stated arguments in “Letter to the Spanish Americans” were written by Miranda.',
+      'Miranda played a crucial role in influencing the content and distribution of “Letter to the Spanish Americans.”',
+      '“Letter to the Spanish Americans” persuaded many people in Latin America to pursue national independence.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text describes how Miranda circulated, edited, and added footnotes to “Letter to the Spanish Americans,” and it claims that the letter and its author would have “remained insignificant” if it weren’t for Miranda’s efforts.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating historical and analytical texts'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b168ce48',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The average age at which people in the United States start businesses is 35. Economist Andrés Hincapié studied why young adults are relatively less likely to start businesses and whether there are ways to increase entrepreneurship in early adulthood. Hincapié found that one impediment is lack of knowledge about the practical details of how businesses are started; he further found that simply providing young adults with good informational resources on the topic significantly alleviates this problem.\n\nBased on the text, what would Hincapié most likely say is a promising way to increase entrepreneurship in early adulthood?',
+    options: [
+      'Creating social networks of young adults who are interested in starting a business',
+      'Encouraging young adults to brainstorm business ideas',
+      'Providing young adults with practical information about how to start a business',
+      'Giving young adults training opportunities at a variety of businesses'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer because it presents a conclusion about increasing entrepreneurship in early adulthood that can be reasonably inferred from the text. The text explains that Hincapié found lack of practical business knowledge to be an impediment and that providing relevant informational resources helps solve the problem.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating economic and social science research'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '2592e0de',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Bicycles were first mass-produced in the late nineteenth century throughout Europe and North America, allowing individuals remarkable freedom to travel longer distances quickly and comfortably. This freedom, coupled with the affordability of the vehicle, made the bicycle immensely popular. Individuals were able to live farther from their workplaces, easily visit neighboring towns, and participate in new leisure and sport activities. Bicycling quickly became a popular social endeavor, with enthusiasts forming local cycling clubs to enjoy these newfound activities with others.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'The widespread adoption of the bicycle in the late nineteenth century provided new opportunities for people.',
+      'The affordability of the bicycle in the late nineteenth century made it the preferred way to travel.',
+      'The popularity of the bicycle in the late nineteenth century gave rise to the first cycling clubs.',
+      'The mass production of the bicycle in the late nineteenth century made it safer for people to use.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The text discusses how the mass production of bicycles in the late nineteenth century allowed people to travel longer distances, live farther from workplaces, visit neighboring towns, and participate in new activities and clubs, providing many new opportunities.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an informational text'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '69d662af',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Ann Petry’s 1946 novel The Street. Lutie lives in an apartment in Harlem, New York.\n\nThe glow from the sunset was making the street radiant. The street is nice in this light, [Lutie] thought. It was swarming with children who were playing ball and darting back and forth across the sidewalk in complicated games of tag. Girls were skipping double dutch rope, going tirelessly through the exact center of a pair of ropes, jumping first on one foot and then the other.\n\nWhich choice best describes what is happening in the text?',
+    options: [
+      'Lutie is observing the appearance of the street at a particular time of day and the events occurring on it.',
+      'Lutie is annoyed by the noise of children playing games on her street.',
+      'Lutie is puzzled by the rules of certain children’s games.',
+      'Lutie is spending time alone in her apartment because she doesn’t want to interact with her neighbors.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer because it most accurately states what is happening in the text. The narrator notes that Lutie observes the street in the light of the sunset and watches children playing ball, tag, and skipping rope.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '89961e26',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Artist Justin Favela explained that he wanted to reclaim the importance of the piñata as a symbol in Latinx culture. To do so, he created numerous sculptures from strips of tissue paper, which is similar to the material used to create piñatas. In 2017, Favela created an impressive life-size piñata-like sculpture of the Gypsy Rose lowrider car, which was displayed at the Petersen Automotive Museum in Los Angeles, California. The Gypsy Rose lowrider was famously driven by Jesse Valadez, an early president of the Los Angeles Imperials Car Club.\n\nAccording to the text, which piece of Favela’s art was on display in the Petersen Automotive Museum in 2017?',
+    options: [
+      'A painting of Los Angeles',
+      'A sculpture of a lowrider car',
+      'A painting of a piñata',
+      'A sculpture of Jesse Valadez'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text describes how Favela created a life-size piñata-like sculpture of the Gypsy Rose lowrider car, which was displayed at the Petersen Automotive Museum in 2017.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a biographical passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b633cc4f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Few animals are known to spit: among them are humans, cobras, and camels. But in January 2022 at a nature preserve in southern England, bird-watcher Clare Jacobs observed a gray seal spitting a jet of water at a white-tailed eagle flying overhead. Seals had never been seen spitting before. Biologist Sean Twiss, who studies gray seals, believes that the seal may have been attempting to scare the eagle away from a food source or that the seal may have just been playing.\n\nWhich choice best states the main topic of the text?',
+    options: [
+      'Bird-watching in southern England',
+      'A previously unseen behavior of gray seals',
+      'How white-tailed eagles defend their territory against other predators',
+      'Differences between gray seals and white-tailed eagles'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because it most accurately states the main topic. The text focuses on the observation that a gray seal spit a jet of water at an eagle, explicitly noting that seals had never been seen spitting before.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a scientific passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '04bcb7a9',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Xin Wang and colleagues have discovered the earliest known example of a flower bud in a 164-million-year-old plant fossil in China. The researchers have named the new species Florigerminis jurassica. They believe that the discovery pushes the emergence of flowering plants, or angiosperms, back to the Jurassic period, which occurred between 145 million and 201 million years ago.\n\nAccording to the text, how old was the fossil that Wang and colleagues discovered?',
+    options: [
+      '150 million years old',
+      '145 million years old',
+      '164 million years old',
+      '201 million years old'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer because it gives the exact age for the fossil discovered by Wang and colleagues that is directly supported by the text: "a 164-million-year-old plant fossil in China."',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a scientific passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c889e52e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In 1935 Hallie Flanagan was chosen to lead the Federal Theatre Project (FTP). This project was part of the new Works Progress Administration (WPA), a program created by President Franklin D. Roosevelt to provide jobs for unemployed people during the Great Depression. As the director of the FTP, Flanagan created jobs for over 12,500 performers, designers, and other theater professionals across the country. She also kept ticket prices low for the shows they staged, which meant that many people could afford to experience theater for the first time.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Jobs provided by the FTP were intended mainly for performers, designers, and other theater professionals.',
+      'President Roosevelt created the WPA to provide jobs for unemployed people.',
+      'During the Great Depression, many people couldn’t afford to buy theater tickets.',
+      'As the director of the FTP, Flanagan succeeded in creating many jobs and introducing people to theater.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because it most accurately states the main idea of the text. The text highlights that Flanagan created over 12,500 jobs and kept ticket prices low so many people could experience theater for the first time.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating historical and biographical passages'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'de0a5b4e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In 2022, researchers rediscovered ancient indigenous glyphs, or drawings, on the walls of a cave in Alabama. The cave’s ceiling was only a few feet high, affording no position from which the glyphs, being as wide as ten feet, could be viewed or photographed in their entirety. However, the researchers used a technique called photogrammetry to assemble numerous photos of the walls into a 3D model. They then worked with representatives of tribes originally from the region, including the Chickasaw Nation, to understand the significance of the animal and humanoid figures adorning the cave.\n\nAccording to the text, what challenge did the researchers have to overcome to examine the glyphs?',
+    options: [
+      'The cave was so remote that the researchers couldn’t easily reach it.',
+      'Some of the glyphs were so faint that they couldn’t be photographed.',
+      'The researchers were unable to create a 3D model of the cave.',
+      'The cave’s dimensions prevented the researchers from fully viewing the glyphs.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text explains that the cave\'s ceiling was only a few feet high, making it impossible from any single position to view or photograph the ten-foot-wide glyphs in their entirety.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an archaeological passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '2287b040',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In the 1960s, Chavela Vargas became an unlikely star in ranchera, a style of traditional Mexican music. Most ranchera singers had clear, polished voices and performed with a full band. But Vargas accompanied her raspy voice with just her guitar. Dressed in men’s trousers and a poncho, she would perform classic songs that had been written from a male point of view and were usually sung by men. She also altered those songs by performing them much more slowly than other ranchera singers did. The slower tempo allowed her to express the emotional quality of the lyrics more fully.\n\nAccording to the text, what is one way that Vargas differed from other ranchera singers?',
+    options: [
+      'She possessed a voice that was clear and polished.',
+      'She avoided singing songs written from a male point of view.',
+      'She disliked performing classic songs.',
+      'She altered classic songs by slowing them down.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because the text states that Vargas "altered those songs by performing them much more slowly than other ranchera singers did," allowing her to express emotional nuance.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a cultural arts passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6675c5c3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from Shyam Selvadurai’s 1994 novel Funny Boy. The seven-year-old narrator lives with his family in Sri Lanka. Radha Aunty is the narrator’s aunt.\n\nRadha Aunty, who was the youngest in my father’s family, had left for America four years ago when I was three, and I could not remember what she looked like. I went into the corridor to look at the family photographs that were hung there. But all the pictures were old ones, taken when Radha Aunty was a baby or young girl. Try as I might, I couldn’t get an idea of what she looked like now. My imagination, however, was quick to fill in this void.\n\nAccording to the text, why does the narrator consult some family photographs?',
+    options: [
+      'He wants to use the photographs as inspiration for a story he is writing.',
+      'He is curious about how his father dressed a long time ago.',
+      'He hopes the photographs will help him recall what his aunt looked like.',
+      'He wants to remind his aunt of an event that is shown in an old photograph.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text states that the narrator could not remember what Radha Aunty looked like, so he went into the corridor to look at family photographs to try to recall her appearance.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '0fd96039',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'It has long been thought that the original author of the US Pledge of Allegiance was Francis Bellamy, who said that he wrote the pledge one evening in August of 1892. But a historian recently discovered a newspaper article that was published several months before August 1892. The article describes students reciting the same pledge that Bellamy claims he first wrote in August. This means that Bellamy may not have created the pledge after all.\n\nBased on the text, what piece of knowledge about the Pledge of Allegiance has recently become uncertain?',
+    options: [
+      'How many changes were made to the pledge in the 1900s',
+      'The identity of the person who first wrote the pledge',
+      'The name of the newspaper that first published the pledge',
+      'Which part of the pledge students liked best in 1892'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text explains that the discovery of a newspaper article mentioning students reciting the pledge prior to August 1892 calls into question whether Francis Bellamy was its original creator, making the identity of its first author uncertain.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating historical and analytical texts'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '2edd7ffe',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Archaeologist Veronica Waweru visited the Lewa Wildlife Conservancy in Kenya. While exploring there, Waweru noticed many rows of shallow pits carved into stone. Waweru believed the pits could have been used as game boards to play ancient versions of mancala, a two-person strategy game that is still popular today. Some of the more recent pits were carved on top of older pits. This led Waweru to think that the game was played at the site for a long time.\n\nAccording to the text, why does Waweru think that mancala was played at the site for a long time?',
+    options: [
+      'Some of the newer pits were carved on top of the older pits.',
+      'She noticed many rows of shallow pits carved into stone.',
+      'She discovered the pits at the Lewa Wildlife Conservancy.',
+      'Some of the pits were shallow and others were quite deep.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The text explains that newer pits were carved directly on top of older pits, indicating that generations of people used the site for mancala over an extended period.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an archaeological passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '0b696a0c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'NASA’s Cassini probe has detected an unusual wobble in the rotation of Mimas, Saturn’s smallest moon. Using a computer model to study Mimas’s gravitational interactions with Saturn and tidal forces, geophysicist Alyssa Rhoden and colleagues have proposed that this wobble could be due to a liquid ocean moving beneath the moon’s icy surface. The researchers believe other moons should be examined to see if they too might have oceans hidden beneath their surfaces.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Rhoden and colleagues were the first to confirm that several of Saturn’s moons contain hidden oceans.',
+      'Research has failed to identify signs that there is an ocean hidden beneath the surface of Mimas.',
+      'Rhoden and colleagues created a new computer model that identifies moons with hidden oceans without needing to analyze the moons’ rotation.',
+      'Research has revealed that an oddity in the rotation of Mimas could be explained by an ocean hidden beneath its surface.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text describes how an unusual wobble in Mimas\'s rotation could be explained by an ocean moving beneath its icy crust.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an astronomical passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3a1f02b0',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is adapted from Frances Hodgson Burnett’s 1911 novel The Secret Garden. Mary, a young girl, recently found an overgrown hidden garden.\n\nMary was an odd, determined little person, and now she had something interesting to be determined about, she was very much absorbed, indeed. She worked and dug and pulled up weeds steadily, only becoming more pleased with her work every hour instead of tiring of it. It seemed to her like a fascinating sort of play.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Mary hides in the garden to avoid doing her chores.',
+      'Mary is getting bored with pulling up so many weeds in the garden.',
+      'Mary is clearing out the garden to create a space to play.',
+      'Mary feels very satisfied when she’s taking care of the garden.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because the text describes Mary being "very much absorbed" and "only becoming more pleased with her work every hour" while tending the garden, viewing it as fascinating play.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '23a7038f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Shimmering is a collective defense behavior that researchers have observed in giant honeybee colonies. When shimmering, different groups of bees flip their bodies up and down in what looks like waves. This defense is initiated when hornets hover near a colony, serving to deter the hornets from approaching the bees. Researchers hypothesize that this behavior is a specialized defense response to hornets, as it is not observed when other, larger predators approach the colony.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Researchers are unsure how giant honeybees defend against predators larger than hornets.',
+      'Researchers think that shimmering in giant honeybees is a specific defense against hornets.',
+      'Hornets are known to be the main predator of giant honeybees.',
+      'Several different species of insects use shimmering to defend against hornets.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text states that shimmering is initiated when hornets hover near the colony and hypothesizes that this behavior is a specialized defense response specific to hornets.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a biological passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7921b86b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Oluwaseyi Moejoh cofounded U-recycle Initiative Africa when she was only a teenager. Moejoh and her team founded the organization to teach young people how their actions affect the environment and why recycling is important. For example, the organization put on an exhibit of art made using recycled materials.\n\nAccording to the text, what is one reason Moejoh and others founded U-recycle Initiative Africa?',
+    options: [
+      'To bring attention to overlooked African artists',
+      'To teach young people why recycling is important',
+      'To help adults gain important outdoor skills',
+      'To give teenagers advice about starting businesses'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text explicitly states that Moejoh and her team founded the organization to "teach young people how their actions affect the environment and why recycling is important."',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an environmental passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'bbfa2bb6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Hevea brasiliensis, a tree in the Amazon rainforest, is the world’s main source of natural rubber. The tree produces a milky substance called latex that is used to make rubber. The bark of Hevea brasiliensis is helpful for the process of making rubber because it has a unique structure that makes it easy to collect latex. A network of tubes in the tree’s inner bark helps the latex to flow out easily when people make small cuts into the bark.\n\nWhat feature of Hevea brasiliensis does the text say is helpful for the process of making rubber?',
+    options: [
+      'Its latex produces rubber of an especially high quality.',
+      'Its bark has a unique structure that makes it easy to collect latex.',
+      'It is able to grow in a wide variety of climates around the world.',
+      'It is one of only two trees in the Amazon that produce latex.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer because the text states that the bark of Hevea brasiliensis "has a unique structure that makes it easy to collect latex" due to a network of inner tubes.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining key details in a scientific passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '706046f7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In the 1960s, Gloria Richardson led a movement to promote racial equality. Her involvement in this effort was inspired by her daughter, Donna Richardson. In 1961, Donna joined protests organized by the Student Nonviolent Coordinating Committee in Cambridge, Maryland. Following her daughter, Gloria joined these protests too. Gloria soon became the cochair of the Cambridge Nonviolent Action Committee. She was also the leader of what became known as the Cambridge movement.\n\nAccording to the text, what did Gloria Richardson lead?',
+    options: [
+      'The Cambridge movement',
+      'Her daughter Donna’s high school',
+      'Protests to support environmental protections',
+      'A new business in Cambridge, Maryland'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The text directly states that Gloria Richardson "was also the leader of what became known as the Cambridge movement."',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating historical and civil rights texts'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'dc5edbf6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Microplastics are pieces of plastic that are smaller than a grain of rice. These small plastics can be found in large quantities in ocean waters. Ecologist Jessica Reichert and her team are studying the role reef-building corals have in capturing microplastics from ocean waters. Through research, her team has found that these corals may be storing up to 20 million kilograms of microplastics each year in their skeletons and tissues.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Ecologists are interested in learning more about how certain corals build large reefs.',
+      'Questions remain around the impact certain corals have on ocean ecosystems.',
+      'Microplastics are small pieces of plastic that can be found in ocean waters.',
+      'Ecologists predict that corals store large amounts of microplastics from ocean waters.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because the passage focuses on research demonstrating that reef-building corals store substantial quantities (up to 20 million kg annually) of ocean microplastics in their skeletons and tissues.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating scientific studies and ecology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'd8758c3b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Psychologists wanted to test how young children think about rewards and fairness. In an experiment, two teachers handed out rewards while children (ages four to six) watched. The teachers gave out the same number of rewards, but one of them counted the rewards out loud. The children were then asked who was fairer. 73% chose the teacher who counted. The psychologists think that counting showed the children that the teacher wanted to be fair. The children may have believed that the teacher who did not count did not care about fairness.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Psychologists think children cannot understand the concept of fairness until they are six years old.',
+      'An experiment found that counting out loud is the best way to teach mathematical concepts to children.',
+      'Psychologists think young children expect to be rewarded when the children show that they care about fairness.',
+      'An experiment showed that the way rewards are given out may affect whether young children think the situation is fair.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text describes an experiment demonstrating that counting rewards aloud significantly influenced whether young children perceived the distribution as fair.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a psychological study'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '0e3b4967',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Scrapbooks of saved fabric pieces were commonly kept by women in the nineteenth-century United States, but few are as meticulously detailed as Hannah Ditzler Alspaugh’s work. Alongside each piece of fabric, Alspaugh recorded intimate memories, such as dressmaking with her sister. Additionally, she listed the prices and how she used the fabric. Historians note that by representing fifty years of changing textures, patterns, and dress styles, the scrapbook is a record of nineteenth-century textiles and dressmaking as well as Alspaugh’s life.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Alspaugh inspired other women to save pieces of fabric in scrapbooks and provide historical records of nineteenth-century fashions in the United States.',
+      'Historians rely on fabric scrapbooks to understand how fashions changed throughout the nineteenth-century United States.',
+      'Fabric scrapbooks were a popular hobby for many women in the nineteenth-century United States.',
+      'Alspaugh’s scrapbook provides a detailed account of her life and historical record of fashion trends in the nineteenth-century United States.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because the text highlights how Hannah Ditzler Alspaugh\'s meticulously documented scrapbook serves as both an intimate personal record and a fifty-year historical chronicle of 19th-century American textiles and dressmaking.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating historical and cultural passages'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'ee41d7e0',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'Arthropods—brine shrimp, hawk moths, and many other invertebrate animals—have a nervous system made up of a brain, nerve cord, and other nerves. Researchers have gained insights about this system in ancient arthropods from traces found in various fossils. For example, in a study of two fossils of the extinct arthropod species Mollisonia symmetrica, Javier Ortega-Hernández, James Weaver, and team observed clear signs of a nerve cord. They also saw possible indications of a synganglion, a brain-like mass of nerves. Researchers hope to identify more features of the nervous systems of prehistoric arthropods as additional fossils are found.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'There are several similarities between the brains of hawk moths and the brains of brine shrimp.',
+      'Fossil evidence can contribute to the understanding of the nervous system in ancient arthropods.',
+      'Newly discovered fossils suggest that ancient hawk moths and ancient brine shrimp had spines.',
+      'Researchers need to focus on finding more fossils of ancient arthropods.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text describes how fossil traces (such as nerve cords and synganglia in Mollisonia symmetrica) provide crucial insights into the nervous systems of ancient arthropods.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of a paleontological passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '41d5c33e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from Beatrice Harraden’s 1894 novel Ships that Pass in the Night.\n\nIn an old second-hand bookshop in London, an old man sat reading Gibbon’s History of Rome. He did not put down his book when the postman brought him a letter. He just glanced indifferently at the letter, and impatiently at the postman. Zerviah Holme did not like to be interrupted when he was reading Gibbon; and as he was always reading Gibbon, an interruption was always regarded by him as an insult.\n\nBased on the text, how did Zerviah Holme most likely feel when the letter was delivered?',
+    options: [
+      'He felt relieved because he had been expecting an important letter.',
+      'He felt excited because the letter was from a good friend.',
+      'He felt sad because the postman did not stop to talk with him before leaving.',
+      'He felt annoyed because he was interrupted while reading his favorite author.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text states that Holme "did not like to be interrupted when he was reading Gibbon" and regarded interruptions as "an insult," glancing impatiently at the postman.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining character emotions in a literary passage'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f2208f98',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'When Kenyan writer Ngũgĩ wa Thiong’o, who had previously published four novels in English, began writing in his native language, Gĩkũyũ, in the 1970s, several fellow writers and critics cautioned that doing so might make his works inaccessible outside his own community. Some noted that Kiswahili—widely spoken in Kenya and elsewhere in Africa—would be a more practical choice. Rejecting their arguments, Ngũgĩ went on to author dozens of acclaimed works in Gĩkũyũ that have been translated into a total of more than thirty languages.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'The reaction to Ngũgĩ’s rejection of English illustrates that some literary experts believe that fame is most easily gained by writing in a widely understood language, such as Gĩkũyũ.',
+      'Although Ngũgĩ insisted on publishing his first works in Gĩkũyũ, they have since been translated into many other languages.',
+      'Although Ngũgĩ’s decision to write in Gĩkũyũ was met with some skepticism, it didn’t prevent him from achieving literary success.',
+      'In the 1970s, Ngũgĩ became convinced that literature ought to be written in authors’ native languages, and he proceeded to publish many works in Gĩkũyũ.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The passage explains that despite critics warning that writing in Gĩkũyũ would limit his audience, Ngũgĩ\'s Gĩkũyũ works went on to achieve immense acclaim and were translated into over thirty languages.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When determining the main idea of an African literature biography'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '748995b3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'In the 1700s and 1800s, European composers experimented with volume in their musical works. They did so by increasing the number of musicians playing in the orchestra. For example, in some of his operas, German composer Richard Wagner added more horns, trombones, and tubas to the orchestra. With more instruments playing at the same time, the orchestra could play extremely loudly at key moments in his operas.\n\nAccording to the text, how did Richard Wagner achieve moments of extremely high volume in his operas?',
+    options: [
+      'By moving the performances of his operas from outdoor stages to indoor ones',
+      'By increasing the number of musicians playing horns, trombones, and tubas in the orchestra',
+      'By building a concert hall whose shape would cause sounds to echo',
+      'By insisting that the singers undergo special training to sing for extended periods of time'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text states that Wagner added more brass instruments (horns, trombones, and tubas) to his orchestra so that more instruments playing simultaneously produced extremely high volume.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When identifying specific factual details in an informational text'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'a842db60',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'To make her art more widely available, graphic artist Elizabeth Catlett turned to linocuts. In linocut printing, an artist carves an image into a sheet of linoleum to create a stamp that is used to mass-produce prints. In the linocut series The Black Woman (1946–1947), Catlett depicts the everyday experiences of Black women alongside the achievements of well-known Black women. This pairing invites the viewer to draw connections among the women. The linocut process enabled Catlett’s work to reach a wide audience and supported her aim to unite Black women through her art.\n\nAccording to the text, what is significant about Catlett’s use of linocut printing?',
+    options: [
+      'Linocut printing involved using materials that were readily available to Catlett.',
+      'Linocut printing helped Catlett use art to connect people, especially Black women.',
+      'Catlett became commercially successful once she started using linocut printing.',
+      'Catlett was one of the first Black artists to use linocut printing.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text concludes by stating that linocut printing enabled Catlett\'s work to reach a broad audience and supported her objective of uniting Black women through shared art.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 12,
+      highlightedText: 'When evaluating artistic and cultural movements'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1e85caa9',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'beginner',
+    questionText: 'The following text is from Edith Nesbit’s 1902 novel Five Children and It. Five young siblings have just moved with their parents from London to a house in the countryside that they call the White House.\n\nIt was not really a pretty house at all; it was quite ordinary, and mother thought it was rather inconvenient, and was quite annoyed at there being no shelves, to speak of, and hardly a cupboard in the place. Father used to say that the ironwork on the roof and coping was like an architect’s nightmare. But the house was deep in the country, with no other house in sight, and the children had been in London for two years, without so much as once going to the seaside even for a day by an excursion train, and so the White House seemed to them a sort of Fairy Palace set down in an Earthly Paradise.\n\nWhich choice best states the main idea of the text?',
+    options: [
+      'Although their parents believe the house has several drawbacks, the children are enchanted by it.',
+      'The children don’t like the house nearly as much as their parents do.',
+      'Each member of the family admires a different characteristic of the house.',
+      'The house is beautiful and well built, but the children miss their old home in London.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The text contrasts the parents\' complaints about the inconvenient, flawed house with the children\'s wonder, viewing it as a "Fairy Palace" and "Earthly Paradise."',
     textbookRef: {
       textbookId: 'sat-rw-mastery',
       page: 12,
