@@ -1,6 +1,6 @@
 # AIES SAT — AI Prompts & System Instructions
 
-This document documents all system prompts, Gemini instructions, and AI heuristics used across the AIES SAT platform.
+This document documents all system prompts, Gemini instructions, heuristics, and pedagogical rules used across the AIES SAT platform.
 
 ---
 
@@ -16,11 +16,13 @@ Section: {section}
 Total Questions: {totalQuestions}, Correct: {correctCount}
 Average Latency per item: {avgLatency}s
 Revisited count: {revisitedCount}
+5-Finger Flags: {fiveFingerCount} ({luckyGuesses} lucky guesses, {skillGaps} skill gaps)
+Bookmarked Errors vs Blindspots: {bookmarkedErrors} expected vs {unbookmarkedErrors} careless mistakes
 
 Generate a concise, constructive, and highly motivating narrative report (3-4 paragraphs) covering:
 1. Executive Summary: Overall placement baseline and readiness.
 2. Domain-by-Domain Breakdown: Strengths and high-yield areas for rapid score improvement.
-3. Cognitive Pacing & Strategy: Notes on speed, confidence, and whether revisiting questions helped or hurt.
+3. Cognitive Pacing & Strategy: Notes on speed, confidence, 5-Finger discipline, and whether revisiting questions helped or hurt.
 4. Recommended Next Steps: 2-3 specific action items in the AIES Practice Studio and Textbook Library.
 
 Tone: Professional, encouraging, rigorous, and student-first.
@@ -68,7 +70,19 @@ Rules:
 
 ---
 
-## 4. Real-time Emotional & Cognitive Latency Heuristic
+## 4. 5-Finger Formula & Metacognitive Error Heuristics
+**Location**: `src/components/sat/FiveFingerWidget.tsx` / `src/pages/student/sat/SatScores.tsx`  
+**Purpose**: Embed test-day metacognitive discipline during Module 1.
+
+- **5-Finger Rule**: In Module 1, students can flag up to 5 questions where they experience friction (Time sink, Between two choices, Unknown concept, Trap answer).
+- **Hard Module 2 Gateway**: If $\le 5$ errors occur in Module 1, student qualifies for Hard Module 2 (unlocking 600–800 score potential). If $> 5$ errors, student routes to Easy Module 2 with a $\sim 600$ score cap warning.
+- **Lucky Guesses**: Flagged with 5-Finger AND answered correctly. Flagged for concept review rather than assuming mastery.
+- **Expected Errors**: Bookmarked for review AND answered incorrectly (conscious risk management).
+- **Careless Blindspots**: Not bookmarked AND answered incorrectly (targeted for work verification habits).
+
+---
+
+## 5. Real-time Emotional & Cognitive Latency Heuristic
 **Location**: `src/utils/empathy-engine.ts`  
 **Purpose**: Map latency spikes, retries, and rapid changes to cognitive load and emotional valence.
 
