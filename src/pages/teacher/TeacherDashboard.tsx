@@ -6,6 +6,7 @@ import { collection, limit, onSnapshot, orderBy, query, Timestamp } from 'fireba
 import { useAppContext } from '../../context/AppContext';
 import { db } from '../../lib/firebase';
 import VoiceInput from '../../components/shared/VoiceInput';
+import { LessonContent } from '../../components/shared/LessonContent';
 
 type Reading = { userId: string; bpm: number; recordedAt?: Timestamp; clientRecordedAt?: string };
 
@@ -308,18 +309,26 @@ export default function TeacherDashboard() {
           </button>
         </div>
         {searchResult && (
-          <div className="mt-4 p-4 bg-neutral-50 rounded-2xl text-sm whitespace-pre-wrap border border-neutral-200">
-            {searchResult}
+          <div className="mt-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 text-neutral-800 space-y-4">
+            <LessonContent content={searchResult} />
             {searchSources.length > 0 && (
-              <ul className="mt-3 list-disc pl-5">
-                {searchSources.map((source, index) => (
-                  <li key={index}>
-                    <a href={source.uri} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      {source.title}
+              <div className="pt-3 border-t border-neutral-200">
+                <p className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Grounded Sources:</p>
+                <div className="flex flex-wrap gap-2">
+                  {searchSources.map((source, index) => (
+                    <a
+                      key={index}
+                      href={source.uri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-blue-50 border border-neutral-200 hover:border-blue-300 text-blue-600 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>{source.title}</span>
                     </a>
-                  </li>
-                ))}
-              </ul>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         )}

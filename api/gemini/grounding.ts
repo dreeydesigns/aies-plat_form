@@ -6,20 +6,70 @@ type ApiResponse = { status: (status: number) => ApiResponse; json: (body: unkno
 // Curated SAT Grounding Knowledge Base Fallback
 const SAT_KNOWLEDGE_FALLBACKS: Record<string, { result: string; sources: Array<{ title: string; uri: string }> }> = {
   semicolon: {
-    result: `### SAT Standard English Conventions: Rules of the Semicolon (;)\n\nOn the Digital SAT, the semicolon is tested frequently under **Boundaries & Sentence Structure**. Here are the essential rules to remember:\n\n1. **Joining Two Independent Clauses**\n   - A semicolon connects two complete, grammatically independent thoughts without a coordinating conjunction (FANBOYS: *for, and, nor, but, or, yet, so*).\n   - *Structure:* [Independent Clause] ; [Independent Clause]\n   - *Example:* "The student completed her adaptive diagnostic**;** she was placed into the advanced algebra tier."\n\n2. **Semicolon + Transitional Adverbs (Conjunctives)**\n   - When connecting two independent clauses using words like *however, therefore, moreover, furthermore, consequently, nevertheless*:\n   - *Structure:* [Independent Clause] ; *however*, [Independent Clause]\n   - *Example:* "The math module was challenging**; however,** she scored 780 by managing her time with the 5-Finger strategy."\n\n3. **Separating Complex List Items (Super-Commas)**\n   - Semicolons separate items in a series when the list items already contain internal commas.\n   - *Example:* "The test centers were located in Nairobi, Kenya**;** Lagos, Nigeria**;** and Accra, Ghana."\n\n**Common SAT Trap:** A semicolon cannot link an independent clause to a dependent fragment (e.g., "Although she studied hard; she was tired" is INCORRECT).`,
+    result: `### SAT Standard English Conventions: Rules of the Semicolon (;)
+
+On the Digital SAT, the semicolon is tested under **Boundaries & Sentence Structure**. Master these core rules:
+
+#### 1. Joining Two Independent Clauses
+- A semicolon links two complete, grammatically independent thoughts without a coordinating conjunction (FANBOYS: *for, and, nor, but, or, yet, so*).
+- **Structure:** \`[Independent Clause] ; [Independent Clause]\`
+- **Example:** "The student completed her adaptive diagnostic**;** she was placed into the advanced algebra tier."
+
+#### 2. Semicolon + Transitional Adverbs (Conjunctives)
+- When connecting two independent clauses with transitional words like *however, therefore, moreover, furthermore, consequently, nevertheless*:
+- **Structure:** \`[Independent Clause] ; however, [Independent Clause]\`
+- **Example:** "The math module was challenging**; however,** she scored 780 by managing her pacing with the 5-Finger strategy."
+
+#### 3. Separating Complex List Items (Super-Commas)
+- Semicolons separate items in a series when individual list items already contain internal commas.
+- **Example:** "The test centers were located in Nairobi, Kenya**;** Lagos, Nigeria**;** and Accra, Ghana."
+
+> **⚠️ Common SAT Trap:** A semicolon cannot link an independent clause to a dependent clause or fragment (e.g., *"Although she studied hard; she was tired"* is grammatically incorrect).`,
     sources: [
       { title: "Mastering Digital SAT Reading & Writing (Textbook Ch. 4)", uri: "/student/sat/textbooks" },
-      { title: "College Board SAT Writing Conventions Guide", uri: "https://satsuite.collegeboard.org" }
+      { title: "Official College Board SAT Grammar Guidelines", uri: "https://satsuite.collegeboard.org" }
     ]
   },
   comma: {
-    result: `### SAT Rules for Commas (,)\n\n1. **FANBOYS + Comma:** Use a comma before coordinating conjunctions (*for, and, nor, but, or, yet, so*) connecting two independent clauses.\n2. **Introductory Modifiers:** Place a comma after introductory dependent clauses or participial phrases.\n3. **Non-Essential Clauses (Appositives):** Surround non-essential information with a pair of commas.\n4. **Comma Splice Warning:** Never join two independent clauses with only a comma!`,
+    result: `### SAT Standard English Conventions: Rules for Commas (,)
+
+#### 1. FANBOYS + Comma
+Use a comma before a coordinating conjunction (*for, and, nor, but, or, yet, so*) when connecting two independent clauses.
+- **Example:** "The timer was running**, but** the student remained calm."
+
+#### 2. Introductory Dependent Clauses & Modifiers
+Place a comma after introductory phrases or dependent clauses.
+- **Example:** "After finishing Module 1**, she reviewed her flagged questions."
+
+#### 3. Non-Essential Information (Appositives)
+Surround non-essential clauses or parenthetical information with a pair of commas.
+- **Example:** "Desmos**, the built-in graphing tool**, is available on all SAT Math modules."
+
+> **⚠️ Common SAT Trap (Comma Splice):** Never connect two independent clauses with only a comma without a FANBOYS conjunction!`,
     sources: [
-      { title: "SAT Grammar & Conventions Handbook", uri: "/student/sat/textbooks" }
+      { title: "SAT Grammar & Conventions Handbook", uri: "/student/sat/textbooks" },
+      { title: "College Board SAT Conventions Guide", uri: "https://satsuite.collegeboard.org" }
     ]
   },
   quadratic: {
-    result: `### SAT Math: Quadratic Equations & Parabolas\n\n1. **Standard Form:** $y = ax^2 + bx + c$\n   - Vertex x-coordinate: $x = -\\frac{b}{2a}$\n   - y-intercept: $(0, c)$\n\n2. **Vertex Form:** $y = a(x - h)^2 + k$\n   - Vertex coordinates: $(h, k)$ (maximum or minimum value is $k$).\n\n3. **Factored Form:** $y = a(x - r_1)(x - r_2)$\n   - x-intercepts / zeros: $r_1$ and $r_2$.\n\n4. **Discriminant Rule:** $D = b^2 - 4ac$\n   - $D > 0$: 2 real solutions / 2 x-intercepts.\n   - $D = 0$: 1 real solution / tangent to x-axis.\n   - $D < 0$: 0 real solutions / no x-intercepts.`,
+    result: `### SAT Math: Quadratic Equations & Parabolas
+
+#### 1. Standard Form: $y = ax^2 + bx + c$
+- **Vertex x-coordinate:** $x = -\\frac{b}{2a}$
+- **y-intercept:** $(0, c)$
+
+#### 2. Vertex Form: $y = a(x - h)^2 + k$
+- **Vertex coordinates:** $(h, k)$
+- Maximum or minimum value of the function is $k$.
+
+#### 3. Factored (Intercept) Form: $y = a(x - r_1)(x - r_2)$
+- **x-intercepts (zeros / roots):** $r_1$ and $r_2$
+- **Axis of symmetry:** $x = \\frac{r_1 + r_2}{2}$
+
+#### 4. The Discriminant Rule: $D = b^2 - 4ac$
+- **$D > 0$:** 2 distinct real solutions (2 x-intercepts)
+- **$D = 0$:** 1 real solution (tangent to x-axis / vertex on axis)
+- **$D < 0$:** 0 real solutions (no x-intercepts)`,
     sources: [
       { title: "Foundations of SAT Math (Textbook Ch. 2)", uri: "/student/sat/textbooks" },
       { title: "Desmos SAT Graphing Guide", uri: "https://www.desmos.com/calculator" }
@@ -36,7 +86,21 @@ function getFallbackResponse(query: string): { result: string; sources: Array<{ 
   }
 
   return {
-    result: `### SAT Educational Concept Summary: "${query}"\n\nHere is the core foundational strategy for **${query}** on the Digital SAT:\n\n1. **Core Concept Overview:**\n   - Master the foundational principles in this domain to optimize your score.\n   - Pay close attention to question stem wording and eliminate standard trap answers.\n\n2. **Test-Day Strategy:**\n   - Use the **5-Finger Formula** during Module 1 if this question type causes hesitation.\n   - Manage pacing: spend no more than 75 seconds per question on the first pass.\n\n3. **Recommended Next Steps:**\n   - Launch **Practice Studio** to work through targeted drills in this skill area.\n   - Consult the **AIES Curated SAT Textbooks** for detailed worked examples and line references.`,
+    result: `### SAT Educational Concept Summary: "${query}"
+
+Here are the core test-taking principles and strategies for **${query}** on the Digital SAT:
+
+#### 1. Foundational Concept Mastery
+- Master the core rules, definitions, and theorems in this domain to ensure speed and accuracy on test day.
+- Pay strict attention to question stems: identify what is being asked before jumping to calculations.
+
+#### 2. Test-Day Execution & 5-Finger Strategy
+- Use the **5-Finger Formula** during Module 1 if this question type causes hesitation or takes longer than 75 seconds.
+- Eliminate obvious trap answers (e.g., sign errors, partial solutions) before selecting your final answer.
+
+#### 3. Recommended Remediation
+- Launch the **Practice Studio** to work through targeted drills in this specific domain.
+- Review related chapters in the **Curated SAT Textbooks** for worked step-by-step examples.`,
     sources: [
       { title: "AIES SAT Knowledge & Remediation Engine", uri: "/student/sat/practice" },
       { title: "AIES Curated Textbook Reader", uri: "/student/sat/textbooks" }

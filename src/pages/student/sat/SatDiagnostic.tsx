@@ -27,6 +27,7 @@ import {
   AlertTriangle,
   HelpCircle
 } from 'lucide-react';
+import { LessonContent } from '../../../components/shared/LessonContent';
 
 const domainNames: Record<SatDomain, string> = {
   'algebra': 'Algebra',
@@ -645,8 +646,8 @@ export default function SatDiagnostic() {
               Synthesizing adaptive cognitive performance...
             </div>
           ) : (
-            <div className="prose prose-sm text-neutral-700 leading-relaxed whitespace-pre-line">
-              {aiReportNarrative}
+            <div className="text-neutral-800 leading-relaxed">
+              <LessonContent content={aiReportNarrative} />
             </div>
           )}
         </div>
