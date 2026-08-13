@@ -8,6 +8,7 @@ import DesmosCalculator from '../../../components/sat/DesmosCalculator';
 import EmpathyResetModal from '../../../components/sat/EmpathyResetModal';
 import LevelUpModal from '../../../components/sat/LevelUpModal';
 import DataLightBanner from '../../../components/sat/DataLightBanner';
+import SprInput from '../../../components/sat/SprInput';
 import { 
   Calculator, 
   ArrowRight, 
@@ -22,7 +23,8 @@ import {
   SlidersHorizontal,
   ExternalLink,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  Bookmark
 } from 'lucide-react';
 
 const domainDetails: Record<SatDomain, { name: string; section: 'math' | 'reading-writing'; color: string }> = {
@@ -50,16 +52,21 @@ export default function SatPractice() {
   const [questionPool, setQuestionPool] = useState<SatQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [sprAnswer, setSprAnswer] = useState<string>('');
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isFiveFinger, setIsFiveFinger] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Session answer history
   const [sessionAnswers, setSessionAnswers] = useState<Array<{
     questionId: string;
-    selected: number;
+    selected: number | string;
     correct: boolean;
     timeSeconds: number;
     revisited: boolean;
     domain: SatDomain;
+    bookmarked: boolean;
+    fiveFinger: boolean;
   }>>([]);
 
   // Telemetry & Latency
@@ -125,18 +132,32 @@ export default function SatPractice() {
   };
 
   const handleSubmitAnswer = async () => {
-    if (selectedOption === null || !currentQuestion || isSubmitted) return;
+    if (!currentQuestion || isSubmitted) return;
 
-    const isCorrect = selectedOption === currentQuestion.correctAnswer;
+    let isCorrect = false;
+    let chosenVal: number | string = '';
+
+    if (currentQuestion.isSPR) {
+      if (!sprAnswer.trim()) return;
+      chosenVal = sprAnswer.trim();
+      isCorrect = String(currentQuestion.correctAnswer).trim() === sprAnswer.trim();
+    } else {
+      if (selectedOption === null) return;
+      chosenVal = selectedOption;
+      isCorrect = selectedOption === currentQuestion.correctAnswer;
+    }
+
     setIsSubmitted(true);
 
     const record = {
       questionId: currentQuestion.id,
-      selected: selectedOption,
+      selected: chosenVal,
       correct: isCorrect,
       timeSeconds: timeSpent,
       revisited: false,
-      domain: currentQuestion.domain
+      domain: currentQuestion.domain,
+      bookmarked: isBookmarked,
+      fiveFinger: isFiveFinger
     };
 
     const updatedSession = [...sessionAnswers, record];
@@ -184,6 +205,9 @@ export default function SatPractice() {
     if (currentIdx < questionPool.length - 1) {
       setCurrentIdx(prev => prev + 1);
       setSelectedOption(null);
+      setSprAnswer('');
+      setIsBookmarked(false);
+      setIsFiveFinger(false);
       setIsSubmitted(false);
       setTimeSpent(0);
     } else {
@@ -191,6 +215,9 @@ export default function SatPractice() {
       setQuestionPool(buildQuestionPool(practiceMode, selectedDomain));
       setCurrentIdx(0);
       setSelectedOption(null);
+      setSprAnswer('');
+      setIsBookmarked(false);
+      setIsFiveFinger(false);
       setIsSubmitted(false);
       setTimeSpent(0);
     }
@@ -199,6 +226,10 @@ export default function SatPractice() {
   // Find referenced textbook
   const textbookRef = currentQuestion?.textbookRef;
   const referencedBook = textbookRef ? initialTextbooks.find(b => b.id === textbookRef.textbookId) : null;
+
+  const isCurrentCorrect = currentQuestion?.isSPR
+    ? String(currentQuestion.correctAnswer).trim() === sprAnswer.trim()
+    : selectedOption === currentQuestion?.correctAnswer;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-2">
@@ -290,7 +321,20 @@ export default function SatPractice() {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsBookmarked(!isBookmarked)}
+                className={`p-2 rounded-xl border text-xs font-bold transition-colors ${
+                  isBookmarked
+                    ? 'bg-blue-600 text-white border-blue-700'
+                    : 'bg-white text-neutral-500 border-neutral-300 hover:bg-neutral-50'
+                }`}
+                title="Mark for review"
+              >
+                <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white' : ''}`} />
+              </button>
+
               {currentQuestion.section === 'math' && (
                 <button
                   onClick={() => setIsCalculatorOpen(true)}
@@ -313,64 +357,80 @@ export default function SatPractice() {
               {currentQuestion.questionText}
             </div>
 
-            {/* Options */}
-            <div className="space-y-3">
-              {currentQuestion.options.map((option, idx) => {
-                const isSelected = selectedOption === idx;
-                const isCorrectAnswer = idx === currentQuestion.correctAnswer;
-                const letter = String.fromCharCode(65 + idx);
+            {/* Options or SPR Input */}
+            {currentQuestion.isSPR ? (
+              <div className="pt-2">
+                <SprInput
+                  value={sprAnswer}
+                  onChange={setSprAnswer}
+                  disabled={isSubmitted}
+                  onEnterSubmit={handleSubmitAnswer}
+                />
+                {isSubmitted && (
+                  <div className="mt-3 p-3 rounded-xl bg-neutral-100 text-xs font-mono font-bold text-neutral-800">
+                    Correct Answer: {String(currentQuestion.correctAnswer)}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {currentQuestion.options.map((option, idx) => {
+                  const isSelected = selectedOption === idx;
+                  const isCorrectAnswer = idx === currentQuestion.correctAnswer;
+                  const letter = String.fromCharCode(65 + idx);
 
-                let cardStyle = 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800';
-                if (isSubmitted) {
-                  if (isCorrectAnswer) {
-                    cardStyle = 'border-emerald-600 bg-emerald-50 text-emerald-950 font-semibold';
-                  } else if (isSelected && !isCorrectAnswer) {
-                    cardStyle = 'border-red-500 bg-red-50 text-red-950 font-semibold';
-                  } else {
-                    cardStyle = 'border-neutral-200 opacity-60 bg-neutral-50';
+                  let cardStyle = 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800';
+                  if (isSubmitted) {
+                    if (isCorrectAnswer) {
+                      cardStyle = 'border-emerald-600 bg-emerald-50 text-emerald-950 font-semibold';
+                    } else if (isSelected && !isCorrectAnswer) {
+                      cardStyle = 'border-red-500 bg-red-50 text-red-950 font-semibold';
+                    } else {
+                      cardStyle = 'border-neutral-200 opacity-60 bg-neutral-50';
+                    }
+                  } else if (isSelected) {
+                    cardStyle = 'border-blue-600 bg-blue-50/70 text-blue-950 font-semibold';
                   }
-                } else if (isSelected) {
-                  cardStyle = 'border-blue-600 bg-blue-50/70 text-blue-950 font-semibold';
-                }
 
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    disabled={isSubmitted}
-                    onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3.5 ${cardStyle}`}
-                  >
-                    <span
-                      className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
-                        isSubmitted && isCorrectAnswer
-                          ? 'bg-emerald-600 text-white'
-                          : isSubmitted && isSelected
-                          ? 'bg-red-500 text-white'
-                          : isSelected
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-neutral-100 text-neutral-600'
-                      }`}
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      disabled={isSubmitted}
+                      onClick={() => handleSelectOption(idx)}
+                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3.5 ${cardStyle}`}
                     >
-                      {letter}
-                    </span>
-                    <span className="text-sm md:text-base pt-0.5">{option}</span>
-                  </button>
-                );
-              })}
-            </div>
+                      <span
+                        className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                          isSubmitted && isCorrectAnswer
+                            ? 'bg-emerald-600 text-white'
+                            : isSubmitted && isSelected
+                            ? 'bg-red-500 text-white'
+                            : isSelected
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-neutral-100 text-neutral-600'
+                        }`}
+                      >
+                        {letter}
+                      </span>
+                      <span className="text-sm md:text-base pt-0.5">{option}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Wrong Answer / Correct Answer Remediation Panel */}
             {isSubmitted && (
               <div
                 className={`p-6 rounded-2xl border ${
-                  selectedOption === currentQuestion.correctAnswer
+                  isCurrentCorrect
                     ? 'bg-emerald-50/80 border-emerald-200 text-emerald-950'
                     : 'bg-amber-50/80 border-amber-200 text-amber-950'
                 } space-y-4`}
               >
                 <div className="flex items-center gap-2 font-bold text-sm">
-                  {selectedOption === currentQuestion.correctAnswer ? (
+                  {isCurrentCorrect ? (
                     <>
                       <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                       <span>Correct! Excellent Application of Concept</span>
@@ -426,7 +486,7 @@ export default function SatPractice() {
             {!isSubmitted ? (
               <button
                 onClick={handleSubmitAnswer}
-                disabled={selectedOption === null}
+                disabled={currentQuestion.isSPR ? !sprAnswer.trim() : selectedOption === null}
                 className="px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 font-bold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
               >
                 Check Answer

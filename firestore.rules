@@ -176,5 +176,16 @@ service cloud.firestore {
       allow create: if isSignedIn();
       allow update, delete: if hasRole('admin');
     }
+
+    match /fiveFingerLogs/{logId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.userId) ||
+        isParentOf(resource.data.userId) ||
+        hasRole('teacher') ||
+        hasRole('admin')
+      );
+      allow create: if isSignedIn();
+      allow update, delete: if hasRole('admin');
+    }
   }
 }

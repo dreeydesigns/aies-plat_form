@@ -75,8 +75,9 @@ export interface SatQuestion {
   skill: string;               // e.g., "linear equations in one variable"
   difficulty: 'beginner' | 'intermediate' | 'expert';
   questionText: string;
-  options: string[];           // 4 options
-  correctAnswer: number;       // index into options (0-3)
+  options: string[];           // 4 options (empty or optional if isSPR)
+  correctAnswer: number | string; // index into options (0-3) or string for SPR questions
+  isSPR?: boolean;
   explanation: string;
   textbookRef?: {
     textbookId: string;
@@ -85,18 +86,29 @@ export interface SatQuestion {
   };
   createdAt: string;
   createdBy: string;           // teacher/admin uid
+  stats?: {
+    attempts: number;
+    correct: number;
+  };
 }
 
 export interface SatDiagnosticSession {
   id: string;
   userId: string;
   section: 'math' | 'reading-writing';
+  module1Questions?: string[];
+  module2Questions?: string[];
+  module2Difficulty?: 'easy' | 'standard' | 'hard';
   moduleResults: Array<{
     questionId: string;
     correct: boolean;
     timeSeconds: number;
     revisited: boolean;       // true if student went back after moving on
+    bookmarked?: boolean;
+    fiveFinger?: boolean;
+    fiveFingerReason?: 'too-slow' | 'between-two' | 'dont-know' | 'trap-answer' | 'other';
     selectedOption?: number;
+    chosenAnswer?: number | string;
   }>;
   placementByDomain: Record<SatDomain, 'beginner' | 'intermediate' | 'expert'>;
   aiSummary?: string;
@@ -111,10 +123,12 @@ export interface SatPracticeSession {
   questions: string[];         // question IDs
   answers: Array<{
     questionId: string;
-    selected: number;
+    selected: number | string;
     correct: boolean;
     timeSeconds: number;
     revisited: boolean;
+    bookmarked?: boolean;
+    fiveFinger?: boolean;
   }>;
   startedAt: string;
   completedAt?: string;
@@ -127,17 +141,32 @@ export interface SatPracticeTest {
   mode: 'math' | 'english' | 'full';
   sections: Array<{
     section: 'math' | 'reading-writing';
-    module: number;            // 1 or 2
+    module: 1 | 2;
     questions: string[];
     timeLimitSeconds: number;
     startedAt?: string;
     submittedAt?: string;
     rawScore?: number;
     estimatedScaledScore?: number;
-    answers?: Record<string, { selected: number; flagged?: boolean; timeSeconds?: number }>;
+    answers?: Record<string, { selected: number | string; flagged?: boolean; timeSeconds?: number; fiveFinger?: boolean; fiveFingerReason?: string }>;
   }>;
   totalEstimatedScore?: number;
   completedAt?: string;
+}
+
+export interface FiveFingerLog {
+  id: string;
+  userId: string;
+  sessionId: string;
+  module: 1 | 2;
+  fingers: Array<{
+    questionId: string;
+    reason: string;
+    wasCorrect: boolean;
+    timeSeconds: number;
+  }>;
+  extraFingers?: Array<{ questionId: string; reason: string }>;
+  createdAt: string;
 }
 
 export interface TextbookPage {

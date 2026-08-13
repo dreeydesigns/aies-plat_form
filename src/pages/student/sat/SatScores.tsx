@@ -220,6 +220,53 @@ export default function SatScores() {
         </div>
       </div>
 
+      {/* 5-Finger & Metacognitive Error Analysis */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex items-center gap-2 font-bold text-neutral-900 text-base">
+            <span className="text-xl">✋</span>
+            5-Finger Strategy Diagnostic History
+          </div>
+          <p className="text-xs text-neutral-500">
+            Metacognitive tracking of struggle points flagged during Module 1 sessions.
+          </p>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs font-semibold p-3 bg-neutral-50 rounded-xl">
+              <span>Avg Module 1 Flags Used:</span>
+              <span className="font-bold text-neutral-900">2.4 / 5</span>
+            </div>
+            <div className="flex justify-between text-xs font-semibold p-3 bg-emerald-50 text-emerald-900 rounded-xl">
+              <span>Lucky Guesses (Flagged & Correct):</span>
+              <span className="font-bold text-emerald-700">38% of flags</span>
+            </div>
+            <div className="flex justify-between text-xs font-semibold p-3 bg-amber-50 text-amber-900 rounded-xl">
+              <span>Confirmed Skill Gaps (Flagged & Wrong):</span>
+              <span className="font-bold text-amber-700">62% of flags</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex items-center gap-2 font-bold text-neutral-900 text-base">
+            <Target className="w-5 h-5 text-indigo-600" />
+            Error Categorization Matrix
+          </div>
+          <p className="text-xs text-neutral-500">
+            Comparing bookmarked struggles against unbookmarked blind spots.
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-blue-50 text-blue-900 rounded-xl text-xs flex justify-between items-center font-semibold">
+              <span>Expected Struggles (Bookmarked & Wrong):</span>
+              <span className="font-bold text-blue-800">44%</span>
+            </div>
+            <div className="p-3 bg-red-50 text-red-900 rounded-xl text-xs flex justify-between items-center font-semibold">
+              <span>Careless Blindspots (Not Bookmarked & Wrong):</span>
+              <span className="font-bold text-red-800">56%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Test History Log Table */}
       {scoreStats.testHistory.length > 0 && (
         <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">

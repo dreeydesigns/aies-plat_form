@@ -6,6 +6,8 @@ import { calculateScaledScore, calculateTotalScore, SAT_DISCLAIMER } from '../..
 import { SatQuestion, SatDomain, SatPracticeTest } from '../../../types';
 import DesmosCalculator from '../../../components/sat/DesmosCalculator';
 import EmpathyResetModal from '../../../components/sat/EmpathyResetModal';
+import FiveFingerWidget, { FiveFingerReason } from '../../../components/sat/FiveFingerWidget';
+import SprInput from '../../../components/sat/SprInput';
 import { 
   Calculator, 
   Clock, 
@@ -21,12 +23,13 @@ import {
   Eye, 
   EyeOff, 
   Grid,
-  ShieldCheck
+  ShieldCheck,
+  Bookmark
 } from 'lucide-react';
 
 interface TestSectionConfig {
   section: 'reading-writing' | 'math';
-  moduleNumber: number;
+  moduleNumber: 1 | 2;
   timeLimitSeconds: number;
   questions: SatQuestion[];
 }
@@ -71,7 +74,13 @@ export default function SatTestRunner() {
   const [isTestFinished, setIsTestFinished] = useState(false);
 
   // User answers & flags: key is questionId
-  const [answers, setAnswers] = useState<Record<string, { selected: number; flagged?: boolean; timeSeconds?: number }>>({});
+  const [answers, setAnswers] = useState<Record<string, {
+    selected: number | string;
+    flagged?: boolean;
+    timeSeconds?: number;
+    fiveFinger?: boolean;
+    fiveFingerReason?: string;
+  }>>({});
   
   // Timer state
   const [timeRemaining, setTimeRemaining] = useState<number>(35 * 60);
@@ -112,17 +121,6 @@ export default function SatTestRunner() {
   const handleTimeExpired = () => {
     // Automatically submit active section
     handleNextSection();
-  };
-
-  const handleSelectAnswer = (optionIdx: number) => {
-    if (!activeQuestion) return;
-    setAnswers(prev => ({
-      ...prev,
-      [activeQuestion.id]: {
-        ...prev[activeQuestion.id],
-        selected: optionIdx
-      }
-    }));
   };
 
   const handleToggleFlag = () => {
@@ -352,8 +350,8 @@ export default function SatTestRunner() {
                     <span className="text-xs font-bold">Q{idx + 1}</span>
                     {isFlagged && <Flag className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />}
                   </div>
-                  <span className="text-xs font-extrabold">
-                    {isAnswered ? `Option ${String.fromCharCode(65 + ans.selected)}` : 'Unanswered'}
+                  <span className="text-xs font-extrabold truncate max-w-full">
+                    {isAnswered ? (typeof ans.selected === 'number' ? `Option ${String.fromCharCode(65 + ans.selected)}` : `Ans: ${ans.selected}`) : 'Unanswered'}
                   </span>
                 </button>
               );
@@ -387,11 +385,38 @@ export default function SatTestRunner() {
 
   const selectedAnswer = answers[activeQuestion.id]?.selected;
   const isFlagged = answers[activeQuestion.id]?.flagged;
+  const isFiveFinger = answers[activeQuestion.id]?.fiveFinger;
+  const fiveFingerReason = answers[activeQuestion.id]?.fiveFingerReason as FiveFingerReason | undefined;
+
+  // Count 5-Fingers in current module
+  const fiveFingersUsed = Object.values(answers).filter(a => a.fiveFinger).length;
+
+  const handleSelectAnswer = (val: number | string) => {
+    if (!activeQuestion) return;
+    setAnswers(prev => ({
+      ...prev,
+      [activeQuestion.id]: {
+        ...prev[activeQuestion.id],
+        selected: val
+      }
+    }));
+  };
+
+  const handleToggleFiveFinger = (questionId: string, reason?: FiveFingerReason) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: {
+        ...prev[questionId],
+        fiveFinger: reason !== undefined,
+        fiveFingerReason: reason
+      }
+    }));
+  };
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-2">
       {/* Top Test Navigation Bar */}
-      <div className="bg-neutral-900 text-white rounded-2xl p-4 flex items-center justify-between shadow-md">
+      <div className="bg-neutral-900 text-white rounded-2xl p-4 flex items-center justify-between shadow-md gap-3">
         <div className="flex items-center gap-3">
           <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 bg-neutral-800 rounded">
             {activeConfig.section === 'math' ? 'Math' : 'Reading & Writing'} · Mod {activeConfig.moduleNumber}
@@ -401,7 +426,19 @@ export default function SatTestRunner() {
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* 5-Finger Formula Widget (Module 1 Only) */}
+          {activeConfig.moduleNumber === 1 && (
+            <FiveFingerWidget
+              currentQuestionId={activeQuestion.id}
+              isFlagged={Boolean(isFiveFinger)}
+              activeReason={fiveFingerReason}
+              usedCount={fiveFingersUsed}
+              maxFingers={5}
+              onToggleFinger={handleToggleFiveFinger}
+            />
+          )}
+
           {/* Timer Display & Toggle */}
           <div className="flex items-center gap-2">
             {!hideTimer ? (
@@ -428,7 +465,7 @@ export default function SatTestRunner() {
               className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-colors"
             >
               <Calculator className="w-3.5 h-3.5" />
-              Desmos
+              <span className="hidden sm:inline">Desmos</span>
             </button>
           )}
 
@@ -458,35 +495,44 @@ export default function SatTestRunner() {
           {activeQuestion.questionText}
         </div>
 
-        {/* Options */}
-        <div className="space-y-3 pt-2">
-          {activeQuestion.options.map((opt, idx) => {
-            const isSelected = selectedAnswer === idx;
-            const letter = String.fromCharCode(65 + idx);
+        {/* Options or SPR Input */}
+        {activeQuestion.isSPR ? (
+          <div className="pt-2">
+            <SprInput
+              value={typeof selectedAnswer === 'string' ? selectedAnswer : ''}
+              onChange={(val) => handleSelectAnswer(val)}
+            />
+          </div>
+        ) : (
+          <div className="space-y-3 pt-2">
+            {activeQuestion.options.map((opt, idx) => {
+              const isSelected = selectedAnswer === idx;
+              const letter = String.fromCharCode(65 + idx);
 
-            return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleSelectAnswer(idx)}
-                className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3.5 ${
-                  isSelected
-                    ? 'border-blue-600 bg-blue-50/70 text-blue-950 font-semibold'
-                    : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
-                }`}
-              >
-                <span
-                  className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
-                    isSelected ? 'bg-blue-600 text-white' : 'bg-neutral-100 text-neutral-600'
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleSelectAnswer(idx)}
+                  className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3.5 ${
+                    isSelected
+                      ? 'border-blue-600 bg-blue-50/70 text-blue-950 font-semibold'
+                      : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
                   }`}
                 >
-                  {letter}
-                </span>
-                <span className="text-sm md:text-base pt-0.5">{opt}</span>
-              </button>
-            );
-          })}
-        </div>
+                  <span
+                    className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                      isSelected ? 'bg-blue-600 text-white' : 'bg-neutral-100 text-neutral-600'
+                    }`}
+                  >
+                    {letter}
+                  </span>
+                  <span className="text-sm md:text-base pt-0.5">{opt}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Bottom Controls */}
