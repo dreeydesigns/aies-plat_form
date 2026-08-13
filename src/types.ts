@@ -184,6 +184,8 @@ export interface CognitiveProfile {
 
 export interface SatProfile {
   diagnosticCompleted?: boolean;
+  targetScore?: number;
+  targetTestDate?: string;
   placementByDomain?: Partial<Record<SatDomain, 'beginner' | 'intermediate' | 'expert'>>;
   practiceHistory?: Array<{
     domain: SatDomain;

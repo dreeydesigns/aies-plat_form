@@ -80,6 +80,7 @@ const SatPracticeTests = React.lazy(() => import('./pages/student/sat/SatPractic
 const SatTestRunner = React.lazy(() => import('./pages/student/sat/SatTestRunner'));
 const SatTextbooks = React.lazy(() => import('./pages/student/sat/SatTextbooks'));
 const SatAssignTest = React.lazy(() => import('./pages/teacher/sat/SatAssignTest'));
+const SatScores = React.lazy(() => import('./pages/student/sat/SatScores'));
 
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
   const { currentUser, userProfile } = useAppContext();
@@ -130,6 +131,7 @@ function AppContent() {
         <Route path="sat/tests" element={<SatPracticeTests />} />
         <Route path="sat/test-runner" element={<SatTestRunner />} />
         <Route path="sat/textbooks" element={<SatTextbooks />} />
+        <Route path="sat/scores" element={<SatScores />} />
         <Route path="courses/:courseId" element={<CourseView />} />
         <Route path="courses/:courseId/lessons/:lessonId" element={<LessonView />} />
         <Route path="leaderboard" element={<Leaderboard />} />
@@ -180,8 +182,6 @@ function AppContent() {
   );
 }
 
-import { AgeTierProvider } from './context/AgeTierContext';
-
 export default function App() {
   return (
     <ErrorBoundary>
@@ -190,12 +190,10 @@ export default function App() {
           <KeyboardShortcutsProvider>
             <ToastProvider>
               <AppProvider>
-                <AgeTierProvider>
-                  <NetworkBanner />
-                  <Router>
-                    <AppContent />
-                  </Router>
-                </AgeTierProvider>
+                <NetworkBanner />
+                <Router>
+                  <AppContent />
+                </Router>
               </AppProvider>
             </ToastProvider>
           </KeyboardShortcutsProvider>
