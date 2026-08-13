@@ -133,53 +133,71 @@ export default function StudentDashboard() {
         </div>
       </div>
 
-      {/* Teacher Retake Requests / Action Required Card */}
-      {pendingPrompts.length > 0 && (
-        <div className="bg-amber-50 rounded-3xl border border-amber-200 p-6 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-amber-900 font-bold text-lg">
-            <AlertCircle className="w-5 h-5 text-amber-600" />
-            Action Required: Teacher Retake Requests ({pendingPrompts.length})
+      {/* SAT PREPARATION HUB & ASSIGNED TESTS */}
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-neutral-900 text-white p-7 rounded-3xl shadow-lg space-y-5">
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 text-blue-200 rounded-full text-xs font-extrabold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              Digital SAT AI Engine
+            </div>
+            <h3 className="text-2xl font-black tracking-tight">AIES SAT Mastery Portal</h3>
+            <p className="text-xs text-neutral-300">
+              {userProfile?.satProfile?.diagnosticCompleted
+                ? 'Your adaptive placement is calibrated. Keep practicing to reach expert difficulty.'
+                : 'Take the free 2-stage adaptive diagnostic to establish your domain baseline.'}
+            </p>
           </div>
-          <div className="space-y-3">
-            {pendingPrompts.map(prompt => {
-              const targetCourse = courses.find(c => c.id === prompt.courseId || c.lessons.some(l => l.id === prompt.lessonId || l.quizId === prompt.targetId));
-              const targetLesson = targetCourse?.lessons.find(l => l.id === prompt.lessonId || l.quizId === prompt.targetId);
 
-              return (
-                <div key={prompt.id} className="bg-white p-4 rounded-2xl border border-amber-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-neutral-900">{prompt.targetTitle}</span>
-                      <span className="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">
-                        Requested by Teacher {prompt.teacherName}
-                      </span>
-                    </div>
-                    {prompt.note && (
-                      <p className="text-sm text-neutral-600 italic mt-1">"{prompt.note}"</p>
-                    )}
-                  </div>
-                  {targetCourse && targetLesson ? (
-                    <button
-                      onClick={() => navigate(`/student/courses/${targetCourse.id}/lessons/${targetLesson.id}?retakePromptId=${prompt.id}&mode=quiz`)}
-                      className="px-5 py-2.5 bg-amber-600 text-white font-bold text-sm rounded-xl hover:bg-amber-700 transition-colors flex items-center gap-2 flex-shrink-0"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                      Retake Exam Now
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => navigate('/student/courses')}
-                      className="px-5 py-2.5 bg-amber-600 text-white font-bold text-sm rounded-xl hover:bg-amber-700 transition-colors flex items-center gap-2 flex-shrink-0"
-                    >
-                      Go to Courses
-                    </button>
-                  )}
-                </div>
-              );
-            })}
+          <div className="flex items-center gap-2 flex-wrap">
+            {!userProfile?.satProfile?.diagnosticCompleted ? (
+              <button
+                onClick={() => navigate('/student/sat/diagnostic')}
+                className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 font-bold text-white text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+              >
+                <Sparkles className="w-4 h-4" />
+                Start Free Diagnostic
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/student/sat/diagnostic')}
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 font-bold text-white text-xs rounded-xl transition-all"
+              >
+                View Diagnostic
+              </button>
+            )}
+            <button
+              onClick={() => navigate('/student/sat/practice')}
+              className="px-5 py-2.5 bg-white text-neutral-900 hover:bg-neutral-100 font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+            >
+              <Zap className="w-4 h-4 text-blue-600" />
+              Practice Studio
+            </button>
+            <button
+              onClick={() => navigate('/student/sat/tests')}
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 font-bold text-white text-xs rounded-xl transition-all"
+            >
+              Full Practice Tests
+            </button>
           </div>
         </div>
-      )}
+
+        {/* Domain Placements Overview if completed */}
+        {userProfile?.satProfile?.placementByDomain && Object.keys(userProfile.satProfile.placementByDomain).length > 0 && (
+          <div className="pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {Object.entries(userProfile.satProfile.placementByDomain).slice(0, 4).map(([domain, tier]) => (
+              <div key={domain} className="bg-white/5 p-3 rounded-xl border border-white/10">
+                <p className="text-[10px] uppercase font-bold text-neutral-400 truncate">{domain.replace('-', ' ')}</p>
+                <span className={`inline-block mt-1 text-[11px] font-extrabold uppercase px-2 py-0.5 rounded ${
+                  tier === 'expert' ? 'bg-emerald-500/20 text-emerald-300' : tier === 'beginner' ? 'bg-amber-500/20 text-amber-300' : 'bg-blue-500/20 text-blue-300'
+                }`}>
+                  {tier}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* KIDS MODE VIEW: Colorful, Gamified Quests & Fun UI */}
       {isKids && (

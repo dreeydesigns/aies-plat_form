@@ -2,11 +2,37 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { checkBadges } from '../utils/badge-manager';
 import { initAuth, db } from '../lib/firebase';
 import { collection, doc, getDoc, updateDoc, setDoc, addDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-import { useFirestoreUsers, useFirestoreCourses, useFirestoreSubmissions, useFirestoreRetakePrompts, useFirestoreAgentEvents, useFirestoreMisconceptionCases } from '../hooks/useFirestore';
+import { 
+  useFirestoreUsers, 
+  useFirestoreCourses, 
+  useFirestoreSubmissions, 
+  useFirestoreRetakePrompts, 
+  useFirestoreAgentEvents, 
+  useFirestoreMisconceptionCases,
+  useFirestoreSatQuestions,
+  useFirestoreAssignedTests,
+  useFirestoreSatDiagnostics,
+  useFirestoreSatPractices,
+  useFirestoreSatTests
+} from '../hooks/useFirestore';
 import { User as FirebaseAuthUser } from 'firebase/auth';
 
-
-import { SensoryProfile, SocialPersonality, TransientEmotionalState, EmotionalStateLog, InterventionRecord } from '../types';
+import { 
+  SensoryProfile, 
+  SocialPersonality, 
+  TransientEmotionalState, 
+  EmotionalStateLog, 
+  InterventionRecord,
+  SatDomain,
+  SatQuestion,
+  SatDiagnosticSession,
+  SatPracticeSession,
+  SatPracticeTest,
+  AssignedTest,
+  CognitiveProfile,
+  SatProfile,
+  Textbook
+} from '../types';
 
 export type Role = 'student' | 'teacher' | 'parent' | 'admin' | null;
 
@@ -23,12 +49,16 @@ export interface User {
   sensoryProfile?: SensoryProfile;
   socialPersonality?: SocialPersonality;
   transientEmotionalState?: TransientEmotionalState;
+  cognitiveProfile?: CognitiveProfile;
+  satProfile?: SatProfile;
   consent?: {
     deviceSync: boolean;
     cameraWellness: boolean;
     whatsappNotifications: boolean;
     updatedAt: string;
+    parentApproved?: boolean;
   };
+  institutionId?: string;
   avatar?: string;
   photoURL?: string;
   points?: number;
@@ -43,7 +73,6 @@ export interface User {
   teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
 }
 
-
 export function computeAge(dob: string): number {
   if (!dob) return 18;
   const birthDate = new Date(dob);
@@ -55,8 +84,6 @@ export function computeAge(dob: string): number {
   }
   return age;
 }
-
-
 
 export interface Lesson {
   id: string;
@@ -191,7 +218,6 @@ export interface AppContextType {
   canAccessSettings: boolean;
   canAccessVR: boolean;
   saveQuizSubmission: (submission: Omit<QuizSubmission, 'id'>) => Promise<string>;
-
   promptRetake: (prompt: Omit<RetakePrompt, 'id'>) => Promise<void>;
   updateSubmissionFeedback: (submissionId: string, teacherFeedback: string) => Promise<void>;
   markRetakeCompleted: (promptId: string) => Promise<void>;
@@ -199,9 +225,21 @@ export interface AppContextType {
   saveMisconceptionCase: (c: Omit<MisconceptionCase, 'id'>) => Promise<string>;
   logEmotionalState: (log: EmotionalStateLog) => Promise<string>;
   saveInterventionRecord: (record: InterventionRecord) => Promise<string>;
+
+  // SAT Platform methods
+  satQuestions: SatQuestion[];
+  assignedTests: AssignedTest[];
+  satDiagnostics: SatDiagnosticSession[];
+  satPractices: SatPracticeSession[];
+  satTests: SatPracticeTest[];
+  saveSatDiagnosticSession: (session: Omit<SatDiagnosticSession, 'id'>) => Promise<string>;
+  saveSatPracticeSession: (session: Omit<SatPracticeSession, 'id'>) => Promise<string>;
+  saveSatPracticeTest: (test: Omit<SatPracticeTest, 'id'>) => Promise<string>;
+  assignSatTest: (assignment: Omit<AssignedTest, 'id'>) => Promise<string>;
+  updateSatPlacement: (domain: SatDomain, level: 'beginner' | 'intermediate' | 'expert') => Promise<void>;
+  updateCognitiveProfile: (profile: Partial<CognitiveProfile>) => Promise<void>;
+  updateConsent: (consent: Partial<NonNullable<User['consent']>>) => Promise<void>;
 }
-
-
 
 const mockQuizzes: Record<string, Quiz> = {
   'q1': {
@@ -233,6 +271,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const agentEvents = useFirestoreAgentEvents(!!currentUser);
   const misconceptionCases = useFirestoreMisconceptionCases(!!currentUser);
 
+  // SAT Subscriptions
+  const satQuestions = useFirestoreSatQuestions(!!currentUser);
+  const assignedTests = useFirestoreAssignedTests(userProfile?.id);
+  const satDiagnostics = useFirestoreSatDiagnostics(userProfile?.id);
+  const satPractices = useFirestoreSatPractices(userProfile?.id);
+  const satTests = useFirestoreSatTests(userProfile?.id);
+
   const logAgentEvent = async (eventData: Omit<AgentEvent, 'id'>): Promise<string> => {
     try {
       const docRef = await addDoc(collection(db, 'agentEvents'), eventData);
@@ -252,7 +297,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       return '';
     }
   };
-
 
   useEffect(() => {
     const storedQuizzes = courses.flatMap(course => Object.values(course.quizzes || {}));
@@ -411,7 +455,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const logEmotionalState = async (logData: EmotionalStateLog): Promise<string> => {
     try {
-      const docRef = await addDoc(collection(db, 'emotionalStateLogs'), logData);
+      const docRef = await addDoc(collection(db, 'emotionalStateLogs'), {
+        ...logData,
+        studentId: logData.userId || logData.studentId || userProfile?.id || 'anonymous'
+      });
       return docRef.id;
     } catch (e) {
       console.error('Error logging emotional state:', e);
@@ -426,6 +473,123 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     } catch (e) {
       console.error('Error saving intervention record:', e);
       return '';
+    }
+  };
+
+  // SAT Session Saving Methods
+  const saveSatDiagnosticSession = async (session: Omit<SatDiagnosticSession, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'satDiagnosticSessions'), session);
+      // Update student satProfile
+      if (userProfile?.id) {
+        const updatedPlacement = {
+          ...(userProfile.satProfile?.placementByDomain || {}),
+          ...session.placementByDomain
+        };
+        await updateDoc(doc(db, 'users', userProfile.id), {
+          'satProfile.diagnosticCompleted': true,
+          'satProfile.placementByDomain': updatedPlacement
+        });
+      }
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving SAT diagnostic session:', e);
+      return '';
+    }
+  };
+
+  const saveSatPracticeSession = async (session: Omit<SatPracticeSession, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'satPracticeSessions'), session);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving SAT practice session:', e);
+      return '';
+    }
+  };
+
+  const saveSatPracticeTest = async (test: Omit<SatPracticeTest, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'satPracticeTests'), test);
+      return docRef.id;
+    } catch (e) {
+      console.error('Error saving SAT practice test:', e);
+      return '';
+    }
+  };
+
+  const assignSatTest = async (assignment: Omit<AssignedTest, 'id'>): Promise<string> => {
+    try {
+      const docRef = await addDoc(collection(db, 'assignedTests'), assignment);
+      // Create notifications for assigned students
+      for (const studentId of assignment.assignedToUserIds) {
+        await addDoc(collection(db, 'notifications'), {
+          recipientId: studentId,
+          title: 'New SAT Test Assigned',
+          message: `${assignment.assignedByTeacherName || 'Your teacher'} assigned an SAT ${assignment.testConfig.section} practice test.`,
+          type: 'sat_assignment',
+          read: false,
+          targetId: docRef.id,
+          createdAt: new Date().toISOString()
+        });
+      }
+      return docRef.id;
+    } catch (e) {
+      console.error('Error assigning SAT test:', e);
+      return '';
+    }
+  };
+
+  const updateSatPlacement = async (domain: SatDomain, level: 'beginner' | 'intermediate' | 'expert') => {
+    if (!userProfile?.id) return;
+    try {
+      const currentPlacements = userProfile.satProfile?.placementByDomain || {};
+      const newPlacements = { ...currentPlacements, [domain]: level };
+      await updateDoc(doc(db, 'users', userProfile.id), {
+        'satProfile.placementByDomain': newPlacements
+      });
+      setUserProfile({
+        ...userProfile,
+        satProfile: {
+          ...userProfile.satProfile,
+          placementByDomain: newPlacements
+        }
+      });
+    } catch (e) {
+      console.error('Error updating SAT placement:', e);
+    }
+  };
+
+  const updateCognitiveProfile = async (profile: Partial<CognitiveProfile>) => {
+    if (!userProfile?.id) return;
+    try {
+      const updated = { ...(userProfile.cognitiveProfile || {}), ...profile };
+      await updateDoc(doc(db, 'users', userProfile.id), {
+        cognitiveProfile: updated
+      });
+      setUserProfile({ ...userProfile, cognitiveProfile: updated as CognitiveProfile });
+    } catch (e) {
+      console.error('Error updating cognitive profile:', e);
+    }
+  };
+
+  const updateConsent = async (consentUpdate: Partial<NonNullable<User['consent']>>) => {
+    if (!userProfile?.id) return;
+    try {
+      const updatedConsent = {
+        deviceSync: false,
+        cameraWellness: false,
+        whatsappNotifications: false,
+        updatedAt: new Date().toISOString(),
+        ...(userProfile.consent || {}),
+        ...consentUpdate
+      };
+      await updateDoc(doc(db, 'users', userProfile.id), {
+        consent: updatedConsent
+      });
+      setUserProfile({ ...userProfile, consent: updatedConsent });
+    } catch (e) {
+      console.error('Error updating consent:', e);
     }
   };
 
@@ -477,10 +641,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       saveMisconceptionCase,
       logEmotionalState,
       saveInterventionRecord,
+
+      // SAT additions
+      satQuestions,
+      assignedTests,
+      satDiagnostics,
+      satPractices,
+      satTests,
+      saveSatDiagnosticSession,
+      saveSatPracticeSession,
+      saveSatPracticeTest,
+      assignSatTest,
+      updateSatPlacement,
+      updateCognitiveProfile,
+      updateConsent
     }}>
-
-
-
       {children}
     </AppContext.Provider>
   );

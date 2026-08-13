@@ -121,6 +121,16 @@ export const emailSignUp = async (
       anxietyTendency: 'low',
       collaborationPreference: 'pairs'
     },
+    cognitiveProfile: {
+      primaryLearningStyle: sensoryProfile?.primary || 'visual',
+      pacing: sensoryProfile?.pacing || 'medium',
+      anxietyTendency: socialPersonality?.anxietyTendency || 'low',
+      neurodivergentFlags: sensoryProfile?.neurodivergentFlags || { adhd: false, dyslexia: false, dyscalculia: false }
+    },
+    satProfile: {
+      diagnosticCompleted: false,
+      placementByDomain: {}
+    },
     consent: {
       deviceSync: false,
       cameraWellness: false,

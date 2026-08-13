@@ -73,6 +73,14 @@ const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
 const GamificationConfig = React.lazy(() => import('./pages/admin/GamificationConfig'));
 const SetupGuide = React.lazy(() => import('./pages/shared/SetupGuide'));
 
+// SAT Lazy Loaded Routes
+const SatDiagnostic = React.lazy(() => import('./pages/student/sat/SatDiagnostic'));
+const SatPractice = React.lazy(() => import('./pages/student/sat/SatPractice'));
+const SatPracticeTests = React.lazy(() => import('./pages/student/sat/SatPracticeTests'));
+const SatTestRunner = React.lazy(() => import('./pages/student/sat/SatTestRunner'));
+const SatTextbooks = React.lazy(() => import('./pages/student/sat/SatTextbooks'));
+const SatAssignTest = React.lazy(() => import('./pages/teacher/sat/SatAssignTest'));
+
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
   const { currentUser, userProfile } = useAppContext();
   const location = useLocation();
@@ -117,6 +125,11 @@ function AppContent() {
       {/* Student Routes */}
       <Route path="/student" element={<ProtectedRoute allowedRole="student"><StudentLayout /></ProtectedRoute>}>
         <Route index element={<StudentDashboard />} />
+        <Route path="sat/diagnostic" element={<SatDiagnostic />} />
+        <Route path="sat/practice" element={<SatPractice />} />
+        <Route path="sat/tests" element={<SatPracticeTests />} />
+        <Route path="sat/test-runner" element={<SatTestRunner />} />
+        <Route path="sat/textbooks" element={<SatTextbooks />} />
         <Route path="courses/:courseId" element={<CourseView />} />
         <Route path="courses/:courseId/lessons/:lessonId" element={<LessonView />} />
         <Route path="leaderboard" element={<Leaderboard />} />
@@ -130,6 +143,7 @@ function AppContent() {
       {/* Teacher Routes */}
       <Route path="/teacher" element={<ProtectedRoute allowedRole="teacher"><TeacherLayout /></ProtectedRoute>}>
         <Route index element={<TeacherDashboard />} />
+        <Route path="sat/assign" element={<SatAssignTest />} />
         <Route path="students/:id" element={<StudentDetail />} />
         <Route path="courses" element={<CourseBuilder />} />
         <Route path="students" element={<TeacherRoster />} />

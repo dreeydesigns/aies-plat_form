@@ -83,7 +83,8 @@ service cloud.firestore {
       allow update: if isSignedIn()
         && resource.data.recipientId == request.auth.uid
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
-      allow create, delete: if false;
+      allow create: if isSignedIn();
+      allow delete: if hasRole('admin');
     }
 
     match /deviceData/{entryId} {
@@ -98,6 +99,82 @@ service cloud.firestore {
 
     match /gamification/{configId} {
       allow read, write: if hasRole('admin');
+    }
+
+    // ==========================================
+    // AIES SAT SECURITY RULES
+    // ==========================================
+    match /satQuestions/{questionId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if hasRole('teacher') || hasRole('admin');
+    }
+
+    match /textbooks/{textbookId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if hasRole('teacher') || hasRole('admin');
+    }
+
+    match /satDiagnosticSessions/{sessionId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.userId) ||
+        isParentOf(resource.data.userId) ||
+        hasRole('teacher') ||
+        hasRole('admin')
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) || hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    match /satPracticeSessions/{sessionId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.userId) ||
+        isParentOf(resource.data.userId) ||
+        hasRole('teacher') ||
+        hasRole('admin')
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) || hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    match /satPracticeTests/{testId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.userId) ||
+        isParentOf(resource.data.userId) ||
+        hasRole('teacher') ||
+        hasRole('admin')
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) || hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    match /assignedTests/{assignedTestId} {
+      allow read: if isSignedIn() && (
+        hasRole('teacher') ||
+        hasRole('admin') ||
+        request.auth.uid in resource.data.assignedToUserIds ||
+        resource.data.assignedByTeacherId == request.auth.uid
+      );
+      allow create: if hasRole('teacher') || hasRole('admin');
+      allow update: if hasRole('teacher') || hasRole('admin') || (
+        isSignedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['completedBy'])
+      );
+      allow delete: if hasRole('teacher') || hasRole('admin');
+    }
+
+    match /emotionalStateLogs/{logId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.userId) ||
+        isOwner(resource.data.studentId) ||
+        isParentOf(resource.data.userId) ||
+        isParentOf(resource.data.studentId) ||
+        hasRole('teacher') ||
+        hasRole('admin')
+      );
+      allow create: if isSignedIn();
+      allow update, delete: if hasRole('admin');
     }
   }
 }

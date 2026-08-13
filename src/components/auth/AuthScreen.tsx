@@ -54,6 +54,22 @@ export default function AuthScreen() {
         leadershipDrive: 'medium',
         anxietyTendency: 'low',
         collaborationPreference: collabPref
+      },
+      cognitiveProfile: {
+        primaryLearningStyle: sensoryPrimary,
+        pacing: pacingPref,
+        anxietyTendency: 'low',
+        neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
+      },
+      satProfile: {
+        diagnosticCompleted: false,
+        placementByDomain: {}
+      },
+      consent: {
+        deviceSync: false,
+        cameraWellness: false,
+        whatsappNotifications: false,
+        updatedAt: new Date().toISOString()
       }
     };
     if (role === 'student') {
