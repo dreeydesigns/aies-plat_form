@@ -382,7 +382,7 @@ Question: Which choice best states the main idea of the text?
 Analysis: Choice C captures the full passage theme (tranquility, purpose, rural life). Choice A is directly contradicted; Choice B and D introduce unsupported assumptions.`
           },
           {
-            heading: '1.2 Worked Example (Medium Tier — Science)',
+            heading: '1.2 Worked Example (Medium Tier — Science & Technology)',
             text: `Passage: Marine biologist Dr. Elena Rostova investigated bioluminescent signaling in deep-sea cephalopods. While previous researchers hypothesized that photophore flashing served primarily to attract prey, Rostova's synchronized camera footage revealed that squid flash patterns became active predominantly when predators were detected within 5 meters. This strongly indicates that the glowing flashes function as an antipredator startle mechanism.
 Question: Which choice best describes the main discovery of Rostova's research?
 (A) Deep-sea squid utilize bioluminescence primarily to disorient and deter predators. [CORRECT]
@@ -392,9 +392,22 @@ Question: Which choice best describes the main discovery of Rostova's research?
 Analysis: Choice A directly summarizes the main discovery (flashing functions as an antipredator mechanism). Choice B and C introduce false comparisons.`
           },
           {
-            heading: '1.3 Common Traps to Eliminate Instantly',
-            text: `1. The "True But Secondary" Trap: An answer option repeats a verbatim fact from sentence 2, but ignores the pivot in sentence 4.
-2. The "Speculative Leap" Trap: An answer option sounds logical in the real world, but cannot be proven strictly from the passage text.`
+            heading: '1.3 Worked Example (Hard Tier — Experimental Controls & Alternative Hypotheses)',
+            text: `Passage: To investigate how microclimatic warming impacts fungal-mediated soil carbon respiration in subalpine spruce ecosystems, Dr. Julian Vance transplanted intact soil cores from 2,800m elevation to 2,200m, where ambient temperatures were 2.5°C warmer. Vance documented a 35% surge in carbon flux among the transplanted cores; critically, metagenomic sequencing verified that microbial community taxonomy and species density remained unaltered throughout the experiment, enabling Vance to attribute the increased respiration strictly to thermal metabolic acceleration.
+Question: It can most reasonably be inferred that the finding regarding microbial community composition was vital because it:
+(A) proved that subalpine spruce trees accelerate carbon uptake at lower elevations.
+(B) ruled out a change in species composition as an alternative explanation for the accelerated carbon flux. [CORRECT]
+(C) demonstrated that cold-adapted fungi migrate rapidly when temperatures increase.
+(D) confirmed that soil respiration rates vary depending on which species dominate the fungal community.
+Analysis: Choice B is correct because holding the species composition constant provides an essential experimental control: if species had changed, the increased flux might have been caused by new invasive species rather than temperature acceleration of existing microbes.`
+          },
+          {
+            heading: '1.4 Hard-Tier Distractor Taxonomy & Elimination Protocol',
+            text: `At the Hard difficulty tier, wrong answers are engineered to sound sophisticated while failing on subtle logical boundaries:
+1. The "Alternative Causality" Trap: A choice assumes the finding was caused by factor X when the text explicitly demonstrates factor Y (or shows that factor X was an experimental control).
+2. The "Unwarranted Absolutism" Trap: A choice claims a discovery "disproved" or "conclusively settled" a historical debate when the author merely presented "preliminary evidence" or a "nuanced qualification".
+3. The "Secondary Detail Echo" Trap: A choice takes an accurate clause from line 2 and elevates it to the overarching theme of the text, ignoring the main conclusion in the final sentences.
+4. The "Subtext Inversion" Trap: In literary texts, taking a character's sarcastic, theatrical, or polite pretense at face value rather than interpreting their true underlying motive.`
           }
         ]
       },

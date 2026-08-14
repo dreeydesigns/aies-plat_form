@@ -59,8 +59,8 @@ Output format must be strictly JSON matching this structure:
       "isSPR": false,
       "explanation": "string",
       "textbookRef": {
-        "textbookId": "sat-math-foundations" | "sat-advanced-math-guide" | "sat-rw-mastery" | "sat-grammar-conventions",
-        "page": 14,
+        "textbookId": "sat-foundations-math" | "sat-advanced-math-mastery" | "sat-reading-writing-mastery" | "sat-grammar-conventions",
+        "page": 1,
         "highlightedText": "string"
       },
       "shortLessonText": "string (optional)",
