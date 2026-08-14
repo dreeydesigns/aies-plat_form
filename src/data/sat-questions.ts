@@ -4177,6 +4177,1114 @@ export const initialSatQuestions: SatQuestion[] = [
     },
     createdAt: '2026-08-14T00:00:00Z',
     createdBy: 'system'
+  },
+  // ==========================================
+  // READING & WRITING — INFORMATION & IDEAS (48 MEDIUM INFERENCES)
+  // ==========================================
+  {
+    id: 'd748c3fd',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In her 2021 article “Throwaway History: Towards a Historiography of Ephemera,” scholar Anne Garner discusses John Johnson (1882–1956), a devoted collector of items intended to be discarded, including bus tickets and campaign pamphlets. Johnson recognized that scholarly institutions considered his expansive collection of ephemera to be worthless—indeed, it wasn’t until 1968, after Johnson’s death, that Oxford University’s Bodleian Library acquired the collection, having grasped the items’ potential value to historians and other researchers. Hence, the example of Johnson serves to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'demonstrate the difficulties faced by contemporary historians in conducting research at the Bodleian Library without access to ephemera.',
+      'represent the challenge of incorporating examples of ephemera into the collections of libraries and other scholarly institutions.',
+      'lend support to arguments by historians and other researchers who continue to assert that ephemera holds no value for scholars.',
+      'illustrate both the relatively low scholarly regard in which ephemera was once held and the later recognition of ephemera’s possible utility.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The passage charts a historical progression: academic institutions initially dismissed Johnson’s collection of disposable items as worthless, but decades later Oxford’s Bodleian Library acquired it after recognizing its substantial historical value.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating historical historiography and archival preservation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'ca5a3fb4',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The practice of logging (cutting down trees for commercial and other uses) is often thought to be at odds with forest conservation (the work of preserving forests). However, a massive study in forest management and preservation spanning 700,000 hectares in Oregon’s Malheur National Forest calls that view into question. So far, results of the study suggest that forest plots that have undergone limited logging (the careful removal of a controlled number of trees) may be more robust than plots that haven’t been logged at all. These results, in turn, suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'logging may be useful for maintaining healthy forests, provided it is limited.',
+      'other forest management strategies are more effective than limited logging.',
+      'as time passes, it will be difficult to know whether limited logging has any benefits.',
+      'the best way to support forest health may be to leave large forests entirely untouched.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The Malheur National Forest study demonstrates that controlled, limited removal of trees actually improves forest robustness compared to unlogged plots, showing that limited logging can serve conservation goals.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating forestry management and ecological conservation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3190835d',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Some businesses believe that when employees are interrupted while doing their work, they experience a decrease in energy and productivity. However, a team led by Harshad Puranik, who studies management, has found that interruptions by colleagues can have a social component that increases employees’ sense of belonging, resulting in greater job satisfaction that benefits employees and employers. Therefore, businesses should recognize that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the interpersonal benefits of some interruptions in the workplace may offset the perceived negative effects.',
+      'in order to maximize productivity, employers should be willing to interrupt employees frequently throughout the day.',
+      'most employees avoid interrupting colleagues because they don’t appreciate being interrupted themselves.',
+      'in order to cultivate an ideal workplace environment, interruptions of work should be discouraged.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. While interruptions are commonly viewed as damaging to productivity, Puranik’s research reveals that the social connectivity and sense of belonging they foster can counterbalance these negative impacts.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing organizational behavior and workplace social dynamics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '01989d77',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Microbes that live in shallow lakes and ponds produce methane, a harmful greenhouse gas. Ecologist Ralf Aben and his team wanted to see how different types of shallow-water plants might affect the amount of methane that escapes into the atmosphere. Aben’s team set up some water tanks with soil and microbes from local ponds. Some tanks had a type of underwater plant that grows in the soil called watermilfoil. Other tanks had either duckweed, a type of plant that floats on the water’s surface, or algae. Aben and his team found that tanks with duckweed and algae released higher levels of methane than tanks with watermilfoil did. This finding suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the presence of some kinds of underwater plants like watermilfoil helps prevent methane from escaping shallow lakes and ponds.',
+      'shallow lakes and ponds release more methane than deeper bodies of water because shallow bodies of water usually have more plants than deep bodies of water do.',
+      'shallow lakes and ponds are more likely to contain algae than to contain either watermilfoil or duckweed.',
+      'having a mix of algae, underwater plants, and floating plants is the best way to reduce the amount of methane in shallow lakes and ponds.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because tanks containing soil-rooted watermilfoil released significantly less methane gas than tanks with floating duckweed or algae, watermilfoil helps suppress or impede methane emissions.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When interpreting aquatic ecology and greenhouse gas fluxes'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7c1e5880',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Scholars have noted that F. Scott Fitzgerald’s writings were likely influenced in part by his marriage to Zelda Fitzgerald, but many don’t recognize Zelda as a writer in her own right. Indeed, Zelda authored several works herself, such as the novel Save Me the Waltz and numerous short stories. Thus, those who primarily view Zelda as an inspiration for F. Scott’s writings ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'overlook the many other factors that motivated F. Scott to write.',
+      'risk misrepresenting the full range of Zelda’s contributions to literature.',
+      'may draw inaccurate conclusions about how F. Scott and Zelda viewed each other’s works.',
+      'tend to read the works of F. Scott and Zelda in an overly autobiographical light.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Reducing Zelda Fitzgerald solely to a passive muse overlooks her active career as a novelist and short story writer, mischaracterizing her independent literary legacy.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating feminist literary criticism and authorial agency'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4603d1f7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In their book Smart Pricing, Jagmohan Raju and Z. John Zhang consider musicians’ use of the nontraditional “pay as you wish” pricing model. This model generally offers listeners the choice to pay more or less than a suggested price for a song or album—or even to pay nothing at all. As the authors note, that’s the option most listeners chose for an album by the band Harvey Danger. Only about 1% opted to pay for the album, resulting in earnings below the band’s expectations. But the authors also discuss musician Jane Siberry, who saw significant earnings from her “pay as you wish” online music store as a result of many listeners choosing to pay more than the store’s suggested prices. Hence, the “pay as you wish” model may ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'prove financially successful for some musicians but disappointing for others.',
+      'hold greater financial appeal for bands than for individual musicians.',
+      'cause most musicians who use the model to lower the suggested prices of their songs and albums over time.',
+      'more strongly reflect differences in certain musicians’ popularity than traditional pricing models do.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The authors juxtapose Harvey Danger’s disappointing 1% payment outcome with Jane Siberry’s highly profitable outcome, demonstrating that "pay as you wish" can yield divergent financial results.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing consumer pricing models and music economics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'db876fd5',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Songbirds learn to respond to and imitate their species’ songs from an early age. With each generation, small differences are introduced that result in distinct variations—called dialects—among geographically isolated populations of the same species. A research study examined whether twelve-day-old Ficedula hypoleuca (pied flycatcher) nestlings prefer local dialects over the unfamiliar dialects of nonlocal F. hypoleuca populations: the more begging calls the nestlings made in response to a song, the stronger their preference. The researchers found that nestlings produced more begging calls in response to their own dialect than to nonlocal dialects. Since song preference plays a role in songbird mate selection, the finding suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'F. hypoleuca nestlings’ preference for their own dialect likely disappears as they mature to promote socialization between different F. hypoleuca populations.',
+      'F. hypoleuca nestlings who show an early preference for their own dialect are likely to receive more food from their caretakers than nestlings who show no preferences among any F. hypoleuca dialects.',
+      'F. hypoleuca nestlings’ preference for their own dialect likely drives them when they mature to reproduce with other F. hypoleuca from local rather than nonlocal populations.',
+      'F. hypoleuca nestlings show a preference for both local F. hypoleuca dialects and the songs of other local songbirds over the songs of nonlocal birds of any species.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text connects early nestling dialect preference with adult mate selection, inferring that early sensitivity to local songs encourages adult birds to mate within their local populations.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When connecting juvenile bird vocal learning with adult mating behavior'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3cc2eacc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In a study of the mechanisms underlying associative memory—or the ability to learn and remember connections between inherently unrelated things—neuroscientists Kei Igarashi, Jasmine Chavez, and others presented mice with memory tests. The team discovered that fan cells, a type of cell found in the medial temporal lobe of the brain, are necessary for the acquisition of new associative memories. They also found that fan cell activity requires dopamine, a chemical the brain produces in response to pleasure and rewards. Consequently, receiving a reward should likely help to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'decrease an individual’s capacity to utilize dopamine.',
+      'increase an individual’s capacity to recognize differences between unrelated things.',
+      'increase an individual’s capacity to form associative memories.',
+      'decrease an individual’s capacity to create fan cells.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Rewards stimulate dopamine production, dopamine activates temporal lobe fan cells, and fan cells are required for forming associative memories—making rewards a catalyst for associative memory acquisition.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When tracing neurochemical causal pathways in memory formation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5bcee487',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Pablo Picasso famously subverted the norms of traditional painting: in his cubist paintings he refused to let his expression be constrained, fragmenting objects and figures to present multiple perspectives simultaneously. Though less widely known, Picasso—who once lamented that writers of his time had “limited themselves to moving around words somewhat while respecting the syntax”—also wrote poetry that defied conventional grammar, semantic relationships, and text structure. Thus, the paintings and poems are linked in that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the poems present many of the same subjects as the paintings but with different thematic approaches.',
+      'the poems are intended to be understood as explanations of the artistic inclinations reflected in the paintings.',
+      'both types of work are characterized by the simultaneous representation of multiple points of view that Picasso is known for.',
+      'both exhibit Picasso’s prioritization of creative expression over the standard rules of the art forms.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The common thread linking Picasso’s visual art and poetry is his deliberate subversion of standard artistic conventions (perspective in painting, grammar/syntax in poetry) in pursuit of unrestricted creative expression.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When identifying unifying philosophical principles across multidisciplinary art'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '54057e3f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Although military veterans make up a small proportion of the total population of the United States, they occupy a significantly higher proportion of the jobs in the civilian government. One possible explanation for this disproportionate representation is that military service familiarizes people with certain organizational structures that are also reflected in the civilian government bureaucracy, and this familiarity thus ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'makes civilian government jobs especially appealing to military veterans.',
+      'alters the typical relationship between military service and subsequent career preferences.',
+      'encourages nonveterans applying for civilian government jobs to consider military service instead.',
+      'increases the number of civilian government jobs that require some amount of military experience to perform.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The proposed explanation suggests that familiarity with hierarchical organizational structures makes civilian government roles attractive and comfortable for veterans seeking post-military careers.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When deducing career motivations in public administration sociology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c4d43991',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Archaeologists have been debating the origin of a rare form of lead found in Shang dynasty (1766–1046 BCE) bronze artifacts since its presence was discovered in China in the 1990s. Different researchers have proposed theories on which regions of the world would have had the raw materials containing the specific lead in these artifacts, but no conclusive evidence has been presented. What is intriguing is that bronze artifacts from China dated after the Shang dynasty do not contain this form of lead, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Shang dynasty bronze pieces are rare and therefore more valuable than those from other time periods.',
+      'the source of some of the raw materials used to make bronze was exploited only until the end of the Shang dynasty.',
+      'bronze was used for a short time during the Shang dynasty before different metals were used to make artifacts.',
+      'methods used to analyze bronze artifacts are not useful on pieces that are dated after the Shang dynasty.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. If a distinctive isotopic lead variety appears strictly during the Shang dynasty and disappears entirely from post-Shang bronzes, the geographical ore deposit yielding that raw material ceased being mined or utilized after the dynasty ended.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating archaeometallurgy and ancient trade routes'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '123bd312',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Herbivorous sauropod dinosaurs could grow more than 100 feet long and weigh up to 80 tons, and some researchers have attributed the evolution of sauropods to such massive sizes to increased plant production resulting from high levels of atmospheric carbon dioxide during the Mesozoic era. However, there is no evidence of significant spikes in carbon dioxide levels coinciding with relevant periods in sauropod evolution, such as when the first large sauropods appeared, when several sauropod lineages underwent further evolution toward gigantism, or when sauropods reached their maximum known sizes, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'fluctuations in atmospheric carbon dioxide affected different sauropod lineages differently.',
+      'the evolution of larger body sizes in sauropods did not depend on increased atmospheric carbon dioxide.',
+      'atmospheric carbon dioxide was higher when the largest known sauropods lived than it was when the first sauropods appeared.',
+      'sauropods probably would not have evolved to such immense sizes if atmospheric carbon dioxide had been even slightly higher.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because major evolutionary surges in sauropod body size occurred without corresponding spikes in Mesozoic atmospheric CO2, sauropod gigantism did not rely on elevated CO2 levels.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating paleoclimatology and dinosaur evolutionary gigantism'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e1504a2a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The Cretaceous pterosaur Tupandactylus navigans is known for having an anomalously oversized head crest. Until an almost complete fossil skeleton was found in Brazil, paleontologists had been able to study only skull specimens from T. navigans, though it was presumed that, like other pterosaurs, the species’s primary form of locomotion was powered flight. Examining the fuller skeleton in 2016, Victor Beccari and his team determined that T. navigans had long hind legs, short wings, and an unusually long neck—characteristics that, combined with the creature’s large-crested head, would have made sustained flight difficult and walking upright relatively comfortable. Based on these findings the team suggests that T. navigans likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'flew for longer distances than did other pterosaur species that had oversized head crests.',
+      'had longer wings than other pterosaur species considered to have been comfortable walking.',
+      'had a smaller head than researchers expected based on the earlier T. navigans skull specimens.',
+      'flew for shorter distances and spent more time walking than researchers previously thought.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Long legs and short wings combined with a heavy crest favored terrestrial bipedal walking while hindering sustained aerial flight, contradicting the previous assumption of flight-dominated locomotion.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When deducing biomechanical locomotion from fossil morphology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c95995bc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Colonized by Spain in the 1600s, New Mexico is home to a dialect of Spanish that differs significantly from dialects spoken in Spain’s other former colonies in the Americas. Most notably, the New Mexican dialect retains older features of the language that other dialects lost in later centuries. But why would it have done so? New Mexico was so distant from population centers in Spain’s other colonies that it attracted few colonists after its initial colonization. Geographical isolation in turn would have limited the exposure of New Mexican colonists to changes occurring to Spanish grammar and vocabulary elsewhere in the empire. Thus, the present-day uniqueness of the New Mexican dialect suggests the extent to which ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'a language can protect itself from being influenced by other languages.',
+      'the grammar and vocabulary of any given language change from one generation to the next.',
+      'geographical isolation can influence how a language develops.',
+      'speakers of one dialect of a language can understand speakers of another dialect of that language.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The passage explicitly links the preservation of archaic Spanish grammatical and lexical forms in New Mexico to its physical and geographic detachment from other colonial trade and communication routes.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating historical dialectology and geographic linguistic isolation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6409016a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The Household, Income and Labour Dynamics in Australia Survey (HILDA) examines trends in economic well-being among 25,000 people in Australia unfolding over many years. As is true of most longitudinal studies, this need for years of data collection results in high costs. By contrast, a relatively straightforward fitness study, such as one that is merely trying to identify the percentage of regular exercisers in a city who do weight training, may not need a large budget because ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'longitudinal methods are probably suitable for the fitness study.',
+      'it would be easy for HILDA researchers to add questions to their economic well-being study.',
+      '25,000 people is more than enough for HILDA to find trends in economic well-being.',
+      'the fitness study can be done well without years of data collection.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text explains that multi-year tracking drives up costs in longitudinal studies; a simple cross-sectional descriptive survey of current exercise habits does not require years of follow-up data collection.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When contrasting longitudinal research designs with cross-sectional studies'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '8fbed1cb',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'When the Vinland Map, a map of the world purported to date to the mid-1400s, surfaced in 1957, some scholars believed it demonstrated that European knowledge of the eastern coast of present-day North America predated Christopher Columbus’s 1492 arrival. In 2021, a team including conservators Marie-France Lemay and Paula Zyats and materials scientist Anikó Bezur performed an extensive analysis of the map and the ink used. They found that the ink contains titanium dioxide, a compound that was first introduced in ink manufacturing in the early 1900s. Therefore, the team concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'mid-1400s Europeans could not have known about the eastern coast of present-day North America.',
+      'the Vinland Map could not have been drawn by mid-1400s mapmakers.',
+      'mapmakers must have used titanium compounds in their ink in the 1400s.',
+      'there isn’t enough information to determine when the ink was created.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because titanium dioxide pigment did not exist in ink manufacturing until the early 20th century, a map drawn with that ink could not have originated in the mid-15th century.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating chemical provenance analysis in historical forgery'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5432d1de',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'It’s common for jazz musicians and fans to refer to certain songs as having “swing,” indicating that the songs provoke a strong feeling, like the impulse to tap one’s foot or dance. The exact acoustic properties that give a song swing, however, have long been thought to be undefinable. To investigate swing, a team led by physicist Corentin Nelias delayed the downbeats and synchronized the offbeats in jazz piano solos and asked jazz musicians to compare the intensity of swing in each modified piece with the intensity of swing in the original piece. They found that participants were more than seven times likelier to characterize the modified songs as having swing than to characterize the original versions as having swing, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'synchronized offbeats tend to give a song swing regardless of whether downbeats are delayed.',
+      'the acoustic properties that give a song swing are not easy for jazz musicians to manipulate.',
+      'jazz songs that feature the piano are more likely to have swing than are jazz songs that do not feature the piano.',
+      'the timing of downbeats and offbeats may play a crucial role in giving a song swing.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. By specifically altering the rhythmic alignment of downbeats and offbeats and observing a sevenfold increase in perceived swing, the researchers demonstrated that micro-timing variations directly create the swing sensation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating music psychoacoustics and rhythmic timing experiments'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4e9afd7a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The Indus River valley civilization flourished in South Asia from 3300 BCE to 1300 BCE. Many examples of the civilization’s writing system exist, but researchers haven’t yet deciphered it or identified which ancient language it represents. Nevertheless, archaeologists have found historical artifacts, such as clay figures and jewelry, that provide information about the civilization’s customs and how its communities were organized. The archaeologists’ findings therefore suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'investigating an ancient civilization is easier without knowledge of the civilization’s language.',
+      'knowing an ancient civilization’s language isn’t necessary in order to learn details about the civilization.',
+      'archaeological research should focus on finding additional artifacts rather than deciphering ancient languages.',
+      'examining the civilization’s historical artifacts has resolved the debate about this civilization’s language.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Despite the writing system remaining completely undeciphered, material artifacts alone have successfully yielded substantive insights into the society’s customs and communal organization.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When assessing material culture vs textual evidence in ancient civilizations'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '420b82e2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In 2016 biological anthropologist Heather F. Smith and her team investigated the evolution of the appendix, an intestinal organ that is present in some mammals, including humans, but is generally thought to have no function. Studying 533 mammal species, the team found that the appendix has emerged independently across multiple lineages in separate instances and, significantly, hasn’t disappeared after emerging in specific lineages. Moreover, the team determined that species with the organ tend to have higher concentrations of lymphoid tissue, which supports immune responses, in the cecum, the organ the appendix is attached to. Therefore, the team hypothesized that the appendix likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'was once present in many nonmammal species but has since disappeared from those lineages.',
+      'has been preserved in certain mammal species because it benefits their immune systems.',
+      'will emerge in a greater number of mammal species because it may serve a necessary function in the immune system.',
+      'produced higher concentrations of lymphoid tissue in mammals in the past than it does currently.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Persistent evolutionary conservation across lineages combined with high lymphoid immune tissue concentrations suggests that the appendix provides adaptive immune benefits.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating evolutionary morphology and immunological organ function'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '95dbdf51',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Laura Mulvey has theorized that in narrative film, shots issuing from a protagonist’s point of view compel viewers to identify with the character. Such identification is heightened by “invisible editing,” or editing so inconspicuous that it renders cuts between shots almost unnoticeable. Conversely, Mulvey proposes that conspicuous editing or an absence of point-of-view shots would induce a more critical stance toward a protagonist. Consider, for example, the attic scene in Alfred Hitchcock’s The Birds, a conspicuously edited sequence of tens of shots, few of which correspond to the protagonist’s point of view. According to Mulvey’s logic, this scene should affect viewers by ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'obscuring their awareness of the high degree of artifice involved in constructing the montage.',
+      'lessening their identification with the protagonist, if not alienating them from the character altogether.',
+      'compelling them to identify with the film’s director, whose proxy is the camera, and not with the protagonist.',
+      'diverting their attention away from the film’s content and toward its stylistic attributes.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Applying Mulvey\'s theory directly: because the attic scene features conspicuous rapid cuts and lacks protagonist POV shots, it induces critical detachment and diminishes audience empathy/identification with the character.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When applying film theory frameworks to specific cinematic scenes'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7ae8065c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Scholars are increasingly exploring the communication and preservation of ecological knowledge through Indigenous songs (e.g., Sakha songs about local ecosystems and those of the Kaluli people about rainforest sounds). In one study, ethnobiologist Dana Lepofsky et al. received insight from Kwaxsistalla Wathl’thla, a song keeper for the Kwakwaka’wakw people in Canada, into songs referencing the people’s use of terraced gardens in intertidal zones along the Pacific Northwest coast for the cultivation of clams for consumption. Archaeological evidence of significant increases in clam size and abundance in that area concurrent with the documented past implementation of the method described in the songs supports the conclusion that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the practice used by ancestors of modern Kwakwaka’wakw people not only effectively maintained a food source but also promoted its robustness.',
+      'non-Indigenous people around the Pacific Northwest coast adopted the practice developed by the Kwakwaka’wakw people after observing its efficacy.',
+      'there is greater corroboration in the archaeological record of ecological practices described in Kwakwaka’wakw songs than of those described in Sakha and Kaluli songs.',
+      'although contemporary Kwakwaka’wakw people have a deep understanding of and appreciation for the fishing and farming practices used by their ancestors, they no longer implement those methods.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The physical evidence showing larger and more plentiful clams during the historical period when terraced gardens were cultivated confirms that the practice actively sustained and enhanced clam populations.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating traditional ecological knowledge and mariculture archaeology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '28dfc05a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Even with the widespread adoption of personal computers, many authors still choose to write and revise their novels by hand and only then transcribe the final version on a computer. It may be tempting to speculate about how a novel written this way would be affected if it had been exclusively typed instead, but each novel is a unique entity resulting from a specific set of circumstances. Therefore, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'in order to increase their efficiency, authors who currently write their novels largely by hand should instead work only on a computer.',
+      'authors who do most of their drafting and revising by hand likely have more success than those who work entirely on a computer.',
+      'novels written by hand take less time to produce, on average, than novels written on a computer do.',
+      'there is no way to reasonably evaluate how a work would be different if it had been written by other means.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Because every creative work is a unique product of its exact conditions of creation, counterfactual speculation regarding how a novel would have turned out under a different writing method cannot be evaluated.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating creative process counterfactuals in literary analysis'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '350e2336',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The Haitian Declaration of Independence was issued in 1804, bringing to an end the revolution against colonial France that began in 1791. Written in French, which was not the first language of most Haitians but which was used throughout Europe as the language of international diplomacy, the declaration notes that Haiti will not bring rebellion to other Caribbean nations, promises to respect the sovereignty of its neighbors—widely understood as a reassurance to the United States—and sets up Haiti as an example for future struggles against colonizers (an implicit reference to the many colonies then found in the Americas). So even though the declaration is explicitly addressed to the Haitian people, it’s reasonable to conclude that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'aspects of the declaration were modeled on similar documents from other countries.',
+      'the French government may have been surprised by the declaration.',
+      'many Haitian people opposed the revolution and the declaration.',
+      'the declaration actually had several intended audiences.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Drafting the document in diplomatic French with specific diplomatic assurances directed toward the United States, Caribbean powers, and American colonies proves the declaration targeted foreign diplomatic audiences alongside the domestic population.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing primary source rhetoric and multi-target audience address'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f942646f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Researchers Suchithra Rajendran and Maximilian Popfinger modeled varying levels of passenger redistribution from short-haul flights (flights of 50 to 210 minutes, from takeoff to landing) to high-speed rail trips. Planes travel faster than trains, but air travel typically requires 3 hours of lead time for security, baggage handling, and boarding that rail travel doesn’t, so short-haul routes take similar amounts of time by air and by rail. However, the model suggests that as rail passenger volumes approach current capacity limits, long lead times emerge. Therefore, for rail to remain a viable alternative to short-haul flights, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'rail systems should offer fewer long-haul routes and airlines should offer more long-haul routes.',
+      'rail systems may need to schedule additional trains for these routes.',
+      'security, baggage handling, and boarding procedures used by airlines may need to be implemented for rail systems.',
+      'passengers who travel by rail for these routes will need to accept that lead times will be similar to those for air travel.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Rail competes with short flights primarily because of minimal lead times; as crowding threatens this speed advantage by creating bottlenecks, adding more train capacity prevents delays and maintains competitiveness.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When assessing transportation capacity modeling and modal shift economics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4a85fea6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Euphorbia esula (leafy spurge) is a Eurasian plant that has become invasive in North America, where it displaces native vegetation and sickens cattle. E. esula can be controlled with chemical herbicides, but that approach can also kill harmless plants nearby. Recent research on introducing engineered DNA into plant species to inhibit their reproduction may offer a path toward exclusively targeting E. esula, consequently ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'making individual E. esula plants more susceptible to existing chemical herbicides.',
+      'enhancing the ecological benefits of E. esula in North America.',
+      'enabling cattle to consume E. esula without becoming sick.',
+      'reducing invasive E. esula numbers without harming other organisms.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Engineered DNA offers species-specific reproductive inhibition, avoiding the non-target toxicity of broad chemical herbicides and curbing leafy spurge without collateral environmental damage.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating genetic biocontrol in invasive species management'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3d505895',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Parthenogenesis is a form of reproduction in which a female reproduces without mating. She produces an egg containing a single offspring whose DNA, or genetic material, comes entirely from its mother. Among birds, parthenogenesis has been found in a handful of species, including pigeons and turkeys. When scientists at the San Diego Zoo analyzed the DNA of the zoo’s California condors (a species of vulture), they discovered that two individuals weren’t genetically similar enough to any of the males in the condor enclosure to be their offspring. However, both had hatched from eggs laid by females in the enclosure. Thus, the scientists concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'at least one of those individuals’ mothers was born as a result of parthenogenesis.',
+      'California condors may reproduce through parthenogenesis in zoos but not in the wild.',
+      'the mothers of the two individuals probably reproduced through parthenogenesis.',
+      'California condors reproduce through parthenogenesis only if females lack sufficient access to males.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Since the two chicks hatched from eggs laid by zoo females but possessed no paternal genetic contribution from any male condors, the mothers produced offspring via asexual parthenogenesis.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing avian genetics and facultative parthenogenesis'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '61228830',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'A heliograph is a semaphore device used for sending optical communications—usually in the form of Morse code—by reflecting flashes of sunlight off a mirror. Heliographs were used for rapid communication across expansive distances for military, surveying, and forestry purposes during the late nineteenth and early twentieth centuries, but they were largely effective only during the daytime, and the range of the device depended on factors such as the opacity of the air and line of sight. Therefore, heliographs were eventually replaced by technology that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'worked on similar principles but was easier to produce and maintain.',
+      'was not so constrained by environmental circumstances.',
+      'could be used for more than military, surveying, or forestry purposes.',
+      'enabled communication that didn’t require knowledge of Morse code.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The text identifies solar availability, atmospheric opacity, and line-of-sight weather obstacles as the fundamental limitations of the heliograph, indicating that successor technologies succeeded by eliminating these environmental dependencies.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing historical telecommunications technology obsolescence'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '787729be',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Martin Dančák, Wewin Tjiasmanto, and colleagues have identified a new carnivorous plant species (Nepenthes pudica) in Indonesia. Like other carnivorous plants, N. pudica has pitfall traps, or pitchers, that capture prey, but unlike others, the pitchers of N. pudica are located underground. The researchers unearthed the new species on fairly dry ridges with surfaces that host few other plants and animals. Therefore, the researchers hypothesize that the N. pudica species likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'represents one of many undiscovered carnivorous plant species in the region.',
+      'formed pitchers early in development to absorb more moisture.',
+      'is buried by nearby animals as they forage along the ridges for food.',
+      'evolved to have underground traps to access more prey than would surface traps.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Since the dry ridge surface hosts few living creatures while subterranean cavities contain burrowing insects, underground pitcher placement represents an evolutionary adaptation to access prey scarce on the dry surface.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating evolutionary adaptations in botanical carnivory'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '575e67df',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'By running computer simulations of the development of our solar system, André Izidoro, Rajdeep Dasgupta, and colleagues concluded that the Sun may have been surrounded by three giant dust rings before the planets started to form. The researchers suggest that the materials in the innermost ring became the four planets closest to the Sun, the materials in the middle ring produced the rest of the planets, and the materials in the outermost ring created the asteroids and other small bodies in the region beyond Neptune. In one simulation, the researchers delayed the initial formation of the middle ring, causing oversized super-Earths to begin developing from the innermost ring. The researchers therefore hypothesize that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the middle ring formed earlier in the solar system’s development than the initial simulations suggested.',
+      'the timing of the initial formation of the middle ring played an important role in determining the eventual size of Earth.',
+      'if the formation of the outermost ring had occurred earlier in a simulation, all the planets would have become super-Earths.',
+      'the innermost ring actually formed into all the planets in our solar system, not just the four closest to the Sun.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. When the middle ring’s appearance was delayed, the inner ring accumulated excess material and swelled into giant super-Earths, proving that the timing of middle ring formation was critical to restricting Earth to its actual compact size.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When interpreting planetary accretion simulations and proto-planetary disks'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'a0b58ef0',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The Younger Dryas was a period of extreme cooling from 11,700 to 12,900 years ago in the Northern Hemisphere. Some scientists argue that a comet fragment hitting Earth brought about the cooling. Others disagree, partly because there is no known crater from such an impact that dates to the beginning of the period. In 2015, a team led by Kurt Kjær detected a 19-mile-wide crater beneath a glacier in Greenland. The scientists who believe an impact caused the Younger Dryas claim that this discovery supports their view. However, Kjær’s team hasn’t yet been able to determine the age of the crater. Therefore, the team suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'it can’t be concluded that the impact that made the crater was connected to the beginning of the Younger Dryas.',
+      'it can’t be determined whether a comet fragment could make a crater as large as 19 miles wide.',
+      'scientists have ignored the possibility that something other than a comet fragment could have made the crater.',
+      'the scientists who believe an impact caused the Younger Dryas have made incorrect assumptions about when the period began.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Without definitive geochronological dating of the subglacial Greenland crater, scientists cannot confirm whether the cratering impact occurred at the onset of the Younger Dryas cooling event.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating impact crater geochronology and paleoclimatic events'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3ae2638c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In documents called judicial opinions, judges explain the reasoning behind their legal rulings, and in those explanations they sometimes cite and discuss historical and contemporary philosophers. Legal scholar and philosopher Anita L. Allen argues that while judges are naturally inclined to mention philosophers whose views align with their own positions, the strongest judicial opinions consider and rebut potential objections; discussing philosophers whose views conflict with judges’ views could therefore ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'allow judges to craft judicial opinions without needing to consult philosophical works.',
+      'help judges improve the arguments they put forward in their judicial opinions.',
+      'make judicial opinions more comprehensible to readers without legal or philosophical training.',
+      'bring judicial opinions in line with views that are broadly held among philosophers.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Allen argues that robust judicial reasoning involves anticipating and systematically refuting counterarguments, meaning that engaging with opposing philosophers strengthens the cogency of a judge’s legal opinion.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing legal philosophy and dialectical counterarguments'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f3f444bc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Many mosquito repellents contain natural components that work by activating multiple odor receptors on mosquitoes’ antennae. As the insects develop resistance, new repellents are needed. Ke Dong and her team found that EBF, a molecular component of a chrysanthemum-flower extract, can repel mosquitoes by activating just one odor receptor—and this receptor, Or31, is present in all mosquito species known to carry diseases. Therefore, the researchers suggest that in developing new repellents, it would be most useful to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'identify molecular components similar to EBF that target the activation of Or31 receptors.',
+      'investigate alternative methods for extracting EBF molecules from chrysanthemums.',
+      'verify the precise locations of Or31 and other odor receptors on mosquitoes’ antennae.',
+      'determine the maximum number of different odor receptors that can be activated by a single molecule.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because Or31 is universally present across disease-bearing mosquito species and effectively triggered by EBF, searching for molecules with similar Or31-targeting capabilities provides the most efficient strategy for next-generation repellents.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating molecular entomology and olfactory receptor targeting'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '25fc2534',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Marine archaeologists have found much of the wooden hull of a sixteenth-century ship in a flooded quarry in southeast England. When it is exposed to air and water, wood rots quickly unless it is protected by sediment that shields it from oxygen. Therefore, the discovered ship was likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'covered by a protective sediment layer in the quarry.',
+      'one of several other ships buried in the same quarry.',
+      'a confirmation of previous theories about the type of wood that was used in sixteenth-century ships.',
+      'first constructed much earlier than previously thought.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because submerged wood degrades rapidly unless insulated from oxygen by sediment, the surviving hull must have been buried under a protective layer of sediment in the flooded quarry.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When deducing preservation conditions in underwater archaeology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '2d2983b3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Pigments give paints and dyes their color. Ocher is a mineral-based pigment used to make several colors, including red. Red ocher gets its color from iron oxide. Pigments can also be plant-based; plant-based pigments contain a high level of carbon. In a 2023 study, archaeologists tested the red pigment on decorated beads made by members of the Natufian culture approximately 15,000 years ago. The test showed that the pigment found on several beads contained no iron but had a high level of carbon. This finding led the researchers to conclude that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the Natufian beads examined in the study are the oldest surviving examples of the use of plant-based pigments for decorating beads.',
+      'the Natufian beadmakers used plant-based pigments rather than ocher to decorate some of the beads examined in the study.',
+      'the Natufian beadmakers preferred to use plant-based pigments because they are much brighter than mineral-based pigments are.',
+      'the pigments used by the Natufian beadmakers likely came from plants because ocher was difficult to find.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The presence of carbon-rich pigment lacking iron oxide confirms that the red coloration on those specific beads derived from organic plant dyes rather than mineral ocher.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing geochemical pigment testing in prehistoric archaeology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '9077be25',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Alice Guy-Blaché directed hundreds of films between 1896 and 1920. She wanted audiences to feel like they were watching real people on screen. She would encourage actors in her films to behave naturally. Guy-Blaché even hung a large sign reading “Be Natural” in the studio where she made her films. At the time, films lacked sound, so actors needed to rely solely on their bodies and facial expressions to convey emotions. As a result, actors tended to highly exaggerate their actions and expressions. The style of acting in Guy-Blaché’s films was therefore ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'copied by many of Guy-Blaché’s peers.',
+      'familiar to actors who had worked on other directors’ films.',
+      'very unusual for the period.',
+      'better than film acting today.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because standard silent cinema convention required exaggerated gestures to communicate emotion without sound, Guy-Blaché’s demand for understated naturalism was highly unconventional and distinct for that era.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating silent film history and early acting conventions'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'df654a2b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Zines are small-scale, self-printed magazines. They have been around since the Black literary zine Fire!! was created in the 1920s. Since then, zines have appealed to creators looking for an inexpensive form of expression to share with a select audience. Zine creators often mix art with social commentary and challenge mainstream culture. At first, the internet appeared to replace the zine, but this old form persists. Today, there are enough zines in the United States to support annual zine festivals. This suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'creators can reach a larger audience by posting online.',
+      'zines are still a meaningful form of expression.',
+      'creators can continue to explore new art forms.',
+      'zines are good sources of mainstream culture.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The continuous production of self-published physical zines and thriving annual festivals in the digital age proves that zines remain an enduring, vibrant medium for independent expression.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating grassroots print culture and alternative publishing'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '485962a6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Astronomers investigated the Arabia Terra region of Mars because it appears to contain irregularly shaped craters that may have been caused by massive volcanic explosions. In their investigations of Arabia Terra, the researchers found remnants of ash deposits in an amount and thickness that would result from a massive volcanic eruption. However, erosion and past resurfacing events could have modified the surface of the planet. Therefore, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the current makeup of the Arabia Terra region might not accurately reflect the volcanic activity of Mars’s past.',
+      'eruptions from Mars’s volcanoes were likely not as massive as astronomers previously believed.',
+      'ash was most likely expelled from multiple different volcanoes on Mars’s surface.',
+      'the craters found in the Arabia Terra region were necessarily created by events other than volcanic eruptions.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because geological weathering, surface erosion, and resurfacing alter crater shapes and disperse ash over billions of years, the contemporary topography of Arabia Terra may provide an incomplete or altered record of ancient volcanism.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing planetary geomorphology and volcanic weathering'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'bcbcc43f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'The ancient Sumerian civilization formed around 4000 BCE between two large rivers in an area that is now Iraq and Syria. The extremely hot and sunny weather in that area helped crops grow very quickly, but it also made it hard to keep the crops from drying up and dying. So, the Sumerians used water from the rivers in their farming. That method worked so well that they often could harvest even more crops than they needed in a season. As a result, the Sumerians ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'harvested crops only on the hottest days of each season.',
+      'found ways to shield their crops from the sun.',
+      'did not begin farming until long after 4000 BCE.',
+      'were able to store extra crops for later use.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Harvesting more agricultural produce than immediate seasonal consumption required created crop surpluses that the Sumerians could store and preserve for future needs.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating irrigation agriculture and food surplus in early civilizations'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'd8b78a2b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Red velvet cake has been a favorite dessert of many for years, but the recipe’s origins are unclear. A bakery in Dallas, Texas, argued that it created the first recipe for the cake when the bakery opened in the 1860s. The Adams Extract Co., which sells baking products, claims to have created the recipe in the 1930s to help market their red dye. A US hotel and a Canadian department store also publicly stated that the red velvet cake sold in each of their establishments in the 1930s was an original creation, each alleging that it was the recipe author. No clear evidence has emerged to favor one of these claims over the others, however. It thus seems that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'red velvet cake was first baked sometime before the 1860s.',
+      'we cannot say at present who actually baked the first red velvet cake.',
+      'none of the supposed inventors of red velvet cake are likely to have invented it.',
+      'the bakery in Dallas, Texas, probably invented red velvet cake.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. With multiple competing commercial and regional claimants from the 1860s through 1930s and a complete absence of conclusive historical proof, the true creator remains undetermined.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating culinary history and conflicting origin claims'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'd047abca',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Narwhals are shy whales that live in the remote Arctic Ocean. Some of them have a long tusk, like a unicorn horn, with sensitive nerves. Narwhals are known for this tusk, but many actually don’t have one and its purpose is unknown. One group of scientists came up with a possible purpose in 2014. The scientists suggested that the tusk may help narwhals determine when water around them is likely to start freezing and become dangerous for them. Marine biologist Kristin Laidre disagrees with that idea, though. She reasons that if the narwhal’s tusk serves such an important purpose, then it’s most likely that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'some narwhals would seek a new habitat.',
+      'fewer marine animals would also have tusks.',
+      'more narwhals would have a tusk.',
+      'narwhals would become less shy over time.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Laidre points out that if the tusk were essential for detecting life-threatening freezing events, natural selection would have favored universal tusk development across the entire species rather than leaving many individuals without one.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating evolutionary arguments and physiological trait distribution'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'fc57d569',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'In dialects of English spoken in Scotland, the “r” sound is strongly emphasized when it appears at the end of syllables (as in “car”) or before other consonant sounds (as in “bird”). English dialects of the Upland South, a region stretching from Oklahoma to western Virginia, place similar emphasis on “r” at the ends of syllables and before other consonant sounds. Historical records show that the Upland South was colonized largely by people whose ancestors came from Scotland. Thus, linguists have concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the English dialects spoken in the Upland South acquired their emphasis on the “r” sound from dialects spoken in Scotland.',
+      'emphasis on the “r” sound will eventually spread from English dialects spoken in the Upland South to dialects spoken elsewhere.',
+      'the English dialects spoken in Scotland were influenced by dialects spoken in the Upland South.',
+      'people from Scotland abandoned their emphasis on the “r” sound after relocating to the Upland South.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The strong historical settlement of the Upland South by Scottish immigrants directly explains why this specific phonetic rhoticity pattern was inherited by the regional American dialect.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When tracing dialect migration and historical phonology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6ca4f991',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Many linguists have claimed that the lyricism of Alexander Pushkin’s Russian novel in verse Eugene Onegin makes the work incapable of being faithfully translated, especially into English. The original work is written much like a long poem, featuring linguistic patterns and flourishes specific to the Russian language. Rather than striving to portray each scene of the novel literally, John Cranko, in his ballet adaptation of Eugene Onegin, opted to let the essence of the work’s emotions inspire the passion of the dancers. Critic Emma Golden writes that Cranko’s “choreography uses the poetry of the human body to summon the parts of Pushkin’s novel that were deemed untranslatable—its commitments to rhythm, cadence, symmetry.” It seems, then, that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Cranko’s loose adaptation of Eugene Onegin into a different medium may have preserved fundamental elements of the source material better than a strictly literal written translation of the text would have.',
+      'though written works are frequently adapted into other formats, ballets are rarely considered to be faithful adaptations of texts.',
+      'English is a particularly difficult language into which to translate poetic works, as its rhythms differ from those of many other languages.',
+      'most critics believe that, like other English translations of Eugene Onegin, Cranko’s ballet adaptation fails to capture the essence of the original’s meaning.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. While verbal translation fails to capture Pushkin’s poetic cadence in English, Cranko’s choreographic adaptation translates the core rhythmic and symmetrical spirit of the verse into physical dance movements.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating intermedial adaptation and poetic translation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5105ca38',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Several artworks found among the ruins of the ancient Roman city of Pompeii depict a female figure fishing with a cupid nearby. Some scholars have asserted that the figure is the goddess Venus, since she is known to have been linked with cupids in Roman culture, but University of Leicester archaeologist Carla Brain suggests that cupids may have also been associated with fishing generally. The fact that a cupid is shown near the female figure, therefore, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'is not conclusive evidence that the figure is Venus.',
+      'suggests that Venus was often depicted fishing.',
+      'eliminates the possibility that the figure is Venus.',
+      'would be difficult to account for if the figure is not Venus.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. If cupids were independently associated with fishing as well as with Venus, the presence of a cupid in a fishing scene does not uniquely identify the female figure as Venus.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating archaeological iconography and classical mythology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '22b3da87',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'During the Bourbon Restoration in France (1814–1830), the right to vote required in part that a person paid at least 300 francs in direct taxes to the government. The four most common taxes (the quatre vieilles) were levied on real estate (both land and buildings); the doors and windows in taxpayer homes; the rental values of homes; and the businesses of artisans and merchants. (Foreign investments were either exempt from taxation or taxed lightly.) Although relatively few people paid the tax on real estate, it was the main means of voter qualification and accounted for over two-thirds of government receipts during this period, suggesting that during the Bourbon Restoration ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'those people who had the right to vote most likely had substantial holdings of French real estate.',
+      'the voting habits of French artisans and merchants were effective in reducing tax burdens on businesses.',
+      'the number of doors and windows in French residences was kept to a minimum but increased after 1830.',
+      'French people with significant foreign investments were unlikely to have the right to vote.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because real estate tax was the predominant pathway to achieving the high 300-franc tax threshold necessary for suffrage, the French electorate during this period consisted primarily of wealthy property owners.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing census suffrage and tax structures in 19th-century history'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'bcf2f169',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Ana Castillo’s 1986 novel The Mixquiahuala Letters is a story told entirely through expressive letters from the narrator to her friend—letters that Castillo suggests could be read in several different orders. As they began reading it in class, some students remarked that they found the novel’s letter format daunting and its treatment of gender relations old-fashioned. The professor, however, pointed out that the novel is written in modern-sounding language and addresses issues that still matter today, suggesting that The Mixquiahuala Letters ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'has more to say about gender relations than other novels from the same period.',
+      'is more relevant to contemporary audiences than it may seem at first.',
+      'is easier to read than many contemporary novels that focus on friendship.',
+      'is best understood after multiple readings in different orders.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The professor rebuts the students\' initial dismissal of the book as dated by highlighting its contemporary voice and relevant themes, demonstrating its enduring relevance.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating modern reception of Chicana literature'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f9884b7a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Zooarchaeologist Ophélie Lebrasseur and her team examined a fox skeleton discovered in 1991 at an archaeological site alongside artifacts of human habitation (like spear points) in central Argentina. Lebrasseur et al. determined that the fox was Dusicyon avus, an extinct species resembling a jackal, and radiocarbon dating placed the fox at the site at the same time as human inhabitants. (Indeed, the inhabitants may have deliberately buried the fox.) In addition, while wild foxes have a diet entirely made of meat, isotopic signatures of the skeleton’s teeth indicated that the fox’s diet, like that of the humans, was partly composed of plant material. Lebrasseur et al. therefore concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the humans who were alive at the same time as the fox most likely ate more meat than the fox did.',
+      'the fox may have been a companion animal of the humans who inhabited the site at the same time.',
+      'the fox had a diet more similar to that of jackals than to that of wild foxes.',
+      'the humans who were alive at the same time as the fox hunted using the spears whose points were also found at the site.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Intentional burial, cohabitation at the same campsite, and sharing an omnivorous human diet indicate that this individual fox was domesticated or kept as a companion animal.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating zooarchaeology and prehistoric animal domestication'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '03701ef3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'To better understand the burrowing habits of Alpheus bellulus (the tiger pistol shrimp), some studies have used resin casting to obtain precise measurements of the shrimps’ burrows. Resin casting involves completely filling an empty burrow with a liquid plastic that hardens to create a three-dimensional model; however, recovering the model inevitably requires destroying the burrow. In their 2022 study, Miyu Umehara and colleagues discovered that an x-ray computed tomography (CT) scanner can accurately record a burrow’s measurements both at a moment in time and throughout the entire burrow-building process, something that’s impossible with resin casting because ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'it can only be used on burrows below a certain size.',
+      'it does not allow for multiple castings of the same burrow over time.',
+      'the casting process takes more time than A. bellulus takes to construct a burrow.',
+      'the process of recovering the model distorts the resin’s shape.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because extracting a resin cast requires destroying the burrow, researchers cannot repeatedly measure the same burrow at successive stages during the construction process.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When evaluating non-destructive imaging in marine ethology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b1fab3e1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'intermediate',
+    questionText: 'Violins made by Antonio Stradivari and other craftspeople in the sixteenth to eighteenth centuries in Cremona, Italy, produce a sound that is considered superior to that of modern stringed instruments. Some experts have claimed that the type of wood used to create Cremonese violins is responsible for their prized sound, but modern and Cremonese violins are made of the same kinds of wood: maple and spruce. New analysis, however, has revealed unique indications that the wood in the older violins was chemically treated by the makers, leading researchers to suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Cremonese violins probably were not considered superior to other instruments at the time they were made.',
+      'the sound quality of Cremonese violins results in part from a method the craftspeople used to alter the wood.',
+      'if modern violins were made of a wood other than maple or spruce, they likely would sound as good as Cremonese violins.',
+      'the current process of making violins is the same process that was used centuries ago by Cremonese craftspeople.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Since wood species (maple and spruce) is identical between historic and modern instruments, the chemical treatment detected in Cremonese wood accounts for their distinctive acoustic qualities.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 24,
+      highlightedText: 'When analyzing material treatment and acoustic properties in historical instruments'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
   }
 ];
+
 
