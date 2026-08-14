@@ -3714,5 +3714,469 @@ export const initialSatQuestions: SatQuestion[] = [
     },
     createdAt: '2026-08-13T00:00:00Z',
     createdBy: 'system'
+  },
+  // ==========================================
+  // READING & WRITING — INFORMATION & IDEAS (20 EASY INFERENCES)
+  // ==========================================
+  {
+    id: '20000f5f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Arthur Conan Doyle’s stories about detective Sherlock Holmes were published between 1887 and 1927. They have inspired countless successful adaptations, including comic strips, movies, and a television series Sherlock Hound, directed by Hayao Miyazaki, who is celebrated for his animated movies. Until 2014, these stories were copyrighted. The right to adapt was only available to those who could afford the copyright fee and gain approval from the strict copyright holders of Doyle’s estate. Some journalists predict that the number of Sherlock Holmes adaptations is likely to increase since the end of copyright means that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Doyle’s original stories will become hard to find.',
+      'people will become more interested in detective stories than they were in the 1800s.',
+      'producing adaptations will become easier and less expensive.',
+      'the former copyright holders of Doyle’s estate will return fees they collected.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text explains that prior to 2014, creators needed to pay expensive fees and gain strict approval to make adaptations. The expiration of copyright eliminates these obstacles, making adaptations easier and cheaper to produce.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When completing logical inferences regarding economic incentives and copyright'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6bc0e595',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'One aspect of in-person shopping that online shopping can’t replicate is the opportunity to touch a product before buying it. Does this difference matter? In an experiment, researchers asked one group of participants to touch a mug and a toy, while another group was prohibited from touching the two items. The participants were then asked how much money they’d pay for the items. People who got to touch the items were willing to pay much more money for them than were people who weren’t allowed to touch the items. This finding suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'people who mainly shop online probably spend more money every month than people who mainly shop in person do.',
+      'in-person shopping may make products seem more valuable than they seem if only viewed online.',
+      'retailers with in-person and online stores should charge the same price for a given product in both places.',
+      'online retailers may be able to raise the prices they charge for products that are only available online.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because physically touching products caused participants to offer higher amounts of money for them, tactile in-person evaluation increases a product’s perceived value compared to viewing it without touch.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating consumer behavior experiments and valuation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'c9708e7d',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'In Switzerland, the white fuzzy mountain flowers known as edelweiss are widely treated as a symbol of strength and courage. Although edelweiss can thrive in extreme conditions, they aren’t notably tougher or harder to reach than other mountain flowers growing in the Swiss Alps. Historian Tobias Scheidegger has shown that the popular view of the flowers originated in the mid-1800s when mountain climbing became popular in Switzerland. Mountain climbers spread the idea that the flowers grew only in steep, icy terrains that were dangerous to climb to. Scheidegger says that these claims were self-interested. He suggests that mountain climbers presented edelweiss in this way in order to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'make themselves appear brave and strong for being able to climb to difficult places where edelweiss supposedly grew.',
+      'encourage more flower enthusiasts to explore the Swiss Alps.',
+      'share their observations about the unusual characteristics of edelweiss with scientists.',
+      'prove that edelweiss were more common in the Swiss Alps than in other mountain regions in Europe.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. If climbers spread the myth that edelweiss grew only in treacherous, inaccessible terrain for self-interested reasons, they did so to elevate their own reputation as brave and formidable climbers for retrieving them.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When analyzing historical motivations and cultural symbol origins'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'dbbbc5dd',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Off-off-Broadway theaters emerged in the late 1950s as a rebellion against mainstream Broadway theaters in New York, freeing artists to create productions that were more experimental than typical Broadway shows. One such artist was playwright María Irene Fornés. Working with off-off-Broadway theaters enabled Fornés not only to direct her own plays but also to direct them exactly as she intended them to be staged, regardless of how strange the results might have seemed to audiences accustomed to Broadway shows. In this way, Fornés ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'wrote plays that would have been too expensive to produce if someone else had directed the production.',
+      'recognized that staging an off-off-Broadway play was more complicated than staging a Broadway play.',
+      'would have been more famous if she had created plays that were mainstream instead of experimental.',
+      'illustrates the artistic opportunity offered by off-off Broadway theaters.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text describes off-off-Broadway as providing freedom for unconventional experimentation and uses Fornés’s ability to direct her daring plays without commercial constraint as a prime example of this artistic opportunity.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When connecting specific biographical examples to general artistic movements'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '8a3ecac6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'North American gray wolves usually have mixed gray and white fur, but some members of the species have a version of a gene, or gene variant, that gives them a mostly black coat instead. Sarah Cubaynes and her team studied twelve populations of North American gray wolves. They found that the black-furred wolves are more common in areas where outbreaks of distemper virus happen regularly. The team also discovered that the black-furred wolves are more likely to be immune to distemper than the gray-furred wolves are. Taken together, these findings suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'North American gray wolves experience more outbreaks of distemper virus than other wolf species do.',
+      'the gene variant that results in black fur may be linked to immunity to the distemper virus.',
+      'the average life span of gray wolves is likely to increase over time because of a particular gene variant.',
+      'gray-furred wolves will soon replace black-furred wolves across North America.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The correlation between the black fur gene variant, higher prevalence in viral outbreak zones, and heightened immunity indicates that the coat color gene variant is linked to viral resistance.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When deducing genetic linkages from ecological epidemiology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4025e00c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'In the 1950s and ’60s, plant breeders created shorter varieties of wheat and rice plants with improved yields. Kelly Gillespie, Rex Bernardo, and other plant specialists are building on that work by exploring the development of shorter corn varieties. Greater height can allow individual plants to produce more ears of corn. However, greater height also makes the stalks more likely to snap or be uprooted in strong winds before the corn can be harvested. Because of this trade-off, some plant specialists suggest that shorter corn varieties will actually ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'help improve yields of harvested corn by being more likely to survive in severe winds.',
+      'be more likely to be uprooted due to the weight of the corn on the stalks.',
+      'require more land for planting than short varieties of wheat and rice typically do.',
+      'begin developing more ears of corn on each plant than the tallest variety of corn currently does.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The trade-off explains that while taller plants form more ears per stalk, wind lodging destroys them before harvest; shorter corn avoids wind damage, increasing net harvestable yield.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating agricultural breeding trade-offs and crop yields'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'fc1259dd',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Archaeologist Christiana Kohler and her team excavated the Egyptian tomb of Queen Merneith, the wife of a First Dynasty pharaoh. Some scholars claim that she also ruled Egypt on her own and was actually the first female pharaoh. The team found a tablet in Merneith’s tomb with writing suggesting that she was in charge of the country’s treasury and other central offices. Whether Merneith was a pharaoh or not, this discovery supports the idea that Merneith likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'had an important role in Egypt’s government.',
+      'lived after rather than before the First Dynasty of Egypt.',
+      'traveled beyond Egypt’s borders often.',
+      'created a new form of writing in Egypt.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Overseeing the national treasury and central state offices confirms that Merneith held a powerful, central leadership role in Egypt’s administrative government.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When interpreting archaeological epigraphy and ancient governance'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'fcae209f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'The Nacional tree is a rare variety of cacao. Nacionals were thought to have gone extinct by the twentieth century due to a fungus. This fungus can spread from tree to nearby tree through the air and causes disease. But around 2013, cacao expert Servio Pachard located some of these Nacional trees. The trees were in the Piedra de Plata coastal forest, within a hard-to-reach valley in Ecuador. Conservationists inferred that the Nacional trees in Piedra de Plata might have avoided the diseases that wiped out the other Nacionals because ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'early twentieth-century scientists did not know why so many Nacionals were becoming infected.',
+      'the ability of the fungus to travel through the air was only recently discovered.',
+      'they were too far from the other Nacional trees infected by the fungus to become infected themselves.',
+      'the chocolate made from their pods was highly valued.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because the lethal fungus transmits through the air between nearby trees, the remote, secluded valley location physically isolated these trees from infected populations.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating pathogen transmission and geographic isolation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '72cbdbc6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Researchers Eugeni Vidal-Tortosa and Robin Lovelace looked at the relationship between street lighting in a city and people’s willingness to ride a bicycle. Their results suggest that poor street lighting can deter new or inexperienced cyclists from riding in a city but has little effect on experienced cyclists. Therefore, increasing the number of streetlights in a city could potentially ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'decrease the number of new or inexperienced cyclists riding in the city.',
+      'increase the number of experienced cyclists riding in the city.',
+      'decrease the number of experienced cyclists riding in the city.',
+      'increase the number of new or inexperienced cyclists riding in the city.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If poor lighting specifically discourages new or novice cyclists, improving and increasing street lighting removes that barrier, potentially boosting cycling among inexperienced riders.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When determining policy impacts from urban planning studies'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6abe5e3c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Individuals with visual impairments who want to experience a solar eclipse may be able to make use of a device that converts light into sound. The device is made up of a microcontroller board and a light sensor that measures the brightness of light shining onto the device. It also has a component called a MIDI, which allows the device to play different sounds. The device plays a high-pitched flute sound in bright light, a neutral-pitched clarinet sound in mid-range light, and a soft clicking sound in low light. After a solar eclipse starts, the sun becomes more covered and the amount of light slowly reduces. Therefore, during a solar eclipse the device will ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'play a flute sound, then a clarinet sound, and then a clicking sound.',
+      'play a clicking sound, then a flute sound, and then a clarinet sound.',
+      'start with fast clarinet sounds that become steadily slower.',
+      'start with a soft flute sound that becomes steadily louder.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. As sunlight decreases progressively during an eclipse (bright $\\rightarrow$ mid-range $\\rightarrow$ low), the device will transition from flute (bright) to clarinet (mid) to clicking (low).',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When tracking sequential processes in sensory assistive technology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '25893fc7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'In many cultures, a handshake can create trust between people. Engineer João Avelino and his team are designing a robot to shake hands with a human in order to improve human-robot interactions. The robot hand adjusts its movements and pressure to better imitate the feel of a human hand. The researchers want the robot’s handshake to feel realistic because ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'lifelike handshakes may make people more comfortable interacting with robots.',
+      'it’s easier to program a robot to perform handshakes than it is to program a robot to perform some other types of greetings.',
+      'people are less likely to interact with robots that don’t look like humans.',
+      'the robot in the researchers’ study may have uses other than interacting with humans.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Handshakes build interpersonal trust; engineering a realistic, humanlike handshake helps foster trust and comfort during human-robot interactions.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating robotics design objectives and human-computer interaction'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '493c46bc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'In the South Pacific, New Caledonian crows use two different kinds of stick tools. One tool is complex. The crows shape a stick from a rare plant into a hook. The other tool is basic. The crows find a stick without a hook on the ground. The hooked tool is harder to get but is much better than the basic tool at removing prey from holes. When studying New Caledonian crows, ecologist Barbara Klump found that they hold the hooked tools in their claws when not using them, or they carefully put them in a safe place. The crows don’t do the same with the basic tools. This suggests to Klump that the ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'hooked stick tools are more valuable to the crows than the stick tools without hooks.',
+      'hooked stick tools are easier for most of the crows to hold than the stick tools without hooks.',
+      'crows prefer to share their hooked stick tools but don’t share the stick tools without hooks.',
+      'crows realize that both kinds of stick tools are less effective than their claws are at removing prey from holes.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Safeguarding hooked tools while discarding plain twigs shows that crows assign higher value to the harder-to-make, more effective hooked tools.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When interpreting animal cognition and tool safekeeping behaviors'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7a895def',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Georgia Douglas Johnson wrote many plays in the 1920s and 1930s. At the time, professional theater companies rarely put on plays by Black women, so few of Johnson’s plays made it to the stage. Only a small number of her plays were published in her lifetime. But that doesn’t mean that Johnson never learned what other people thought of her plays. Johnson hosted weekly get-togethers for fellow Black writers and artists in her Washington, D.C., home. Attendees would read and discuss one another’s work, including Johnson’s own. These gatherings could therefore serve as ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'an occasion for professional theater companies to put on plays.',
+      'an opportunity for Johnson to get feedback on her plays.',
+      'a way for Johnson to learn about plays that were produced in other cities.',
+      'subject matter for future plays by Johnson.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Reading and discussing works among fellow writers provided Johnson with artistic criticism and peer feedback that commercial theaters denied her.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating literary salons and community artistic feedback'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'eca09a92',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'If an animal has been extinct for a long time, how can scientists learn what color it was? One group of scientists came up with a possible answer. When the scientists examined the fossilized feather of an extinct bird, they found melanosomes in it. Melanosomes produce pigment, or grains of color, inside cells. Because melanosomes are shaped differently depending on which colors they produce, the scientists hypothesized that they could ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'show how melanosomes can be found in fossils belonging to animals from other extinct species.',
+      'determine the colors of the bird based on the appearance of the melanosomes in the feather.',
+      'explain why the melanosomes in the feather were so well preserved.',
+      'identify the colors of extinct animals whose fossils lack melanosomes.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Since distinct melanosome shapes correspond to specific pigment colors, analyzing the shape/appearance of fossilized melanosomes enables scientists to reconstruct the bird\'s coloration.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating paleobiological pigment reconstruction'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'ead0fd9b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'A typical string quartet consists of two violin players, a viola player, and a cello player. When a string quartet performs, one violinist and the cellist usually sit facing the audience. The violist and the other violinist usually sit facing each other. This seating arrangement causes the viola’s carved sound openings, or f-holes, to be angled away from the audience. Therefore, if the viola player has a musical solo and wants to make sure that the audience can hear it clearly, the violist typically ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'instructs the other members of the quartet to play louder.',
+      'plays at the same volume as the cellist.',
+      'shifts position in order to face outwards toward the audience.',
+      'looks at the sheet music instead of looking at the audience.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. If standard seating turns the viola’s acoustic openings away from listeners, pivoting to face outward directs the sound projection directly to the audience during a solo.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When analyzing acoustic projection in musical performance'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1d0b5bf4',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'To create the poems in her 2017 collection One Last Word, poet Nikki Grimes used a writing method called the golden shovel. This method often involves choosing a line from an existing poem and then using each word from that line as the last word of each line in a new poem. Grimes wanted the poems in One Last Word to honor important Black poets of the past, so she chose lines by poets such as Langston Hughes and Georgia Douglas Johnson. Writing in this way can be challenging and might seem as though it would produce awkward poems. However, reviewers praised One Last Word as a beautiful and powerful tribute to the poets who inspired it. This reaction suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'most reviewers didn’t understand Grimes’s goal for One Last Word.',
+      'Grimes successfully used the golden shovel method to achieve her goal for One Last Word.',
+      'Langston Hughes and Georgia Douglas Johnson are two of Grimes’s favorite poets.',
+      'Grimes inspired many other writers to create poems using the golden shovel method.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Reviewers calling the collection a "beautiful and powerful tribute" proves that Grimes overcame the constraints of the golden shovel technique to successfully fulfill her tribute objective.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When evaluating poetic form constraints and literary reception'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5b4829d2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Researchers wanted to study how consumers’ reactions to an ad may be affected by other ads. The researchers began by showing study participants an ad for a product, with some seeing a less detailed ad and others seeing a more detailed one. Then, all participants viewed the same second ad for a store and shared their opinion of the store based on this second ad. Participants who had first seen an ad less detailed than the second ad had a higher opinion of the store than the participants who had first seen a more detailed ad. The researchers concluded that reactions to an ad may be affected by ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the number of people who viewed the ad.',
+      'the length of time viewing previous ads.',
+      'the amount of detail viewed in previous ads.',
+      'the time of day that the ad is viewed.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The only independent variable manipulated between participant groups was whether the initial anchoring ad had higher or lower levels of detail.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When identifying independent variables in advertising psychology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b4da6aaf',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'The musical Hadestown was produced off-Broadway in New York in 2016. A revised version of the musical premiered on Broadway in 2019, in a larger production. In a review of the Broadway production, theater critic Jesse Green enthusiastically praised the musical’s storytelling. However, Green also explained that he had seen the earlier version of Hadestown in 2016 and had found the storytelling to be very confusing. This suggests that in Green’s view, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the 2016 version of Hadestown had fewer storytelling problems than the 2019 version did.',
+      'Hadestown should have had a larger production in 2019 than it actually did.',
+      'the 2019 version of Hadestown was less enjoyable than the 2016 version.',
+      'Hadestown improved greatly between 2016 and its premiere on Broadway.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Green moving from finding the 2016 storytelling "very confusing" to enthusiastically praising the 2019 Broadway storytelling indicates a substantial improvement over time.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When analyzing theatrical revision and critical evaluation shifts'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7afdcca2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'Over 600 languages are spoken in New York City in addition to English—one can find Amharic spoken in the neighborhood of Norwood, or Ilocano in Woodside. Most speakers of Chinese languages reside in the neighborhood of Flushing (part of New York City’s borough of Queens) and in Chinatown, in the borough of Manhattan. New immigrants from north China, where Mandarin is the primary first language, tend to settle in Queens, while new immigrants from south China, where many people speak Cantonese or Fuzhounese as a first language, tend to settle in Manhattan. It can therefore be inferred that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'languages tend to change more rapidly in areas where many languages are spoken than in areas where few languages are spoken.',
+      'languages spoken by immigrant peoples can differ significantly in vocabulary and pronunciation from those same languages in their country of origin.',
+      'there is a positive correlation between the physical size of a country and the number of languages spoken in that country.',
+      'correlations in a country between languages and regions where they are spoken can replicate themselves in a new country to which the original country’s citizens emigrate.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The geographic regional division in China (north vs south) mirrors the immigrant enclave choices in New York City (Queens vs Manhattan), showing geographic linguistic patterns replicating in the diaspora.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When analyzing sociolinguistics and immigrant demographic patterns'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '93cad661',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'beginner',
+    questionText: 'A main goal of the Association for the Advancement of Creative Musicians (AACM), an arts organization founded in 1965, is to advance new works by Black musicians. The AACM achieves this goal in part by focusing on young artists. By having established musicians and composers serve as mentors, the AACM gives young artists the benefits of expert technical training and creative guidance. Numerous organizations offer similar kinds of support to new generations of painters, writers, and other artists, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'artists of all ages benefit more from technical training than from creative guidance.',
+      'many arts organizations recognize the importance of providing opportunities for young artists to learn from experienced mentors.',
+      'most established artists could become even better artists by serving as mentors.',
+      'finding a mentor is more important for musicians than it is for painters, writers, and other types of artists.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The widespread adoption of mentorship programs across multiple artistic disciplines demonstrates that arts organizations broadly value connecting emerging creators with seasoned mentors.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 22,
+      highlightedText: 'When synthesizing organizational practices across artistic fields'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
   }
 ];
+
