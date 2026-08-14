@@ -298,6 +298,8 @@ export default function SatDiagnostic() {
 
     const placements: Record<SatDomain, 'beginner' | 'intermediate' | 'expert'> = {} as any;
 
+    const targetTimeMs = selectedSection === 'math' ? 95000 : 71000;
+
     domainsForSection.forEach(domain => {
       const domainQuestions = allQuestions.filter(q => q.domain === domain);
       if (domainQuestions.length === 0) {
@@ -306,9 +308,8 @@ export default function SatDiagnostic() {
       }
 
       let correct = 0;
-      let totalTime = 0;
+      let totalTimeMs = 0;
       let totalRevisits = 0;
-      let totalWeight = 0;
 
       domainQuestions.forEach(q => {
         const a = answers[q.id];
@@ -316,27 +317,31 @@ export default function SatDiagnostic() {
           ? (a?.sprAnswer && String(q.correctAnswer).trim() === a.sprAnswer.trim())
           : (a?.selectedOption === q.correctAnswer);
 
-        if (isCorr) {
-          correct++;
-          if (q.difficulty === 'expert') totalWeight += 3;
-          else if (q.difficulty === 'intermediate') totalWeight += 2;
-          else totalWeight += 1;
-        }
-        totalTime += (a?.timeSeconds || 30);
+        if (isCorr) correct++;
+        totalTimeMs += (a?.timeSeconds || 30) * 1000;
         if (a?.revisited) totalRevisits++;
       });
 
-      const acc = correct / domainQuestions.length;
-      const avgPacing = totalTime / domainQuestions.length; // seconds per item
-      const revisitRatio = totalRevisits / domainQuestions.length;
+      const total = domainQuestions.length;
+      const accuracyScore = total > 0 ? (correct / total) : 0;
+      const avgTimeToAnswerMs = total > 0 ? (totalTimeMs / total) : targetTimeMs;
+      const avgRevisitCount = total > 0 ? (totalRevisits / total) : 0;
 
-      // Multi-factor classification combining Accuracy + Pacing + Revisit Confidence Pattern
-      if ((acc >= 0.75 || totalWeight >= 3) && avgPacing <= 60 && revisitRatio <= 0.35) {
-        placements[domain] = 'expert';
-      } else if (acc <= 0.35 || avgPacing > 80 || (acc <= 0.5 && revisitRatio > 0.5)) {
+      // Exact Spec v3 formula:
+      // accuracyScore = correct / total
+      // paceScore = 1 - clamp((avgTimeToAnswerMs - targetTimeMs) / targetTimeMs, 0, 1)
+      // revisitPenalty = clamp(avgRevisitCount / 2, 0, 0.2)
+      // compositeScore = (0.7 * accuracyScore) + (0.2 * paceScore) - revisitPenalty
+      const paceScore = 1 - Math.max(0, Math.min(1, (avgTimeToAnswerMs - targetTimeMs) / targetTimeMs));
+      const revisitPenalty = Math.max(0, Math.min(0.2, avgRevisitCount / 2));
+      const compositeScore = (0.7 * accuracyScore) + (0.2 * paceScore) - revisitPenalty;
+
+      if (compositeScore < 0.45) {
         placements[domain] = 'beginner';
-      } else {
+      } else if (compositeScore < 0.75) {
         placements[domain] = 'intermediate';
+      } else {
+        placements[domain] = 'expert';
       }
     });
 

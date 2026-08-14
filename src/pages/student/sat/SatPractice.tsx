@@ -186,25 +186,35 @@ export default function SatPractice() {
       setShowEmpathyModal(true);
     }
 
-    // Check rolling items in this domain for Level-Up (>=80% accuracy) or De-escalation (<=35% accuracy)
-    const domainRecent = updatedSession.filter(a => a.domain === currentQuestion.domain).slice(-10);
-    if (domainRecent.length >= 5) {
+    // Continuous difficulty adaptation (Spec v3 Section 5):
+    // Track a rolling window of the last 8 answered questions
+    // If rolling accuracy > 85% at the current difficulty tier -> escalate one tier (Easy->Medium->Hard)
+    // If rolling accuracy < 50% at current tier -> de-escalate one tier (never below Easy)
+    const domainRecent = updatedSession.filter(a => a.domain === currentQuestion.domain).slice(-8);
+    if (domainRecent.length >= 8) {
       const correctCount = domainRecent.filter(a => a.correct).length;
       const acc = correctCount / domainRecent.length;
       const currentLevel = userProfile?.satProfile?.placementByDomain?.[currentQuestion.domain] || 'intermediate';
 
-      if (acc >= 0.8 && currentLevel !== 'expert') {
+      if (acc > 0.85 && currentLevel !== 'expert') {
         const nextLevel = currentLevel === 'beginner' ? 'intermediate' : 'expert';
-        console.log(`[Adaptive Engine] Tier escalated for ${currentQuestion.domain}: ${currentLevel} -> ${nextLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%)`);
+        console.log(`[Adaptive Engine] Tier escalated for ${currentQuestion.domain}: ${currentLevel} -> ${nextLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%, window: 8)`);
         await updateSatPlacement(currentQuestion.domain, nextLevel);
         setLevelUpData({ domain: currentQuestion.domain, newLevel: nextLevel });
-      } else if (acc <= 0.35 && currentLevel !== 'beginner') {
+      } else if (acc < 0.50 && currentLevel !== 'beginner') {
         const lowerLevel = currentLevel === 'expert' ? 'intermediate' : 'beginner';
-        console.log(`[Adaptive Engine] Tier de-escalated for ${currentQuestion.domain}: ${currentLevel} -> ${lowerLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%)`);
+        console.log(`[Adaptive Engine] Tier de-escalated for ${currentQuestion.domain}: ${currentLevel} -> ${lowerLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%, window: 8)`);
         await updateSatPlacement(currentQuestion.domain, lowerLevel);
       }
     }
-  };
+
+    // Spec v3 Section 10: Track consecutive Hard-tier questions answered correctly to unlock Full-Length tests
+    if (isAnswerCorrect && (currentQuestion.difficulty === 'expert' || currentQuestion.difficulty === 'hard')) {
+      const secKey = currentQuestion.section === 'math' ? 'math' : 'rw';
+      const prevConsec = userProfile?.satProfile?.consecutiveHardCorrect?.[secKey] || 0;
+      const newConsec = prevConsec + 1;
+      console.log(`[Practice] Consecutive Hard-tier correct in ${secKey}: ${newConsec}`);
+    }
 
   const handleNextQuestion = () => {
     if (currentIdx < questionPool.length - 1) {

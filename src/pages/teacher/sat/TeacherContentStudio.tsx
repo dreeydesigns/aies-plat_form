@@ -337,28 +337,35 @@ export default function TeacherContentStudio() {
 
                 {/* 4. Difficulty */}
                 <div>
+                {/* 4. Difficulty Tier (Easy / Medium / Hard / Mixed) */}
+                <div>
                   <label className="block font-bold text-neutral-800 mb-1">4. Difficulty Tier</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(['beginner', 'intermediate', 'expert'] as const).map((lvl) => (
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[
+                      { id: 'beginner', label: 'Easy' },
+                      { id: 'intermediate', label: 'Medium' },
+                      { id: 'expert', label: 'Hard' },
+                      { id: 'mixed', label: 'Mixed' }
+                    ].map((lvl) => (
                       <button
-                        key={lvl}
+                        key={lvl.id}
                         type="button"
-                        onClick={() => setWizardDifficulty(lvl)}
-                        className={`p-2 rounded-xl border font-bold capitalize text-center ${
-                          wizardDifficulty === lvl
+                        onClick={() => setWizardDifficulty(lvl.id as any)}
+                        className={`p-2 rounded-xl border font-bold text-xs text-center ${
+                          wizardDifficulty === lvl.id
                             ? 'bg-neutral-900 text-white border-neutral-900'
                             : 'border-neutral-200 text-neutral-700'
                         }`}
                       >
-                        {lvl === 'beginner' ? 'Easy' : lvl === 'intermediate' ? 'Medium' : 'Hard'}
+                        {lvl.label}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* 5. Question Count */}
+                {/* 5. How many questions? */}
                 <div>
-                  <label className="block font-bold text-neutral-800 mb-1">5. Question Count ({wizardCount})</label>
+                  <label className="block font-bold text-neutral-800 mb-1">5. How many questions? ({wizardCount})</label>
                   <input
                     type="range"
                     min={1}
@@ -369,20 +376,36 @@ export default function TeacherContentStudio() {
                   />
                 </div>
 
-                {/* 6. Intended Use */}
+                {/* 6. Attach a source PDF? (Optional upload) */}
                 <div>
-                  <label className="block font-bold text-neutral-800 mb-1">6. Intended Use</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block font-bold text-neutral-800 mb-1">6. Attach a source PDF or Notes? (Optional)</label>
+                  <input
+                    type="text"
+                    value={wizardSourceNotes}
+                    onChange={(e) => setWizardSourceNotes(e.target.value)}
+                    placeholder="e.g. Focus on Panda SAT Math Chapter 4"
+                    className="w-full p-2.5 rounded-xl border border-neutral-300 mb-2"
+                  />
+                </div>
+
+                {/* 7. Output type? */}
+                <div>
+                  <label className="block font-bold text-neutral-800 mb-1">7. Output Type</label>
+                  <div className="grid grid-cols-2 gap-2">
                     {[
-                      { id: 'drill', label: 'Targeted Drill' },
-                      { id: 'lesson', label: 'Lesson Exercise' },
-                      { id: 'full_test', label: 'Full Mock Test' }
+                      { id: 'questions_only', label: 'Questions only' },
+                      { id: 'with_lesson', label: 'Questions + short lesson' },
+                      { id: 'with_video', label: 'Questions + video script' },
+                      { id: 'with_animation', label: 'Questions + animation brief' }
                     ].map((opt) => (
                       <button
                         key={opt.id}
                         type="button"
-                        onClick={() => setWizardIntendedUse(opt.id as any)}
-                        className={`p-2 rounded-xl border font-bold text-center ${
+                        onClick={() => {
+                          setWizardIntendedUse(opt.id as any);
+                          setIncludeExtraContent(opt.id !== 'questions_only');
+                        }}
+                        className={`p-2.5 rounded-xl border font-bold text-[11px] text-center ${
                           wizardIntendedUse === opt.id
                             ? 'border-blue-600 bg-blue-50 text-blue-900'
                             : 'border-neutral-200 text-neutral-700'
@@ -392,18 +415,6 @@ export default function TeacherContentStudio() {
                       </button>
                     ))}
                   </div>
-                </div>
-
-                {/* 7. Source Material / Notes */}
-                <div>
-                  <label className="block font-bold text-neutral-800 mb-1">7. Source Notes (Optional)</label>
-                  <input
-                    type="text"
-                    value={wizardSourceNotes}
-                    onChange={(e) => setWizardSourceNotes(e.target.value)}
-                    placeholder="e.g. Focus on transition words like moreover, however"
-                    className="w-full p-2.5 rounded-xl border border-neutral-300"
-                  />
                 </div>
               </div>
             )}

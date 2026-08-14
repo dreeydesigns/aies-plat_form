@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Calculator, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Calculator, BookOpen, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function SatChooseSubject() {
   const navigate = useNavigate();
-  const [selectedSubject, setSelectedSubject] = useState<'math' | 'reading-writing'>('math');
+  const [selectedSubject, setSelectedSubject] = useState<string>('');
 
   const handleStart = () => {
+    if (!selectedSubject) return;
     navigate(`/student/sat/preview-runner?subject=${selectedSubject}`);
   };
 
@@ -22,66 +23,43 @@ export default function SatChooseSubject() {
           </p>
         </div>
 
-        {/* One field selector: Math or Reading & Writing */}
-        <div className="space-y-4">
-          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400">
-            Subject
+        {/* Required Dropdown Selection per Spec v3 Page 5 */}
+        <div className="space-y-3">
+          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-600">
+            Subject <span className="text-blue-600">*</span>
           </label>
-          <div className="grid grid-cols-1 gap-3">
-            <button
-              type="button"
-              onClick={() => setSelectedSubject('math')}
-              className={`p-5 rounded-2xl border-2 text-left transition-all flex items-center justify-between ${
-                selectedSubject === 'math'
-                  ? 'border-blue-600 bg-blue-50/70 text-blue-950 shadow-xs'
-                  : 'border-neutral-200 bg-white text-neutral-800 hover:border-neutral-300'
-              }`}
+          <div className="relative">
+            <select
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              className="w-full p-4 bg-neutral-50 border-2 border-neutral-200 rounded-2xl text-sm font-bold text-neutral-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all appearance-none cursor-pointer"
             >
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
-                  selectedSubject === 'math' ? 'bg-blue-600 text-white' : 'bg-neutral-100 text-neutral-600'
-                }`}>
-                  <Calculator className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-base">Math</h3>
-                  <p className="text-xs text-neutral-500 mt-0.5">Algebra, Advanced Math, Problem-Solving, Geometry & Trig with Desmos</p>
-                </div>
-              </div>
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                selectedSubject === 'math' ? 'border-blue-600 bg-blue-600' : 'border-neutral-300'
-              }`}>
-                {selectedSubject === 'math' && <div className="w-2 h-2 rounded-full bg-white" />}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setSelectedSubject('reading-writing')}
-              className={`p-5 rounded-2xl border-2 text-left transition-all flex items-center justify-between ${
-                selectedSubject === 'reading-writing'
-                  ? 'border-emerald-600 bg-emerald-50/70 text-emerald-950 shadow-xs'
-                  : 'border-neutral-200 bg-white text-neutral-800 hover:border-neutral-300'
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
-                  selectedSubject === 'reading-writing' ? 'bg-emerald-600 text-white' : 'bg-neutral-100 text-neutral-600'
-                }`}>
-                  <BookOpen className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-base">Reading & Writing</h3>
-                  <p className="text-xs text-neutral-500 mt-0.5">Information & Ideas, Craft & Structure, Expression of Ideas, Conventions</p>
-                </div>
-              </div>
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                selectedSubject === 'reading-writing' ? 'border-emerald-600 bg-emerald-600' : 'border-neutral-300'
-              }`}>
-                {selectedSubject === 'reading-writing' && <div className="w-2 h-2 rounded-full bg-white" />}
-              </div>
-            </button>
+              <option value="" disabled>
+                Select a subject to preview...
+              </option>
+              <option value="math">Math</option>
+              <option value="reading-writing">Reading & Writing</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500">
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+              </svg>
+            </div>
           </div>
+
+          {/* Context Card for Selected Subject */}
+          {selectedSubject === 'math' && (
+            <div className="p-4 bg-blue-50/70 border border-blue-200 rounded-2xl flex items-center gap-3 text-xs text-blue-900">
+              <Calculator className="w-5 h-5 text-blue-600 shrink-0" />
+              <span>Algebra, Advanced Math, Problem-Solving, Geometry & Trig with embedded Desmos calculator.</span>
+            </div>
+          )}
+          {selectedSubject === 'reading-writing' && (
+            <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl flex items-center gap-3 text-xs text-emerald-900">
+              <BookOpen className="w-5 h-5 text-emerald-600 shrink-0" />
+              <span>Information & Ideas, Craft & Structure, Expression of Ideas, and Standard English Conventions.</span>
+            </div>
+          )}
         </div>
 
         {/* Navigation Actions */}
@@ -89,16 +67,18 @@ export default function SatChooseSubject() {
           <button
             type="button"
             onClick={() => navigate('/student/sat/preview-intro')}
-            className="py-4 px-6 rounded-2xl border border-neutral-300 font-bold text-neutral-700 hover:bg-neutral-50 text-sm transition-colors"
+            className="py-4 px-6 rounded-2xl border border-neutral-300 font-bold text-neutral-700 hover:bg-neutral-50 text-sm transition-colors flex items-center gap-2"
           >
+            <ArrowLeft className="w-4 h-4" />
             Back
           </button>
           <button
             type="button"
             onClick={handleStart}
-            className="flex-1 py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl text-base transition-all shadow-md flex items-center justify-center gap-2"
+            disabled={!selectedSubject}
+            className="flex-1 py-4 px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 text-white font-extrabold rounded-2xl text-base transition-all shadow-md flex items-center justify-center gap-2"
           >
-            <span>Start Preview</span>
+            <span>Start preview</span>
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>

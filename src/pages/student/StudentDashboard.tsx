@@ -37,12 +37,33 @@ export default function StudentDashboard() {
       {/* Page Header: Greeting + one line of context */}
       <div className="space-y-1">
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-900 tracking-tight">
-          Hello, {studentName}
+          Welcome back, {studentName}
         </h1>
         <p className="text-neutral-500 text-sm md:text-base">
           Choose a practice session or jump into your scheduled test.
         </p>
       </div>
+
+      {/* Non-modal Parent Linking Banner for Minors if not linked */}
+      {userProfile?.dateOfBirth && !userProfile?.linkedParentUid && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold shrink-0">
+              !
+            </div>
+            <div>
+              <p className="text-xs font-bold text-neutral-900">Link a Parent or Guardian</p>
+              <p className="text-[11px] text-neutral-600">Connect a parent to share your SAT practice reports and progress milestones.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/onboarding')}
+            className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs whitespace-nowrap transition-colors"
+          >
+            Connect Parent
+          </button>
+        </div>
+      )}
 
       {/* SECTION 1: Your Tests */}
       <div className="space-y-4">
@@ -82,9 +103,8 @@ export default function StudentDashboard() {
           activeAssignedTests.length === 0 ? (
             /* Empty State when nothing is scheduled */
             <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-xs text-center space-y-2">
-              <p className="text-sm font-bold text-neutral-800">No tests currently scheduled</p>
-              <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                When your instructor assigns an official test or workout, it will appear here.
+              <p className="text-sm font-bold text-neutral-800">
+                No upcoming tests. Official tests appear here once your teacher schedules one.
               </p>
             </div>
           ) : (
@@ -129,9 +149,8 @@ export default function StudentDashboard() {
           /* Past Tests View */
           pastSatTests.length === 0 ? (
             <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-xs text-center space-y-2">
-              <p className="text-sm font-bold text-neutral-800">No past test records yet</p>
-              <p className="text-xs text-neutral-500">
-                Completed tests and score reports will be archived here.
+              <p className="text-sm font-bold text-neutral-800">
+                Nothing here yet — your completed tests will show up.
               </p>
             </div>
           ) : (

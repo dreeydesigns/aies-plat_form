@@ -53,22 +53,38 @@ export default function AuthScreen() {
     return newUser;
   };
 
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please enter your email and password.');
+    setEmailError('');
+    setPasswordError('');
+    setError('');
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email.trim())) {
+      setEmailError('Please enter a valid email address.');
       return;
     }
+
+    // Password validation (min 8 chars per Spec v3 Page 1)
+    if (!password || password.length < 8) {
+      setPasswordError('Password must be at least 8 characters long.');
+      return;
+    }
+
     try {
       setLoading(true);
       setError('');
       
       if (isSignUp) {
-        const signupResult = await emailSignUp(email, password, role, generateLinkCode());
+        const signupResult = await emailSignUp(email.trim(), password, role, generateLinkCode());
         setUserProfile({ ...signupResult.userData, id: signupResult.user.uid } as any);
-        navigate(role === 'student' ? '/student' : `/${role}`);
+        navigate(role === 'student' ? '/onboarding' : `/${role}`);
       } else {
-        const user = await emailSignIn(email, password);
+        const user = await emailSignIn(email.trim(), password);
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data() as any;
@@ -77,16 +93,16 @@ export default function AuthScreen() {
         } else {
           const newUser = await handleCreateNewUserDoc(user.uid, null, null, role);
           setUserProfile({ ...newUser, id: user.uid } as any);
-          navigate(role === 'student' ? '/student' : `/${role}`);
+          navigate(role === 'student' ? '/onboarding' : `/${role}`);
         }
       }
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {
-        setError('An account with this email already exists. Please sign in instead.');
+        setEmailError('An account with this email already exists. Please sign in instead.');
       } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
         setError('Invalid email or password. Please try again.');
       } else if (err.code === 'auth/weak-password') {
-        setError('Password should be at least 6 characters long.');
+        setPasswordError('Password must be at least 8 characters long.');
       } else {
         setError(err.message || 'Authentication failed');
       }
@@ -209,11 +225,17 @@ export default function AuthScreen() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailError('');
+              }}
               placeholder="student@example.com"
               required
               className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
+            {emailError && (
+              <p className="text-xs text-rose-400 font-semibold mt-1.5 pl-1">{emailError}</p>
+            )}
           </div>
 
           <div>
@@ -234,11 +256,17 @@ export default function AuthScreen() {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordError('');
+              }}
               placeholder="••••••••"
               required
               className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
+            {passwordError && (
+              <p className="text-xs text-rose-400 font-semibold mt-1.5 pl-1">{passwordError}</p>
+            )}
           </div>
 
           <button
@@ -250,14 +278,14 @@ export default function AuthScreen() {
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               <>
-                <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
+                <span>{isSignUp ? 'Create account' : 'Sign in'}</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        {/* Toggle Sign in / Sign up */}
+        {/* Toggle Sign in / Sign up (Spec v3 Page 1: Create account (primary), Sign in (secondary link below)) */}
         <div className="pt-2 text-center text-xs text-slate-400">
           {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
           <button
@@ -265,11 +293,13 @@ export default function AuthScreen() {
             onClick={() => {
               setIsSignUp(!isSignUp);
               setError('');
+              setEmailError('');
+              setPasswordError('');
               setMessage('');
             }}
             className="text-blue-400 font-bold hover:underline"
           >
-            {isSignUp ? 'Sign In' : 'Sign Up Free'}
+            {isSignUp ? 'Sign in' : 'Create account'}
           </button>
         </div>
 

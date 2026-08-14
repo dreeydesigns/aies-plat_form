@@ -220,6 +220,56 @@ export default function SatScores() {
         </div>
       </div>
 
+      {/* Targeted Textbook Remediation Links (Spec v3 Section 12) */}
+      <div className="bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              Recommended Textbook Remediation
+            </h3>
+            <p className="text-xs text-neutral-500 mt-0.5">
+              Direct links to high-yield chapters and pages in the Textbook Library for your weakest domains.
+            </p>
+          </div>
+          <button
+            onClick={() => navigate('/student/sat/textbooks')}
+            className="px-4 py-2 bg-neutral-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-colors"
+          >
+            Open Library →
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
+          <div
+            onClick={() => navigate('/student/sat/textbooks?book=sat-foundations-math&page=1')}
+            className="p-4 bg-neutral-50 hover:bg-blue-50 border border-neutral-200 hover:border-blue-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+          >
+            <span className="text-[10px] font-extrabold uppercase text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Algebra</span>
+            <p className="text-xs font-bold text-neutral-900 group-hover:text-blue-700">Linear Systems & Slope-Intercept</p>
+            <p className="text-[11px] text-neutral-500">Foundations of SAT Math · Page 1</p>
+          </div>
+
+          <div
+            onClick={() => navigate('/student/sat/textbooks?book=sat-grammar-conventions&page=1')}
+            className="p-4 bg-neutral-50 hover:bg-emerald-50 border border-neutral-200 hover:border-emerald-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+          >
+            <span className="text-[10px] font-extrabold uppercase text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Conventions</span>
+            <p className="text-xs font-bold text-neutral-900 group-hover:text-emerald-700">Sentence Boundaries & Semicolons</p>
+            <p className="text-[11px] text-neutral-500">Standard English Conventions · Page 1</p>
+          </div>
+
+          <div
+            onClick={() => navigate('/student/sat/textbooks?book=sat-advanced-math-mastery&page=1')}
+            className="p-4 bg-neutral-50 hover:bg-purple-50 border border-neutral-200 hover:border-purple-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+          >
+            <span className="text-[10px] font-extrabold uppercase text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Advanced Math</span>
+            <p className="text-xs font-bold text-neutral-900 group-hover:text-purple-700">Nonlinear Systems & Quadratics</p>
+            <p className="text-[11px] text-neutral-500">SAT Advanced Math Mastery · Page 1</p>
+          </div>
+        </div>
+      </div>
+
       {/* 5-Finger & Metacognitive Error Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">

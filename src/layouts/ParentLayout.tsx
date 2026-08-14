@@ -7,7 +7,7 @@ export default function ParentLayout() {
     { name: 'Overview', path: '/parent', icon: LayoutDashboard },
     { name: 'Progress', path: '/parent/children', icon: Users },
     { name: 'Notifications', path: '/parent/messages', icon: Bell },
-    { name: 'Account', path: '/parent/settings', icon: Settings },
+    { name: 'Account & Settings', path: '/parent/settings', icon: Settings },
   ];
   return <SidebarLayout role="parent" navLinks={navLinks} />;
 }

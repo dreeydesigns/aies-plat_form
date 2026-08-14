@@ -133,6 +133,97 @@ export default function StudentDetail() {
         </div>
       </div>
 
+      {/* SAT Domain Mastery & Placement Summary (Spec v3 Section 9) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-extrabold text-neutral-900 text-base flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-blue-600" />
+              SAT Math Placement
+            </h3>
+            <span className={`px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider ${
+              student.classificationMath === 'expert'
+                ? 'bg-purple-100 text-purple-800'
+                : student.classificationMath === 'intermediate'
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-amber-100 text-amber-800'
+            }`}>
+              {student.classificationMath || 'Intermediate'}
+            </span>
+          </div>
+          <div className="space-y-2 text-xs">
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Algebra</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['algebra'] || 'Proficient'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Advanced Math</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['advanced-math'] || 'Mastered'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Problem-Solving & Data</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['problem-solving-data-analysis'] || 'Developing'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Geometry & Trig</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['geometry-trigonometry'] || 'Proficient'}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-extrabold text-neutral-900 text-base flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-600" />
+              SAT Reading & Writing Placement
+            </h3>
+            <span className={`px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider ${
+              student.classificationRW === 'expert'
+                ? 'bg-purple-100 text-purple-800'
+                : student.classificationRW === 'intermediate'
+                ? 'bg-emerald-100 text-emerald-800'
+                : 'bg-amber-100 text-amber-800'
+            }`}>
+              {student.classificationRW || 'Intermediate'}
+            </span>
+          </div>
+          <div className="space-y-2 text-xs">
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Information & Ideas</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['information-ideas'] || 'Mastered'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Craft & Structure</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['craft-structure'] || 'Proficient'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Expression of Ideas</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['expression-of-ideas'] || 'Developing'}
+              </span>
+            </div>
+            <div className="flex justify-between font-semibold text-neutral-600">
+              <span>Standard English Conventions</span>
+              <span className="font-bold text-neutral-900">
+                {student.satProfile?.placementByDomain?.['standard-english-conventions'] || 'Proficient'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Adaptive Analytics & Retake Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Assigned Retakes */}

@@ -11,24 +11,31 @@ import {
   Sparkles, 
   Layers, 
   CheckCircle2, 
-  ShieldAlert 
+  ShieldAlert,
+  Lock,
+  Unlock
 } from 'lucide-react';
 
 export default function SatPracticeTests() {
-  const { userProfile, satTests } = useAppContext();
+  const { userProfile } = useAppContext();
   const navigate = useNavigate();
+
+  // Spec v3 Section 10: Unlock condition (3 consecutive Hard-tier questions cleared or diagnostic completed)
+  const mathConsecutive = userProfile?.satProfile?.consecutiveHardCorrect?.math || 0;
+  const rwConsecutive = userProfile?.satProfile?.consecutiveHardCorrect?.rw || 0;
+  const isDiagnosticDone = userProfile?.satProfile?.diagnosticCompleted || userProfile?.satProfile?.placementByDomain !== undefined;
 
   const handleStartTest = (mode: 'math' | 'english' | 'full') => {
     navigate(`/student/sat/test-runner?mode=${mode}`);
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-4">
+    <div className="max-w-5xl mx-auto space-y-8 py-4 font-sans">
       {/* Top Banner */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold uppercase tracking-wider border border-blue-200">
           <Sparkles className="w-3.5 h-3.5" />
-          Bluebook-Equivalent Timed Simulation
+          Timed Exam Simulation
         </div>
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-900 tracking-tight">
           Full-Length SAT Practice Tests
@@ -43,7 +50,7 @@ export default function SatPracticeTests() {
         {/* Full SAT Test */}
         <div className="bg-white rounded-3xl p-6 border-2 border-blue-600 shadow-md flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-wider">
-            Most Popular
+            Full Simulation
           </div>
           <div className="space-y-4">
             <div className="w-12 h-12 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center font-bold">
@@ -51,14 +58,14 @@ export default function SatPracticeTests() {
             </div>
             <h3 className="text-xl font-bold text-neutral-900">Full SAT Exam</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
-              Complete 4-module test simulating real Digital SAT conditions: 2 Reading & Writing modules + 2 Math modules.
+              Complete 4-module test: 2 Reading & Writing modules (32 min each) + 10-minute break + 2 Math modules (35 min each).
             </p>
             <div className="space-y-2 pt-2 text-xs font-semibold text-neutral-500 border-t border-neutral-100">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-blue-600" /> 134 minutes total
+                <Clock className="w-4 h-4 text-blue-600" /> 134 min + 10 min break
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-blue-600" /> 400 - 1600 Total Score
+                <Award className="w-4 h-4 text-blue-600" /> 400 – 1600 Total Score
               </div>
             </div>
           </div>
@@ -66,7 +73,7 @@ export default function SatPracticeTests() {
             onClick={() => handleStartTest('full')}
             className="mt-6 w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 font-bold text-white text-sm transition-colors flex items-center justify-center gap-2"
           >
-            Start Full Test
+            <span>Start Full Test</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -79,14 +86,14 @@ export default function SatPracticeTests() {
             </div>
             <h3 className="text-xl font-bold text-neutral-900">Math Section Only</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
-              2 timed modules (35 min each) covering all 4 math domains with Desmos graphing calculator enabled.
+              2 timed modules (35 min / 22 questions each) covering all 4 math domains with embedded Desmos graphing calculator.
             </p>
             <div className="space-y-2 pt-2 text-xs font-semibold text-neutral-500 border-t border-neutral-100">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-indigo-600" /> 70 minutes (44 items)
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-indigo-600" /> 200 - 800 Math Score
+                <Award className="w-4 h-4 text-indigo-600" /> 200 – 800 Math Score
               </div>
             </div>
           </div>
@@ -94,12 +101,12 @@ export default function SatPracticeTests() {
             onClick={() => handleStartTest('math')}
             className="mt-6 w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-black font-bold text-white text-sm transition-colors flex items-center justify-center gap-2"
           >
-            Start Math Only
+            <span>Start Math Only</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* English Only */}
+        {/* Reading & Writing Only */}
         <div className="bg-white rounded-3xl p-6 border border-neutral-200 shadow-sm hover:border-neutral-300 transition-all flex flex-col justify-between">
           <div className="space-y-4">
             <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold">
@@ -107,14 +114,14 @@ export default function SatPracticeTests() {
             </div>
             <h3 className="text-xl font-bold text-neutral-900">Reading & Writing</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
-              2 timed modules (32 min each) covering comprehension, vocabulary in context, transitions, and grammar.
+              2 timed modules (32 min / 27 questions each) covering information, craft, expression of ideas, and conventions.
             </p>
             <div className="space-y-2 pt-2 text-xs font-semibold text-neutral-500 border-t border-neutral-100">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-emerald-600" /> 64 minutes (54 items)
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-emerald-600" /> 200 - 800 RW Score
+                <Award className="w-4 h-4 text-emerald-600" /> 200 – 800 RW Score
               </div>
             </div>
           </div>
@@ -122,7 +129,7 @@ export default function SatPracticeTests() {
             onClick={() => handleStartTest('english')}
             className="mt-6 w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-black font-bold text-white text-sm transition-colors flex items-center justify-center gap-2"
           >
-            Start Reading & Writing
+            <span>Start Reading & Writing</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
