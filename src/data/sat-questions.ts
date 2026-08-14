@@ -2775,8 +2775,8 @@ export const initialSatQuestions: SatQuestion[] = [
       'Like all stories about the lives of inconsequential people, this story must necessarily be related in a particular way if the reason the story is consequential is to be made evident to the audience.',
       'It is a remarkable story that happened to an unremarkable person, though one could plausibly argue that because the story is valuable, some of its value accrues to the person at its center.'
     ],
-    correctAnswer: 1,
-    explanation: 'Choice B is the best answer. The narrator explains that Hans Castorp is an ordinary man of no special importance, yet the story itself holds great significance as evidenced by its historical patina and deep past tense framing.',
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer because it presents a statement about Hans Castorp’s story that is suggested by the text. The narrator indicates that the story about Hans Castorp will be told not because there is something particularly notable about him (he is "perfectly ordinary"), but because the story itself is remarkable ("very much worth telling"). The narrator notes that it is "in Hans Castorp’s favor" that the story is his, and that "not every story happens to everybody." Thus, the text suggests both that the story is remarkable happening to an unremarkable person and that the person at the center takes on some of the story’s value.',
     textbookRef: {
       textbookId: 'sat-rw-mastery',
       page: 16,
