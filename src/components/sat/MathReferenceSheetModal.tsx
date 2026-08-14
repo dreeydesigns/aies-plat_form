@@ -34,9 +34,8 @@ export default function MathReferenceSheetModal({ isOpen, onClose }: MathReferen
           <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2">
             <h3 className="font-bold text-neutral-900 uppercase tracking-wider text-[11px]">Circles</h3>
             <p className="font-mono text-neutral-800">Area: <span className="font-bold">$A = \pi r^2$</span></p>
-            <p className="font-mono text-neutral-800">Circumference: <span className="font-bold">$C = 2\pi r$</span></p>
-            <p className="font-mono text-neutral-800">Degrees in circle: <span className="font-bold">$360^\circ$</span></p>
-            <p className="font-mono text-neutral-800">Radians in circle: <span className="font-bold">$2\pi\text{ radians}$</span></p>
+            <p className="font-mono text-neutral-800">Degrees in circle: <span className="font-bold">360°</span></p>
+            <p className="font-mono text-neutral-800">Radians in circle: <span className="font-bold">2π radians</span></p>
           </div>
 
           {/* Triangles & Rectangles */}

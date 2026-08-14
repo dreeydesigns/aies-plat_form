@@ -209,12 +209,13 @@ export default function SatPractice() {
     }
 
     // Spec v3 Section 10: Track consecutive Hard-tier questions answered correctly to unlock Full-Length tests
-    if (isAnswerCorrect && (currentQuestion.difficulty === 'expert' || currentQuestion.difficulty === 'hard')) {
+    if (isCorrect && (currentQuestion.difficulty === 'expert' || currentQuestion.difficulty === 'hard')) {
       const secKey = currentQuestion.section === 'math' ? 'math' : 'rw';
       const prevConsec = userProfile?.satProfile?.consecutiveHardCorrect?.[secKey] || 0;
       const newConsec = prevConsec + 1;
       console.log(`[Practice] Consecutive Hard-tier correct in ${secKey}: ${newConsec}`);
     }
+  };
 
   const handleNextQuestion = () => {
     if (currentIdx < questionPool.length - 1) {

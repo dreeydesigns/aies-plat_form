@@ -1,6 +1,8 @@
 import { SatQuestion } from '../types';
+import { centralIdeasQuestions } from './centralIdeasQuestions';
 
 export const initialSatQuestions: SatQuestion[] = [
+  ...centralIdeasQuestions,
   // ==========================================
   // MATH — ALGEBRA
   // ==========================================

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { initialTextbooks } from '../../../data/textbooks';
-import { Textbook, TextbookPage } from '../../../types';
+import { initialSatQuestions } from '../../../data/sat-questions';
+import { Textbook, TextbookPage, SatQuestion } from '../../../types';
 import { 
   BookOpen, 
   Search, 
@@ -13,14 +14,21 @@ import {
   Check, 
   FileText,
   Share2,
-  Sparkles
+  Sparkles,
+  Zap,
+  HelpCircle,
+  Lightbulb,
+  CheckCircle2,
+  XCircle,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 
 export default function SatTextbooks() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const textbookIdParam = searchParams.get('textbookId');
+  const textbookIdParam = searchParams.get('textbookId') || searchParams.get('book');
   const pageParam = parseInt(searchParams.get('page') || '0', 10);
   const highlightParam = searchParams.get('highlight') || '';
 
@@ -28,6 +36,8 @@ export default function SatTextbooks() {
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedLink, setCopiedLink] = useState(false);
+  const [showAiAssistant, setShowAiAssistant] = useState(false);
+  const [activeTab, setActiveTab] = useState<'reading' | 'questions' | 'ai'>('reading');
 
   const highlightRef = useRef<HTMLDivElement | null>(null);
 
@@ -78,12 +88,25 @@ export default function SatTextbooks() {
     setTimeout(() => setCopiedLink(false), 2000);
   };
 
+  // Questions referenced by this book/page
+  const relatedQuestions = useMemo(() => {
+    if (!selectedBook) return [];
+    const currentPage = selectedBook.pages[currentPageIndex];
+    if (!currentPage) return [];
+    return initialSatQuestions.filter(
+      q => q.textbookRef?.textbookId === selectedBook.id && 
+          (q.textbookRef?.page === currentPage.pageNumber || !q.textbookRef?.page)
+    );
+  }, [selectedBook, currentPageIndex]);
+
   // Filter books by search
   const filteredBooks = useMemo(() => {
     if (!searchQuery) return initialTextbooks;
     const q = searchQuery.toLowerCase();
     return initialTextbooks.filter(
-      b => b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)
+      b => b.title.toLowerCase().includes(q) || 
+           b.author.toLowerCase().includes(q) ||
+           b.pages.some(p => p.content.toLowerCase().includes(q) || p.sections.some(s => s.heading.toLowerCase().includes(q) || s.text.toLowerCase().includes(q)))
     );
   }, [searchQuery]);
 
@@ -92,9 +115,9 @@ export default function SatTextbooks() {
     const currentPage: TextbookPage | undefined = selectedBook.pages[currentPageIndex];
 
     return (
-      <div className="max-w-5xl mx-auto space-y-6 py-2">
+      <div className="max-w-6xl mx-auto space-y-6 py-2">
         {/* Top Reader Navigation Bar */}
-        <div className="bg-white p-4 rounded-2xl border border-neutral-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-white p-4 rounded-3xl border border-neutral-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <button
             onClick={() => {
               setSelectedBook(null);
@@ -115,7 +138,7 @@ export default function SatTextbooks() {
               <button
                 onClick={() => handlePageChange(currentPageIndex - 1)}
                 disabled={currentPageIndex === 0}
-                className="p-1.5 rounded-lg border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
+                className="p-2 rounded-xl border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
                 title="Previous Page"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -123,7 +146,7 @@ export default function SatTextbooks() {
               <button
                 onClick={() => handlePageChange(currentPageIndex + 1)}
                 disabled={currentPageIndex === selectedBook.pages.length - 1}
-                className="p-1.5 rounded-lg border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
+                className="p-2 rounded-xl border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
                 title="Next Page"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -132,16 +155,28 @@ export default function SatTextbooks() {
 
             <button
               onClick={handleShareLink}
-              className="p-2 rounded-lg border border-neutral-200 text-neutral-600 hover:text-neutral-900 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              className="p-2 rounded-xl border border-neutral-200 text-neutral-600 hover:text-neutral-900 text-xs font-semibold flex items-center gap-1.5 transition-colors"
               title="Copy deep-link to this page"
             >
               {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
               <span className="hidden sm:inline">{copiedLink ? 'Copied!' : 'Share'}</span>
             </button>
+
+            <button
+              onClick={() => setShowAiAssistant(!showAiAssistant)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+                showAiAssistant
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>AI Study Co-Pilot</span>
+            </button>
           </div>
         </div>
 
-        {/* Reader Layout: Sidebar TOC + Page Content */}
+        {/* Reader Layout: Sidebar TOC + Page Content + Optional AI Co-Pilot */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Table of Contents */}
           <div className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm space-y-4 md:col-span-1 h-fit">
@@ -164,10 +199,21 @@ export default function SatTextbooks() {
                 </button>
               ))}
             </div>
+
+            {/* Quick Practice Launcher */}
+            <div className="pt-4 border-t border-neutral-100 space-y-2">
+              <button
+                onClick={() => navigate('/student/sat/practice')}
+                className="w-full py-2.5 px-3 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                Practice This Subject
+              </button>
+            </div>
           </div>
 
-          {/* Page Display */}
-          <div className="bg-white p-8 md:p-12 rounded-3xl border border-neutral-200 shadow-sm md:col-span-3 space-y-8 min-h-[500px]">
+          {/* Page Display & Content */}
+          <div className="bg-white p-6 md:p-10 rounded-3xl border border-neutral-200 shadow-sm md:col-span-3 space-y-8 min-h-[500px]">
             {/* Header info */}
             <div className="border-b border-neutral-100 pb-4 flex items-center justify-between">
               <div>
@@ -199,25 +245,142 @@ export default function SatTextbooks() {
               </div>
             )}
 
-            {/* Page Main Text */}
-            <div className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed text-base">
-              <p>{currentPage?.content}</p>
+            {/* Mode Selector Tabs */}
+            <div className="flex items-center gap-2 border-b border-neutral-100 pb-2">
+              <button
+                onClick={() => setActiveTab('reading')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  activeTab === 'reading' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+                }`}
+              >
+                Textbook Chapter
+              </button>
+              <button
+                onClick={() => setActiveTab('questions')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 ${
+                  activeTab === 'questions' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+                }`}
+              >
+                <span>Linked Questions</span>
+                <span className="px-1.5 py-0.2 bg-neutral-200 text-neutral-800 rounded-full text-[10px]">
+                  {relatedQuestions.length}
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveTab('ai')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 ${
+                  activeTab === 'ai' ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                AI Key Takeaways
+              </button>
             </div>
 
-            {/* Structured Sections */}
-            {currentPage?.sections && currentPage.sections.length > 0 && (
-              <div className="space-y-6 pt-4 border-t border-neutral-100">
-                {currentPage.sections.map((section, idx) => (
-                  <div key={idx} className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-2">
-                    <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-blue-600" />
-                      {section.heading}
-                    </h3>
-                    <p className="text-sm text-neutral-700 leading-relaxed">
-                      {section.text}
-                    </p>
+            {/* Tab: Reading */}
+            {activeTab === 'reading' && (
+              <div className="space-y-6">
+                <div className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed text-sm whitespace-pre-line">
+                  {currentPage?.content}
+                </div>
+
+                {/* Structured Sections */}
+                {currentPage?.sections && currentPage.sections.length > 0 && (
+                  <div className="space-y-4 pt-4 border-t border-neutral-100">
+                    {currentPage.sections.map((section, idx) => (
+                      <div key={idx} className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-2">
+                        <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
+                          <FileText className="w-4 h-4 text-blue-600" />
+                          {section.heading}
+                        </h3>
+                        <p className="text-sm text-neutral-700 leading-relaxed">
+                          {section.text}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
+              </div>
+            )}
+
+            {/* Tab: Linked Questions */}
+            {activeTab === 'questions' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-neutral-800">
+                    Official SAT Drill Items Grounded in Page {currentPage?.pageNumber}
+                  </h3>
+                  <span className="text-xs text-neutral-500">{relatedQuestions.length} questions available</span>
+                </div>
+
+                {relatedQuestions.length === 0 ? (
+                  <div className="p-8 text-center bg-neutral-50 rounded-2xl border border-neutral-200 text-neutral-500 text-xs">
+                    No individual questions mapped directly to this specific page index yet.
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {relatedQuestions.map((q, idx) => (
+                      <div key={q.id || idx} className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                            Item ID: {q.id}
+                          </span>
+                          <span className="text-xs font-extrabold uppercase text-neutral-500">
+                            {q.difficulty}
+                          </span>
+                        </div>
+                        <p className="text-sm text-neutral-900 font-medium whitespace-pre-line leading-relaxed">
+                          {q.questionText}
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                          {q.options.map((opt, optIdx) => (
+                            <div
+                              key={optIdx}
+                              className={`p-3 rounded-xl text-xs font-semibold border flex items-center justify-between ${
+                                optIdx === q.correctAnswer
+                                  ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                                  : 'bg-white border-neutral-200 text-neutral-700'
+                              }`}
+                            >
+                              <span>{String.fromCharCode(65 + optIdx)}. {opt}</span>
+                              {optIdx === q.correctAnswer && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
+                            </div>
+                          ))}
+                        </div>
+                        {q.explanation && (
+                          <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900">
+                            <span className="font-bold">Official Rationale: </span>
+                            {q.explanation}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab: AI Key Takeaways */}
+            {activeTab === 'ai' && (
+              <div className="p-6 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 rounded-3xl border border-blue-200 space-y-4">
+                <div className="flex items-center gap-2 text-blue-900 font-extrabold text-sm">
+                  <Sparkles className="w-4 h-4 text-blue-600" />
+                  AI Synthesis & SAT Strategy Guide for Page {currentPage?.pageNumber}
+                </div>
+                <div className="space-y-3 text-xs text-neutral-800 leading-relaxed">
+                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
+                    <span className="font-bold text-blue-800">1. Core SAT Tested Concept</span>
+                    <p>Identify the central claim of the passage by determining what overarching idea connects every supporting sentence, rather than focusing on an isolated detail.</p>
+                  </div>
+                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
+                    <span className="font-bold text-amber-800">2. High-Frequency Trap Types</span>
+                    <p>Watch for choices that are factually accurate to the excerpt but "Too Narrow" (only stating one sentence's detail) or "Too Extreme" (introducing unsupported absolutes).</p>
+                  </div>
+                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
+                    <span className="font-bold text-emerald-800">3. Rapid Elimination Method</span>
+                    <p>If a question asks "What is true according to the text?", eliminate any option where the relationship between causes or characters has been subtly reversed.</p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -228,18 +391,18 @@ export default function SatTextbooks() {
 
   // TEXTBOOK LIBRARY LIST VIEW
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-4">
+    <div className="max-w-6xl mx-auto space-y-8 py-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold uppercase tracking-wider mb-2 border border-blue-200">
             <Sparkles className="w-3.5 h-3.5" />
-            Official Remediation Library
+            AI Remediation & Textbook Library
           </div>
           <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
-            SAT Curated Textbooks & Guides
+            Curated SAT Textbooks & Skill Manuals
           </h1>
           <p className="text-neutral-500 text-sm mt-1 max-w-xl">
-            Original, licensed curriculum materials integrated with our wrong-answer remediation engine.
+            Original curriculum materials with full OCR indexing, case studies, and 1-click deep-link wrong answer remediation.
           </p>
         </div>
 
@@ -248,16 +411,16 @@ export default function SatTextbooks() {
           <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Search topics or titles..."
+            placeholder="Search topics, authors, or text..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-neutral-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-white rounded-2xl border border-neutral-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
       {/* Book Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredBooks.map((book) => (
           <div
             key={book.id}
@@ -265,16 +428,16 @@ export default function SatTextbooks() {
           >
             <div className="space-y-4">
               <div
-                className={`w-full h-36 rounded-2xl bg-gradient-to-br ${book.coverColor} text-white p-6 flex flex-col justify-between shadow-inner`}
+                className={`w-full h-40 rounded-2xl bg-gradient-to-br ${book.coverColor} text-white p-6 flex flex-col justify-between shadow-inner`}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 bg-black/20 backdrop-blur-md rounded-full">
-                    AIES Original Edition
+                    AIES Edition
                   </span>
-                  <BookOpen className="w-6 h-6 opacity-80" />
+                  <BookOpen className="w-5 h-5 opacity-90" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-lg text-white leading-tight">
+                  <h3 className="font-extrabold text-base text-white leading-snug">
                     {book.title}
                   </h3>
                   <p className="text-xs text-white/80 mt-1">{book.author}</p>
@@ -282,15 +445,15 @@ export default function SatTextbooks() {
               </div>
 
               <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
                   Publisher
                 </p>
-                <p className="text-xs font-medium text-neutral-600">{book.publisherOrOwner}</p>
+                <p className="text-xs font-semibold text-neutral-700">{book.publisherOrOwner}</p>
               </div>
 
               <div className="space-y-1">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
-                  Available Pages & Chapters
+                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
+                  Indexed Chapters & Pages
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {book.pages.map((p) => (
@@ -307,7 +470,7 @@ export default function SatTextbooks() {
 
             <button
               onClick={() => handleSelectBook(book)}
-              className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-black font-bold text-white text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-2xl bg-neutral-900 hover:bg-black font-bold text-white text-xs transition-colors flex items-center justify-center gap-2"
             >
               <BookOpen className="w-4 h-4" />
               Open Textbook Reader

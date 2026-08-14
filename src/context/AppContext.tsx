@@ -45,6 +45,13 @@ export interface User {
   dateOfBirth?: string; // YYYY-MM-DD
   age?: number;
   parentId?: string | null;
+  linkedParentUid?: string;          // student only
+  linkedStudentUids?: string[];      // parent only
+  classificationMath?: 'beginner' | 'intermediate' | 'expert';
+  classificationRW?: 'beginner' | 'intermediate' | 'expert';
+  targetTestDate?: string;
+  targetScore?: number;
+  baselineScore?: number;
   isParentManaged?: boolean;
   sensoryProfile?: SensoryProfile;
   socialPersonality?: SocialPersonality;
@@ -71,6 +78,8 @@ export interface User {
   earnedBadges?: string[];
   learningRecords?: Array<{ lessonId: string; completedAt: string; quizScore?: number }>;
   teacherReport?: { strengths: string; supportNeeds: string; remarks: string; updatedAt: string };
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export function computeAge(dob: string): number {

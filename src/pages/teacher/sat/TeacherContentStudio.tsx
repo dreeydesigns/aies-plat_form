@@ -335,8 +335,6 @@ export default function TeacherContentStudio() {
                   />
                 </div>
 
-                {/* 4. Difficulty */}
-                <div>
                 {/* 4. Difficulty Tier (Easy / Medium / Hard / Mixed) */}
                 <div>
                   <label className="block font-bold text-neutral-800 mb-1">4. Difficulty Tier</label>

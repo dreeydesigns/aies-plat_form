@@ -12,6 +12,13 @@ export interface DriveFile {
 
 export type UserRole = 'student' | 'parent' | 'teacher' | 'admin';
 
+export interface CognitiveProfile {
+  workingMemory: 'standard' | 'high' | 'extended';
+  processingSpeed: 'standard' | 'rapid' | 'deliberate';
+  patternRecognition: 'standard' | 'high' | 'expert';
+  attentionSpanMinutes?: number;
+}
+
 export interface UserProfile {
   uid: string;
   id?: string;
@@ -36,6 +43,7 @@ export interface UserProfile {
   completedLessons?: string[];
   earnedBadges?: string[];
   satProfile?: SatProfile;
+  cognitiveProfile?: CognitiveProfile;
   createdAt?: string;
   updatedAt?: string;
 }

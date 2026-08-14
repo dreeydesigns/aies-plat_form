@@ -2,6 +2,178 @@ import { Textbook } from '../types';
 
 export const initialTextbooks: Textbook[] = [
   {
+    id: 'sat-reading-central-ideas',
+    title: 'Digital SAT Reading & Writing: Information & Ideas Mastery',
+    author: 'AIES Reading & Humanities Faculty',
+    publisherOrOwner: 'AIES Academic Press (Original Content)',
+    coverColor: 'from-teal-600 to-emerald-800',
+    pages: [
+      {
+        pageNumber: 1,
+        content: `Central Ideas and Details in Literary Passages:
+Literary passages on the Digital SAT evaluate your ability to identify the primary theme, emotional subtext, or central action of short excerpts from classic and contemporary literature.
+
+Key Principles:
+1. Focus on the whole passage, not an isolated detail: A correct "main idea" must encapsulate the overarching arc of the excerpt rather than a single sentence.
+2. Track character interiority and relationships: Notice how characters' thoughts, feelings, and actions reveal their internal motivations and external standing.
+3. Distinguish tone and subtext: Notice when reactions represent delight rather than fear, fond admiration rather than jealousy, or subtle communication rather than direct assertion.`,
+        sections: [
+          {
+            heading: 'Literature Case Study 1: Jane Austen’s Sense and Sensibility (Elinor Dashwood)',
+            text: 'Passage Analysis: Elinor, though "only nineteen," possesses a "strength of understanding, and coolness of judgment" that qualifies her to be the counsellor of her mother. While she has strong feelings, she knows how to govern them—a skill her mother and sister lack. Thus, the text establishes that Elinor is remarkably mature beyond her years.'
+          },
+          {
+            heading: 'Literature Case Study 2: Oscar Wilde’s The Picture of Dorian Gray',
+            text: 'Passage Analysis: When Dorian views his portrait painted by Hallward, his cheeks flush with pleasure and a look of joy enters his eyes. He is in wonder and so entranced that he barely hears Hallward. Thus, the text directly supports that Dorian is delighted and revelatory about his painted portrait.'
+          },
+          {
+            heading: 'Literature Case Study 3: Jack London’s The Call of the Wild (Buck & John Thornton)',
+            text: 'Passage Analysis: "Thornton alone held Buck. The rest of mankind was as nothing." Buck only tolerates other travelers if they are close to Thornton. Thus, Buck holds John Thornton in far higher regard than any other human being.'
+          },
+          {
+            heading: 'Literature Case Study 4: Anton Chekhov’s "Ionitch" & Mark Haber’s "Saint Sebastian’s Abyss"',
+            text: 'Passage Analysis: In Chekhov, the citizens of S. point to the Turkins as the "most accomplished and most enlightened family of all," showing their unique social status. In Haber, Schmidt sighs, winces, and invents a fake appointment to convey his intense displeasure with a dining companion who dislikes painting without explicitly stating it.'
+          }
+        ]
+      },
+      {
+        pageNumber: 2,
+        content: `Arts, Culture, and Social Expression in Digital SAT Passages:
+Passages in the humanities examine how artists, performers, and cultural innovators use creative mediums to challenge conventions, promote education, and unite communities.
+
+Key Principles:
+1. Identify the artist\'s motivation and societal impact: Connect the physical medium (e.g. wire sculptures, linocut prints, ranchera music, beadwork) to the broader cultural or educational objective.
+2. Note how innovative adaptations alter traditional genres: When an artist slows down tempo (Chavela Vargas) or pairs high and low culture (Jeffrey Gibson combining punching bags with women\'s jingle dress beadwork), identify the deliberate rejection of gender roles or artistic boundaries.`,
+        sections: [
+          {
+            heading: 'Arts & Education: Ruth Asawa & San Francisco Arts Programs',
+            text: 'Passage Analysis: Ruth Asawa was dedicated to bringing art to children in San Francisco, cofounding the Alvarado School Arts Workshop in 1968 and a public arts high school in 1982. Her primary legacy highlighted in the text is her initiative in creating accessible public school art programs.'
+          },
+          {
+            heading: 'Cultural Innovation: Jeffrey Gibson & Native Beadwork',
+            text: 'Passage Analysis: Jeffrey Gibson decorates boxing punching bags with leather fringe and jingles from Ojibwe women\'s dance dressmaking, intentionally merging masculine sports objects with traditional female Native crafts to reject rigid gender divisions.'
+          },
+          {
+            heading: 'Social Advocacy: Elizabeth Catlett’s Linocut Series',
+            text: 'Passage Analysis: In "The Black Woman" (1946–1947), Catlett uses mass-produced linocut prints to depict everyday and renowned Black women side by side, using accessible art to connect, celebrate, and unite Black women.'
+          },
+          {
+            heading: 'Musical Expression: Chavela Vargas & Richard Wagner',
+            text: 'Passage Analysis: Chavela Vargas performed classic ranchera songs much more slowly with raspy solo guitar to express emotional nuances. In 19th-century opera, Richard Wagner achieved extreme volume by expanding brass sections (horns, trombones, tubas).'
+          }
+        ]
+      },
+      {
+        pageNumber: 3,
+        content: `Historical Perspectives, Primary Sources, and Oral Traditions:
+Historical and social studies passages examine how historical evidence, documentation methods, and diverse source materials expand our understanding of key historical figures and movements.
+
+Key Principles:
+1. Examine evidentiary reliability: Differentiate between contemporary written records, later chronicles based on oral tradition, and newly discovered archival articles.
+2. Recognize historiographical expansion: Notice when modern historians (such as Ashley D. Farmer) expand traditional source archives to include print ephemera, cartoons, and advertisements to illuminate underrepresented figures.`,
+        sections: [
+          {
+            heading: 'Historical Historiography: Ashley D. Farmer on Black Women in Black Power',
+            text: 'Passage Analysis: While earlier histories relied predominantly on essays by male leaders, Farmer incorporates political cartoons, ads, and artwork to demonstrate the diverse, vital contributions of Black women to the movement.'
+          },
+          {
+            heading: 'Textual Forebears: Viscardo y Guzmán & Francisco de Miranda',
+            text: 'Passage Analysis: Peruvian thinker Viscardo wrote "Letter to the Spanish Americans" in 1791, but Venezuelan revolutionary Miranda circulated, edited, and added footnotes, making him central to the text’s distribution and impact.'
+          },
+          {
+            heading: 'Documentary Certainty: The US Pledge of Allegiance',
+            text: 'Passage Analysis: Francis Bellamy long claimed to author the pledge in August 1892, but a newspaper article published months earlier describes students reciting the pledge, calling the original authorship into question.'
+          },
+          {
+            heading: 'Oral Traditions: West African Jalis & Polish Piast Dynasty',
+            text: 'Passage Analysis: West African jalis preserve oral family histories and community stories despite modern tech. In Polish history, Mieszko II Lambert is verified by written records, while 10th-century Siemomysł relies on oral tradition in later chronicles.'
+          }
+        ]
+      },
+      {
+        pageNumber: 4,
+        content: `Natural Sciences, Ecology, and Paleontology:
+Scientific passages test your comprehension of hypotheses, experimental designs, biological adaptations, and evolutionary discoveries.
+
+Key Principles:
+1. Pinpoint the primary finding: What did the researchers observe or discover (e.g. a 164-million-year-old flower bud fossil, coral microplastic storage, or seal water spitting)?
+2. Connect adaptation to environment: Identify the specific physical mechanism (longer helicopter blades on Mars, thicker downy feathers in cold Himalayan elevations, tree bark tubes in rubber trees) that enables functioning under distinct environmental conditions.`,
+        sections: [
+          {
+            heading: 'Planetary Engineering: Amelia Quon & the NASA Mars Helicopter',
+            text: 'Passage Analysis: Because Mars’s atmosphere is only 1% as dense as Earth’s, standard blades cannot generate lift. Quon’s team engineered blades that are longer and rotate faster to compensate for atmospheric thinness.'
+          },
+          {
+            heading: 'Paleobotany: Discovery of Florigerminis jurassica',
+            text: 'Passage Analysis: Xin Wang and colleagues uncovered a 164-million-year-old fossil flower bud in China, providing evidence that angiosperms (flowering plants) emerged in the Jurassic period (145–201 million years ago).'
+          },
+          {
+            heading: 'Marine Ecology: Corals, Microplastics, and Bleaching',
+            text: 'Passage Analysis: Jessica Reichert found reef corals capture and store up to 20 million kg of microplastics annually. When bleached from environmental stress, corals produce bright pigments to shield sensitive recolonizing algae from intense sunlight.'
+          },
+          {
+            heading: 'Behavioral Biology: Honeybee Shimmering & Songbird Feathers',
+            text: 'Passage Analysis: Giant honeybees flip bodies in waves ("shimmering") specifically to repel hornets. In the Himalayas, Sahas Barve demonstrated high-elevation songbirds possess longer feathers with more downy insulation.'
+          }
+        ]
+      },
+      {
+        pageNumber: 5,
+        content: `Astrophysics, Planetary Astronomy, and Geophysics:
+Astrophysical passages report on planetary dynamics, subsurface oceans, galactic structures, and the conditions necessary for extraterrestrial life.
+
+Key Principles:
+1. Relate observed anomalies to physical models: Connect an unusual wobble or surface feature to the underlying physical cause (e.g. liquid oceans beneath Mimas and Europa).
+2. Distinguish confirmed discoveries from ongoing hypotheses: Note what has been verified (e.g. Wigner crystal imaging with graphene, SOFIA magnetic fields) versus proposed models.`,
+        sections: [
+          {
+            heading: 'Subsurface Oceans: Saturn\'s Mimas & Jupiter\'s Europa',
+            text: 'Passage Analysis: Cassini detected a rotational wobble in Mimas consistent with a deep liquid ocean. On Europa, parallel ridges mirror water pocket fissures on Greenland ice sheets, suggesting subsurface ocean activity.'
+          },
+          {
+            heading: 'Quantum Physics: Confirmation of the Wigner Crystal',
+            text: 'Passage Analysis: Eugene Wigner posited an electron honeycomb crystal in 1934. In 2021, Feng Wang’s team cooled trapped electrons and used an ultrathin graphene sheet to capture the first visual confirmation.'
+          },
+          {
+            heading: 'Astrophysics: NASA Aspera & SOFIA Telescope',
+            text: 'Passage Analysis: Aspera aims to observe previously unseen "warm-hot" circumgalactic medium gas crucial to galaxy evolution. SOFIA mapped galactic bone G47 and surprisingly found a non-uniform, disordered magnetic field.'
+          },
+          {
+            heading: 'Exobiology: Stern & Gerya on Plate Tectonics',
+            text: 'Passage Analysis: Stern and Gerya propose that beyond the habitable zone and atmosphere, active plate tectonics is an essential condition for accelerating the evolution of complex extraterrestrial life.'
+          }
+        ]
+      },
+      {
+        pageNumber: 6,
+        content: `Social Sciences, Behavioral Psychology, and Technology:
+Social science passages investigate human behavior, decision-making, consumer psychology, and how new technologies interact with cognitive expectations.
+
+Key Principles:
+1. Identify the causal variable in experiments: What was manipulated (e.g. counting rewards out loud, device type used for surveys, social media integration in fashion forecasts)?
+2. Recognize cognitive reconciliation: Notice how participants resolve dissonance or adjust perceptions when reality diverges from expectations (e.g. negative disconfirmation in smart home adoption).`,
+        sections: [
+          {
+            heading: 'Developmental Psychology: Children and Perceptions of Fairness',
+            text: 'Passage Analysis: When teachers distributed equal rewards, 73% of children aged 4–6 rated the teacher who counted aloud as fairer, showing that the method of delivery affects children\'s judgment of equity.'
+          },
+          {
+            heading: 'Consumer Technology: Negative Disconfirmation in Smart Homes',
+            text: 'Passage Analysis: Davit Marikyan found that although smart home tech frequently causes initial frustration by falling short of high expectations, users employ cognitive coping strategies to achieve long-term satisfaction.'
+          },
+          {
+            heading: 'Methodology: Survey Interactions on PCs vs Smartphones',
+            text: 'Passage Analysis: Décieux and Sischka proved device type alters survey behavior: PC users multitask more frequently but achieve higher completion rates than mobile respondents.'
+          },
+          {
+            heading: 'Applied Analytics: Fashion Demand & Social Media Data',
+            text: 'Passage Analysis: Fu and Fisher demonstrated that combining retailers\' historical sales data with real-time social media signals boosts fashion demand forecast accuracy by 24% to 57%.'
+          }
+        ]
+      }
+    ]
+  },
+  {
     id: 'sat-math-foundations',
     title: 'Foundations of Digital SAT Math',
     author: 'AIES STEM Editorial Board',
