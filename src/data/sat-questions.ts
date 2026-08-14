@@ -5284,7 +5284,1667 @@ export const initialSatQuestions: SatQuestion[] = [
     },
     createdAt: '2026-08-14T00:00:00Z',
     createdBy: 'system'
+  },
+  // ==========================================
+  // READING & WRITING — INFORMATION & IDEAS (72 HARD INFERENCES)
+  // ==========================================
+  {
+    id: 'f1bfbed3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Marta Coll and colleagues’ 2010 Mediterranean Sea biodiversity census reported approximately 17,000 species, nearly double the number reported in Carlo Bianchi and Carla Morri’s 2000 census—a difference only partly attributable to the description of new invertebrate species in the interim. Another factor is that the morphological variability of microorganisms is poorly understood compared to that of vertebrates, invertebrates, plants, and algae, creating uncertainty about how to evaluate microorganisms as species. Researchers’ decisions on such matters therefore can be highly consequential. Indeed, the two censuses reported similar counts of vertebrate, plant, and algal species, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Coll and colleagues reported a much higher number of species than Bianchi and Morri did largely due to the inclusion of invertebrate species that had not been described at the time of Bianchi and Morri’s census.',
+      'some differences observed in microorganisms may have been treated as variations within species by Bianchi and Morri but treated as indicative of distinct species by Coll and colleagues.',
+      'Bianchi and Morri may have been less sensitive to the degree of morphological variation displayed within a typical species of microorganism than Coll and colleagues were.',
+      'the absence of clarity regarding how to differentiate among species of microorganisms may have resulted in Coll and colleagues underestimating the number of microorganism species.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because counts for vertebrates, plants, and algae were nearly identical and new invertebrates explained only part of the discrepancy, the doubling of species counts in Coll’s census stemmed from taxonomic classification choices regarding microorganisms—specifically splitting morphological variations into distinct species rather than grouping them within single species.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating taxonomic species delimitation and microbial biodiversity censuses'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6b8a7c74',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'One recognized social norm of gift giving is that the time spent obtaining a gift will be viewed as a reflection of the gift’s thoughtfulness. Marketing experts Farnoush Reshadi, Julian Givi, and Gopal Das addressed this view in their studies of norms specifically surrounding the giving of gift cards, noting that while recipients tend to view digital gift cards (which can be purchased online from anywhere and often can be redeemed online as well) as superior to physical gift cards (which sometimes must be purchased in person and may only be redeemable in person) in terms of usage, 94.8 percent of participants surveyed indicated that it is more socially acceptable to give a physical gift card to a recipient. This finding suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'gift givers likely overestimate the amount of effort required to use digital gift cards and thus mistakenly assume gift recipients will view them as less desirable than physical gift cards.',
+      'physical gift cards are likely preferred by gift recipients because the tangible nature of those cards offers a greater psychological sense of ownership than digital gift cards do.',
+      'physical gift cards are likely less desirable to gift recipients than digital gift cards are because of the perception that physical gift cards require unnecessary effort to obtain.',
+      'gift givers likely perceive digital gift cards as requiring relatively low effort to obtain and thus wrongly assume gift recipients will appreciate them less than they do physical gift cards.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Because social norms link effort to perceived thoughtfulness, gift givers assume that effortlessly acquired digital cards will be viewed as thoughtless or unappreciated, even though recipients actually find digital cards more convenient.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing consumer psychology and gift-giving norms'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'ce4448b7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Researchers recently found that disruptions to an enjoyable experience, like a short series of advertisements during a television show, often increase viewers’ reported enjoyment. Suspecting that disruptions to an unpleasant experience would have the opposite effect, the researchers had participants listen to construction noise for 30 minutes and anticipated that those whose listening experience was frequently interrupted with short breaks of silence would thus ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'find the disruptions more irritating as time went on.',
+      'rate the listening experience as more negative than those whose listening experience was uninterrupted.',
+      'rate the experience of listening to construction noise as lasting for less time than it actually lasted.',
+      'perceive the volume of the construction noise as growing softer over time.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. If disruptions counteract hedonic adaptation—making pleasant experiences feel more enjoyable—then disruptions to an unpleasant experience prevent habituation, making the overall experience feel more intensely negative.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating hedonic adaptation and experience interruption models'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'a68fd3e7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Many of William Shakespeare’s tragedies address broad themes that still appeal to today’s audiences. For instance, Romeo and Juliet, which is set in the Italy of Shakespeare’s time, tackles the themes of parents versus children and love versus hate, and the play continues to be read and produced widely around the world. But understanding Shakespeare’s so-called history plays can require a knowledge of several centuries of English history. Consequently, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'many theatergoers and readers today are likely to find Shakespeare’s history plays less engaging than the tragedies.',
+      'some of Shakespeare’s tragedies are more relevant to today’s audiences than twentieth-century plays.',
+      'Romeo and Juliet is the most thematically accessible of all Shakespeare’s tragedies.',
+      'experts in English history tend to prefer Shakespeare’s history plays to his other works.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because tragedies center on universal human conflicts accessible to all audiences while history plays demand specialized background knowledge of medieval English politics, modern readers and theatergoers generally find the history plays less immediately accessible and engaging.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing audience accessibility in dramatic genres'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4b3d6062',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The Mammillaria cactus M. boolii occurs naturally only in the state of Sonora in Mexico, and the smallness of its range makes it especially vulnerable to extinction. The traditional single-species approach to conservation emphasizes the need to focus on individual species most at risk, like M. boolii, but recently, conservationists have argued that an ecosystem-based approach that incorporates the many interactions between the climate, terrain, and various species of a given geographical area may lead to better outcomes for all the species in a given location. If this view is correct, the single-species approach to the conservation of M. boolii could thus ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'lead to a better understanding of how the distribution of Mammillaria species throughout Mexico has affected their survival.',
+      'allow conservationists to better consider how climatic changes affecting Sonora may reduce the number of species competing with M. boolii.',
+      'erroneously shift the focus of conservation efforts away from M. boolii itself.',
+      'fail to consider the ways in which the survival of M. boolii may be influenced by changes in the populations of other species that inhabit Sonora.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If holistic ecosystem interactions dictate long-term survival, an isolated focus on M. boolii alone neglects how ecological relationships with co-occurring Sonora flora and fauna directly affect the cactus’s viability.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When contrasting single-species and ecosystem-based conservation models'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '58e9e497',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In the early nineteenth century, some Euro-American farmers in the northeastern United States used agricultural techniques developed by the Haudenosaunee (Iroquois) people centuries earlier, but it seems that few of those farmers had actually seen Haudenosaunee farms firsthand. Barring the possibility of several farmers of the same era independently developing techniques that the Haudenosaunee people had already invented, these facts most strongly suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'those farmers learned the techniques from other people who were more directly influenced by Haudenosaunee practices.',
+      'the crops typically cultivated by Euro-American farmers in the northeastern United States were not well suited to Haudenosaunee farming techniques.',
+      'Haudenosaunee farming techniques were widely used in regions outside the northeastern United States.',
+      'Euro-American farmers only began to recognize the benefits of Haudenosaunee farming techniques late in the nineteenth century.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. If farmers adopted complex Haudenosaunee agricultural methods without direct contact with Haudenosaunee farms or independent invention, the knowledge must have diffused through intermediary individuals who learned the practices directly.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When tracing agricultural knowledge diffusion in early American history'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '58817765',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Some geologists have proposed designating the period from 1950 to the present as a new geological epoch (the Anthropocene) characterized by human impact on Earth, but they have struggled to identify reliable stratigraphic markers of the epoch’s onset. Inta Dimante-Deimantovica and a research team investigated whether the initial appearance of primary microplastics—invented and mass-produced for industrial and other purposes, beginning around the middle of the twentieth century—in sedimentary layers could serve this role. The researchers analyzed European lake sediment profiles from the late eighteenth century to the present. Microplastics were present in all layers, likely because certain microplastic shapes enabled rapid downward migration. The researchers therefore concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the lowest sedimentary layer in which microplastics are found cannot be treated as indicative of the chronological beginning of the Anthropocene.',
+      'the presence of microplastics in sediment dating to the late eighteenth century casts doubt on the appropriateness of designating 1950 as the onset of the Anthropocene.',
+      'microplastics are not prevalent enough in sediment to serve as a reliable sign of the human impact characteristic of the Anthropocene.',
+      'using the earliest presence of microplastics as a stratigraphic marker of the beginning of the Anthropocene is likely to be viable in some locations but is not viable in Europe.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because microplastics migrate downward through porous sediment into older pre-1950 layers (such as 18th-century strata), finding microplastics in a deep layer does not accurately date the chronological onset of the mid-20th-century Anthropocene.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating stratigraphic markers and Anthropocene geochronology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1755eaf0',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Like many other genera of wild bees, bumblebees have in recent decades experienced population collapse caused by, among other factors, habitat destruction and climate variation. Bumblebees are also one of the most researched bee genera, second only to honeybees. As a result, ecologists have gained much of their insight about wild-bee declines from bumblebees. In a 2021 paper, zoologist Guillaume Ghisbain notes that bumblebees are among the relatively few wild-bee genera that display social behaviors and dietary generalism (ability to obtain nectar and pollen from a diversity of plant species), two traits that are associated with increased resilience to some specific environmental changes. Ghisbain therefore contends that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'although bumblebees and many other wild bees have experienced similar population declines in the past, compared with other wild bees, bumblebees are likely at greater risk of being harmed by climate variation than by habitat destruction.',
+      'although bumblebees have been more extensively studied than most wild bees, researchers should not use bumblebees to draw conclusions about the decline of other wild bees, even ones with feeding patterns and levels of sociability that are similar to those of bumblebees.',
+      'because bumblebees and other bees with generalist diets are less negatively affected by environmental stress than bees with specialized diets are, they are less likely to experience major population changes in the future than bees with specialized diets are.',
+      'because the responses of bumblebees and other wild bees to environmental threats are not always comparable, researchers need to exercise caution when extrapolating information about wild-bee population declines from bumblebees.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Since bumblebees possess social and generalist foraging advantages that most solitary specialist wild bees lack, their resilience dynamics differ, meaning findings from bumblebee studies cannot be universally generalized across all wild bee taxa.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating ecological generalization across taxa'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'ac285054',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The domestic sweet potato (Ipomoea batatas) descends from a wild plant native to South America. It also populates the Polynesian Islands, where evidence confirms that Native Hawaiians and other Indigenous peoples were cultivating the plant centuries before seafaring first occurred over the thousands of miles of ocean separating them from South America. To explain how the sweet potato was first introduced in Polynesia, botanist Pablo Muñoz-Rodríguez and colleagues analyzed the DNA of numerous varieties of the plant, concluding that Polynesian varieties diverged from South American ones over 100,000 years ago. Given that Polynesia was peopled only in the last three thousand years, the team concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the cultivation of the sweet potato in Polynesia likely predates its cultivation in South America.',
+      'Polynesian peoples likely acquired the sweet potato from South American peoples only within the last three thousand years.',
+      'human activity likely played no role in the introduction of the sweet potato in Polynesia.',
+      'Polynesian sweet potato varieties likely descend from a single South American variety that was domesticated, not wild.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because Polynesian sweet potato lineage split genetically from South American lineages over 100,000 years ago—long before humans inhabited Polynesia 3,000 years ago—the plant must have dispersed across the Pacific via natural mechanisms (such as oceanic drift or bird ingestion) without human agency.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing phylogenetics and prehistoric botanical dispersal'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '8e6a96f5',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Duckweed is a small freshwater plant that is often exposed to zinc pollution. Sofia Vámos and colleagues collected samples of four duckweed ecotypes (genetically and geographically distinct populations within a species), along with water from each ecotype’s habitat. Hypothesizing that each ecotype is adapted to its local conditions in ways that bolster its growth and resistance to pollutants, the researchers grew each ecotype in all four water samples and with three levels of zinc (none, low, high). (The researchers did not replicate local differences in light or temperature.) They found that the ecotypes grew equally well in all four water samples and that adding zinc consistently enhanced growth, regardless of concentration, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'while the ecotypes are genetically and geographically distinct, those differences do not represent adaptations to local environmental conditions.',
+      'there may not be significant differences in the water that each ecotype inhabits, but there are significant differences in each ecotype’s resistance to zinc pollution.',
+      'if each ecotype is indeed locally adapted as the researchers hypothesized, those adaptations are to other environmental conditions than the water each ecotype inhabits.',
+      'although the researchers’ hypothesis does not appear to be supported, this may be because the levels of zinc exposure the plants in the experiment received did not match their exposure in their natural environments.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Since the ecotypes showed no difference in growth across different habitat waters, any local adaptations that exist must involve untested environmental parameters (such as light intensity, temperature, or seasonal climate) rather than local water chemistry.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating experimental ecotype local adaptation and environmental variables'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '086dd8cc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The morphological novelty of echinoderms—marine invertebrates with radial symmetry, usually starlike, around a central point—impedes comparisons with most other animals, in which bilateral symmetry on an anterior-posterior (head to tail) axis through a trunk is typical. Particularly puzzling are sea stars, thought to have evolved a headless layout from a known bilateral origin. Applying genomic knowledge of Saccoglossus kowalevskii acorn worms (close relatives of sea stars, and thus expected to have similar markers for corresponding anatomical regions) to the body patterning genes of Patiria miniata sea stars, Laurent Formery et al. observed activity only in anterior genes across P. miniata’s entire body and some posterior genes limited to the edges, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'despite the greater prevalence of anterior genes in sea stars’ genetic makeup, posterior genes active at the body’s perimeter are primarily responsible for the starlike layout that distinguishes sea stars’ radial symmetry from that of other echinoderms.',
+      'contrary to the belief that they evolved from early ancestors with the bilateral form typical of many other animals, sea stars instead originated with an atypical body layout that was neither bilaterally nor radially symmetrical.',
+      'although the two species are closely related, there is only minimal correspondence in the genetic markers for head, tail, and trunk region development in P. miniata sea stars and S. kowalevskii acorn worms.',
+      'rather than undergoing changes resulting in the eventual elimination of a head region in their radial body plan, as previously assumed, sea stars’ morphology evolved to completely lack a trunk and consist primarily of a head region.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The gene expression data showed anterior (head) genetic markers expressed across almost the entire body of the sea star while trunk/posterior markers were virtually absent, disproving the headless hypothesis and demonstrating that sea stars are essentially living heads.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing evolutionary developmental biology (evo-devo) and body plan genomics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e185a21f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'One theory behind human bipedalism speculates that it originated in a mostly ground-based ancestor that practiced four-legged “knuckle-walking,” like chimpanzees and gorillas do today, and eventually evolved into moving upright on two legs. But recently, researchers observed orangutans, another relative of humans, standing on two legs on tree branches and using their arms for balance while they reached for fruits. These observations may suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'bipedalism evolved because it was advantageous to a tree-dwelling ancestor of humans.',
+      'bipedalism must have evolved simultaneously with knuckle-walking and tree-climbing.',
+      'moving between the ground and the trees would have been difficult without bipedalism.',
+      'a knuckle-walking human ancestor could have easily moved bipedally in trees.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Observing arboreal orangutans using two-legged standing to reach fruits provides an alternate evolutionary pathway: bipedal posture may have originated as an arboreal feeding adaptation in tree-dwelling ancestors prior to terrestrial knuckle-walking.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating hominid evolutionary biomechanics and bipedal origins'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f39507a3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'One challenge when researching whether holding elected office changes a person’s behavior is the problem of ensuring that the experiment has an appropriate control group. To reveal the effect of holding office, researchers must compare people who hold elected office with people who do not hold office but who are otherwise similar to the office-holders. Since researchers are unable to control which politicians win elections, they therefore ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'struggle to find valid data about the behavior of politicians who do not currently hold office.',
+      'can only conduct valid studies with people who have previously held office rather than people who presently hold office.',
+      'should select a control group of people who differ from office-holders in several significant ways.',
+      'will find it difficult to identify a group of people who can function as an appropriate control group for their studies.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Because victory in democratic elections cannot be randomly assigned by researchers, finding an exact control group of candidates who possess identical traits but did not win office presents a severe experimental obstacle.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing experimental design and control group selection in political science'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '09d942c6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'A social species, chickens will cry out to one another in warning if they sense a hawk or other predator nearby. But if alone, a chicken will remain silent so as not to attract the predator’s attention. Sonja Hillemacher decided to use this behavior to determine whether individual chickens possess a capacity to recognize themselves visually when reflected in a mirror (a common standard for animal intelligence). In the first condition of her study, the subject could see its reflection, but no other chickens were present. In a second condition, another chicken was visible to the subject. Hillemacher presented an image of a hawk to the subject in both conditions, reasoning that if chickens lacked a capacity for visual self-recognition, then ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'neither study condition would elicit an audible response from the subject.',
+      'the subject likely would cry out a warning in both study conditions.',
+      'only the first study condition would elicit an audible response from the subject.',
+      'the subject would fail to distinguish its reflection from the image of the hawk.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. If a chicken cannot recognize its mirror reflection as itself, it perceives the reflection as a fellow conspecific chicken. Therefore, when exposed to a hawk predator, it will vocalize warning calls in both the mirror condition and the live companion condition.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When interpreting mirror self-recognition experimental logic in ethology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f9bd4e61',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'German theater practitioner Bertolt Brecht (1898–1956) believed that theater should elicit an intellectual rather than an emotional response from audiences, provoking them to consider social and political realities that extend beyond the characters and events depicted onstage. Brecht’s influence can be seen in English playwright Caryl Churchill’s 1979 play Cloud 9: although the play sometimes invites empathetic reactions, it primarily works to engage audiences in an interrogation of patriarchy and colonialism, which it does by placing audiences at a distance, thereby encouraging them to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'focus on the characters’ beliefs about social and political issues as revealed by the characters’ actions.',
+      'reflect on social and political phenomena not directly related to patriarchy and colonialism.',
+      'recognize pertinent social and political parallels between Germany during Brecht’s time and England at the time when Churchill was writing Cloud 9.',
+      'be dispassionate as they think critically about the social and political questions raised by the play.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Following Brechtian alienation (*Verfremdungseffekt*), placing the audience at an emotional distance prompts viewers to remain dispassionate and critically dissect the systemic sociopolitical themes rather than getting swept up in emotional identification.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing Brechtian alienation and political theater dramaturgy'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4889580c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Archaeologists and historians used to believe that the Maya civilization during its Classic period (roughly 250–900) lacked agricultural marketplaces. One reason for this belief was that these scholars misunderstood the ecology of the regions the Maya inhabited. Marketplaces typically emerge because different individuals or groups want to trade resources they control for resources they don’t control. Scholars seriously underestimated the ecological diversity of the Maya landscape and thus assumed that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'marketplaces likely would not have attracted many traders from outside the regions controlled by the Maya.',
+      'farming practices would have been largely the same throughout Maya lands even if the crops people produced varied significantly.',
+      'marketplaces would not have enabled Maya people to acquire many products different from those they already produced.',
+      'farmers would trade agricultural products only if they had already produced enough to meet their own needs.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. If scholars falsely believed the Maya environment was ecologically uniform, they assumed every community produced identical agricultural goods, eliminating the resource disparities that incentivize market trade.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating Mesoamerican economic archaeology and marketplace exchange'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4ba0695d',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The alpaca was domesticated by Indigenous peoples in the Andes about 7,000 years ago. But which wild species did it descend from, the vicuña or guanaco? A research team led by Ruiwen Fan may have solved the mystery, concluding that the alpaca is the domesticated form of the vicuña but that the modern alpaca gets only 64 percent of its genetic material from its wild ancestor. The rest comes from the domesticated llama. The llama, meanwhile, gets 95.5 percent of its genetic material from its own wild ancestor, the guanaco, and the rest from the alpaca. The llama and alpaca apparently interbred widely for only a handful of generations between 400 and 600 years ago. Assuming that the findings of Fan’s team are valid, it can be inferred that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'modern llama populations have a greater degree of genetic diversity, on average, than modern alpaca populations do.',
+      'the domestication process of the alpaca may have involved some introduction of genetic material from the llama.',
+      'the period of interbreeding resulted in a greater genetic difference between alpacas and their wild ancestors than between llamas and their wild ancestors.',
+      'if they were subjected to genetic testing, modern populations of guanacos and vicuñas would likely show traces of ancient interbreeding as well.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Following the 400–600-year-old interbreeding period, alpacas retained only 64% of their ancestral vicuña genome (a 36% shift), whereas llamas retained 95.5% of their ancestral guanaco genome (only a 4.5% shift).',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating camelid domestication genetics and post-conquest hybridization'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'd95a0bb8',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The ratio of methane to other atmospheric constituents—represented by a measure called the methane mole fraction—influences a variety of meteorological phenomena, notably precipitation and humidity. For Titan, Saturn’s largest moon, the observational data that exist are too sparse and discrepant to fully constrain the range of the methane mole fraction at various atmospheric levels. Juan Lora and colleagues point out that outputs of the IPSL atmospheric model of Titan, which track closely to observations in some respects, reflect how the model’s developers responded to this challenge: by prescribing a uniform methane mole fraction for the lowest level of the atmosphere. It is therefore important to note that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'some disagreements between the model’s simulations of Titan’s precipitation and humidity and the moon’s actual precipitation and humidity are to be expected.',
+      'further observations of Titan may clarify the moon’s methane mole fraction sufficiently for the model to employ a single value rather than a range.',
+      'even though the model’s outputs sometimes agree with observational data, Titan’s real methane mole fraction is likely higher than the methane mole fraction used in the model.',
+      'inconsistencies across the model’s simulations of Titan’s precipitation and humidity could be attributable to variations in the moon’s methane mole fraction.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because actual methane mole fraction varies and directly drives humidity and rain, forcing a simplified uniform assumption into the base level of the computer model will inevitably produce discrepancies with actual atmospheric observations.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When interpreting planetary atmospheric models and parameter assumptions'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'aaddd60f',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Scientists studying Mars long thought the history of its crust was relatively simple. One reason for this is that geologic and climate data collected by a spacecraft showed that the crust was largely composed of basalt, likely as a result of intense volcanic activity that brought about a magma ocean, which then cooled to form the planet’s surface. A study led by Valerie Payré focused on additional information—further analysis of data collected by the spacecraft and infrared wavelengths detected from Mars’s surface—that revealed the presence of surprisingly high concentrations of silica in certain regions on Mars. Since a planetary surface that formed in a mostly basaltic environment would be unlikely to contain large amounts of silica, Payré concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the information about silica concentrations collected by the spacecraft is likely more reliable than the silica information gleaned from infrared wavelengths detected from Mars’s surface.',
+      'high silica concentrations on Mars likely formed from a different process than that which formed the crusts of other planets.',
+      'having a clearer understanding of the composition of Mars’s crust and the processes by which it formed will provide more insight into how Earth’s crust formed.',
+      'Mars’s crust likely formed as a result of other major geological events in addition to the cooling of a magma ocean.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. High silica concentrations cannot be produced solely by the cooling of a primordial basaltic magma ocean, indicating that complex subsequent magmatic or hydrothermal geological processes contributed to crust formation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating Martian petrology and crustal evolution'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5f16d809',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In classical Greek and Roman mythology, female characters are typically cast as either villains lacking in psychological depth or passive victims who are marginal to these stories, which usually focus on the exploits of male characters. Recently, a subgenre has emerged in which writers reimagine these stories from the perspectives of their female characters, giving them agency and complex motivations. Purists argue that such efforts represent a distinctively modern tendency to impose our own values on past civilizations, obscuring those civilizations’ beliefs. Defenders of the subgenre counter that reimaginings of the myths for new cultural contexts are almost as old as the myths themselves, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'bringing female perspectives to the forefront is not indicative of a novel attitude regarding fidelity to Greek and Roman myths’ ideologies.',
+      'modern writers’ foregrounding of female characters is chiefly motivated by a desire to counterbalance the primacy of male perspectives among earlier adaptations of Greek and Roman myths.',
+      'purists are overlooking a long tradition of adapting Greek and Roman myths to focus on female characters.',
+      'the complex motivations given to female characters in modern retellings of Greek and Roman myths reflect a recent shift toward psychological depth in fictional representation.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Defenders point out that ancient myths have always been continuously adapted and altered to fit shifting contemporary cultural values, meaning modern female-centered adaptations do not represent an unprecedented break with tradition.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing classical myth adaptations and ideological reception'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '08395130',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The Hubble Space Telescope (HST) is projected to maintain operation until at least 2030, but it has already revolutionized high-resolution imaging of solar-system bodies in visible and ultraviolet (UV) light wavelengths, notwithstanding that only about 6% of the bodies imaged by the HST are within the solar system. NASA researcher Cindy L. Young and colleagues assert that a new space telescope dedicated exclusively to solar-system observations would permit an extensive survey of minor solar-system bodies and long-term UV observation to discern how solar-system bodies change over time. Young and colleagues’ recommendation therefore implies that the HST ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'will likely continue to be used primarily to observe objects outside the solar system.',
+      'will no longer be used to observe solar system objects if the telescope recommended by Young and colleagues is deployed.',
+      'can be modified to observe the features of solar system objects that are of interest to Young and colleagues.',
+      'lacks the sensors to observe the wavelengths of light needed to discern how solar system bodies change over time.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The need for a dedicated solar system telescope arises because Hubble’s observation time is overwhelmingly allocated (~94%) to deep space objects outside our solar system, a priority expected to continue.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating space observatory mission allocation and planetary astronomy'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '26f5c4ba',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In 2022, Crystal Reeck and colleagues studied whether the decision-making modes that guide consumers influence their choice between nonenvironmentally friendly standard electricity plans and environmentally friendly green plans that cap electricity usage. Study participants who self-reported using either an Affect Mode or Role Mode—which prioritize choices that have a stronger positive emotional or social impact, respectively—were more likely to select a green plan. Conversely, participants using a Calculation Mode—which aims to minimize both financial cost and personal inconvenience—were more likely to select a standard plan, even when the green option was cheaper. This finding suggests that participants using a Calculation Mode ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'were equally unlikely to factor the financial savings of the green plan into their decision-making as were participants using either the Affect or Role Modes.',
+      'may have been less strongly motivated to appear socially responsible with their choice of plan than they realized.',
+      'may have determined that the green plan imposed additional burdens on them that were not sufficiently offset by the potential financial savings.',
+      'were less likely to believe that the green plan was truly cost-effective than were participants using either the Affect or Role Modes.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because Calculation Mode minimizes both financial cost and personal inconvenience, choosing a more expensive standard plan over a cheaper capped green plan indicates that the perceived personal inconvenience of electricity caps outweighed monetary savings.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing consumer decision modes and non-monetary utility costs'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'cef77aa7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Geoglyphs are large-scale designs of lines or shapes created in a natural landscape. The Nazca Lines were created in the Nazca Desert in Peru by several Indigenous civilizations over a period of many centuries. Peruvian archaeologist Johny Isla specializes in these geoglyphs. At a German exhibit about the Nazca Lines, he saw an old photograph of a large geoglyph of a whalelike figure and was surprised that he didn’t recognize it. Isla returned to Peru and used a drone to search a wide area, looking for the figure from the air. This approach suggests that Isla thought that if he hadn’t already seen it, the whalelike geoglyph ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'must represent a species of whale that went extinct before there were any people in Peru.',
+      'is actually located in Germany, not Peru, and isn’t part of the Nazca Lines at all.',
+      'is probably in a location Isla hadn’t ever come across while on the ground.',
+      'was almost certainly created a long time after the other Nazca Lines geoglyphs were created.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because huge Nazca geoglyphs are often undetectable from ground level and Isla had never observed it during ground surveys, he utilized an aerial drone to search areas unvisited or obscured from terrestrial view.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating aerial archaeology and landscape geoglyphs'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '9c591ff7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Some Astyanax mexicanus, a river-dwelling fish found in northeast Mexico, have colonized caves in the region. Although there is little genetic difference between river and cave A. mexicanus and all members of the species can emit the same sounds, biologist Carole Hyacinthe and colleagues found that the context and significance of those sounds vary by location—e.g., the click that river-dwelling A. mexicanus use to signal aggression is used by cave dwellers when foraging—and the acoustic properties of cave fish sounds show some cave-specific variations as well. Hyacinthe and colleagues note that differences in sonic communication could accumulate to the point of inhibiting interbreeding among fish from different locations, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'although A. mexicanus living in rivers are genetically similar to those living in caves, river fish rely on sonic communication less than cave fish do.',
+      'although A. mexicanus is a single species at present, it could be in the process of splitting into distinct populations with different characteristics.',
+      'although all A. mexicanus emit sounds, the fish living in rivers produce some sounds that the fish living in caves do not, and vice versa.',
+      'although A. mexicanus from different locations can interbreed currently, river fish and cave fish are sufficiently genetically distinct that they can be considered separate species.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Emerging behavioral and acoustic communication barriers that reduce interbreeding represent early-stage behavioral reproductive isolation, indicating incipient speciation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating bioacoustic isolation and speciation mechanisms'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'fd1095d7',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'To address the susceptibility of materials used in components of high-performance machinery, such as aircraft engines, to creep (deformation that is induced by persistent mechanical stress and that often occurs at elevated temperatures), materials researchers have developed silicon carbide (SiC) fibers for producing aerospace composites. Testing the thermomechanical properties of several commercially available SiC fibers, Ramakrishna T. Bhatt et al. found that in comparison with two polymer-derived SiC fibers, a nitrogen-treated SiC fiber exhibited a lower minimum creep rate, a measure of the rate at which a stress-exposed material deforms at a constant temperature and uniaxial load. The finding suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'unlike the two polymer-derived SiC fibers, the nitrogen-treated SiC fiber can substantially inhibit creep, provided that temperatures and loads are consistent.',
+      'the two polymer-derived SiC fibers likely hold similar potential for reducing the creep resistance of materials exposed to stress and elevated temperatures, thus prolonging the life span of aerospace machinery.',
+      'composites based on the two polymer-derived SiC fibers have chemical properties that may improve the mechanical and thermal stability of aerospace equipment to a greater extent than do composites based on the nitrogen-treated SiC fiber.',
+      'aerospace composites containing the nitrogen-treated SiC fiber may have the ability to withstand mechanical stress for a longer period of time than can aerospace composites containing either of the two polymer-derived SiC fibers.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. A lower minimum creep rate means a material deforms more slowly under persistent heat and mechanical stress, enabling nitrogen-treated SiC composites to endure operational stress for longer operational lifetimes.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating material creep resistance in aerospace composites'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4b8eda0a',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'For its 1974 work Instant Mural, the Chicano art collective Asco taped members Patssi Valdez and Humberto Sandoval to an outdoor wall in East Los Angeles. The work is manifestly a commentary on constraint, but many critics focus on Valdez and the social constraints women faced at the time, which is understandable but leaves the presence of Valdez’s male collaborator Sandoval unexplained. We should instead consider that in 1974, the art establishment’s recognition of Chicano artists was (and had long been) restricted to sociohistorical muralists, leaving nonmuralist Chicano artists—like Asco’s members—struggling to even exhibit their work; attending to this context opens an interpretation that accounts for all the evidence, allowing us to conclude that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'while Valdez’s presence in Instant Mural represents the social constraints placed on women at the time, Sandoval’s presence represents Chicano muralists’ frustration at their lack of recognition by the art establishment.',
+      'the main subject of Instant Mural is female Chicano artists’ experience of being doubly constrained by gender-role expectations and the marginalization of certain types of art.',
+      'Instant Mural is a reflection on the constraining aesthetic expectations placed on Chicano artists in general rather than on the social constraints placed on women specifically.',
+      'Instant Mural is best understood not as a critique of the social constraints placed on women but rather as a critique of sociohistorical muralists’ depictions of Chicano culture.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Taping both male and female members to a wall critiques the institutional constraints imposed on all avant-garde Chicano artists who were marginalized by the art establishment’s narrow demand for traditional sociohistorical murals.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing performance art symbolism and art historical institutions'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '55688b3c',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Dutch painters in the sixteenth and seventeenth centuries often showed tables filled with large wheels of cheese or carved shards of butter. Some art historians, noting that dairy products were a major component of the Dutch diet, interpret these depictions as reflections of everyday Dutch eating habits. However, a group of researchers recently reviewed hundreds of food-related paintings and found that lemons—which could only be acquired in the Netherlands at great cost, since they had to be imported from warmer climates—feature in Dutch paintings of the period more than three times as frequently as dairy products do, thereby casting doubt on the idea that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'dairy products were a more significant component of the Dutch diet of the period than lemons were.',
+      'food was a more popular subject among Dutch painters than it was among painters from other countries at the time.',
+      'depictions of food in Dutch paintings of the period should be taken as realistic representations of Dutch eating habits.',
+      'Dutch painters of the period may have depicted foods for symbolic reasons rather than to show what Dutch people typically ate.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The high frequency of rare, luxury imported lemons compared to everyday domestic dairy products proves that Dutch still life paintings were curated artistic compositions rather than accurate documentary records of everyday dietary consumption.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating realistic representation vs artistic symbolism in Dutch Golden Age art'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1bf2173e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In a three-year study of parasitic infections by Anomotaenia brevis tapeworms in Temnothorax nylanderi ants, entomologist Susanne Foitzik and colleagues found something unexpected: rather than reducing its host’s fitness, as is typical of parasites, A. brevis greatly extends the lifespan of a T. nylanderi worker ant and seems to halt the effects of aging. Furthermore, those infected receive special treatment, ceasing their share of labor to sustain the colony and remaining in the nest as uninfected workers feed, groom, and transport them. By contrast, the researchers observed that uninfected workers in parasitized colonies have shortened lifespans, most likely because the ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'uninfected workers are at high risk for direct exposure to A. brevis in the course of providing social care to the infected workers in the nest.',
+      'need to compensate for reduced contributions within the colony while also caring for infected workers is burdensome to the uninfected workers.',
+      'high level of activity maintained by the uninfected workers makes them better able than infected workers to quickly disperse when the nest is attacked by a predator.',
+      'average lifespan of T. nylanderi worker ants in colonies without parasitic activity typically falls well below three years, the range covered by the study.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Uninfected ants take on both the daily foraging/labor abandoned by non-working infected ants and the additional physical burden of constantly grooming and feeding them, leading to physical exhaustion and reduced longevity.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When interpreting host-parasite social manipulation in entomology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '7bdf094b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Sir Gawain and the Green Knight is a circa 1400 poem written in Middle English—an archaic form of the English spoken today. Over the last several centuries, the English language has undergone such transformations in vocabulary, spelling, and grammar that most readers now rely on translations to read Sir Gawain. In the introduction to his 2007 translation, Simon Armitage remarks that the sonic patterns of the poem, which was written in alliterative verse (a verse form featuring extensive repetition of initial consonant sounds), are essential to its structure. Because many Modern English words begin with different sounds than their Middle English equivalents do, a strictly literal translation of Sir Gawain would therefore likely ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'preserve much of the original text’s meaning at the expense of other qualities that are also integral to the experience of reading the poem.',
+      'appeal more to modern readers than would translations like Armitage’s that instead prioritize the original text’s sonic and structural qualities.',
+      'be more faithful to the original intentions of the poem than most strictly literal translations of alliterative Middle English poems are to their originals.',
+      'be preferable to modern readers who are primarily interested in learning what the poem reveals about historical conditions during the time it was originally written.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. A literal word-for-word semantic translation preserves propositional meaning but inevitably loses the initial-consonant alliterative sonic structure that defines the poetic form in Middle English.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating alliterative verse translation trade-offs'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '9391b7cc',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'If some artifacts recovered from excavations of the settlement of Kuulo Kataa, in modern Ghana, date from the thirteenth century CE, that may lend credence to claims that the settlement was founded before or around that time. There is other evidence, however, strongly supporting a fourteenth century CE founding date for Kuulo Kataa. If both the artifact dates and the fourteenth century CE founding date are correct, that would imply that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'artifacts from the fourteenth century CE are more commonly recovered than are artifacts from the thirteenth century CE.',
+      'the artifacts originated elsewhere and eventually reached Kuulo Kataa through trade or migration.',
+      'Kuulo Kataa was founded by people from a different region than had previously been assumed.',
+      'excavations at Kuulo Kataa may have inadvertently damaged some artifacts dating to the fourteenth century CE.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. If artifacts predate the physical founding of the settlement by a century, those objects must have been manufactured in an older settlement and brought to Kuulo Kataa by migrating settlers or trade networks.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When reconciling artifact dates with settlement foundation chronologies'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '2a075bd1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Indigenous cultures possess unique knowledge of the medicinal uses of plants. According to a 2021 study, 73 percent of the medicinal uses of plants native to North America are reflected in the vocabulary of a single Indigenous language. However, as more and more Indigenous people exclusively speak a globally dominant language, such as English, their ancestral languages fade from daily use. These facts lend added importance to tribal nations’ efforts to preserve their languages. By ensuring the continued use of Cherokee, Ojibwe, and the hundreds of other Indigenous languages in what is now the United States, tribal nations are also ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'increasing the number of medicinal plants represented in the vocabularies of Indigenous languages.',
+      'transmitting terms for medicinal plants from Indigenous languages to globally dominant languages.',
+      'preserving knowledge about the medicinal value of plants native to the tribal nations’ lands.',
+      'ensuring that citizens of tribal nations have physical access to medicinal plants.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because unique ethnomedicinal botanical knowledge is encoded exclusively in specific Indigenous linguistic vocabularies, preserving ancestral languages directly preserves the medicinal knowledge itself.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating ethnobotany and Indigenous language preservation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'db57afa3',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Whistler waves are low-frequency plasma waves that on Earth are typically generated by lightning. Numerous recordings of whistler waves on Venus have led many scientists to suggest that the planet’s atmosphere is host to extensive amounts of lightning, and, in fact, Venusian whistler waves have similar energy signatures to those of whistler waves generated by lightning on Earth. The majority of Venusian whistler wave data come from two spacecraft missions—the Pioneer Venus Orbiter (PVO) and the Venus Express (VEX)—which have included few observations of other phenomena consistent with lightning occurrences (such as flashes of light), leading other scientists to suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'similarities in the energy signatures of Venusian and Earth whistler waves may reflect imprecisions in the PVO and VEX data.',
+      'the purported Venusian whistler waves must actually be some other type of atmospheric activity than whistler waves.',
+      'Venusian lightning has properties that make it unlikely to generate whistler waves.',
+      'there are geophysical characteristics of Venus not shared with Earth that promote the generation of whistler waves.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If plasma whistler waves are abundant on Venus while optical flashes of lightning are absent, non-lightning geophysical or atmospheric plasma mechanisms unique to Venus may be responsible for generating the waves.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating planetary plasma physics and planetary atmospheres'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '8209f485',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Across brown bears—omnivores with high dietary plasticity—there is wide variety in dietary mix, which may reflect genetics, local resource availability, or social learning (cubs stay with their mothers for two years or more). Evaluating these possibilities, Anne Hertel et al. analyzed 30 years of data on trophic position (indicative of dietary mix) for female brown bears. After separation, daughters, who tended to settle near their mothers, occupied the same trophic positions as their mothers for two years, but the correlation disappeared by year five. Trophic correlation with unrelated individuals in similar habitats was modest, while habitat-independent correlation with nonmaternal relatives (e.g., cousins) was no different than with unrelated individuals. These findings suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'growing dissimilarity between mothers and their daughters with regard to dietary mix may reflect changes in the resources available in maternal habitats, though social learning could also contribute to the trend.',
+      'dietary mix among females may reflect a social learning effect that eventually diminishes, though environmental constraints cannot be ruled out as a contributing factor.',
+      'female dietary mix is best understood as changeable and contingent on fluctuating environmental conditions rather than as the result of social learning or genetic factors.',
+      'social learning and resource fluctuations may both play a role in dietary mix among females, at least temporarily, though genetic factors appear to make a significant contribution as well.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The strong dietary match between mothers and daughters immediately after independence indicates early maternal social learning that wanes after several years as bears adapt to local habitat resource constraints.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating foraging plasticity and social transmission in carnivores'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3882ddf6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'To investigate the history of plate subduction—when one of Earth’s tectonic plates slides beneath another—Sarah M. Aarons and colleagues compared ancient rocks from the Acasta Gneiss Complex in Canada to modern rocks. Using isotope analysis, the researchers found that Acasta rocks dating to about 4.02 billion years ago (bya) most strongly resemble modern rocks formed in a plume setting (an area in which hot rocks from Earth’s mantle flow upward into the crust). By contrast, they found that Acasta rocks dating to about 3.75 bya and 3.6 bya have an isotope composition that is similar to that of modern rocks formed in a subduction setting. Aarons’s team therefore concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'subduction-like processes began occurring in some locations no later than 3.75 bya.',
+      'subduction replaced mantle plume formation as the most common geological process by about 4.02 bya.',
+      'the majority of the rocks in the Acasta Gneiss Complex formed through subduction.',
+      'the rocks in the Acasta Gneiss Complex are of a more recent origin than scientists previously thought.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The isotopic transition to subduction-like geochemical signatures in rocks dated to 3.75 bya demonstrates that tectonic plate subduction was actively occurring on Earth by at least 3.75 billion years ago.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When interpreting Archean geochemistry and the onset of plate tectonics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '3f236877',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Ratified by more than 90 countries, the Nagoya Protocol is an international agreement ensuring that Indigenous communities are compensated when their agricultural resources and knowledge of wild plants and animals are utilized by agricultural corporations. However, the protocol has shortcomings. For example, it allows corporations to insist that their agreements with communities to conduct research on the commercial uses of the communities’ resources and knowledge remain confidential. Therefore, some Indigenous advocates express concern that the protocol may have the unintended effect of ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'diminishing the monetary reward that corporations might derive from their agreements with Indigenous communities.',
+      'limiting the research that corporations conduct on the resources of the Indigenous communities with which they have signed agreements.',
+      'preventing independent observers from determining whether the agreements guarantee equitable compensation for Indigenous communities.',
+      'discouraging Indigenous communities from learning new methods for harvesting plants and animals from their corporate partners.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Allowing corporations to enforce strict confidentiality clauses on agreements prevents external watchdog groups from auditing contracts to ensure Indigenous communities receive fair compensation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing international environmental law and transparency protocols'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '0dba14e6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The increased integration of digital technologies throughout the process of book creation in the late 20th and early 21st centuries lowered the costs of book production, but those decreased costs have been most significant in the manufacturing and distribution process, which occurs after the authoring, editing, and design of the book are complete. This suggests that in the late 20th and early 21st centuries, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'digital technologies made it easier than it had been previously for authors to write very long works and get them published.',
+      'customers generally expected the cost of books to decline relative to the cost of other consumer goods.',
+      'publishers increased the variety of their offerings by printing more unique titles but also printed fewer copies of each title.',
+      'the costs of writing, editing, and designing a book were less affected by the technologies used than were the costs of manufacturing and distributing a book.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If cost reductions from digital workflows were most pronounced in physical printing and distribution, the earlier creative phases (authoring, editing, design) experienced comparatively less cost reduction.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing digital publishing supply chains and production economics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'a44c7bd4',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Some ethicists hold that the moral goodness of an individual’s actions depends solely on whether the actions themselves are good, irrespective of the context in which they are carried out. Philosopher L. Sebastian Purcell has shown that surviving works of Aztec (Nahua) philosophy express a very different view. Purcell reveals that these works posit an ethical system in which an individual’s actions are judged in light of how well they accord with the individual’s role in society and how well they contribute to the community. To the extent that these works are representative of Aztec thought, Purcell’s analysis suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the Aztecs would have disputed the idea that the morality of an individual’s actions can be assessed by appealing to standards of behavior that are independent of the individual’s social circumstances.',
+      'the Aztecs would not have accepted the notion that the morality of an individual’s actions can be fairly evaluated by people who do not live in the same society as that individual.',
+      'actions by members of Aztec society who contributed a great deal to their community could be judged as morally good even if those actions were inconsistent with behaviors the Aztecs regarded as good in all contexts.',
+      'similar actions performed by people in different social roles in Aztec society would have been regarded as morally equivalent unless those actions led to different outcomes for the community.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Aztec ethics judged morality based on community contribution and social role context, contradicting decontextualized universal moral theories that evaluate actions independent of social circumstances.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating Indigenous ethics and context-dependent moral philosophy'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'a13c1c66',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Many animals, including humans, must sleep, and sleep is known to have a role in everything from healing injuries to encoding information in long-term memory. But some scientists claim that, from an evolutionary standpoint, deep sleep for hours at a time leaves an animal so vulnerable that the known benefits of sleeping seem insufficient to explain why it became so widespread in the animal kingdom. These scientists therefore imply that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'prolonged deep sleep is likely advantageous in ways that have yet to be discovered.',
+      'most traits perform functions that are hard to understand from an evolutionary standpoint.',
+      'it is more important to understand how widespread prolonged deep sleep is than to understand its function.',
+      'many traits that provide significant benefits for an animal also likely pose risks to that animal.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. If the extreme evolutionary risks of predatory vulnerability during deep sleep outweigh its currently known physiological benefits, sleep must confer additional undiscovered adaptive advantages.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing evolutionary paradoxes and sleep neurobiology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1ffd60ce',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'An analysis by Alain Elayi and colleagues of coins minted in Sidon in the fifth and fourth centuries BCE reveals a change in their composition over time: while a coin from circa 450 BCE contains about 98% silver and 1% copper, a coin from 367 BCE (the end of Ba’alšillem II’s reign) contains 74.2% silver and 24.7% copper, giving it a relatively yellowish appearance that traders would have noticed. Because coins with a silver content below 80% were widely considered unsuitable for trade, Elayi et al. speculate that a crisis in confidence in the currency occurred in Sidon around 367 BCE, which was likely relieved—despite Sidon’s persistent oppressive financial obligations—as a result of Ba’alšillem II’s successor Abd’aštart I’s decision to ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'proclaim that the percentage of silver in coins suitable for trade would be raised to a threshold higher than 80%.',
+      'keep the amount of silver in Sidonian coins consistent with that in coins minted in 367 BCE but decrease their weight.',
+      'begin minting heavier coins with a proportion of silver to copper similar to that in coins minted in 367 BCE.',
+      'fund the mining of some copper deposits that were not available to Ba’alšillem II.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. To restore confidence in a debased currency rejected by traders for having less than 80% silver, the incoming ruler needed to mandate and mint coins exceeding the required silver purity threshold.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating numismatic debasement and monetary policy in antiquity'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e6e6be2d',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Overgrazing by purple sea urchins has caused many kelp forests along North America’s west coast to be replaced by urchin barrens—areas stripped of vegetation and covered in purple sea urchins. Urchins in barrens persist in a state of starvation that lessens their nutritional value—and thus their appeal—to many predators. Sarah Gravem and colleagues placed sunflower sea stars, a once-abundant predator species suffering massive population declines in recent years, in aquariums that each contained a nutritionally poor and a nutritionally rich purple sea urchin. The researchers found that the sea stars selected the nutritionally rich urchin in 42.7% of trials and the nutritionally poor urchin in 37.5% of trials, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'sunflower sea stars are willing to hunt sea urchins, but if given a choice, they will prey on other more nutritious marine animals instead.',
+      'sunflower sea stars are reluctant to feed on both nutritionally poor and nutritionally rich sea urchins and are therefore unlikely to thrive in kelp forests.',
+      'sunflower sea stars are less likely to consume sea urchins in barrens than other species of sea stars are, putting sunflower sea stars at a high risk of extinction.',
+      'sunflower sea stars do not always avoid foraging on nutritionally poor sea urchins, making sunflower sea star population recovery a potentially important tool for controlling urchin barrens.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Because sunflower sea stars readily consume nutritionally depleted urchins (selecting them in 37.5% of trials), recovering their predator populations could effectively clear overgrazed urchin barrens and facilitate kelp reforestation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing keystone predators and trophic cascades in marine ecology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '0dccbf17',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Henry Ossawa Tanner’s 1893 painting The Banjo Lesson, which depicts an elderly man teaching a boy to play the banjo, is regarded as a landmark in the history of works by Black artists in the United States. Scholars should be cautious when ascribing political or ideological values to the painting, however: beliefs and assumptions that are commonly held now may have been unfamiliar to Tanner and his contemporaries, and vice versa. Scholars who forget this fact when discussing The Banjo Lesson therefore ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'risk judging Tanner’s painting by standards that may not be historically appropriate.',
+      'tend to conflate Tanner’s political views with those of his contemporaries.',
+      'forgo analyzing Tanner’s painting in favor of analyzing his political activity.',
+      'wrongly assume that Tanner’s painting was intended as a critique of his fellow artists.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Anachronistically applying 21st-century political assumptions to a 19th-century painting risks evaluating Tanner’s work through historically inappropriate ideological frameworks.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating historical contextualism in 19th-century African American art'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5632ffb4',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In a study of the cognitive abilities of white-faced capuchin monkeys (Cebus imitator), researchers neglected to control for the physical difficulty of the tasks they used to evaluate the monkeys. The cognitive abilities of monkeys given problems requiring little dexterity, such as sliding a panel to retrieve food, were judged by the same criteria as were those of monkeys given physically demanding problems, such as unscrewing a bottle and inserting a straw. The results of the study, therefore, ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'could suggest that there are differences in cognitive ability among the monkeys even though such differences may not actually exist.',
+      'are useful for identifying tasks that the monkeys lack the cognitive capacity to perform but not for identifying tasks that the monkeys can perform.',
+      'should not be taken as indicative of the cognitive abilities of any monkey species other than C. imitator.',
+      'reveal more about the monkeys’ cognitive abilities when solving artificial problems than when solving problems encountered in the wild.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Failing to isolate motor dexterity from problem-solving capacity conflates physical motor failure with intellectual inability, generating false apparent differences in cognitive skill.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When identifying confounding variables in primate cognitive testing'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '1b9b29f1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'A team of biologists led by Jae-Hoon Jung, Antonio D. Barbosa, and Stephanie Hutin investigated the mechanism that allows Arabidopsis thaliana (thale cress) plants to accelerate flowering at high temperatures. They replaced the protein ELF3 in the plants with a similar protein found in another species (stiff brome) that, unlike A. thaliana, displays no acceleration in flowering with increased temperature. A comparison of unmodified A. thaliana plants with the altered plants showed no difference in flowering at 22° Celsius, but at 27° Celsius, the unmodified plants exhibited accelerated flowering while the altered ones did not, which suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'temperature-sensitive accelerated flowering is unique to A. thaliana.',
+      'A. thaliana increases ELF3 production as temperatures rise.',
+      'ELF3 enables A. thaliana to respond to increased temperatures.',
+      'temperatures of at least 22° Celsius are required for A. thaliana to flower.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Replacing native ELF3 eliminated the thermal flowering acceleration at 27°C, demonstrating that functional ELF3 protein mediates the plant\'s physiological response to elevated temperatures.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing thermosensory protein pathways in plant genetics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '71c2cea9',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Belonging to neither the minimalist nor the abstract art movements but heavily influencing both, Constantin Brâncuşi spent his sculpting career returning to the same few themes—a kiss, a sleeping head, and a bird in flight—each rendered in pristine, simple, almost abstract forms. Perhaps the most famous example is Bird in Space (1923), a tall, slender bronze sculpture that arcs upward in a manner suggestive of flight but that otherwise lacks any identifiable characteristics of a bird. Despite the seeming simplicity of his works, the exacting standards to which Brâncuşi held his work meant that he produced relatively few pieces over his career. There is thus something of a disparity between ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the nature of much of Brâncuşi’s work and the abstraction of Bird in Space.',
+      'Brâncuşi’s relatively limited productivity and the diversity of his sculptures.',
+      'the themes Brâncuşi explored and the themes favored by artists he inspired.',
+      'Brâncuşi’s importance to the history of art and his total artistic output.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The text contrasts Brâncuşi’s profound, towering historical influence across modern art movements with the small, limited physical quantity of sculptures he produced over his lifetime.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating artistic influence versus catalog volume in modern sculpture'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '75208874',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The widespread use of social media enables linguists to study changes in language usage in real time. A notable recent example is the proliferation of the affix meng- among speakers of Bahasa Indonesia, the official language of Indonesia. Linguists observed meng- originate as an onomatopoetic tag that social-media users applied to images of cats they posted; over time, users increasingly applied it as a prefix to existing words (e.g., mengsedih affixes meng- to the word for sad) in text that they posted. From there, it has begun to move into spoken Bahasa Indonesia. Linguists have noted many similar examples of this phenomenon occurring in other languages, suggesting that social media ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'is more useful for studying informal language than for studying formal or official language.',
+      'appears to be exerting an exceptionally strong influence on the evolution of Bahasa Indonesia.',
+      'may give linguists a somewhat misleading sense of how languages are changing.',
+      'does not merely register changes in language usage but can facilitate such changes.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Rather than serving simply as a passive diagnostic recording tool for linguists, social media platforms act as active incubators and drivers of linguistic innovations that migrate into everyday spoken language.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing digital sociolinguistics and morphological evolution'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '45c03837',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Outi Tervo and team studied the effect of human-caused noise on narwhals (Monodon monoceros), arctic marine mammals that are sensitive to acoustic changes in their environment. Hypothesizing that elevated sound levels affect foraging among narwhals, Tervo’s team compared narwhal diving behaviors in natural sound conditions with those behaviors in two human-caused sound exposure conditions—ship sounds and ship sounds coupled with sonic pulses. Both exposure conditions resulted in significant decreases in the number and target depth of deep dives (associated with foraging) relative to natural conditions. However, differences between diving behaviors in the two exposure types were negligible, a finding that could be attributed to the fact that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'sonic pulses can be heard at significantly greater ocean depths than ship sounds can.',
+      'ship sounds contribute so much to the overall sound level that the addition of sonic pulses has little effect on the narwhals’ auditory environment.',
+      'narwhals forage at shallower depths in the presence of ship sounds alone than in the presence of ship sounds coupled with sonic pulses.',
+      'the narwhals weren’t as sensitive to human-caused sounds as the researchers had predicted.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. If baseline ship engine noise is already so loud that it disrupts foraging behavior to a ceiling level, layering sonic pulses creates negligible additional behavioral disruption.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating marine anthropogenic noise pollution and cetacean bioacoustics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e9521fd1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The Uto-Aztecan language family is divided into a northern branch, which includes the Shoshone language of present-day Idaho and Utah, and a southern one, whose best-known representative is Nahuatl, the language of the Aztec Empire in Mexico. Lexical similarities across the family, including of botanical terms, confirm descent from a single language spoken millennia ago, and the family’s geographical distribution suggests an origin in what is now the US Southwest. However, vocabulary pertaining to maize isn’t shared between northern and southern branches, despite the crop’s universal cultivation among Uto-Aztecan tribes. Given archaeological evidence that maize originated in Mexico and diffused northward into what became the US Southwest, some linguists reason that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'northern Uto-Aztecan tribes likely obtained the crop directly from a southern Uto-Aztecan tribe rather than from a non-Uto-Aztecan tribe.',
+      'variation in maize-related vocabulary within each branch of the Uto-Aztecan family likely reflects regionally specific methods for cultivating the crop.',
+      'southern Uto-Aztecan tribes likely acquired maize at roughly the same time as northern Uto-Aztecan tribes did, though from different sources.',
+      'the family’s division into northern and southern branches likely preceded the acquisition of the crop by the Uto-Aztecan tribes.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If northern and southern branches had already split before maize agriculture spread to them, each branch independently developed its own distinct lexical terms for the newly introduced crop.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating historical glottochronology and agricultural diffusion'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '96d1c1fe',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Tatiana R. Feuerborn and colleagues analyzed the genomes of more than a hundred domesticated dogs from sites in Siberia dating from 11,000 years ago to the present. They found that the dogs constituted a genetically isolated population of Arctic breeds until approximately 2,000 years ago, at which point there was substantial interbreeding with Near Eastern dog breeds. Furthermore, beginning around 2,000 years ago, some sites contain artifacts consistent with a Near East origin, like glass beads, but the people show no evidence of having traveled extensively outside Siberia. From this, Feuerborn and colleagues concluded that around 2,000 years ago ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'dogs and artifacts like glass beads began to be transported from the Near East to Siberia.',
+      'people from Siberia began to reach the Near East, where they acquired dogs and artifacts such as glass beads.',
+      'glass beads and other artifacts from the Near East began to be exchanged for dogs from Siberia.',
+      'dogs from the Near East began to be exchanged for glass beads and other artifacts from Siberia.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Because Near Eastern dog genetics and material trade goods (glass beads) arrived in Siberia while native Siberian populations did not travel south, goods and dogs were transported northward along ancient trade networks into Siberia.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating archaeogenomics and ancient trade networks'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b5e9f3c2',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Ancestral Puebloans, the civilization from which present-day Pueblo tribes descended, emerged as early as 1500 B.C.E. in an area of what is now the southwestern United States and dispersed suddenly in the late 1200s C.E., abandoning established villages with systems for farming crops and turkeys. Recent analysis comparing turkey remains at Mesa Verde, one such village in southern Colorado, to samples from modern turkey populations in the Rio Grande Valley of north central New Mexico determined that the latter birds descended in part from turkeys cultivated at Mesa Verde, with shared genetic markers appearing only after 1280. Thus, researchers concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'conditions of the terrains in the Rio Grande Valley and Mesa Verde had greater similarities in the past than they do today.',
+      'some Ancestral Puebloans migrated to the Rio Grande Valley in the late 1200s and carried farming practices with them.',
+      'Indigenous peoples living in the Rio Grande Valley primarily planted crops and did not cultivate turkeys before 1280.',
+      'the Ancestral Puebloans of Mesa Verde likely adopted the farming practices of Indigenous peoples living in other regions.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The sudden appearance of Mesa Verde domesticated turkey genetic markers in Rio Grande Valley flocks immediately after the 1280 abandonment indicates that migrating Ancestral Puebloan farmers brought their domesticated stock with them.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating archaeological migration tracking via domesticated zooarchaeology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4f9f8ea6',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Birds of many species ingest foods containing carotenoids, pigmented molecules that are converted into feather coloration. Coloration tends to be especially saturated in male birds’ feathers, and because carotenoids also confer health benefits, the deeply saturated colors generally serve to communicate what is known as an honest signal of a bird’s overall fitness to potential mates. However, ornithologist Allison J. Shultz and others have found that males in several species of the tanager genus Ramphocelus use microstructures in their feathers to manipulate light, creating the appearance of deeper saturation without the birds necessarily having to maintain a carotenoid-rich diet. These findings suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'individual male tanagers can engage in honest signaling without relying on carotenoid consumption.',
+      'feather microstructures may be less effective than deeply saturated feathers for signaling overall fitness.',
+      'scientists have yet to determine why tanagers have a preference for mates with colorful appearances.',
+      'a male tanager’s appearance may function as a dishonest signal of the individual’s overall fitness.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. If deep saturation traditionally serves as an honest indicator of nutritional health and fitness, structurally mimicking that saturation without ingesting carotenoids creates a deceptive or dishonest signal to prospective mates.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating evolutionary signaling theory and structural coloration'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b603f00b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Microbial fuel cells (MFCs) capitalize on the ability of some species of bacteria to oxidize organic matter and transfer electrons extracellularly. The bacteria form a dense biofilm on the surface of an electron-collecting anode, but moving the electrons from the bacterial cytoplasm to an external electrode requires that the electrons pass through a series of inefficient oxidation-reduction (redox) reactions. Accordingly, MFC power output rarely exceeds a density of 0.30 milliwatts per square centimeter (mW/cm2). In an experiment, researchers added silver nanoparticles to carbon paper covering the anode in an MFC. The resulting power density was 0.66 mW/cm2. Since metals such as silver exhibit high electrical conductivity, the researchers hypothesized that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'silver nanoparticles may allow electrons to bypass the series of redox reactions and transfer directly to the electrode.',
+      'electrons may be conducted directly to the electrode before the silver nanoparticles catalyze the redox reactions.',
+      'silver nanoparticles may increase the metabolic processes of the bacteria, thereby increasing the number of free electrons available to transfer to the electrode.',
+      'as the density of the biofilm increases, the series of redox reactions may accelerate independent of the presence of the silver nanoparticles.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Highly conductive silver nanoparticles offer a direct conduction pathway, enabling extracellular electrons to bypass rate-limiting, inefficient cellular redox chains to reach the anode directly.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing bioelectrochemical systems and nanoparticle electron transport'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f2250478',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Among social animals that care for their young, such as chickens, macaque monkeys, and humans, newborns appear to show an innate attraction to faces and face-like stimuli. Elisabetta Versace and her colleagues used an image of three black dots arranged in the shape of eyes and a nose or mouth to test whether this trait also occurs in Testudo tortoises, which live alone and do not engage in parental care. They found that tortoise hatchlings showed a significant preference for the image, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'face-like stimuli are likely perceived as harmless by newborns of social species that practice parental care but as threatening by newborns of solitary species without parental care.',
+      'researchers should not assume that an innate attraction to face-like stimuli is necessarily an adaptation related to social interaction or parental care.',
+      'researchers can assume that the attraction to face-like stimuli that is seen in social species that practice parental care is learned rather than innate.',
+      'newly hatched Testudo tortoises show a stronger preference for face-like stimuli than adult Testudo tortoises do.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Finding face-pattern preference in solitary reptiles that never interact with parents or conspecifics demonstrates that the cognitive trait does not necessarily evolve exclusively as an adaptation for social bonding or parental recognition.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating evolutionary origins of facial recognition in reptiles'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '6e0e0de1',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Aerogels are highly porous foams consisting mainly of tiny air pockets within a solidified gel. These lightweight materials are often applied to spacecraft and other equipment required to withstand extreme conditions, as they provide excellent insulation despite typically being brittle and eventually fracturing due to degradation from repeated exposure to high heat. Now, Xiangfeng Duan of the University of California, Los Angeles, and colleagues have developed an aerogel with uniquely flexible properties. Unlike earlier aerogels, Duan’s team’s material contracts rather than expands when heated and fully recovers after compressing to just 5% of its original volume, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'the aerogel’s remarkable flexibility results from its higher proportion of air pockets to solidified gel as compared to other aerogels.',
+      'the aerogel’s overall strength is greater than that of other insulators but its ability to withstand exposure to intense heat is lower.',
+      'the aerogel will be more effective as an insulator for uses that involve gradual temperature shifts than for those that involve rapid heat increases.',
+      'the aerogel will be less prone to the structural weakness that ultimately causes most other aerogels to break down with use.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Because previous aerogels failed from thermal expansion fractures and brittleness, an aerogel that contracts smoothly under heat and rebounds after 95% volume compression overcomes the structural failure mechanisms of conventional insulation.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating nanomaterial thermal insulation and negative thermal expansion'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5cd55c77',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'During their larval phase, numerous species of coral reef fish are drawn toward areas where light is present. To better understand how artificial light at night (ALAN) might affect some coral reef fish, researchers explored the effect of exposure to low levels of ALAN on the reproductive success of the common clownfish (Amphiprion ocellaris). While exposure to low levels of ALAN had no significant effect on spawning frequency and egg fertilization in A. ocellaris, incubation in the presence of ALAN completely inhibited hatching. These findings suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'A. ocellaris that settle in areas with low levels of ALAN have significantly higher rates of successful egg fertilization than A. ocellaris that settle in areas without ALAN do.',
+      'the reproductive success of A. ocellaris would be at risk if they were to selectively settle in regions that are regularly exposed to low levels of ALAN.',
+      'the reproductive success of A. ocellaris is more greatly affected by the presence of low levels of ALAN during incubation than the reproductive success of other species of coral reef fish is.',
+      'the spawning frequency of A. ocellaris was more strongly affected by the presence of low levels of ALAN than egg fertilization was, though both were less affected than incubation.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Because clownfish larvae are naturally drawn toward light, settling in artificially lit reefs exposes their clutches to nocturnal light that totally blocks hatching, collapsing reproductive recruitment.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating ecological light pollution (ALAN) impacts on marine reproduction'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f495b554',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Silicon-based photovoltaic cells account for 95% of the cells used in solar panels worldwide despite converting an average of only 18–22% of the sunlight that reaches them. In a study addressing this relative inefficiency, a team led by Laura Miranda-Pérez demonstrated that the addition of a thin layer of the mineral perovskite—which captures the blue range of light in the solar spectrum, whereas silicon captures the red range—allows the cells to convert 29.5% or more of the Sun’s energy into usable electricity. Cells made with only perovskite, however, are no more efficient than silicon-based ones. It’s reasonable to conclude, then, that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'photovoltaic cells with both silicon and perovskite are more efficient because they make use of more of the solar spectrum.',
+      'photovoltaic cells with only perovskite and no silicon would likely convert more than 29.5% of the Sun’s energy.',
+      'solar power will remain elusive until photovoltaic cells are replaced with a more practical technology.',
+      'researchers need to evaluate whether other minerals like perovskite are as effective as perovskite seems to be.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Tandem perovskite-silicon cells achieve superior conversion efficiency because pairing the two materials allows the cell to harvest complementary portions of the solar spectrum (perovskite captures blue; silicon captures red).',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating tandem solar cell physics and spectral absorption'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'f27559d4',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Volunteering, or giving time for a community service for free, is a valuable form of civic engagement because helping in a community is also good for society as a whole. In a survey of youths in the United States, most young people said that they believe volunteering is a way to help people on an individual level. Meanwhile, only 6% of the youths said that they think volunteering is a way to help fix problems in society overall. These replies suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'many young people think they can volunteer only within their own communities.',
+      'volunteering may be even more helpful than many young people think it is.',
+      'volunteering can help society overall more than it can help individual people.',
+      'many young people may not know how to find ways to volunteer their time.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. While sociological research establishes that volunteering creates systemic macro-benefits for society as a whole, young people overwhelmingly recognize only micro-level interpersonal aid, underestimating its total societal impact.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating youth civic engagement and societal impact perception'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'd1539546',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Tides can deposit large quantities of dead vegetation within a salt marsh, smothering healthy plants and leaving a salt panne—a depression devoid of plants that tends to trap standing water—in the marsh’s interior. Ecologist Kathryn Beheshti and colleagues found that burrowing crabs living within these pannes improve drainage by loosening the soil, leading the pannes to shrink as marsh plants move back in. At salt marsh edges, however, crab-induced soil loosening can promote marsh loss by accelerating erosion, suggesting that the burrowing action of crabs ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'can be beneficial to marshes with small pannes but can be harmful to marshes with large pannes.',
+      'may promote increases in marsh plants or decreases in marsh plants, depending on the crabs’ location.',
+      'tends to be more heavily concentrated in areas of marsh interiors with standing water than at marsh edges.',
+      'varies in intensity depending on the size of the panne relative to the size of the surrounding marsh.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. In interior pannes, crab burrowing restores vegetation by enhancing drainage, whereas at marsh boundaries, identical burrowing destabilizes edges and causes vegetation loss through erosion.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing spatial heterogeneity in ecosystem engineering'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'cf3acc50',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Compiled in the late 1500s largely through the efforts of Indigenous scribes, Cantares Mexicanos is the most important collection of poetry in Classical Nahuatl, the principal language of the Aztec Empire. The poems portray Aztec society before the occupation of the empire by the army of Spain, and marginal notes in Cantares Mexicanos indicate that much of the collection’s content predates the initial invasion. Nonetheless, some of the poems contain inarguable references to beliefs and customs common in Spain during this era. Thus, some scholars have concluded that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'while its content largely predates the invasion, Cantares Mexicanos also contains additions made after the invasion.',
+      'although those who compiled Cantares Mexicanos were fluent in Nahuatl, they had limited knowledge of the Spanish language.',
+      'before the invasion by Spain, the poets of the Aztec Empire borrowed from the literary traditions of other societies.',
+      'the references to beliefs and customs in Spain should be attributed to a coincidental resemblance between the societies of Spain and the Aztec Empire.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. The presence of Spanish colonial cultural references inside a collection of pre-conquest Aztec poetry demonstrates that post-invasion scribes incorporated later additions during late 16th-century transcription.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing colonial Mesoamerican manuscript interpolation'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '4802f6a5',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Aptamers—synthetic DNA or RNA molecules that bind to target molecules—can be used to test for foodborne bacterial pathogens, though their specificity (the probability of returning a negative result in the absence of the focal pathogen) in real-world foods has been unclear. Sandeep Somvanshi et al. fabricated test paper incorporating aptamers targeting strain O157:H7 of the bacteria Escherichia coli; the paper shifts from pink to purple as the aptamers bind to target molecules. Somvanshi et al. tested the paper in store-bought pear juice they treated with E. coli O157:H7, other strains of E. coli, or other bacteria species. Following exposure, the paper from the O157:H7 test was purple while papers from the other tests were pink, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'aptamer-based tests in real-world foods are more likely to show a high degree of specificity if the focal pathogen is E. coli O157:H7 than if the focal pathogen is another strain of E. coli or another species.',
+      'uncertainty about the specificity of aptamer-based tests for pathogens in real-world foods may be due to the similarity between E. coli O157:H7 and other E. coli strains.',
+      'the specificity of the tests in a real-world food was unaffected by the aptamers’ tendency to bind to different strains of E. coli.',
+      'the aptamers successfully bound to E. coli O157:H7 and the tests displayed a high degree of specificity in a real-world food.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. The test paper triggered the purple color change solely in the presence of target O157:H7 while remaining negative (pink) for all other bacterial strains in real store-bought pear juice, demonstrating high specificity.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating biosensor specificity in food safety diagnostics'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '9abc3ba5',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: '“Gestures” in painting are typically thought of as bold, expressive brushstrokes. In the 1970s, American painter Jack Whitten built a 12-foot (3.7-meter) tool he named the “developer” to apply paint to an entire canvas in one motion, resulting in his series of “slab” paintings from that decade. Whitten described this process as making an entire painting in “one gesture,” signaling a clear departure from the prevalence of gestures in his work from the 1960s. Some art historians claim this shift represents “removing gesture” from the process. Therefore, regardless of whether using the developer constitutes a gesture, both Whitten and these art historians likely agree that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'any tool that a painter uses to create an artwork is capable of creating gestures.',
+      'Whitten’s work from the 1960s exhibits many more gestures than his work from the 1970s does.',
+      'Whitten became less interested in exploring the role of gesture in his work as his career progressed.',
+      'Whitten’s work from the 1960s is much more realistic than his work from the 1970s is.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Whether Whitten’s tool created "one gesture" or "removed gesture entirely," both perspectives agree that his earlier 1960s canvases contained far more individual gestural marks than his 1970s slab paintings.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing gestural abstraction and tool innovation in post-war painting'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '38facbad',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Studies conducted in individual Western societies have demonstrated associations between personality traits and five musical factors (mellowness, unpretentiousness, sophistication, intensity, and contemporariness) underlying individual preferences for styles of Western music. To investigate these associations across cultures, David M. Greenberg et al. collected music-preference assessments for Western genres and self-reported personality traits from participants in fifty-three countries across six continents. The study confirmed that the five-factor framework accurately captured participants’ tastes in Western music, and, moreover, the study found similar correlations between patterns of these factors and of personality traits, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'across cultural contexts, people who share similar profiles of personality traits tend to prefer listening to similar types of Western music.',
+      'the five-factor framework can likely be used to predict preferences for non-Western music styles based on personality traits even if the characteristics of those styles substantially differ from characteristics of Western music styles.',
+      'the strength of the relationship between personality traits and musical preferences varies less across cultures than researchers had previously assumed.',
+      'people with a relatively high degree of familiarity with Western music styles are likely to express stronger preferences for those styles than people with a relatively low degree of familiarity with those styles are.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Finding identical correlations between specific personality profiles and Western music preference factors across 53 diverse countries shows that personality-musical preference links transcend specific cultural boundaries.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating cross-cultural music psychology and five-factor personality models'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5c7e0d62',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Arthurian legends (tales related to the character of King Arthur) derive from many sources, such as Vita Sancti Cadoci, composed in the 11th century, and Culhwch and Olwen from the second half of the 12th century. One of the most significant sources, Geoffrey of Monmouth’s History of the Kings of Britain, was written in the 1130s; some material from it was later adapted by the Norman poet Wace into the Roman de Brut in 1155. But Wace didn’t merely adapt History, he added to it as well, introducing the famous Round Table at which Arthur’s knights assembled, which suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'Roman de Brut is more historically accurate than History, because Culhwch and Olwen had not been written when Geoffrey of Monmouth was writing his work.',
+      'Geoffrey of Monmouth was unaware of stories of the Round Table when composing his History, though historians know that works containing such stories were available to him.',
+      'Geoffrey of Monmouth’s accounts of Arthurian legends in his History are more similar overall in content to the accounts in Culhwch and Olwen than they are to the accounts in Roman de Brut.',
+      'the Arthurian legends that the author of Vita Sancti Cadoci drew on would not have featured the Round Table.'
+    ],
+    correctAnswer: 3,
+    explanation: 'Choice D is the best answer. Since the concept of the Round Table was first invented and introduced by Wace in 1155, any 11th-century Arthurian sources (such as *Vita Sancti Cadoci*) predated the Round Table and could not have featured it.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating chronological literary motifs in medieval Arthurian tradition'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '299c5303',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'As the name suggests, dramaturges originated in theater, where they continue to serve a variety of functions: conducting historical research for directors, compiling character biographies for actors, and perhaps most importantly, helping writers of plays and musicals to hone the works’ stories and characters. Performance scholar Susan Manning observes that many choreographers, like playwrights and musical theater writers, are concerned with storytelling and characterization. In fact, some choreographers describe the dances they create as expressions of narrative through movement; it is therefore unsurprising that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'dramaturges can have a profound impact on the artistic direction of plays and musicals.',
+      'choreographers developing dances with narrative elements frequently engage dramaturges to assist in refining those elements.',
+      'dances by choreographers who incorporate narrative elements are more accessible to audiences than dances by choreographers who do not.',
+      'some directors and actors rely too heavily on dramaturges to complete certain research tasks.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Since dramaturges specialize in characterization and narrative dramaturgy, choreographers crafting story-driven dance works naturally hire dramaturges to help structure and sharpen those narrative components.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating dance dramaturgy and narrative choreography'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'cac82f9b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Biologist Natacha Bodenhausen and colleagues analyzed the naturally occurring bacterial communities associated with leaves and roots of wild Arabidopsis thaliana, a small flowering plant. The researchers found many of the same bacterial genera in both the plants’ leaves and roots. To explain this, the researchers pointed to the general proximity of A. thaliana leaves to the ground and noted that rain splashing off soil could bring soil-based bacteria into contact with the leaves. Alternatively, the researchers noted that wind, which may be a source of bacteria in the aboveground portion of plants, could also bring bacteria to the soil and roots. Either explanation suggests that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'bacteria carried by wind are typically less beneficial to A. thaliana than soil-based bacteria are.',
+      'some bacteria in A. thaliana leaves and roots may share a common source.',
+      'many bacteria in A. thaliana leaves may have been deposited by means other than rain.',
+      'A. thaliana leaves and roots are especially vulnerable to harmful bacteria.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. Whether soil splashes onto leaves or wind deposits airborne bacteria into both soil and foliage, both proposed mechanisms trace the shared bacterial genera to a common environmental reservoir.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating plant microbiome dispersal mechanisms'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'b9a3941b',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'The single origin hypothesis of iron metallurgy posits that the craft originated in Anatolia (West Asia) circa 2200–2000 BCE before diffusing to other parts of the world, including Africa. Some proponents of the hypothesis argue that iron production technologies first arrived in North Africa through Carthage, where the earliest evidence of ironworking dates to approximately 800–600 BCE, before these technologies spread to sub-Saharan Africa over the following centuries. However, excavation of multiple sites on the Adamawa plateau in Central Africa conducted by Étienne Zangato and Augustin Holl uncovered evidence of iron workshops that may have been in operation as late as 900–750 BCE in Gbabari and as early as 2300–1900 BCE in Ôboui and Gbatoro. These findings suggest that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'iron production may have developed independently and relatively simultaneously in Anatolia and parts of Central Africa.',
+      'iron production technologies found in Gbabari likely derived directly from technologies transmitted from Anatolia, but those found in Ôboui and Gbatoro did not.',
+      'iron production technologies were likely transmitted from Anatolia to Central Africa via an alternate route than the one suggested by some proponents of the single origin hypothesis.',
+      'iron production may have originated in Anatolia much earlier than the available evidence currently indicates.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Finding Central African ironworking sites dating to 2300–1900 BCE (predating or matching Anatolian dates and predating Carthage by a millennium) demonstrates independent, concurrent indigenous development of iron metallurgy in Central Africa.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating African archaeometallurgy and independent invention hypotheses'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '45f66433',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'While mammals collectively exhibit the highest ratio of brain size to body size among vertebrates, a team led by paleontologist Ornella Bertrand demonstrates that for ten million years following the extinction of dinosaurs, that ratio in fact shrank for mammals as they evolved to fill newly vacated ecological niches and their bodies increased in size more rapidly than their brains. Competition for resources tends to favor intelligence and thus large, complex brains, but during this period, the abundance of resources relative to mammalian population numbers likely moderated competition and facilitated an increase in body size. Bertrand and her team reason that as population numbers swelled, competition intensified, creating conditions that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'heightened the advantage that large body size conferred on mammals in certain ecological niches.',
+      'restricted resources so drastically that mammals struggled to secure enough food to maintain large brain sizes.',
+      'favored an evolutionary increase in brain size relative to body size among mammals.',
+      'encouraged mammals with large brain sizes to adapt to a range of ecological niches.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text explains that resource competition selects for cognitive capability and complex brains; once post-extinction populations recovered and competition intensified, selection pressure shifted to favor larger relative brain sizes.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating mammalian encephalization quotient evolution'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'e503ae04',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'With the ongoing expansion of e-commerce, consumers are expecting faster and faster delivery of goods, but delivery companies continue to struggle with last-mile logistics (the final step in delivery to consumers) due to challenges such as complex and inefficient delivery routes. Innovations to mitigate these challenges have been emerging—the use of aerial drones, for example—but these innovations tend to engender their own complications (e.g., regulations on the use of drones in residential airspace), leading researchers to conclude that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'consumers’ expectations for reduced delivery times may be outstripping what is viable for delivery companies to provide.',
+      'a better understanding of consumers’ expectations for delivery is needed so that companies can better plan for fluctuations in delivery volume.',
+      'rapid delivery is a leading factor in consumer satisfaction, and therefore delivery companies would benefit from investing resources in reducing delivery times.',
+      'there may not be sufficient incentive for delivery companies to attempt to solve the problems associated with last-mile logistics.'
+    ],
+    correctAnswer: 0,
+    explanation: 'Choice A is the best answer. Given persistent ground route bottlenecks and regulatory barriers impeding technological solutions like drones, rapidly escalating consumer demands for near-instant delivery exceed the practical operational capacity of logistics providers.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing e-commerce last-mile supply chain constraints'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '5d20f560',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Conventional theories of rhetoric hold that presenting information as coming from credentialed experts increases that information’s credibility. When communications researcher Sungkyoung Lee and her colleagues tested messages seeking volunteers for clinical trials, however, they found that participants in their study judged recruitment messages from former trial volunteers as significantly more credible than messages from doctors (i.e., credentialed experts). One reason for this may be that the doctors’ status as credentialed experts wasn’t ignored but rather was outweighed by participants’ views of the experiential relevance of the two types of messengers; that is, participants may have reacted the way they did because ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'messages from former trial volunteers depicted clinical trials as being more positive experiences than did messages from doctors.',
+      'participants did not have enough experience to evaluate the credibility of the doctors’ messages but did have enough experience to evaluate the credibility of former trial volunteers’ messages.',
+      'the fact that former trial volunteers went through the same experience that participants were contemplating while doctors did not was more important to participants than the doctors’ status as credentialed experts was.',
+      'participants regarded the experiences of both the doctors and former trial volunteers as relevant to the subject of clinical trials but were skeptical of the doctors’ status as credentialed experts.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. The text defines experiential relevance as the critical factor: prospective volunteers valued the firsthand personal lived experience of past trial participants above the detached professional expertise of medical doctors.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating experiential credibility vs source credentials in health communications'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: 'cae97f58',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Mosses can struggle in harsh desert conditions because these plants require enough sunlight for photosynthesis but not so much that they risk drying out. Researchers Jenna Ekwealor and Kirsten M. Fisher found several species of Syntrichia caninervis, a type of desert moss, growing under quartz crystals in California’s Mojave Desert. To evaluate whether these semitransparent rocks benefited the moss, the researchers compared the shoot tissue, a measure of plant growth, of S. caninervis when growing on the soil surface versus when the moss was growing under the quartz rocks. They found that the shoot tissue was 62% longer for moss growing under the quartz as compared to moss on the soil surface, suggesting that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'S. caninervis is one of the few types of moss that can survive under semitransparent rocks.',
+      'quartz crystals do not transmit the necessary sunlight for photosynthesis in S. caninervis.',
+      'S. caninervis growing under quartz crystals experience lower light intensity and are thus able to retain more moisture.',
+      'quartz crystals are capable of supporting S. caninervis growth if the crystals are not too thin.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Semitransparent quartz filters extreme desert solar radiation, creating a sheltered microclimate that permits adequate photosynthesis while preventing excessive evaporation, boosting growth by 62%.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing hypolithic desert microhabitats and moss physiology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '65502c46',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'In a 2017 article, historian Jasmine Kilburn-Toppin explains that in early modern London, members of the city’s guilds (trade and artisanal associations) were participants in a civic culture in which gift giving both signaled and conferred social status. Research on this phenomenon has tended to focus on philanthropic gifting by London’s largest guilds; for her part, Kilburn-Toppin focuses on the gifting of handmade objects and fixtures (such as decorative paneling or plasterwork) within the craft guilds, which were “composed of highly discerning producers and consumers of material cultures.” Given this characterization, it can reasonably be inferred that the gifting of such objects may have ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'ensured that knowledge of the materials and techniques used by members of the craft guilds stayed within the craft guilds.',
+      'emphasized ostentatious offerings in the case of the largest guilds and prosaic objects in the case of the craft guilds.',
+      'functioned as a way for craft guild members to maintain and enhance their professional reputations among their peers.',
+      'conferred greater social status when the recipient belonged to one of London’s largest guilds than when the recipient belonged to a craft guild.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Exchanging masterfully crafted artisanal objects within a peer community of discerning master craftsmen allowed donors to showcase their technical prowess and elevate their professional stature.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When analyzing early modern artisanal gift exchange and professional prestige'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '9869c261',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'Data collected by the Mars rover Curiosity at the Gale Crater’s Murray Formation are suggestive of hydrological deposition of sediment in the distant past. To characterize the nature of the depositional environment, Frances Rivera-Hernández et al. analyzed the grain size of Murray Formation sediment, finding that although there are intervals of coarse grains, most of the sediment consists of fine grains that show signs of cracking due to episodic desiccation. Rivera-Hernández et al. concluded that the coarse grains are sandstone, which tends to be deposited by flowing water, whereas the fine grains are mudstone, which is slowly deposited by settling out of suspension in low-flow water, leading the researchers to posit that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'although the area of the Murray Formation experienced a prolonged period of dryness that prevented a lake from forming, water flowing from a distant source was present.',
+      'a lake existed at the Murray Formation for a prolonged period, though the lake occasionally experienced drying and there were periods in which one or more streams were present.',
+      'one or more streams existed at the Murray Formation for an extended period until being replaced by a lake that persisted for only a brief period before permanently drying.',
+      'a stream-fed lake was present at the Murray Formation for an extended period, and although the streams experienced occasional drying, the lake did not.'
+    ],
+    correctAnswer: 1,
+    explanation: 'Choice B is the best answer. The predominance of mudstone indicates a persistent standing body of water (a lake), mudstone desiccation cracks reflect periodic drying events, and coarse sandstone layers document transient flowing streams entering the basin.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating lacustrine sedimentology and Mars paleohydrology'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
+  },
+  {
+    id: '27ea642e',
+    section: 'reading-writing',
+    domain: 'information-ideas',
+    skill: 'Inferences',
+    difficulty: 'expert',
+    questionText: 'As juveniles, all white-necked jacobin hummingbirds display vibrantly blue head plumage; when they enter adulthood, males retain these blue feathers and most females molt to a drab green hue. However, 28% of adult female jacobins remain identical in coloration to juveniles and adult males. Based on field observations in Panama, a team of researchers reports that while adult males show a clear preference in mate selection for adult females with drab green feathers, they also engage in more antagonistic behavior toward those adult females than toward blue-feathered adult females when competing for resources. Therefore, the team hypothesizes that ______\n\nWhich choice most logically completes the text?',
+    options: [
+      'adult male jacobins do not act antagonistically toward juvenile jacobins with blue head plumage when competing for resources.',
+      'the percentage of blue-feathered females will increase until fewer than half of adult female jacobins are green-feathered.',
+      'the occurrence of blue head plumage in adult female jacobins is driven by one or more factors not associated with mate attraction.',
+      'coloration prevents green-feathered adult female jacobins from distinguishing between adult males and blue-feathered adult females.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Choice C is the best answer. Because males actively prefer mating with green females, retaining blue plumage reduces mating appeal but offers an adaptive foraging benefit by shielding blue females from male territorial aggression.',
+    textbookRef: {
+      textbookId: 'sat-rw-mastery',
+      page: 26,
+      highlightedText: 'When evaluating female polymorphism and sexual selection trade-offs'
+    },
+    createdAt: '2026-08-14T00:00:00Z',
+    createdBy: 'system'
   }
 ];
+
 
 
