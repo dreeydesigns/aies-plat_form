@@ -10,7 +10,7 @@ export const initialTextbooks: Textbook[] = [
     pages: [
       {
         pageNumber: 14,
-        content: 'Linear equations in one and two variables represent straight-line relationships. The standard slope-intercept form is y = mx + b, where m is the slope and b is the y-intercept. When solving systems of linear equations, a system has infinitely many solutions if and only if both equations represent identical lines with equal slopes and equal y-intercepts.',
+        content: 'Linear equations in one and two variables represent straight-line relationships. The standard slope-intercept form is y = mx + b, where m is the slope and b is the y-intercept. When solving systems of linear equations, a system has infinitely many solutions if and only if both equations represent identical lines with equal slopes and equal y-intercepts. A system has no solution when lines are parallel with identical slopes and distinct y-intercepts.',
         sections: [
           {
             heading: 'Linear Relationships and Slope',
@@ -28,10 +28,10 @@ export const initialTextbooks: Textbook[] = [
         sections: [
           {
             heading: 'The Vertex and Axis of Symmetry',
-            text: 'For any parabola y = ax^2 + bx + c, the vertex occurs at x = -b / (2a). The vertex form y = a(x - h)^2 + k explicitly gives the extremum at (h, k). If a > 0, the parabola opens upward and has a minimum value of k.'
+            text: 'For any parabola y = ax^2 + bx + c, the vertex occurs at x = -b / (2a). The vertex form y = a(x - h)^2 + k explicitly gives the extremum at (h, k). If a > 0, the parabola opens upward and has a minimum value of k at x = h.'
           },
           {
-            heading: 'Discriminant Analysis',
+            heading: 'Discriminant Analysis & Tangency',
             text: 'A quadratic equation has exactly one real solution if and only if b^2 - 4ac = 0. When intersecting a line y = mx + c with a parabola, substitute and equate the resulting quadratic discriminant to zero for tangency.'
           }
         ]
@@ -61,6 +61,43 @@ export const initialTextbooks: Textbook[] = [
           {
             heading: 'Circle Arc Length and Sector Area',
             text: 'Arc length s = r * theta and sector area A = (1/2) * r^2 * theta when angle theta is measured in radians. To convert degrees to radians, multiply by pi / 180.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'sat-advanced-math-guide',
+    title: 'SAT Advanced Math & Functions Mastery',
+    author: 'Panda SAT & STEM Editorial',
+    publisherOrOwner: 'Panda SAT Curriculum Series',
+    coverColor: 'from-purple-700 to-indigo-900',
+    pages: [
+      {
+        pageNumber: 18,
+        content: 'Polynomial division, factor theorem, and remainder theorem. If a polynomial P(x) is divided by (x - a), the remainder is P(a). If P(a) = 0, then (x - a) is a factor of P(x). Equivalent rational expressions require finding common denominators and identifying extraneous solutions that make denominators equal zero.',
+        sections: [
+          {
+            heading: 'Remainder & Factor Theorem',
+            text: 'For polynomial P(x), evaluating P(c) gives the remainder when P(x) is divided by (x - c). If P(c) = 0, then (x - c) is a factor, meaning x = c is a zero/root.'
+          },
+          {
+            heading: 'Rational Function Asymptotes',
+            text: 'Vertical asymptotes occur at zeros of the denominator that are not cancelled by the numerator. Horizontal asymptotes depend on comparing degrees of numerator and denominator.'
+          }
+        ]
+      },
+      {
+        pageNumber: 36,
+        content: 'Exponential and radical equations. To solve exponential equations with different bases, express both sides in terms of common prime bases or take logarithms. For radical equations sqrt(ax + b) = cx + d, always check for extraneous solutions introduced by squaring both sides.',
+        sections: [
+          {
+            heading: 'Radical Expressions & Fractional Exponents',
+            text: 'The n-th root of x^m is represented as x^(m/n). When squaring both sides of radical equations, extraneous solutions often arise when the resulting linear expression is negative.'
+          },
+          {
+            heading: 'Exponential Decay & Half-Life',
+            text: 'Half-life decay is given by N(t) = N0 * (1/2)^(t / t_half). The base rate remains constant over equal fractional intervals.'
           }
         ]
       }
@@ -126,6 +163,43 @@ export const initialTextbooks: Textbook[] = [
           {
             heading: 'Dangling and Misplaced Modifiers',
             text: 'An introductory participial phrase (e.g., "Walking through the forest, ...") must be immediately followed by the noun that logically performs the action.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'sat-grammar-conventions',
+    title: 'Standard English Conventions & Grammar Rules',
+    author: 'Panda SAT Writing & Grammar Board',
+    publisherOrOwner: 'Panda SAT Writing Series',
+    coverColor: 'from-amber-600 to-orange-700',
+    pages: [
+      {
+        pageNumber: 22,
+        content: 'Punctuation boundaries: commas, semicolons, dashes, and colons. A single dash or colon requires an independent clause preceding it. Paired dashes, paired commas, or paired parentheses enclose non-essential parenthetical information that can be removed without breaking sentence structure.',
+        sections: [
+          {
+            heading: 'Non-Essential Clauses & Paired Punctuation',
+            text: 'If a descriptive phrase is set off by commas or dashes, test it by mentally removing the clause. The remaining sentence must be grammatically complete.'
+          },
+          {
+            heading: 'Subject-Verb Agreement Across Prepositional Phrases',
+            text: 'The verb must agree with the true head subject, not the intervening nouns within prepositional phrases (e.g., "The box of old books is heavy", not "are heavy").'
+          }
+        ]
+      },
+      {
+        pageNumber: 48,
+        content: 'Pronoun ambiguity and parallelism. Every pronoun (it, they, this) must have an unambiguous, grammatically aligned antecedent noun. Parallel structure requires that lists and comparisons maintain identical grammatical forms (e.g., gerund with gerund, infinitive with infinitive).',
+        sections: [
+          {
+            heading: 'Pronoun Case & Number Agreement',
+            text: 'Singular indefinite pronouns (everyone, each, neither) require singular verbs and pronouns. Avoid ambiguous "this" or "they" without explicit referents.'
+          },
+          {
+            heading: 'Comparative Parallelism & Illogical Comparisons',
+            text: 'Compare equivalent entities: "The score of student A was higher than that of student B", not "than student B".'
           }
         ]
       }

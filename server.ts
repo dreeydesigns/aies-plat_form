@@ -24,6 +24,16 @@ async function startServer() {
     }
   });
 
+  app.post("/api/gemini/generate-questions", async (req, res) => {
+    try {
+      const handler = (await import("./api/gemini/generate-questions.js")).default;
+      await handler(req, res as any);
+    } catch (err: any) {
+      console.error("Generate questions error:", err);
+      res.status(500).json({ error: err.message || "Question generation failed" });
+    }
+  });
+
   app.post("/api/generate-course", async (req, res) => {
     try {
       const handler = (await import("./api/generate-course.js")).default;

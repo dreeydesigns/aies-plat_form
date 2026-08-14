@@ -1,421 +1,264 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { SatDomain } from '../../types';
 import { 
-  Trophy, 
-  Flame, 
-  Sparkles, 
-  Zap, 
+  Play, 
   Layers, 
-  BookOpen, 
-  BarChart3, 
-  Target, 
-  Calendar, 
+  Sparkles, 
   Clock, 
-  ArrowRight, 
+  Calendar, 
   CheckCircle2, 
-  Search, 
-  Loader2, 
-  Send,
-  HelpCircle,
-  TrendingUp,
-  AlertCircle
+  ArrowRight, 
+  FileText,
+  AlertCircle,
+  Zap,
+  BookOpen
 } from 'lucide-react';
-import VoiceInput from '../../components/shared/VoiceInput';
-import Badges from '../../components/shared/Badges';
-import { LessonContent } from '../../components/shared/LessonContent';
-
-const domainNames: Record<SatDomain, { name: string; section: 'math' | 'reading-writing' }> = {
-  'algebra': { name: 'Algebra', section: 'math' },
-  'advanced-math': { name: 'Advanced Math', section: 'math' },
-  'problem-solving-data-analysis': { name: 'Problem-Solving & Data', section: 'math' },
-  'geometry-trigonometry': { name: 'Geometry & Trig', section: 'math' },
-  'information-ideas': { name: 'Information & Ideas', section: 'reading-writing' },
-  'craft-structure': { name: 'Craft & Structure', section: 'reading-writing' },
-  'expression-of-ideas': { name: 'Expression of Ideas', section: 'reading-writing' },
-  'standard-english-conventions': { name: 'Standard English', section: 'reading-writing' }
-};
 
 export default function StudentDashboard() {
-  const { userProfile, earnedBadges, assignedTests } = useAppContext();
+  const { userProfile, assignedTests = [], satTests = [] } = useAppContext();
   const navigate = useNavigate();
 
-  // Search Assistant state
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState('');
-  const [searchSources, setSearchSources] = useState<any[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  // Toggles
+  const [yourTestsTab, setYourTestsTab] = useState<'active' | 'past'>('active');
+  const [practiceTab, setPracticeTab] = useState<'active' | 'past'>('active');
 
-  const satProfile = userProfile?.satProfile;
-  const placements = satProfile?.placementByDomain || {};
-  const targetScore = satProfile?.targetScore || 1450;
-  const targetTestDate = satProfile?.targetTestDate || '';
+  const studentName = userProfile?.name?.split(' ')[0] || 'Student';
 
-  // Calculate days remaining to target test date
-  const daysToTest = targetTestDate ? Math.max(0, Math.ceil((new Date(targetTestDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))) : 45;
+  // Active assigned tests vs past completed tests
+  const activeAssignedTests = assignedTests.filter(
+    (t) => !t.completedBy || !userProfile?.id || !t.completedBy.includes(userProfile.id)
+  );
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
-    setIsSearching(true);
-    setSearchResult('');
-    setSearchSources([]);
-    try {
-      const response = await fetch('/api/gemini/grounding', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery }),
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data.error) {
-        setSearchResult(`### SAT Concept Research\n\n${data.result || data.error}`);
-      } else {
-        setSearchResult(data.result || "No explanation found.");
-        if (data.sources) {
-          setSearchSources(data.sources);
-        }
-      }
-    } catch (error) {
-      // Local Client Fallback for SAT Topics
-      const queryLower = searchQuery.toLowerCase();
-      if (queryLower.includes('semicolon') || queryLower.includes('semi-colon')) {
-        setSearchResult(`### SAT Standard English Conventions: Rules of the Semicolon (;)\n\nOn the Digital SAT, the semicolon is tested under **Boundaries & Sentence Structure**:\n\n1. **Connecting Two Independent Clauses**\n   - A semicolon joins two complete thoughts without a coordinating conjunction (FANBOYS).\n   - *Rule:* [Independent Clause] **;** [Independent Clause]\n   - *Example:* "She prepared for the digital SAT**;** her hard work paid off."\n\n2. **Semicolon + Transitional Adverb (Conjunctives)**\n   - *Rule:* [Independent Clause] **; however,** [Independent Clause]\n   - *Example:* "The question was complex**; nevertheless,** he solved it using elimination."\n\n3. **Separating Items in a Complex List**\n   - Used as a "super-comma" when listed items already have commas inside them.\n\n> **⚠️ SAT Trap:** A semicolon cannot connect an independent clause to a dependent clause or fragment.`);
-        setSearchSources([
-          { title: "Mastering Digital SAT Reading & Writing (Ch. 4)", uri: "/student/sat/textbooks" },
-          { title: "Official College Board SAT Grammar Guidelines", uri: "https://satsuite.collegeboard.org" }
-        ]);
-      } else {
-        setSearchResult(`### SAT Concept Overview: "${searchQuery}"\n\nHere are the core test-taking principles for **${searchQuery}**:\n\n1. **Core Concept:** Master this domain's foundational formulas and rules to maximize your score trajectory.\n2. **Test-Day Strategy:** Use the **5-Finger Formula** during Module 1 if this question type causes hesitation.\n3. **Practice Recommendation:** Jump into the **Practice Studio** to work on targeted drills with instant textbook remediation.`);
-        setSearchSources([
-          { title: "AIES SAT Knowledge & Remediation Engine", uri: "/student/sat/practice" },
-          { title: "AIES Curated Textbook Reader", uri: "/student/sat/textbooks" }
-        ]);
-      }
-    } finally {
-      setIsSearching(false);
-    }
-  };
+  const pastSatTests = satTests || [];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 py-2">
-      {/* Top Header & Streak Stats */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-black text-neutral-900 tracking-tight">
-            Welcome back, {userProfile?.name?.split(' ')[0] || 'Scholar'}
-          </h1>
-          <p className="text-neutral-500 text-sm mt-1">
-            Digital SAT Preparation Command Center · Adaptive Practice & Mastery Engine
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-4 bg-white p-2.5 px-4 rounded-2xl border border-neutral-200 shadow-xs">
-            <div className="flex items-center gap-1.5">
-              <Trophy className="w-4 h-4 text-amber-500" />
-              <span className="font-bold text-neutral-800 text-sm">{userProfile?.points || 0} pts</span>
-            </div>
-            <div className="w-px h-4 bg-neutral-200" />
-            <div className="flex items-center gap-1.5">
-              <Flame className="w-4 h-4 text-orange-500" />
-              <span className="font-bold text-neutral-800 text-sm">{userProfile?.streak || 1} day streak</span>
-            </div>
-          </div>
-        </div>
+    <div className="max-w-4xl mx-auto space-y-10 py-6 font-sans">
+      {/* Page Header: Greeting + one line of context */}
+      <div className="space-y-1">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-900 tracking-tight">
+          Hello, {studentName}
+        </h1>
+        <p className="text-neutral-500 text-sm md:text-base">
+          Choose a practice session or jump into your scheduled test.
+        </p>
       </div>
 
-      {/* Main SAT Target & Readiness Hero Card */}
-      <div className="bg-gradient-to-br from-neutral-900 via-neutral-800 to-blue-950 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden space-y-6">
-        <div className="flex flex-col md:flex-row justify-between md:items-center gap-6 relative z-10">
-          <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 text-blue-300 rounded-full text-xs font-extrabold uppercase tracking-wider border border-white/10">
-              <Sparkles className="w-3.5 h-3.5" />
-              Digital SAT Adaptive Engine
-            </div>
-            <h2 className="text-2xl md:text-3xl font-black tracking-tight">
-              Target Score: {targetScore} / 1600
-            </h2>
-            <p className="text-neutral-300 text-sm leading-relaxed">
-              {satProfile?.diagnosticCompleted
-                ? `Your baseline placement is active. Complete daily adaptive practice to turn your intermediate domains into expert tiers before test day.`
-                : `Take the official 2-stage adaptive diagnostic to establish your exact placement across all 8 SAT domains.`}
-            </p>
-          </div>
+      {/* SECTION 1: Your Tests */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-extrabold text-neutral-900 tracking-tight">
+            Your Tests
+          </h2>
 
-          <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 flex-shrink-0">
-            {!satProfile?.diagnosticCompleted ? (
-              <button
-                onClick={() => navigate('/student/sat/diagnostic')}
-                className="py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 font-bold text-white text-sm transition-all shadow-md flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
-                Start Diagnostic Test
-              </button>
-            ) : (
-              <button
-                onClick={() => navigate('/student/sat/practice')}
-                className="py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 font-bold text-white text-sm transition-all shadow-md flex items-center justify-center gap-2"
-              >
-                <Zap className="w-4 h-4" />
-                Launch Practice Studio
-              </button>
-            )}
-
+          {/* Active / Past Toggle */}
+          <div className="bg-neutral-100 p-1 rounded-2xl flex items-center gap-1 border border-neutral-200">
             <button
-              onClick={() => navigate('/student/sat/tests')}
-              className="py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/20 font-bold text-white text-sm transition-all border border-white/20 flex items-center justify-center gap-2"
+              type="button"
+              onClick={() => setYourTestsTab('active')}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                yourTestsTab === 'active'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
             >
-              <Layers className="w-4 h-4" />
-              Test Center
+              Active
+            </button>
+            <button
+              type="button"
+              onClick={() => setYourTestsTab('past')}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                yourTestsTab === 'past'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              Past
             </button>
           </div>
         </div>
 
-        {/* Target Countdown Widget */}
-        <div className="pt-4 border-t border-neutral-700/60 flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-400">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-blue-400" />
-            <span>Target Test Date: <strong className="text-white">{targetTestDate || 'Upcoming Sitting'}</strong></span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-amber-400" />
-            <span>Countdown: <strong className="text-amber-300">{daysToTest} days remaining</strong></span>
-          </div>
-          <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
-            <span>Status: <strong className="text-emerald-300">{satProfile?.diagnosticCompleted ? 'Calibrated' : 'Diagnostic Pending'}</strong></span>
-          </div>
-        </div>
-      </div>
-
-      {/* Teacher Assigned Tests Notification Card (if any) */}
-      {assignedTests && assignedTests.length > 0 && (
-        <div className="bg-amber-50 rounded-3xl border border-amber-200 p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-bold text-amber-950 text-base flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-amber-600" />
-              Assigned SAT Workouts from Teachers ({assignedTests.length})
-            </h3>
-            <span className="text-xs font-extrabold uppercase px-2.5 py-0.5 bg-amber-200 text-amber-900 rounded-full">
-              Action Required
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {assignedTests.map((t) => (
-              <div key={t.id} className="bg-white p-4 rounded-2xl border border-amber-200 shadow-xs flex flex-col justify-between space-y-3">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase px-2 py-0.5 bg-neutral-100 text-neutral-700 rounded">
-                      {t.testConfig.section === 'math' ? 'Math Workout' : 'Reading & Writing'}
-                    </span>
-                    {t.dueDate && <span className="text-[11px] text-neutral-500 font-semibold">Due: {t.dueDate}</span>}
-                  </div>
-                  <h4 className="font-bold text-neutral-900 text-sm mt-2">
-                    {t.testConfig.domain ? `Focused Domain: ${t.testConfig.domain}` : 'Comprehensive Adaptive Practice'}
-                  </h4>
-                  <p className="text-xs text-neutral-500 mt-0.5">Assigned by {t.assignedByTeacherName || 'Teacher'}</p>
-                </div>
-
-                <button
-                  onClick={() => navigate(`/student/sat/practice?domain=${t.testConfig.domain || 'algebra'}`)}
-                  className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5"
+        {yourTestsTab === 'active' ? (
+          activeAssignedTests.length === 0 ? (
+            /* Empty State when nothing is scheduled */
+            <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-xs text-center space-y-2">
+              <p className="text-sm font-bold text-neutral-800">No tests currently scheduled</p>
+              <p className="text-xs text-neutral-500 max-w-sm mx-auto">
+                When your instructor assigns an official test or workout, it will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {activeAssignedTests.map((test) => (
+                <div
+                  key={test.id}
+                  className="bg-white rounded-3xl p-6 border-2 border-blue-600 shadow-sm flex flex-col justify-between space-y-4"
                 >
-                  <Zap className="w-3.5 h-3.5" />
-                  Launch Assigned Workout
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* 8-Domain Mastery Status Grid */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-neutral-900">8 Official SAT Domains Mastery</h3>
-            <p className="text-xs text-neutral-500">Your current adaptive difficulty rating by domain</p>
-          </div>
-          <button
-            onClick={() => navigate('/student/sat/practice')}
-            className="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1"
-          >
-            Practice Any Domain <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {(Object.keys(domainNames) as SatDomain[]).map((domainKey) => {
-            const info = domainNames[domainKey];
-            const tier = placements[domainKey] || 'intermediate';
-
-            return (
-              <div
-                key={domainKey}
-                onClick={() => navigate(`/student/sat/practice?domain=${domainKey}`)}
-                className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400">
-                      {info.section === 'math' ? 'Math' : 'Reading & Writing'}
-                    </span>
-                    <span
-                      className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full ${
-                        tier === 'expert'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : tier === 'beginner'
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
-                    >
-                      {tier}
-                    </span>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-extrabold uppercase tracking-wider">
+                        {test.testConfig.section === 'math' ? 'Math Test' : 'Reading & Writing'}
+                      </span>
+                      {test.dueDate && (
+                        <span className="text-xs text-neutral-500 font-semibold flex items-center gap-1">
+                          <Calendar className="w-3.5 h-3.5 text-neutral-400" />
+                          Due {test.dueDate}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-neutral-900 text-base">
+                      {test.testConfig.domain ? `Domain Focus: ${test.testConfig.domain}` : 'Assigned SAT Practice Test'}
+                    </h3>
+                    <p className="text-xs text-neutral-500">
+                      Assigned by {test.assignedByTeacherName || 'Teacher'}
+                    </p>
                   </div>
-                  <h4 className="font-bold text-neutral-900 text-base mt-2 group-hover:text-blue-600 transition-colors">
-                    {info.name}
-                  </h4>
+
+                  <button
+                    onClick={() => navigate(`/student/sat/practice?domain=${test.testConfig.domain || 'algebra'}`)}
+                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs"
+                  >
+                    <Play className="w-3.5 h-3.5 fill-white" />
+                    Start Assigned Test
+                  </button>
                 </div>
-
-                <div className="flex items-center justify-between text-xs font-bold text-blue-600 pt-2 border-t border-neutral-100">
-                  <span>Start Drills</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              ))}
+            </div>
+          )
+        ) : (
+          /* Past Tests View */
+          pastSatTests.length === 0 ? (
+            <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-xs text-center space-y-2">
+              <p className="text-sm font-bold text-neutral-800">No past test records yet</p>
+              <p className="text-xs text-neutral-500">
+                Completed tests and score reports will be archived here.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {pastSatTests.map((t, idx) => (
+                <div
+                  key={t.id || idx}
+                  className="bg-white rounded-2xl p-4 border border-neutral-200 flex items-center justify-between"
+                >
+                  <div>
+                    <p className="text-sm font-bold text-neutral-900">
+                      Full-Length Test · {t.mode.toUpperCase()}
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                      Completed {t.completedAt ? new Date(t.completedAt).toLocaleDateString() : 'Recently'}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-lg font-black text-blue-600">
+                      {t.totalEstimatedScore || '—'}
+                    </span>
+                    <span className="text-xs text-neutral-400"> / 1600</span>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Quick Action Navigation Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Practice Studio Card */}
-        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center font-bold">
-              <Zap className="w-6 h-6" />
+              ))}
             </div>
-            <h4 className="font-bold text-neutral-900 text-lg">Practice & Prepare</h4>
-            <p className="text-xs text-neutral-500 leading-relaxed">
-              Adaptive weighted question streams with instant explanation & textbook deep-linking.
-            </p>
-          </div>
-          <button
-            onClick={() => navigate('/student/sat/practice')}
-            className="w-full py-2.5 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5"
-          >
-            Launch Practice Studio <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* Textbooks Card */}
-        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <h4 className="font-bold text-neutral-900 text-lg">Curated Textbooks</h4>
-            <p className="text-xs text-neutral-500 leading-relaxed">
-              Official remediation library with page & line highlight reader for wrong answers.
-            </p>
-          </div>
-          <button
-            onClick={() => navigate('/student/sat/textbooks')}
-            className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5"
-          >
-            Open Textbook Reader <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* Score Reports Card */}
-        <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center font-bold">
-              <BarChart3 className="w-6 h-6" />
-            </div>
-            <h4 className="font-bold text-neutral-900 text-lg">Score Reports</h4>
-            <p className="text-xs text-neutral-500 leading-relaxed">
-              Concordance scaled projections (400–1600), section breakdowns, and progress curves.
-            </p>
-          </div>
-          <button
-            onClick={() => navigate('/student/sat/scores')}
-            className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5"
-          >
-            View Full Score Reports <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-
-      {/* AI Grounded SAT Research Assistant */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-neutral-900 font-bold text-lg">
-          <Search className="w-5 h-5 text-blue-600" />
-          AI Grounded SAT Research & Concept Assistant
-        </div>
-        <p className="text-xs text-neutral-500">
-          Ask questions about tricky math formulas, grammatical rules, or test taking strategies.
-        </p>
-
-        <div className="flex items-center gap-2">
-          <div className="flex-1 relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="e.g. How do I solve quadratic system intersections? or Rules for semicolons..."
-              className="w-full pl-10 pr-12 py-3 border border-neutral-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyDown={e => e.key === 'Enter' && handleSearch()}
-            />
-            <Search className="absolute left-3 top-3.5 text-neutral-400 w-5 h-5" />
-            <div className="absolute right-2 top-2">
-              <VoiceInput onTranscript={text => setSearchQuery(prev => `${prev} ${text}`)} />
-            </div>
-          </div>
-          <button
-            onClick={handleSearch}
-            disabled={isSearching}
-            className="px-6 py-3 bg-neutral-900 hover:bg-black text-white font-bold rounded-xl disabled:opacity-50 text-sm transition-colors"
-          >
-            {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Ask AI'}
-          </button>
-        </div>
-
-        {searchResult && (
-          <div className="mt-4 p-6 bg-neutral-50/90 rounded-2xl border border-neutral-200 leading-relaxed text-neutral-800 space-y-4">
-            <LessonContent content={searchResult} />
-            {searchSources.length > 0 && (
-              <div className="pt-3 border-t border-neutral-200">
-                <p className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Grounded Educational Sources:</p>
-                <div className="flex flex-wrap gap-2">
-                  {searchSources.map((source, index) => (
-                    <a
-                      key={index}
-                      href={source.uri}
-                      target={source.uri.startsWith('http') ? '_blank' : undefined}
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-blue-50 border border-neutral-200 hover:border-blue-300 text-blue-600 rounded-lg text-xs font-semibold transition-colors"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>{source.title}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          )
         )}
       </div>
 
-      {/* Badges and Rewards Section */}
-      <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm">
-        <Badges earnedBadges={earnedBadges} />
+      {/* SECTION 2: Practice & Prepare (Active / Past toggle, exactly two entry cards) */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-extrabold text-neutral-900 tracking-tight">
+            Practice & Prepare
+          </h2>
+
+          <div className="bg-neutral-100 p-1 rounded-2xl flex items-center gap-1 border border-neutral-200">
+            <button
+              type="button"
+              onClick={() => setPracticeTab('active')}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                practiceTab === 'active'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              Active
+            </button>
+            <button
+              type="button"
+              onClick={() => setPracticeTab('past')}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                practiceTab === 'past'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              Past
+            </button>
+          </div>
+        </div>
+
+        {practiceTab === 'active' ? (
+          /* Exactly TWO entry cards: Test Preview and Full-Length Practice */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Card 1: Test Preview */}
+            <div
+              onClick={() => navigate('/student/sat/preview-intro')}
+              className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer flex flex-col justify-between space-y-6 group"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <h3 className="text-2xl font-black text-neutral-900 group-hover:text-blue-600 transition-colors">
+                  Test Preview
+                </h3>
+                <p className="text-neutral-500 text-sm leading-relaxed">
+                  Walk through the interface and try out sample questions with assistive tools. Untimed and unscored.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-neutral-100 text-sm font-bold text-blue-600">
+                <span>Start Test Preview</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Card 2: Full-Length Practice */}
+            <div
+              onClick={() => navigate('/student/sat/tests')}
+              className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer flex flex-col justify-between space-y-6 group"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                  <Layers className="w-6 h-6" />
+                </div>
+                <h3 className="text-2xl font-black text-neutral-900 group-hover:text-indigo-600 transition-colors">
+                  Full-Length Practice
+                </h3>
+                <p className="text-neutral-500 text-sm leading-relaxed">
+                  Experience full timed SAT simulation tests under authentic exam pacing with scaled score estimates.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-neutral-100 text-sm font-bold text-indigo-600">
+                <span>Explore Practice Tests</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Past Practice Sessions */
+          <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-xs text-center space-y-3">
+            <p className="text-sm font-bold text-neutral-800">Your practice history</p>
+            <p className="text-xs text-neutral-500">
+              View your score improvements, question logs, and domain mastery in Score Reports.
+            </p>
+            <button
+              onClick={() => navigate('/student/sat/scores')}
+              className="px-5 py-2.5 bg-neutral-900 text-white font-bold text-xs rounded-xl hover:bg-black transition-colors inline-flex items-center gap-1.5 mt-2"
+            >
+              View Score Reports <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

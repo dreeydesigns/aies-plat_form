@@ -186,7 +186,7 @@ export default function SatPractice() {
       setShowEmpathyModal(true);
     }
 
-    // Check rolling 10 items in this domain for Level-Up (>80% accuracy)
+    // Check rolling items in this domain for Level-Up (>=80% accuracy) or De-escalation (<=35% accuracy)
     const domainRecent = updatedSession.filter(a => a.domain === currentQuestion.domain).slice(-10);
     if (domainRecent.length >= 5) {
       const correctCount = domainRecent.filter(a => a.correct).length;
@@ -195,8 +195,13 @@ export default function SatPractice() {
 
       if (acc >= 0.8 && currentLevel !== 'expert') {
         const nextLevel = currentLevel === 'beginner' ? 'intermediate' : 'expert';
+        console.log(`[Adaptive Engine] Tier escalated for ${currentQuestion.domain}: ${currentLevel} -> ${nextLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%)`);
         await updateSatPlacement(currentQuestion.domain, nextLevel);
         setLevelUpData({ domain: currentQuestion.domain, newLevel: nextLevel });
+      } else if (acc <= 0.35 && currentLevel !== 'beginner') {
+        const lowerLevel = currentLevel === 'expert' ? 'intermediate' : 'beginner';
+        console.log(`[Adaptive Engine] Tier de-escalated for ${currentQuestion.domain}: ${currentLevel} -> ${lowerLevel} (Rolling Accuracy: ${Math.round(acc * 100)}%)`);
+        await updateSatPlacement(currentQuestion.domain, lowerLevel);
       }
     }
   };

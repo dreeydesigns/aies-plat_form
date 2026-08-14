@@ -5,8 +5,7 @@ import { googleSignIn, emailSignIn, emailSignUp, sendPasswordReset } from '../..
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { generateLinkCode } from '../../lib/linkUtils';
-import { BookOpen, LogIn, User, Users, GraduationCap } from 'lucide-react';
-
+import { BookOpen, LogIn, ArrowRight, Loader2, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function AuthScreen() {
   const { userProfile, setUserProfile } = useAppContext();
@@ -16,17 +15,10 @@ export default function AuthScreen() {
   const [message, setMessage] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   
-  const [step, setStep] = useState<1 | 1.5 | 2>(1);
-  const [selectedRole, setSelectedRole] = useState<'student' | 'teacher' | 'parent'>('student');
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  
-  // Psychometric & Sensory Onboarding State
-  const [sensoryPrimary, setSensoryPrimary] = useState<'visual' | 'auditory' | 'kinesthetic' | 'reading'>('visual');
-  const [pacingPref, setPacingPref] = useState<'fast' | 'medium' | 'slow'>('medium');
-  const [collabPref, setCollabPref] = useState<'solo' | 'pairs' | 'groups'>('pairs');
+  const [role, setRole] = useState<'student' | 'teacher' | 'parent'>('student');
+  const [showRoleSwitch, setShowRoleSwitch] = useState(false);
 
   useEffect(() => {
     if (userProfile) {
@@ -38,49 +30,23 @@ export default function AuthScreen() {
     }
   }, [userProfile, navigate]);
 
-  const handleCreateNewUserDoc = async (uid: string, displayName: string | null, photoURL: string | null = null, role: 'student'|'teacher'|'parent') => {
+  const handleCreateNewUserDoc = async (uid: string, displayName: string | null, photoURL: string | null = null, selectedRole: 'student'|'teacher'|'parent') => {
     const newUser: any = {
-      name: displayName || email.split('@')[0] || 'User',
-      role: role,
+      name: displayName || email.split('@')[0] || 'Student',
+      role: selectedRole,
       avatar: photoURL || undefined,
-      sensoryProfile: {
-        primary: sensoryPrimary,
-        pacing: pacingPref,
-        complexityTolerance: 3,
-        rewardSensitivity: 3,
-        neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
-      },
-      socialPersonality: {
-        leadershipDrive: 'medium',
-        anxietyTendency: 'low',
-        collaborationPreference: collabPref
-      },
-      cognitiveProfile: {
-        primaryLearningStyle: sensoryPrimary,
-        pacing: pacingPref,
-        anxietyTendency: 'low',
-        neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
-      },
       satProfile: {
         diagnosticCompleted: false,
         placementByDomain: {}
       },
-      consent: {
-        deviceSync: false,
-        cameraWellness: false,
-        whatsappNotifications: false,
-        updatedAt: new Date().toISOString()
-      }
+      createdAt: new Date().toISOString()
     };
-    if (role === 'student') {
+    if (selectedRole === 'student') {
       newUser.points = 0;
       newUser.level = 1;
-      newUser.streak = 0;
-      newUser.completedLessons = [];
-      newUser.earnedBadges = [];
+      newUser.streak = 1;
       newUser.linkCode = generateLinkCode();
-      newUser.parentIds = [];
-    } else if (role === 'parent') {
+    } else if (selectedRole === 'parent') {
       newUser.childIds = [];
     }
     await setDoc(doc(db, 'users', uid), newUser);
@@ -90,65 +56,37 @@ export default function AuthScreen() {
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      setError('Please enter email and password.');
-      return;
-    }
-    if (isSignUp && !dateOfBirth) {
-      setError('Please enter your date of birth.');
+      setError('Please enter your email and password.');
       return;
     }
     try {
       setLoading(true);
       setError('');
       
-      let user;
       if (isSignUp) {
-        const sensoryProfile = {
-          primary: sensoryPrimary,
-          pacing: pacingPref,
-          complexityTolerance: 3,
-          rewardSensitivity: 3,
-          neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
-        };
-        const socialPersonality = {
-          leadershipDrive: 'medium',
-          anxietyTendency: 'low',
-          collaborationPreference: collabPref
-        };
-        const signupResult = await emailSignUp(email, password, selectedRole, generateLinkCode(), dateOfBirth, sensoryProfile, socialPersonality);
+        const signupResult = await emailSignUp(email, password, role, generateLinkCode());
         setUserProfile({ ...signupResult.userData, id: signupResult.user.uid } as any);
-        navigate('/onboarding');
+        navigate(role === 'student' ? '/student' : `/${role}`);
       } else {
-
-        user = await emailSignIn(email, password);
+        const user = await emailSignIn(email, password);
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data() as any;
           setUserProfile({ ...userData, id: user.uid });
+          navigate(userData.role === 'student' ? '/student' : `/${userData.role}`);
         } else {
-          // Fallback if document missing
-          const newUser = await handleCreateNewUserDoc(user.uid, null, null, 'student');
+          const newUser = await handleCreateNewUserDoc(user.uid, null, null, role);
           setUserProfile({ ...newUser, id: user.uid } as any);
-          navigate('/onboarding');
+          navigate(role === 'student' ? '/student' : `/${role}`);
         }
       }
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {
-        setError('An account with this email already exists. Please select "Back to Login" and sign in instead.');
+        setError('An account with this email already exists. Please sign in instead.');
       } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
-        setError('Invalid email or password. Please check your credentials and try again.');
-      } else if (err.code === 'auth/operation-not-allowed') {
-        setError('Email/Password sign-in is disabled. Please enable it in Firebase Console > Authentication > Sign-in method.');
-      } else if (err.code === 'auth/invalid-email') {
-        setError('Please enter a valid email address.');
+        setError('Invalid email or password. Please try again.');
       } else if (err.code === 'auth/weak-password') {
         setError('Password should be at least 6 characters long.');
-      } else if (err.code === 'auth/too-many-requests') {
-        setError('Access to this account has been temporarily disabled due to many failed login attempts. Try again later or reset your password.');
-      } else if (err.message && err.message.toLowerCase().includes('offline')) {
-        setError('Network error: Unable to connect to the server. Please check your internet connection.');
-      } else if (err.code === 'auth/network-request-failed') {
-        setError('Network error: Failed to connect to authentication server.');
       } else {
         setError(err.message || 'Authentication failed');
       }
@@ -167,25 +105,18 @@ export default function AuthScreen() {
         if (userDoc.exists()) {
           const userData = userDoc.data() as any;
           setUserProfile({ ...userData, id: result.user.uid });
+          navigate(userData.role === 'student' ? '/student' : `/${userData.role}`);
         } else {
-          // In Google sign in for a new user, if they haven't picked a role, default to student.
-          const roleToUse = isSignUp ? selectedRole : 'student';
-          const newUser = await handleCreateNewUserDoc(result.user.uid, result.user.displayName, result.user.photoURL, roleToUse);
+          const newUser = await handleCreateNewUserDoc(result.user.uid, result.user.displayName, result.user.photoURL, role);
           setUserProfile({ ...newUser, id: result.user.uid } as any);
-          navigate('/onboarding');
+          navigate(role === 'student' ? '/student' : `/${role}`);
         }
       }
     } catch (err: any) {
-      if (err.code === 'auth/unauthorized-domain') {
-        setError('Domain unauthorized: Please add "aies-plat-form.vercel.app" to Authorized Domains in Firebase Console > Authentication > Settings.');
-      } else if (err.code === 'auth/operation-not-allowed') {
-        setError('Google sign-in is disabled. Please enable Google provider in Firebase Console > Authentication > Sign-in method.');
-      } else if (err.code === 'auth/popup-blocked') { 
-        setError('Sign in popup was blocked. Please allow popups or open the app in a new window.'); 
-      } else if (err.message && err.message.toLowerCase().includes('offline')) {
-        setError('Network error: Unable to connect to the database. Please check your connection.');
-      } else { 
-        setError(err.message || 'Failed to sign in'); 
+      if (err.code === 'auth/popup-blocked') {
+        setError('Sign in popup was blocked. Please allow popups and try again.');
+      } else {
+        setError(err.message || 'Failed to sign in with Google');
       }
     } finally {
       setLoading(false);
@@ -194,299 +125,196 @@ export default function AuthScreen() {
 
   const handlePasswordReset = async () => {
     if (!email) {
-      setError('Enter your email address first, then select “Forgot password?”.');
+      setError('Please enter your email address first, then click "Forgot password?".');
       return;
     }
-
     try {
       setLoading(true);
       setError('');
-      setMessage('If an account exists for this email, a password-reset link has been sent. Please check your inbox and spam folder.');
       await sendPasswordReset(email);
+      setMessage('Password reset link sent! Check your email inbox.');
     } catch (err: any) {
-      if (err.code === 'auth/invalid-email') {
-        setError('Please enter a valid email address.');
-      } else if (err.code === 'auth/operation-not-allowed') {
-        setError('Password reset is unavailable because Email/Password sign-in is disabled in Firebase.');
-      } else {
-        setError('Unable to send a password-reset email. Please try again later.');
-      }
-      setMessage('');
+      setError('Failed to send reset email. Please verify your email address.');
     } finally {
       setLoading(false);
     }
   };
-  
-  if (isSignUp && step === 1) {
-    return (
-      <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4 font-sans text-neutral-900">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-800 tracking-tight mb-2">Welcome to AIES 3.0</h1>
-          <p className="text-neutral-500 max-w-md mx-auto">How will you be using the platform?</p>
-        </div>
-        <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm w-full max-w-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <button
-              onClick={() => setSelectedRole('student')}
-              className={`p-6 rounded-xl border-2 text-center transition-all ${selectedRole === 'student' ? 'border-blue-600 bg-blue-50' : 'border-neutral-200 hover:border-blue-300'}`}
-            >
-              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4 ${selectedRole === 'student' ? 'bg-blue-600 text-white' : 'bg-neutral-100 text-neutral-600'}`}>
-                <GraduationCap className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-1">Student</h3>
-              <p className="text-xs text-neutral-500">I want to learn and earn badges</p>
-            </button>
-            
-            <button
-              onClick={() => setSelectedRole('teacher')}
-              className={`p-6 rounded-xl border-2 text-center transition-all ${selectedRole === 'teacher' ? 'border-emerald-600 bg-emerald-50' : 'border-neutral-200 hover:border-emerald-300'}`}
-            >
-              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4 ${selectedRole === 'teacher' ? 'bg-emerald-600 text-white' : 'bg-neutral-100 text-neutral-600'}`}>
-                <BookOpen className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-1">Teacher</h3>
-              <p className="text-xs text-neutral-500">I want to create courses</p>
-            </button>
-            
-            <button
-              onClick={() => setSelectedRole('parent')}
-              className={`p-6 rounded-xl border-2 text-center transition-all ${selectedRole === 'parent' ? 'border-amber-600 bg-amber-50' : 'border-neutral-200 hover:border-amber-300'}`}
-            >
-              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4 ${selectedRole === 'parent' ? 'bg-amber-600 text-white' : 'bg-neutral-100 text-neutral-600'}`}>
-                <Users className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-1">Parent / Guardian</h3>
-              <p className="text-xs text-neutral-500">I want to track progress</p>
-            </button>
-          </div>
-          
-          <div className="flex gap-4">
-            <button 
-              onClick={() => setIsSignUp(false)}
-              className="flex-1 py-3 px-4 bg-white border border-neutral-300 text-neutral-700 font-bold rounded-xl hover:bg-neutral-50 transition-colors"
-            >
-              Back to Login
-            </button>
-            <button 
-              onClick={() => setStep(selectedRole === 'student' ? 1.5 : 2)}
-              className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors"
-            >
-              Continue as {selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isSignUp && step === 1.5) {
-    return (
-      <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4 font-sans text-neutral-900">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-neutral-800 tracking-tight">Personalized Cognitive & Sensory Profile</h1>
-          <p className="text-neutral-500 text-sm max-w-md mx-auto mt-1">Help AIES adapt lessons to your exact cognitive & sensory style.</p>
-        </div>
-        <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm w-full max-w-xl space-y-6">
-          <div>
-            <label className="block text-sm font-bold text-neutral-800 mb-2">1. How do you learn best?</label>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { id: 'visual', label: '🎨 Visual & Diagrams' },
-                { id: 'auditory', label: '🎧 Listening & Audio' },
-                { id: 'kinesthetic', label: '🧪 Interactive 3D Labs' },
-                { id: 'reading', label: '📖 Structured Reading' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setSensoryPrimary(opt.id as any)}
-                  className={`p-3 text-sm font-bold rounded-xl border transition-all text-left ${sensoryPrimary === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-neutral-800 mb-2">2. What learning pace feels comfortable?</label>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { id: 'fast', label: '🚀 Rapid Sprint' },
-                { id: 'medium', label: '⚖️ Steady Flow' },
-                { id: 'slow', label: '🌀 Step-by-Step' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setPacingPref(opt.id as any)}
-                  className={`p-3 text-xs font-bold rounded-xl border transition-all text-center ${pacingPref === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-neutral-800 mb-2">3. Preferred collaboration style?</label>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { id: 'solo', label: '👤 Solo Explorer' },
-                { id: 'pairs', label: '👥 Study Buddy' },
-                { id: 'groups', label: '🤝 Team Squad' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setCollabPref(opt.id as any)}
-                  className={`p-3 text-xs font-bold rounded-xl border transition-all text-center ${collabPref === opt.id ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-neutral-200 hover:border-purple-200'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-4 pt-4 border-t border-neutral-100">
-            <button
-              onClick={() => setStep(1)}
-              className="flex-1 py-3 px-4 bg-white border border-neutral-300 text-neutral-700 font-bold rounded-xl hover:bg-neutral-50 transition-colors"
-            >
-              Back
-            </button>
-            <button
-              onClick={() => setStep(2)}
-              className="flex-1 py-3 px-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-colors"
-            >
-              Continue to Credentials
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4 font-sans text-neutral-900">
-      <div className="text-center mb-8">
-        <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-          <BookOpen className="w-10 h-10" />
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
+      {/* Brand Header */}
+      <div className="text-center mb-8 space-y-2 max-w-md">
+        <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-blue-500/20 text-white">
+          <BookOpen className="w-7 h-7" />
         </div>
-        <h1 className="text-3xl font-bold text-neutral-800 tracking-tight">AIES Platform</h1>
-        <p className="text-neutral-500 mt-2 max-w-md mx-auto">
-          Alternative International Education System.
+        <h1 className="text-3xl font-black tracking-tight text-white mt-4">
+          AIES SAT
+        </h1>
+        <p className="text-slate-400 text-sm">
+          Digital SAT Preparation & Adaptive Mastery Platform
         </p>
       </div>
-      
-      <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm w-full max-w-md flex flex-col items-center">
-        {error && <div className="mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg w-full text-center">{error}</div>}
-        {message && <div className="mb-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg w-full text-center">{message}</div>}
-        
-        {isSignUp && (
-          <div className="w-full mb-6 flex items-center justify-between bg-neutral-50 p-3 rounded-lg border border-neutral-200">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-                {selectedRole === 'student' ? <GraduationCap className="w-4 h-4" /> : selectedRole === 'teacher' ? <BookOpen className="w-4 h-4" /> : <Users className="w-4 h-4" />}
-              </div>
-              <div>
-                <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider">Signing up as</p>
-                <p className="text-sm font-bold text-neutral-900 capitalize">{selectedRole}</p>
-              </div>
-            </div>
-            <button onClick={() => setStep(1)} className="text-sm text-blue-600 font-bold hover:underline">Change</button>
+
+      {/* Main Auth Card (Full-screen focused card, no competing secondary buttons) */}
+      <div className="bg-slate-800/90 backdrop-blur-xl border border-slate-700/80 rounded-3xl p-8 shadow-2xl w-full max-w-md space-y-6">
+        <div className="border-b border-slate-700/60 pb-4">
+          <h2 className="text-xl font-extrabold text-white">
+            {isSignUp ? 'Create your student account' : 'Sign in to continue'}
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            {isSignUp ? 'Get instant access to adaptive practice and official test simulations.' : 'Welcome back! Enter your credentials to access your dashboard.'}
+          </p>
+        </div>
+
+        {error && (
+          <div className="p-3.5 bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold rounded-xl text-center">
+            {error}
           </div>
         )}
 
-        <form onSubmit={handleEmailAuth} className="w-full flex flex-col gap-4 mb-6">
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">Email</label>
-            <input 
-              type="email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              placeholder="Enter your email"
-              required
-            />
-            {!isSignUp && (
-              <button
-                type="button"
-                onClick={handlePasswordReset}
-                disabled={loading}
-                className="mt-2 text-sm text-blue-600 font-bold hover:underline disabled:opacity-50"
-              >
-                Forgot password?
-              </button>
-            )}
+        {message && (
+          <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold rounded-xl text-center">
+            {message}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">Password</label>
-            <input 
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+        )}
 
-          {isSignUp && (
-            <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-1">Date of Birth</label>
-              <input
-                type="date"
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
-                className="w-full px-4 py-2 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                required
-              />
-              <p className="text-xs text-neutral-500 mt-1">
-                Learners under 14 are guided into Kids Mode, and sensitive device settings are managed by a linked parent.
-              </p>
-            </div>
-          )}
-
-          <button 
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-3 disabled:opacity-50 mt-2"
-          >
-            {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
-          </button>
-        </form>
-        
-        <div className="w-full flex items-center gap-4 mb-6">
-          <div className="h-px bg-neutral-200 flex-1"></div>
-          <span className="text-sm text-neutral-500 font-medium">OR</span>
-          <div className="h-px bg-neutral-200 flex-1"></div>
-        </div>
-
-        <button 
+        {/* Google One-Tap / Social Auth */}
+        <button
+          type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
-          type="button"
-          className="w-full py-3 px-4 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-800 font-bold rounded-xl transition-colors flex items-center justify-center gap-3 disabled:opacity-50"
+          className="w-full py-3.5 px-4 bg-white hover:bg-slate-100 text-slate-900 font-bold rounded-2xl text-sm transition-all flex items-center justify-center gap-2.5 shadow-sm disabled:opacity-50"
         >
-          <LogIn className="w-5 h-5" />
-          {loading ? 'Processing...' : (isSignUp ? 'Sign Up with Google' : 'Sign In with Google')}
+          <svg className="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z" />
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z" />
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 14.8s.7 5.1 1.9 7.5l3.7-2.9z" />
+            <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z" />
+          </svg>
+          Continue with Google
         </button>
-        
-        <p className="mt-6 text-sm text-neutral-500 text-center">
-          {isSignUp ? "Already have an account? " : "Don't have an account? "}
-          <button 
+
+        <div className="flex items-center gap-3">
+          <div className="h-px bg-slate-700 flex-1" />
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">or with email</span>
+          <div className="h-px bg-slate-700 flex-1" />
+        </div>
+
+        {/* Email & Password Form */}
+        <form onSubmit={handleEmailAuth} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+              Email address
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="student@example.com"
+              required
+              className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                Password
+              </label>
+              {!isSignUp && (
+                <button
+                  type="button"
+                  onClick={handlePasswordReset}
+                  className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  Forgot?
+                </button>
+              )}
+            </div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {loading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <>
+                <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </form>
+
+        {/* Toggle Sign in / Sign up */}
+        <div className="pt-2 text-center text-xs text-slate-400">
+          {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
+          <button
             type="button"
             onClick={() => {
               setIsSignUp(!isSignUp);
-              if (!isSignUp) setStep(1);
+              setError('');
+              setMessage('');
             }}
-            className="text-blue-600 font-bold hover:underline"
+            className="text-blue-400 font-bold hover:underline"
           >
-            {isSignUp ? 'Sign In' : 'Sign Up'}
+            {isSignUp ? 'Sign In' : 'Sign Up Free'}
           </button>
-        </p>
-        <button type="button" onClick={() => navigate('/admin-console')} className="mt-3 text-xs text-neutral-400 hover:text-neutral-700">Administrator sign in</button>
+        </div>
+
+        {/* Role Switching for Teachers & Parents (Subtle, non-competing) */}
+        <div className="pt-4 border-t border-slate-700/60 text-center">
+          <button
+            type="button"
+            onClick={() => setShowRoleSwitch(!showRoleSwitch)}
+            className="text-[11px] text-slate-500 hover:text-slate-300 transition-colors"
+          >
+            {showRoleSwitch ? 'Hide Educator & Parent login' : 'Teacher or Parent login →'}
+          </button>
+
+          {showRoleSwitch && (
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => setRole('teacher')}
+                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
+                  role === 'teacher' ? 'bg-emerald-600 text-white' : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                Teacher Mode
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('parent')}
+                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
+                  role === 'parent' ? 'bg-amber-600 text-white' : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                Parent Portal
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('student')}
+                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
+                  role === 'student' ? 'bg-blue-600 text-white' : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                Student Mode
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

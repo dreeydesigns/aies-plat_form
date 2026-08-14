@@ -414,7 +414,15 @@ export default function SatTestRunner() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 py-2">
+    <div className="max-w-4xl mx-auto space-y-4 py-2">
+      {/* Visible Section Progress Bar */}
+      <div className="w-full bg-neutral-200 h-2 rounded-full overflow-hidden">
+        <div
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 h-full transition-all duration-300 rounded-full"
+          style={{ width: `${((currentQuestionIndex + 1) / (activeConfig.questions.length || 1)) * 100}%` }}
+        />
+      </div>
+
       {/* Top Test Navigation Bar */}
       <div className="bg-neutral-900 text-white rounded-2xl p-4 flex items-center justify-between shadow-md gap-3">
         <div className="flex items-center gap-3">

@@ -73,7 +73,6 @@ const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
 const GamificationConfig = React.lazy(() => import('./pages/admin/GamificationConfig'));
 const SetupGuide = React.lazy(() => import('./pages/shared/SetupGuide'));
 
-// SAT Lazy Loaded Routes
 const SatDiagnostic = React.lazy(() => import('./pages/student/sat/SatDiagnostic'));
 const SatPractice = React.lazy(() => import('./pages/student/sat/SatPractice'));
 const SatPracticeTests = React.lazy(() => import('./pages/student/sat/SatPracticeTests'));
@@ -81,6 +80,10 @@ const SatTestRunner = React.lazy(() => import('./pages/student/sat/SatTestRunner
 const SatTextbooks = React.lazy(() => import('./pages/student/sat/SatTextbooks'));
 const SatAssignTest = React.lazy(() => import('./pages/teacher/sat/SatAssignTest'));
 const SatScores = React.lazy(() => import('./pages/student/sat/SatScores'));
+const SatPreviewIntro = React.lazy(() => import('./pages/student/sat/SatPreviewIntro'));
+const SatChooseSubject = React.lazy(() => import('./pages/student/sat/SatChooseSubject'));
+const SatPreviewRunner = React.lazy(() => import('./pages/student/sat/SatPreviewRunner'));
+const TeacherContentStudio = React.lazy(() => import('./pages/teacher/sat/TeacherContentStudio'));
 
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
   const { currentUser, userProfile } = useAppContext();
@@ -126,6 +129,9 @@ function AppContent() {
       {/* Student Routes */}
       <Route path="/student" element={<ProtectedRoute allowedRole="student"><StudentLayout /></ProtectedRoute>}>
         <Route index element={<StudentDashboard />} />
+        <Route path="sat/preview-intro" element={<SatPreviewIntro />} />
+        <Route path="sat/preview-subject" element={<SatChooseSubject />} />
+        <Route path="sat/preview-runner" element={<SatPreviewRunner />} />
         <Route path="sat/diagnostic" element={<SatDiagnostic />} />
         <Route path="sat/practice" element={<SatPractice />} />
         <Route path="sat/tests" element={<SatPracticeTests />} />
@@ -145,6 +151,7 @@ function AppContent() {
       {/* Teacher Routes */}
       <Route path="/teacher" element={<ProtectedRoute allowedRole="teacher"><TeacherLayout /></ProtectedRoute>}>
         <Route index element={<TeacherDashboard />} />
+        <Route path="content-studio" element={<TeacherContentStudio />} />
         <Route path="sat/assign" element={<SatAssignTest />} />
         <Route path="students/:id" element={<StudentDetail />} />
         <Route path="courses" element={<CourseBuilder />} />

@@ -306,7 +306,10 @@ export default function SatDiagnostic() {
       }
 
       let correct = 0;
+      let totalTime = 0;
+      let totalRevisits = 0;
       let totalWeight = 0;
+
       domainQuestions.forEach(q => {
         const a = answers[q.id];
         const isCorr = q.isSPR
@@ -319,12 +322,18 @@ export default function SatDiagnostic() {
           else if (q.difficulty === 'intermediate') totalWeight += 2;
           else totalWeight += 1;
         }
+        totalTime += (a?.timeSeconds || 30);
+        if (a?.revisited) totalRevisits++;
       });
 
-      const domainAccuracy = correct / domainQuestions.length;
-      if (domainAccuracy >= 0.75 || totalWeight >= 3) {
+      const acc = correct / domainQuestions.length;
+      const avgPacing = totalTime / domainQuestions.length; // seconds per item
+      const revisitRatio = totalRevisits / domainQuestions.length;
+
+      // Multi-factor classification combining Accuracy + Pacing + Revisit Confidence Pattern
+      if ((acc >= 0.75 || totalWeight >= 3) && avgPacing <= 60 && revisitRatio <= 0.35) {
         placements[domain] = 'expert';
-      } else if (domainAccuracy <= 0.33) {
+      } else if (acc <= 0.35 || avgPacing > 80 || (acc <= 0.5 && revisitRatio > 0.5)) {
         placements[domain] = 'beginner';
       } else {
         placements[domain] = 'intermediate';
