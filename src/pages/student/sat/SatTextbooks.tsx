@@ -106,7 +106,11 @@ export default function SatTextbooks() {
     return initialTextbooks.filter(
       b => b.title.toLowerCase().includes(q) || 
            b.author.toLowerCase().includes(q) ||
-           b.pages.some(p => p.content.toLowerCase().includes(q) || p.sections.some(s => s.heading.toLowerCase().includes(q) || s.text.toLowerCase().includes(q)))
+           b.pages.some(p => 
+             p.content.toLowerCase().includes(q) || 
+             (p.ocrText && p.ocrText.toLowerCase().includes(q)) ||
+             p.sections.some(s => s.heading.toLowerCase().includes(q) || s.text.toLowerCase().includes(q))
+           )
     );
   }, [searchQuery]);
 

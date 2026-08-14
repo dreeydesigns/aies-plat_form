@@ -21,7 +21,7 @@ According to the text, what is true about Elinor?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer because it provides a detail about Elinor that is established in the text. The text indicates that although Elinor is "only nineteen," she gives good advice and exhibits such a high level of understanding and judgment that she serves as "the counsellor of her mother." Thus, Elinor is mature beyond her years.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Literature Case Study 1: Jane Austen’s Sense and Sensibility (Elinor Dashwood)'
     },
@@ -46,7 +46,7 @@ Based on the text, what would have been the most likely consequence if New had n
     correctAnswer: 1,
     explanation: 'Choice B is the best answer because it presents the most likely consequence if New had not begun using sewing machines. The text states that New gained new customers and that sewing machines allowed him to make bags more efficiently, or in less time than he could when sewing by hand. It’s reasonable to conclude that if New hadn’t reduced the time it took to make each bag by starting to use sewing machines, it would have been hard for him to keep up with the increased demand.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Cultural Innovation: Jeffrey Gibson & Native Beadwork'
     },
@@ -71,7 +71,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer because it most accurately states the main idea of the text. The text begins by establishing Ruth Asawa as an artist who worked in several art forms but emphasizes that she was interested in art for reasons other than her desire to create it. The text mentions two ways in which Asawa brought art to children through public schools: cofounding the Alvarado School Arts Workshop in 1968 and helping found a public arts high school in 1982.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts & Education: Ruth Asawa & San Francisco Arts Programs'
     },
@@ -98,7 +98,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer because it most effectively states the main idea of the text, which is that Heidi is delighted and fascinated by an image she sees in one of Grandmama’s books. In the text, Heidi screams upon first seeing the picture of the green pasture with glowing eyes, devouring the scene with delight.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -125,7 +125,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The narrator is "embarrassed" about the route he took, which ends up leaving him lost and confused about how to get to his destination for the evening.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Track character interiority and relationships'
     },
@@ -150,7 +150,7 @@ According to the text, what is one reason some archaeologists are interested in 
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The text states that archaeologists are interested in using scents to better understand "ancient rituals, trade, social hierarchies, and medicine," all of which are important aspects of ancient life.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -175,7 +175,7 @@ Based on the text, which research question was Manzoor’s study most likely int
     correctAnswer: 1,
     explanation: 'Choice B is the best answer because it presents a research question that is clearly addressed by Manzoor’s study as described in the text: examining whether and how background music influences customer shopping satisfaction.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 6,
       highlightedText: 'Social Sciences, Behavioral Psychology, and Technology'
     },
@@ -202,7 +202,7 @@ According to the text, what is true about Mother?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer because it describes something that is true of Mother, as presented in the text: she writes stories for her children and makes up funny pieces of poetry for birthdays and other occasions.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -229,7 +229,7 @@ According to the text, what does the narrator do as she walks across the stage?`
     correctAnswer: 3,
     explanation: 'Choice D is the best answer because it presents a statement about what the narrator is doing that is directly supported by the text: she recalls her teacher’s advice to pretend she is playing for only one person to manage her performance anxiety and focuses on her father.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Distinguish tone and subtext'
     },
@@ -256,7 +256,7 @@ According to the text, what is true about Dorian?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer because it presents a statement about Dorian that is directly supported by the text: his cheeks flush with pleasure, a look of joy comes into his eyes, and he stands in wonder.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Literature Case Study 2: Oscar Wilde’s The Picture of Dorian Gray'
     },
@@ -281,7 +281,7 @@ According to the text, why would a helicopter built for Earth be unable to fly o
     correctAnswer: 0,
     explanation: 'Choice A is the best answer because it presents an explanation about a helicopter that is directly supported by the text: Mars’s atmosphere is only 1% as dense as Earth’s, preventing Earth helicopters from staying aloft.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Planetary Engineering: Amelia Quon & the NASA Mars Helicopter'
     },
@@ -308,7 +308,7 @@ According to the text, what did the narrator and Mario do while riding in the ca
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The text explicitly states that during the car ride, the narrator and Mario "played games" to spot different license plates.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -335,7 +335,7 @@ According to the text, how does the narrator feel about being at summer camp?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer because it accurately states how the narrator feels: "I did feel scared, but also excited."',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Track character interiority and relationships'
     },
@@ -360,7 +360,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. The text describes how Miranda circulated, edited, and footnoted the letter, asserting that without him Viscardo’s role would have remained insignificant.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Textual Forebears: Viscardo y Guzmán & Francisco de Miranda'
     },
@@ -385,7 +385,7 @@ Based on the text, what would Hincapié most likely say is a promising way to in
     correctAnswer: 2,
     explanation: 'Choice C is the best answer because it presents a conclusion that can be directly inferred: offering practical informational resources on starting a business alleviates the main impediment to young entrepreneurship.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 6,
       highlightedText: 'Social Sciences, Behavioral Psychology, and Technology'
     },
@@ -410,7 +410,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text discusses how mass production of bicycles provided new mobility, leisure, social clubs, and geographical opportunities for 19th-century individuals.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -437,7 +437,7 @@ Which choice best describes what is happening in the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Lutie looks out at sunset, thinking the street looks nice in the radiant light, and watches the children play tag and double dutch.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -462,7 +462,7 @@ According to the text, which piece of Favela’s art was on display in the Peter
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The text states that Favela created a life-size piñata-like sculpture of the Gypsy Rose lowrider car displayed at the Petersen Automotive Museum in 2017.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Cultural Innovation: Jeffrey Gibson & Native Beadwork'
     },
@@ -487,7 +487,7 @@ Which choice best states the main topic of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The text focuses on the novel observation of a gray seal spitting water at an eagle—a behavior never before seen in seals.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Behavioral Biology: Honeybee Shimmering & Songbird Feathers'
     },
@@ -512,7 +512,7 @@ According to the text, how old was the fossil that Wang and colleagues discovere
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. The text explicitly states that Xin Wang and colleagues discovered a 164-million-year-old plant fossil.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Paleobotany: Discovery of Florigerminis jurassica'
     },
@@ -537,7 +537,7 @@ Based on the text, what can be concluded about the diminishing popularity of the
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Because records show portrait submissions began declining before the invention of photography, photography cannot be the sole or primary driver of the decline.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -562,7 +562,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The text describes how despite the apartment\'s impractical and disorienting design, residents like Yamaoka experience real health and awareness benefits.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -587,7 +587,7 @@ According to the text, how do historians view pachuca style?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. Historians view the pachuca style as a rebellious manifestation of Mexican American women seeking freedom, individuality, and self-expression against rigid expectations.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -612,7 +612,7 @@ According to the text, why are ecologists worried about Pando?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text states that ecologists are concerned that Pando’s overall growth is declining due to deer grazing on young trees.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Natural Sciences, Ecology, and Paleontology'
     },
@@ -637,7 +637,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. Barve verified that colder high-elevation mountain habitats correspond to thicker, downier feather structures, supporting the general biological prediction.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Behavioral Biology: Honeybee Shimmering & Songbird Feathers'
     },
@@ -662,7 +662,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Wang and colleagues produced the first direct visual impression/confirmation of the electron-based Wigner crystal posited in 1934.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Quantum Physics: Confirmation of the Wigner Crystal'
     },
@@ -698,7 +698,7 @@ Based on the text, what challenge do humans sometimes experience?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The poem establishes that like caged animals, human souls with lofty dreams and visions are trapped and limited by mortal constraints ("stifling flesh").',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -723,7 +723,7 @@ Based on the text, which choice best describes the two previously unknown pengui
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The penguins are prehistoric fossil species from 55 million years ago that are extinct and no longer living.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Natural Sciences, Ecology, and Paleontology'
     },
@@ -748,7 +748,7 @@ According to the text, what is a difference between how historians view Siemomys
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text directly contrasts Mieszko II Lambert, whose rule is documented, with Siemomysł, whose historical actuality remains disputed due to reliance on oral tradition.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Oral Traditions: West African Jalis & Polish Piast Dynasty'
     },
@@ -773,7 +773,7 @@ Information in the text best supports which statement about the finding made by 
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. Genetic affinity among populations with similar bidirectional tools indicates that tool styles likely spread via intermarriage and population blending rather than trade or imitation alone.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -798,7 +798,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. The Black Pearl orchestra performs classical music and allows community members to actively participate through its iConduct! conducting workshops.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -823,7 +823,7 @@ Based on the text, which statement about Waugh’s works would Perry most likely
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. Perry argues against a rigid division of Waugh’s career, noting that romanticism and thematic continuity span both early and late writings.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -848,7 +848,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. While historically viewed as strictly motor-related, new discoveries demonstrate the cerebellum also regulates emotion, social behavior, and motivation.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Natural Sciences, Ecology, and Paleontology'
     },
@@ -873,7 +873,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text states that jalis continue to be revered guardians of community history and oral narratives despite modern technological shifts.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Oral Traditions: West African Jalis & Polish Piast Dynasty'
     },
@@ -898,7 +898,7 @@ What does the text most strongly suggest about corals that produce bright colors
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Bright colors are produced by bleached corals following environmental stressors in order to shade incoming light and facilitate algae recolonization.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Marine Ecology: Corals, Microplastics, and Bleaching'
     },
@@ -925,7 +925,7 @@ What does the text suggest about the Turkins?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The citizens unanimously point to the Turkins as the "most accomplished and most enlightened family of all," signaling their unique and elevated social status in S.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Literature Case Study 4: Anton Chekhov’s "Ionitch"'
     },
@@ -950,7 +950,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The text describes how Taylor sources native Arizona plants, dock roots, and local clay to produce wool dyes.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -975,7 +975,7 @@ According to the text, what do some historians suggest about Maya civilization?`
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Historians hypothesize that Maya mathematicians acquired their concept and symbol for zero from the earlier Olmec civilization.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1000,7 +1000,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. While praising the oral history as valuable and comprehensive, the text points out its primary limitation: the absence of an overarching authorial narrative voice.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1025,7 +1025,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The identical north-south pyramid and plaza orientation indicates cultural and structural ties between Izapa and the 41 surrounding settlements.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1050,7 +1050,7 @@ Based on the text, what do Stern and Gerya most likely believe about the develop
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Stern and Gerya suggest that habitable zone terrestrial planets with active plate tectonics have a much higher likelihood of evolving complex life.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Exobiology: Stern & Gerya on Plate Tectonics'
     },
@@ -1075,7 +1075,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text explains that María Izquierdo\'s high-quality Mexican artwork is overshadowed in the US due to the disproportionate public focus on Kahlo and Rivera.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -1100,7 +1100,7 @@ According to the text, why are some critics skeptical of the concept behind Bosc
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Critics are skeptical because it remains unproven whether the vertical building can sustain the hundreds of trees in the long term.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Natural Sciences, Ecology, and Paleontology'
     },
@@ -1125,7 +1125,7 @@ Which choice best describes Gibson’s approach to art, as presented in the text
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Gibson creates original art pieces by drawing upon traditional Indigenous dressmaking, beadwork, and jingle dance elements.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Cultural Innovation: Jeffrey Gibson & Native Beadwork'
     },
@@ -1152,7 +1152,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. The narrator reflects with profound gratitude and admiration on the years spent observing the creative process of a genius inventor.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1177,7 +1177,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text posits that Europa’s parallel ice ridges formed through pressurized water pockets similar to Greenland’s ice sheet, powered by its subsurface ocean.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Subsurface Oceans: Saturn\'s Mimas & Jupiter\'s Europa'
     },
@@ -1202,7 +1202,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The Aspera mission will provide the first direct observational data of warm-hot CGM gas, illuminating galaxy evolution and star formation.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Astrophysics: NASA Aspera & SOFIA Telescope'
     },
@@ -1227,7 +1227,7 @@ Which choice best describes the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Farmer’s inclusion of broader visual and print ephemera has enriched historical scholarship on Black women’s pivotal contributions to the Black Power movement.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Historiography: Ashley D. Farmer on Black Women in Black Power'
     },
@@ -1252,7 +1252,7 @@ According to the text, what was surprising about the researchers’ mapping of t
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Unlike the uniform magnetic fields found in other galactic bones, G47 unexpectedly exhibited an irregular magnetic field with no clear alignment.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Astrophysics: NASA Aspera & SOFIA Telescope'
     },
@@ -1277,7 +1277,7 @@ Which choice best states the text’s main idea about Hunt?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The text establishes that Hunt favors stylized, abstract, and unrealistic forms over realistic precision in both mythological and historical subjects.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -1304,7 +1304,7 @@ According to the text, why does Bill regularly ask about “seafaring men”?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Although initially thought to seek company, Bill actively spies through curtains and stays silent to evade and avoid encounters with other sailors.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1331,7 +1331,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. Floating above misty clouds in "delicious inertia," the travelers are completely enchanted and absorbed by their transformed celestial vantage point.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1356,7 +1356,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. Researchers applied portable X-ray fluorescence to non-destructively identify the chemical signatures and manufacturing kilns of shipwrecked bowls.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1390,7 +1390,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The speaker expresses regret over failing to register or remember their first meeting because they could not foresee the profound relationship that would bloom years later.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1417,7 +1417,7 @@ Based on the text, what is notable about Schmidt’s behavior?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. By wincing, sighing, and concocting an obviously transparent appointment, Schmidt makes his contempt and disapproval unmistakably clear without uttering it directly.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Literature Case Study 4: Anton Chekhov’s "Ionitch" & Mark Haber’s "Saint Sebastian’s Abyss"'
     },
@@ -1451,7 +1451,7 @@ Based on the text, in what way is the human mind like a flower?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. The poem compares the human mind to a flower needing dew and rain, demonstrating that both must receive proper nourishment to flourish.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1476,7 +1476,7 @@ Which choice best states the main topic of the text?`,
     correctAnswer: 1,
     explanation: 'Choice B is the best answer. The passage centers on the discovery and historical importance of an ancient runestone found in Norway.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1501,7 +1501,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Testing reconstructed torches and lamps enabled researchers to learn how Stone Age cave artists lit paths and worked underground.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1526,7 +1526,7 @@ According to the text, what did Sun and colleagues discover about surfactants?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Sun’s team discovered that surfactants leaching from plastics reduce wave dampening much more powerfully than physical particles alone.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Marine Ecology: Corals, Microplastics, and Bleaching'
     },
@@ -1551,7 +1551,7 @@ What does the text indicate about the discovery of the sandal?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Freezing ice temperatures preserved the leather for 1,700 years, while warm 2019 melting temperatures revealed it.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 3,
       highlightedText: 'Historical Perspectives, Primary Sources, and Oral Traditions'
     },
@@ -1576,7 +1576,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. Marikyan showed that users can resolve negative disconfirmation through cognitive adaptation to achieve satisfaction with smart home technology.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 6,
       highlightedText: 'Consumer Technology: Negative Disconfirmation in Smart Homes'
     },
@@ -1603,7 +1603,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The passage establishes that John Thornton held an exclusive, unparalleled bond of loyalty with Buck above all other humans.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Literature Case Study 3: Jack London’s The Call of the Wild (Buck & John Thornton)'
     },
@@ -1628,7 +1628,7 @@ Which choice best states the text’s main idea?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Hagfish slime threads are being studied to synthesize strong, elastic, and eco-friendly lab-grown textile fabrics.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Natural Sciences, Ecology, and Paleontology'
     },
@@ -1653,7 +1653,7 @@ Which choice best describes the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Smart-Grosvenor’s 1970 book "Vibration Cooking" broke traditional culinary conventions and represents a foundational contribution to food and cultural writing.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Social Advocacy: Elizabeth Catlett’s Linocut Series'
     },
@@ -1678,7 +1678,7 @@ According to the text, what was surprising to scientists studying the seismic ac
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Scientists were surprised that marsquakes concentrated in a single location rather than dispersing across the planet.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 5,
       highlightedText: 'Astrophysics, Planetary Astronomy, and Geophysics'
     },
@@ -1703,7 +1703,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. Integrating multiple data streams (social media signals with proprietary sales records) significantly improves forecasting accuracy for apparel demand.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 6,
       highlightedText: 'Applied Analytics: Fashion Demand & Social Media Data'
     },
@@ -1728,7 +1728,7 @@ What does the text most strongly suggest about the songs sung by Rainey and Smit
     correctAnswer: 2,
     explanation: 'Choice C is the best answer. Davis’s painstaking, labor-intensive effort to manually transcribe unclear vinyl recordings indicates that reliable transcripts of their improvised lyrics did not exist.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 2,
       highlightedText: 'Arts, Culture, and Social Expression in Digital SAT Passages'
     },
@@ -1753,7 +1753,7 @@ Which choice best states the main idea of the text?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. The study by Décieux and Sischka demonstrates that device type (PC vs smartphone) significantly influences multitasking tendencies and completion rates.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 6,
       highlightedText: 'Methodology: Survey Interactions on PCs vs Smartphones'
     },
@@ -1780,7 +1780,7 @@ Based on the text, what is true about Mrs. Ochiltree’s acquaintances?`,
     correctAnswer: 3,
     explanation: 'Choice D is the best answer. Because Mrs. Ochiltree\'s comments are startlingly blunt and cause her acquaintances to actively avoid her, it is clear they are offended by her remarks.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 1,
       highlightedText: 'Central Ideas and Details in Literary Passages'
     },
@@ -1805,7 +1805,7 @@ According to the text, how did the researchers determine the level of surprise d
     correctAnswer: 0,
     explanation: 'Choice A is the best answer. The researchers quantified cats’ surprise levels by monitoring their ear and head movements in response to owner vocalizations from spaced speakers.',
     textbookRef: {
-      textbookId: 'sat-reading-central-ideas',
+      textbookId: 'sat-reading-writing-mastery',
       page: 4,
       highlightedText: 'Behavioral Biology: Honeybee Shimmering & Songbird Feathers'
     },

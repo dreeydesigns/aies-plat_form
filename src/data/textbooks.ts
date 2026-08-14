@@ -1,380 +1,630 @@
 import { Textbook } from '../types';
 
 export const initialTextbooks: Textbook[] = [
+  // =========================================================================
+  // TEXTBOOK 1: Foundations of Digital SAT Math
+  // =========================================================================
   {
-    id: 'sat-reading-central-ideas',
-    title: 'Digital SAT Reading & Writing: Information & Ideas Mastery',
-    author: 'AIES Reading & Humanities Faculty',
-    publisherOrOwner: 'AIES Academic Press (Original Content)',
-    coverColor: 'from-teal-600 to-emerald-800',
+    id: 'sat-foundations-math',
+    title: 'Foundations of Digital SAT Math',
+    author: 'AIES STEM & Quantitative Research Board',
+    publisherOrOwner: 'AIES Academic Press (Original Curriculum Series)',
+    coverColor: 'from-blue-600 via-indigo-600 to-sky-700',
     pages: [
       {
         pageNumber: 1,
-        content: `Central Ideas and Details in Literary Passages:
-Literary passages on the Digital SAT evaluate your ability to identify the primary theme, emotional subtext, or central action of short excerpts from classic and contemporary literature.
+        content: `CHAPTER 1: ALGEBRA — LINEAR EQUATIONS IN ONE VARIABLE
 
-Key Principles:
-1. Focus on the whole passage, not an isolated detail: A correct "main idea" must encapsulate the overarching arc of the excerpt rather than a single sentence.
-2. Track character interiority and relationships: Notice how characters' thoughts, feelings, and actions reveal their internal motivations and external standing.
-3. Distinguish tone and subtext: Notice when reactions represent delight rather than fear, fond admiration rather than jealousy, or subtle communication rather than direct assertion.`,
+1. Concept Introduction
+Linear equations in one variable describe constant rates of change where the variable is raised only to the first power ($x^1$). On the Digital SAT, linear equation problems range from fundamental multi-step isolate-and-solve questions to questions testing structural equivalence, clearing rational denominators, and recognizing conditions that yield infinitely many solutions or no solution.
+
+2. The Core Method: Systematic Isolation & Structural Recognition
+Step 1: Simplify Both Sides — Expand all parentheses using the distributive property and combine like terms on each side independently.
+Step 2: Clear Fractions — If equations contain rational coefficients, multiply the entire equation by the Least Common Multiple (LCM) of all denominators.
+Step 3: Collect Variable Terms — Move all terms containing the variable to one side and all constant terms to the opposite side using inverse operations.
+Step 4: Solve and Verify — Isolate the variable and check against the exact quantity requested by the prompt (e.g. solve for $2x - 3$, not just $x$).
+
+3. Special Structural Cases:
+- Exactly One Solution: $ax + b = cx + d$ where $a \\neq c$.
+- No Solution (Parallel): $ax + b = ax + d$ where $b \\neq d$ (e.g., $0x = 5$, impossible).
+- Infinitely Many Solutions (Identity): $ax + b = ax + b$ (e.g., $0x = 0$, true for all real numbers).`,
+        ocrText: 'Linear equations in one variable, distributive property, isolate variable, no solution, infinitely many solutions, least common multiple.',
         sections: [
           {
-            heading: 'Literature Case Study 1: Jane Austen’s Sense and Sensibility (Elinor Dashwood)',
-            text: 'Passage Analysis: Elinor, though "only nineteen," possesses a "strength of understanding, and coolness of judgment" that qualifies her to be the counsellor of her mother. While she has strong feelings, she knows how to govern them—a skill her mother and sister lack. Thus, the text establishes that Elinor is remarkably mature beyond her years.'
+            heading: '1.1 Worked Example (Easy Tier)',
+            text: `Problem: If $4(x - 3) + 7 = 27$, what is the value of $x + 5$?
+Step-by-step Solution:
+1. Distribute 4: $4x - 12 + 7 = 27$
+2. Combine constants: $4x - 5 = 27$
+3. Add 5 to both sides: $4x = 32$
+4. Divide by 4: $x = 8$
+5. Answer the prompt: The question asks for $x + 5 = 8 + 5 = 13$.
+Common Trap: Students often stop at $x = 8$ without computing $x + 5$. Always double check the target expression.`
           },
           {
-            heading: 'Literature Case Study 2: Oscar Wilde’s The Picture of Dorian Gray',
-            text: 'Passage Analysis: When Dorian views his portrait painted by Hallward, his cheeks flush with pleasure and a look of joy enters his eyes. He is in wonder and so entranced that he barely hears Hallward. Thus, the text directly supports that Dorian is delighted and revelatory about his painted portrait.'
+            heading: '1.2 Worked Example (Medium Tier)',
+            text: `Problem: For what value of $k$ does the equation $\\frac{3x - 5}{4} + \\frac{x + 1}{2} = \\frac{k x - 3}{4}$ have infinitely many solutions?
+Step-by-step Solution:
+1. Multiply the entire equation by LCM 4: $(3x - 5) + 2(x + 1) = k x - 3$
+2. Expand: $3x - 5 + 2x + 2 = k x - 3$
+3. Combine like terms: $5x - 3 = k x - 3$
+4. For infinitely many solutions, coefficients of $x$ and constants must match identically: $5x = k x \\implies k = 5$.`
           },
           {
-            heading: 'Literature Case Study 3: Jack London’s The Call of the Wild (Buck & John Thornton)',
-            text: 'Passage Analysis: "Thornton alone held Buck. The rest of mankind was as nothing." Buck only tolerates other travelers if they are close to Thornton. Thus, Buck holds John Thornton in far higher regard than any other human being.'
+            heading: '1.3 Worked Example (Hard Tier)',
+            text: `Problem: In the equation $a(2x - 5) + 3x = 11x - 20$, $a$ is a constant. If the equation has no solution, what condition must be true?
+Step-by-step Solution:
+1. Expand left side: $2ax - 5a + 3x = 11x - 20$
+2. Group variable terms: $(2a + 3)x - 5a = 11x - 20$
+3. For no solution, slopes must be equal ($2a + 3 = 11$) while constant terms differ ($-5a \\neq -20$).
+4. Solve for $a$: $2a = 8 \\implies a = 4$.
+5. Check constants: $-5(4) = -20$, which equals $-20$. That would yield infinitely many solutions! Thus, if $-5a \\neq -20$, no value of constant $a$ with $2a+3=11$ produces no solution; the equation is an identity when $a = 4$.`
           },
           {
-            heading: 'Literature Case Study 4: Anton Chekhov’s "Ionitch" & Mark Haber’s "Saint Sebastian’s Abyss"',
-            text: 'Passage Analysis: In Chekhov, the citizens of S. point to the Turkins as the "most accomplished and most enlightened family of all," showing their unique social status. In Haber, Schmidt sighs, winces, and invents a fake appointment to convey his intense displeasure with a dining companion who dislikes painting without explicitly stating it.'
+            heading: '1.4 Practice Checkpoint & Self-Drill',
+            text: `Q1 (Easy): If $5x - 8 = 32$, what is the value of $10x$? (Ans: 80)
+Q2 (Medium): Solve for $x$: $\\frac{2}{3}(x - 6) = \\frac{1}{2}x + 1$. (Ans: $x = 30$)
+Q3 (Hard): The equation $3(kx - 2) = 15x - 6$ has infinitely many solutions for all $x$. What is the value of $k$? (Ans: $k = 5$)`
           }
         ]
       },
       {
         pageNumber: 2,
-        content: `Arts, Culture, and Social Expression in Digital SAT Passages:
-Passages in the humanities examine how artists, performers, and cultural innovators use creative mediums to challenge conventions, promote education, and unite communities.
+        content: `CHAPTER 1: ALGEBRA — LINEAR FUNCTIONS, SLOPE, AND CARTESIAN GRAPHS
 
-Key Principles:
-1. Identify the artist\'s motivation and societal impact: Connect the physical medium (e.g. wire sculptures, linocut prints, ranchera music, beadwork) to the broader cultural or educational objective.
-2. Note how innovative adaptations alter traditional genres: When an artist slows down tempo (Chavela Vargas) or pairs high and low culture (Jeffrey Gibson combining punching bags with women\'s jingle dress beadwork), identify the deliberate rejection of gender roles or artistic boundaries.`,
+1. Concept Introduction
+A linear function is a mathematical relationship with a constant rate of change. On the Digital SAT, questions test your ability to interpret the slope $m$ and $y$-intercept $b$ in contextual word problems (such as cost models, physics rate problems, and depreciation), convert between standard form ($Ax + By = C$) and slope-intercept form ($y = mx + b$), and analyze parallel and perpendicular lines.
+
+2. The Core Method: Rate of Change & Intercept Analysis
+- Slope Formula: $m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{\\Delta y}{\\Delta x} = \\frac{\\text{Change in Output}}{\\text{Change in Input}}$
+- Contextual Meaning of Slope: The rate at which the dependent variable changes for every single unit increase in the independent variable.
+- Contextual Meaning of $y$-intercept ($b$): The baseline or initial value when the input variable $x = 0$.
+- Parallel Lines: Slopes are equal ($m_1 = m_2$).
+- Perpendicular Lines: Slopes are negative reciprocals ($m_1 \\cdot m_2 = -1 \\implies m_2 = -\\frac{1}{m_1}$).`,
+        ocrText: 'Linear functions, slope intercept form, rate of change, Cartesian plane, parallel lines, perpendicular lines, y intercept.',
         sections: [
           {
-            heading: 'Arts & Education: Ruth Asawa & San Francisco Arts Programs',
-            text: 'Passage Analysis: Ruth Asawa was dedicated to bringing art to children in San Francisco, cofounding the Alvarado School Arts Workshop in 1968 and a public arts high school in 1982. Her primary legacy highlighted in the text is her initiative in creating accessible public school art programs.'
+            heading: '2.1 Contextual Interpretation & Word Problems',
+            text: `Example: A certified electrician charges a flat diagnostic fee of $85 plus $65 per hour of labor. The total charge $C$ for $h$ hours is modeled by $C(h) = 65h + 85$.
+- Interpretation: The slope 65 represents the hourly labor cost ($65/hour). The y-intercept 85 represents the initial diagnostic fee incurred before any labor begins ($h = 0$).`
           },
           {
-            heading: 'Cultural Innovation: Jeffrey Gibson & Native Beadwork',
-            text: 'Passage Analysis: Jeffrey Gibson decorates boxing punching bags with leather fringe and jingles from Ojibwe women\'s dance dressmaking, intentionally merging masculine sports objects with traditional female Native crafts to reject rigid gender divisions.'
+            heading: '2.2 Worked Example: Perpendicular Line Equations (Medium Tier)',
+            text: `Problem: Line $k$ passes through points $(2, -3)$ and $(6, 5)$. Line $p$ is perpendicular to line $k$ and passes through $(4, 1)$. What is the equation of line $p$?
+Step-by-step Solution:
+1. Find slope of line $k$: $m_k = \\frac{5 - (-3)}{6 - 2} = \\frac{8}{4} = 2$.
+2. Determine perpendicular slope: $m_p = -\\frac{1}{2}$.
+3. Use point-slope form with $(4, 1)$: $y - 1 = -\\frac{1}{2}(x - 4)$
+4. Expand: $y - 1 = -\\frac{1}{2}x + 2 \\implies y = -\\frac{1}{2}x + 3$.`
           },
           {
-            heading: 'Social Advocacy: Elizabeth Catlett’s Linocut Series',
-            text: 'Passage Analysis: In "The Black Woman" (1946–1947), Catlett uses mass-produced linocut prints to depict everyday and renowned Black women side by side, using accessible art to connect, celebrate, and unite Black women.'
-          },
-          {
-            heading: 'Musical Expression: Chavela Vargas & Richard Wagner',
-            text: 'Passage Analysis: Chavela Vargas performed classic ranchera songs much more slowly with raspy solo guitar to express emotional nuances. In 19th-century opera, Richard Wagner achieved extreme volume by expanding brass sections (horns, trombones, tubas).'
+            heading: '2.3 Common Traps & Desmos Verification Strategy',
+            text: `Common Trap: Misinterpreting horizontal vs vertical line equations. $y = c$ is horizontal (slope = 0); $x = c$ is vertical (slope undefined).
+Desmos Tip: In the Digital SAT interface, open the Desmos calculator and type equations directly to visually inspect intercepts, intersections, and slopes instantly.`
           }
         ]
       },
       {
         pageNumber: 3,
-        content: `Historical Perspectives, Primary Sources, and Oral Traditions:
-Historical and social studies passages examine how historical evidence, documentation methods, and diverse source materials expand our understanding of key historical figures and movements.
+        content: `CHAPTER 1: ALGEBRA — SYSTEMS OF TWO LINEAR EQUATIONS
 
-Key Principles:
-1. Examine evidentiary reliability: Differentiate between contemporary written records, later chronicles based on oral tradition, and newly discovered archival articles.
-2. Recognize historiographical expansion: Notice when modern historians (such as Ashley D. Farmer) expand traditional source archives to include print ephemera, cartoons, and advertisements to illuminate underrepresented figures.`,
+1. Concept Introduction
+A system of linear equations consists of two or more equations sharing the same variables. Solutions correspond to the coordinate points $(x, y)$ where the lines intersect on the Cartesian coordinate plane.
+
+2. The Three Algebraic Methods:
+- Substitution: Solve one equation for one variable and substitute the resulting expression into the other equation. Ideal when one variable has a coefficient of 1 or -1.
+- Elimination (Linear Combinations): Multiply one or both equations by constants so that the coefficients of one variable become opposites, then add the equations to eliminate that variable.
+- Geometric Analysis of Solutions:
+  * 1 Solution: Lines intersect at exactly one point (different slopes, $m_1 \\neq m_2$).
+  * 0 Solutions: Parallel lines (same slope, different y-intercepts: $\\frac{A_1}{A_2} = \\frac{B_1}{B_2} \\neq \\frac{C_1}{C_2}$).
+  * $\\infty$ Solutions: Coincident lines (same slope, same y-intercept: $\\frac{A_1}{A_2} = \\frac{B_1}{B_2} = \\frac{C_1}{C_2}$).`,
+        ocrText: 'Systems of equations, elimination method, substitution method, intersection, parallel lines, infinitely many solutions.',
         sections: [
           {
-            heading: 'Historical Historiography: Ashley D. Farmer on Black Women in Black Power',
-            text: 'Passage Analysis: While earlier histories relied predominantly on essays by male leaders, Farmer incorporates political cartoons, ads, and artwork to demonstrate the diverse, vital contributions of Black women to the movement.'
+            heading: '3.1 Elimination Method Worked Example',
+            text: `Problem: Solve the system:
+(1) $3x + 4y = 26$
+(2) $5x - 2y = 4$
+Step-by-step Solution:
+1. Multiply equation (2) by 2: $10x - 4y = 8$
+2. Add to equation (1): $(3x + 4y) + (10x - 4y) = 26 + 8 \\implies 13x = 34 \\implies x = 2$.
+3. Check: $3(2) + 4y = 26 \\implies 6 + 4y = 26 \\implies 4y = 20 \\implies y = 5$.
+Solution: $(x, y) = (2, 5)$.`
           },
           {
-            heading: 'Textual Forebears: Viscardo y Guzmán & Francisco de Miranda',
-            text: 'Passage Analysis: Peruvian thinker Viscardo wrote "Letter to the Spanish Americans" in 1791, but Venezuelan revolutionary Miranda circulated, edited, and added footnotes, making him central to the text’s distribution and impact.'
-          },
-          {
-            heading: 'Documentary Certainty: The US Pledge of Allegiance',
-            text: 'Passage Analysis: Francis Bellamy long claimed to author the pledge in August 1892, but a newspaper article published months earlier describes students reciting the pledge, calling the original authorship into question.'
-          },
-          {
-            heading: 'Oral Traditions: West African Jalis & Polish Piast Dynasty',
-            text: 'Passage Analysis: West African jalis preserve oral family histories and community stories despite modern tech. In Polish history, Mieszko II Lambert is verified by written records, while 10th-century Siemomysł relies on oral tradition in later chronicles.'
+            heading: '3.2 Infinite Solutions Parameter Problem (Hard Tier)',
+            text: `Problem: If $6x - 15y = 21$ and $2x - ky = 7$ have infinitely many solutions, what is $k$?
+Step-by-step Solution:
+1. Notice ratio of leading coefficients: $\\frac{6}{2} = 3$.
+2. Ratio of constants: $\\frac{21}{7} = 3$.
+3. For identical lines, ratio of y-coefficients must also equal 3: $\\frac{-15}{-k} = 3 \\implies 15 = 3k \\implies k = 5$.`
           }
         ]
       },
       {
         pageNumber: 4,
-        content: `Natural Sciences, Ecology, and Paleontology:
-Scientific passages test your comprehension of hypotheses, experimental designs, biological adaptations, and evolutionary discoveries.
+        content: `CHAPTER 2: PROBLEM-SOLVING & DATA ANALYSIS — RATIOS, RATES & PERCENTAGES
 
-Key Principles:
-1. Pinpoint the primary finding: What did the researchers observe or discover (e.g. a 164-million-year-old flower bud fossil, coral microplastic storage, or seal water spitting)?
-2. Connect adaptation to environment: Identify the specific physical mechanism (longer helicopter blades on Mars, thicker downy feathers in cold Himalayan elevations, tree bark tubes in rubber trees) that enables functioning under distinct environmental conditions.`,
+1. Concept Introduction
+Problem-Solving and Data Analysis accounts for approximately 15% of the Digital SAT Math section. Questions assess proportional reasoning, unit conversions (dimensional analysis), multi-step percentage change, and exponential growth/decay models.
+
+2. Key Formulas & Proportional Methods:
+- Unit Conversion (Factor-Label Method): Multiply by conversion fractions equal to 1 until desired units are achieved.
+- Percent Change Formula:
+  $$\\text{Percent Change} = \\left( \\frac{\\text{New Value} - \\text{Original Value}}{\\text{Original Value}} \\right) \\times 100\\%$$
+- Multiplier Method for Successive Percentages:
+  * An increase of $p\\%$ corresponds to multiplier $(1 + \\frac{p}{100})$.
+  * A decrease of $p\\%$ corresponds to multiplier $(1 - \\frac{p}{100})$.
+  * Successive changes multiply: An increase of 20% followed by a decrease of 20% equals $(1.20)(0.80) = 0.96$ (a net 4% decrease, NOT 0%).`,
+        ocrText: 'Ratios, rates, unit conversion, percent change, exponential growth, successive percentage discounts.',
         sections: [
           {
-            heading: 'Planetary Engineering: Amelia Quon & the NASA Mars Helicopter',
-            text: 'Passage Analysis: Because Mars’s atmosphere is only 1% as dense as Earth’s, standard blades cannot generate lift. Quon’s team engineered blades that are longer and rotate faster to compensate for atmospheric thinness.'
+            heading: '4.1 Dimensional Analysis Worked Example',
+            text: `Problem: A vehicle travels at a constant speed of 72 kilometers per hour. What is its speed in meters per second?
+Step-by-step Solution:
+1. Set up conversion factors: $1\\text{ km} = 1000\\text{ m}$ and $1\\text{ hour} = 3600\\text{ seconds}$.
+2. Calculation: $\\frac{72\\text{ km}}{1\\text{ hr}} \\times \\frac{1000\\text{ m}}{1\\text{ km}} \\times \\frac{1\\text{ hr}}{3600\\text{ s}} = \\frac{72000}{3600} = 20\\text{ m/s}$.`
           },
           {
-            heading: 'Paleobotany: Discovery of Florigerminis jurassica',
-            text: 'Passage Analysis: Xin Wang and colleagues uncovered a 164-million-year-old fossil flower bud in China, providing evidence that angiosperms (flowering plants) emerged in the Jurassic period (145–201 million years ago).'
-          },
-          {
-            heading: 'Marine Ecology: Corals, Microplastics, and Bleaching',
-            text: 'Passage Analysis: Jessica Reichert found reef corals capture and store up to 20 million kg of microplastics annually. When bleached from environmental stress, corals produce bright pigments to shield sensitive recolonizing algae from intense sunlight.'
-          },
-          {
-            heading: 'Behavioral Biology: Honeybee Shimmering & Songbird Feathers',
-            text: 'Passage Analysis: Giant honeybees flip bodies in waves ("shimmering") specifically to repel hornets. In the Himalayas, Sahas Barve demonstrated high-elevation songbirds possess longer feathers with more downy insulation.'
+            heading: '4.2 Successive Percentage Trap (Medium Tier)',
+            text: `Problem: A laptop originally priced at $800 is discounted by 25%. During a holiday sale, an additional 10% discount is applied to the sale price. What is the final price?
+Step-by-step Solution:
+1. Apply first multiplier: $800 \\times (1 - 0.25) = 800 \\times 0.75 = 600$.
+2. Apply second multiplier: $600 \\times (1 - 0.10) = 600 \\times 0.90 = 540$.
+Common Trap: Adding percentages $(25\\% + 10\\% = 35\\%)$ gives $800 \\times 0.65 = 520$, which is incorrect because the second discount applies only to the reduced price.`
           }
         ]
       },
       {
         pageNumber: 5,
-        content: `Astrophysics, Planetary Astronomy, and Geophysics:
-Astrophysical passages report on planetary dynamics, subsurface oceans, galactic structures, and the conditions necessary for extraterrestrial life.
+        content: `CHAPTER 2: PROBLEM-SOLVING & DATA ANALYSIS — TWO-WAY TABLES & STATISTICS
 
-Key Principles:
-1. Relate observed anomalies to physical models: Connect an unusual wobble or surface feature to the underlying physical cause (e.g. liquid oceans beneath Mimas and Europa).
-2. Distinguish confirmed discoveries from ongoing hypotheses: Note what has been verified (e.g. Wigner crystal imaging with graphene, SOFIA magnetic fields) versus proposed models.`,
+1. Concept Introduction
+Two-way frequency tables display categorical data for two variables across rows and columns. Statistical questions evaluate measures of center (mean, median), measures of spread (range, standard deviation), line of best fit residuals, and conditional probability.
+
+2. Core Probability & Statistical Definitions:
+- Conditional Probability: $P(A \\mid B) = \\frac{\\text{Count of }(A \\text{ and } B)}{\\text{Total in Subpopulation } B}$
+  * "Of the students who play soccer, what fraction play chess?" $\\implies$ Denominator is total soccer players only.
+- Mean vs Median & Skewness:
+  * Mean: Sensitive to extreme outliers.
+  * Median: Resistant to outliers (middle value when ordered).
+  * Right-skewed distribution (tail to the right) $\\implies \\text{Mean} > \\text{Median}$.
+  * Left-skewed distribution (tail to the left) $\\implies \\text{Mean} < \\text{Median}$.
+- Standard Deviation: Quantifies how closely data cluster around the mean. Larger spread $\\implies$ larger standard deviation.`,
+        ocrText: 'Two way tables, conditional probability, mean, median, standard deviation, scatterplots, line of best fit, residuals.',
         sections: [
           {
-            heading: 'Subsurface Oceans: Saturn\'s Mimas & Jupiter\'s Europa',
-            text: 'Passage Analysis: Cassini detected a rotational wobble in Mimas consistent with a deep liquid ocean. On Europa, parallel ridges mirror water pocket fissures on Greenland ice sheets, suggesting subsurface ocean activity.'
-          },
-          {
-            heading: 'Quantum Physics: Confirmation of the Wigner Crystal',
-            text: 'Passage Analysis: Eugene Wigner posited an electron honeycomb crystal in 1934. In 2021, Feng Wang’s team cooled trapped electrons and used an ultrathin graphene sheet to capture the first visual confirmation.'
-          },
-          {
-            heading: 'Astrophysics: NASA Aspera & SOFIA Telescope',
-            text: 'Passage Analysis: Aspera aims to observe previously unseen "warm-hot" circumgalactic medium gas crucial to galaxy evolution. SOFIA mapped galactic bone G47 and surprisingly found a non-uniform, disordered magnetic field.'
-          },
-          {
-            heading: 'Exobiology: Stern & Gerya on Plate Tectonics',
-            text: 'Passage Analysis: Stern and Gerya propose that beyond the habitable zone and atmosphere, active plate tectonics is an essential condition for accelerating the evolution of complex extraterrestrial life.'
-          }
-        ]
-      },
-      {
-        pageNumber: 6,
-        content: `Social Sciences, Behavioral Psychology, and Technology:
-Social science passages investigate human behavior, decision-making, consumer psychology, and how new technologies interact with cognitive expectations.
+            heading: '5.1 Two-Way Table Conditional Probability',
+            text: `Example Table:
+| Group | Juniors | Seniors | Total |
+| App Dev | 45 | 55 | 100 |
+| Robotics | 35 | 65 | 100 |
+| Total | 80 | 120 | 200 |
 
-Key Principles:
-1. Identify the causal variable in experiments: What was manipulated (e.g. counting rewards out loud, device type used for surveys, social media integration in fashion forecasts)?
-2. Recognize cognitive reconciliation: Notice how participants resolve dissonance or adjust perceptions when reality diverges from expectations (e.g. negative disconfirmation in smart home adoption).`,
-        sections: [
-          {
-            heading: 'Developmental Psychology: Children and Perceptions of Fairness',
-            text: 'Passage Analysis: When teachers distributed equal rewards, 73% of children aged 4–6 rated the teacher who counted aloud as fairer, showing that the method of delivery affects children\'s judgment of equity.'
+Problem: If a student enrolled in Robotics is chosen at random, what is the probability that the student is a Senior?
+Solution: The condition restricts our denominator to the Robotics row (Total = 100). The number of Seniors in Robotics is 65.
+$P(\\text{Senior} \\mid \\text{Robotics}) = \\frac{65}{100} = 0.65$.`
           },
           {
-            heading: 'Consumer Technology: Negative Disconfirmation in Smart Homes',
-            text: 'Passage Analysis: Davit Marikyan found that although smart home tech frequently causes initial frustration by falling short of high expectations, users employ cognitive coping strategies to achieve long-term satisfaction.'
-          },
-          {
-            heading: 'Methodology: Survey Interactions on PCs vs Smartphones',
-            text: 'Passage Analysis: Décieux and Sischka proved device type alters survey behavior: PC users multitask more frequently but achieve higher completion rates than mobile respondents.'
-          },
-          {
-            heading: 'Applied Analytics: Fashion Demand & Social Media Data',
-            text: 'Passage Analysis: Fu and Fisher demonstrated that combining retailers\' historical sales data with real-time social media signals boosts fashion demand forecast accuracy by 24% to 57%.'
+            heading: '5.2 Scatterplots and Residuals',
+            text: `Definition: A residual is the vertical distance between an observed data point and the regression line of best fit:
+$$\\text{Residual} = y_{\\text{observed}} - y_{\\text{predicted}}$$
+- If the point lies above the line, the residual is positive (model underestimates).
+- If the point lies below the line, the residual is negative (model overestimates).`
           }
         ]
       }
     ]
   },
+
+  // =========================================================================
+  // TEXTBOOK 2: SAT Advanced Math & Functions Mastery
+  // =========================================================================
   {
-    id: 'sat-math-foundations',
-    title: 'Foundations of Digital SAT Math',
-    author: 'AIES STEM Editorial Board',
-    publisherOrOwner: 'AIES Academic Press (Original Content)',
-    coverColor: 'from-blue-600 to-indigo-700',
-    pages: [
-      {
-        pageNumber: 14,
-        content: 'Linear equations in one and two variables represent straight-line relationships. The standard slope-intercept form is y = mx + b, where m is the slope and b is the y-intercept. When solving systems of linear equations, a system has infinitely many solutions if and only if both equations represent identical lines with equal slopes and equal y-intercepts. A system has no solution when lines are parallel with identical slopes and distinct y-intercepts.',
-        sections: [
-          {
-            heading: 'Linear Relationships and Slope',
-            text: 'The rate of change between two coordinates (x1, y1) and (x2, y2) is given by m = (y2 - y1) / (x2 - x1). Parallel lines have identical slopes and distinct intercepts. Perpendicular lines have negative reciprocal slopes (m1 * m2 = -1).'
-          },
-          {
-            heading: 'Systems with Infinite or No Solutions',
-            text: 'In a linear system Ax + By = C and Dx + Ey = F, if A/D = B/E != C/F, the lines are parallel and have no solution. If A/D = B/E = C/F, the lines are coincident and yield infinitely many solutions.'
-          }
-        ]
-      },
-      {
-        pageNumber: 28,
-        content: 'Quadratic expressions take the form ax^2 + bx + c = 0. The discriminant Delta = b^2 - 4ac determines the nature of the roots: Delta > 0 indicates two distinct real solutions, Delta = 0 indicates exactly one repeated real solution, and Delta < 0 indicates two complex conjugate solutions with no real x-intercepts on the Cartesian plane.',
-        sections: [
-          {
-            heading: 'The Vertex and Axis of Symmetry',
-            text: 'For any parabola y = ax^2 + bx + c, the vertex occurs at x = -b / (2a). The vertex form y = a(x - h)^2 + k explicitly gives the extremum at (h, k). If a > 0, the parabola opens upward and has a minimum value of k at x = h.'
-          },
-          {
-            heading: 'Discriminant Analysis & Tangency',
-            text: 'A quadratic equation has exactly one real solution if and only if b^2 - 4ac = 0. When intersecting a line y = mx + c with a parabola, substitute and equate the resulting quadratic discriminant to zero for tangency.'
-          }
-        ]
-      },
-      {
-        pageNumber: 45,
-        content: 'Percentages, rates, and proportional relationships form the core of Problem Solving & Data Analysis. When a quantity increases by p% and subsequently decreases by p%, the final value is strictly less than the initial value by a factor of (1 - (p/100)^2). Relative risk and conditional probability require isolating the specific subpopulation in the two-way contingency table denominator.',
-        sections: [
-          {
-            heading: 'Percent Change and Compound Growth',
-            text: 'Percent change is defined as ((New - Original) / Original) * 100%. Exponential growth is modeled by f(t) = P(1 + r)^t, where r is the growth rate per period.'
-          },
-          {
-            heading: 'Conditional Probability in Tables',
-            text: 'The probability of event A given event B, P(A|B), is computed by taking the joint count of (A and B) divided by the total count in row/column B only.'
-          }
-        ]
-      },
-      {
-        pageNumber: 62,
-        content: 'Geometry on the SAT tests properties of similar triangles, right triangle trigonometry, and circle equations. In similar triangles, corresponding side lengths are strictly proportional while corresponding angles are equal. The standard circle equation is (x - h)^2 + (y - k)^2 = r^2 with center (h, k) and radius r.',
-        sections: [
-          {
-            heading: 'Complementary Angle Trigonometry',
-            text: 'For complementary angles alpha and beta where alpha + beta = 90 degrees (or pi/2 radians), sin(alpha) = cos(beta) and cos(alpha) = sin(beta). This identity is frequently tested in right triangle problems.'
-          },
-          {
-            heading: 'Circle Arc Length and Sector Area',
-            text: 'Arc length s = r * theta and sector area A = (1/2) * r^2 * theta when angle theta is measured in radians. To convert degrees to radians, multiply by pi / 180.'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'sat-advanced-math-guide',
+    id: 'sat-advanced-math-mastery',
     title: 'SAT Advanced Math & Functions Mastery',
-    author: 'Panda SAT & STEM Editorial',
+    author: 'Panda SAT STEM Editorial & Advanced Curriculum Group',
     publisherOrOwner: 'Panda SAT Curriculum Series',
-    coverColor: 'from-purple-700 to-indigo-900',
+    coverColor: 'from-purple-800 via-indigo-900 to-violet-950',
     pages: [
       {
-        pageNumber: 18,
-        content: 'Polynomial division, factor theorem, and remainder theorem. If a polynomial P(x) is divided by (x - a), the remainder is P(a). If P(a) = 0, then (x - a) is a factor of P(x). Equivalent rational expressions require finding common denominators and identifying extraneous solutions that make denominators equal zero.',
+        pageNumber: 1,
+        content: `CHAPTER 1: ADVANCED MATH — QUADRATIC FUNCTIONS, FACTORING & VERTEX FORM
+
+1. Concept Introduction
+Quadratic functions take the standard form $f(x) = ax^2 + bx + c$ ($a \\neq 0$). Digital SAT Advanced Math problems require fluid movement between standard form, factored form $a(x - r_1)(x - r_2)$, and vertex form $a(x - h)^2 + k$.
+
+2. Key Formulas & Algebraic Landmarks:
+- Vertex Coordinates: $(h, k) = \\left( -\\frac{b}{2a}, f\\left(-\\frac{b}{2a}\\right) \\right)$
+- Axis of Symmetry: $x = -\\frac{b}{2a}$
+- Quadratic Formula: $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$
+- Discriminant Analysis ($\\Delta = b^2 - 4ac$):
+  * $\\Delta > 0$: 2 distinct real solutions ($2$ distinct $x$-intercepts).
+  * $\\Delta = 0$: Exactly 1 real repeated solution ($1$ $x$-intercept, vertex touches $x$-axis).
+  * $\\Delta < 0$: 0 real solutions (2 complex conjugate solutions, parabola does not intersect $x$-axis).`,
+        ocrText: 'Quadratic functions, vertex form, quadratic formula, discriminant, axis of symmetry, factoring, parabola.',
         sections: [
           {
-            heading: 'Remainder & Factor Theorem',
-            text: 'For polynomial P(x), evaluating P(c) gives the remainder when P(x) is divided by (x - c). If P(c) = 0, then (x - c) is a factor, meaning x = c is a zero/root.'
+            heading: '1.1 Vertex Form Conversion by Completing the Square',
+            text: `Problem: Write $y = 2x^2 - 12x + 23$ in vertex form and state its minimum value.
+Step-by-step Solution:
+1. Factor out leading coefficient 2 from variable terms: $y = 2(x^2 - 6x) + 23$
+2. Complete the square inside: take half of $-6$ (which is $-3$) and square it ($(-3)^2 = 9$).
+3. Add and balance: $y = 2(x^2 - 6x + 9) + 23 - 2(9)$
+4. Simplify: $y = 2(x - 3)^2 + 23 - 18 \\implies y = 2(x - 3)^2 + 5$.
+5. The vertex is at $(3, 5)$. Since $a = 2 > 0$, the parabola opens upward with a minimum value of $5$ at $x = 3$.`
           },
           {
-            heading: 'Rational Function Asymptotes',
-            text: 'Vertical asymptotes occur at zeros of the denominator that are not cancelled by the numerator. Horizontal asymptotes depend on comparing degrees of numerator and denominator.'
+            heading: '1.2 Tangency & Line-Parabola Intersections (Hard Tier)',
+            text: `Problem: For what value of $c$ does the line $y = 4x + c$ intersect the parabola $y = x^2 + 2x + 7$ at exactly one point?
+Step-by-step Solution:
+1. Equate the two equations: $x^2 + 2x + 7 = 4x + c$
+2. Set to standard quadratic form: $x^2 - 2x + (7 - c) = 0$
+3. For exactly one intersection, the discriminant must equal zero:
+   $\\Delta = b^2 - 4ac = (-2)^2 - 4(1)(7 - c) = 0$
+4. Expand: $4 - 28 + 4c = 0 \\implies -24 + 4c = 0 \\implies 4c = 24 \\implies c = 6$.`
           }
         ]
       },
       {
-        pageNumber: 36,
-        content: 'Exponential and radical equations. To solve exponential equations with different bases, express both sides in terms of common prime bases or take logarithms. For radical equations sqrt(ax + b) = cx + d, always check for extraneous solutions introduced by squaring both sides.',
+        pageNumber: 2,
+        content: `CHAPTER 1: ADVANCED MATH — POLYNOMIAL THEOREMS & RATIONAL EXPRESSIONS
+
+1. Concept Introduction
+Higher-order polynomials and rational expressions test factorization, root multiplicity, end behavior, and asymptotes.
+
+2. The Remainder & Factor Theorems:
+- Remainder Theorem: When polynomial $P(x)$ is divided by linear factor $(x - c)$, the remainder is equal to $P(c)$.
+- Factor Theorem: $(x - c)$ is a factor of $P(x)$ if and only if $P(c) = 0$, which means $x = c$ is an $x$-intercept (root) of the graph.
+- Multiplicity of Roots:
+  * Odd multiplicity (e.g. $(x - c)^1, (x - c)^3$): Graph crosses the $x$-axis at $x = c$.
+  * Even multiplicity (e.g. $(x - c)^2, (x - c)^4$): Graph touches and turns around at the $x$-axis.`,
+        ocrText: 'Polynomial division, remainder theorem, factor theorem, rational expressions, vertical asymptotes, extraneous solutions.',
         sections: [
           {
-            heading: 'Radical Expressions & Fractional Exponents',
-            text: 'The n-th root of x^m is represented as x^(m/n). When squaring both sides of radical equations, extraneous solutions often arise when the resulting linear expression is negative.'
+            heading: '2.1 Remainder Theorem Application',
+            text: `Problem: If $P(x) = 3x^3 - 5x^2 + k x - 8$ is divided by $(x - 2)$, the remainder is 14. What is the value of $k$?
+Step-by-step Solution:
+1. Apply Remainder Theorem: $P(2) = 14$.
+2. Substitute $x = 2$: $3(2)^3 - 5(2)^2 + k(2) - 8 = 14$
+3. Compute: $3(8) - 5(4) + 2k - 8 = 14 \\implies 24 - 20 + 2k - 8 = 14 \\implies 2k - 4 = 14 \\implies 2k = 18 \\implies k = 9$.`
           },
           {
-            heading: 'Exponential Decay & Half-Life',
-            text: 'Half-life decay is given by N(t) = N0 * (1/2)^(t / t_half). The base rate remains constant over equal fractional intervals.'
+            heading: '2.2 Radical Equations & Extraneous Solutions',
+            text: `Problem: Solve $\\sqrt{2x + 15} = x$ for all real solutions.
+Step-by-step Solution:
+1. Square both sides: $2x + 15 = x^2$
+2. Rearrange to standard quadratic: $x^2 - 2x - 15 = 0$
+3. Factor: $(x - 5)(x + 3) = 0 \\implies x = 5$ or $x = -3$.
+4. Check for extraneous roots:
+   * For $x = 5$: $\\sqrt{2(5) + 15} = \\sqrt{25} = 5$ (Valid).
+   * For $x = -3$: $\\sqrt{2(-3) + 15} = \\sqrt{9} = 3 \\neq -3$ (Extraneous!).
+5. The only valid real solution is $x = 5$.`
+          }
+        ]
+      },
+      {
+        pageNumber: 3,
+        content: `CHAPTER 2: GEOMETRY & TRIGONOMETRY — CIRCLES & RIGHT TRIANGLE TRIGONOMETRY
+
+1. Concept Introduction
+The Digital SAT tests circle equations in standard Cartesian form, central and inscribed angles, arc length, sector area, and right-triangle trigonometric identities.
+
+2. Key Formulas:
+- Standard Circle Equation: $(x - h)^2 + (y - k)^2 = r^2$ where center is $(h, k)$ and radius is $r$.
+- Arc Length ($s$) and Sector Area ($A$) in Radians:
+  $$s = r\\theta, \\quad A = \\frac{1}{2}r^2\\theta \\quad (\\theta \\text{ in radians})$$
+- Radian-Degree Conversion: $180^\\circ = \\pi\\text{ radians} \\implies 1\\text{ rad} = \\frac{180^\\circ}{\\pi}$
+- Complementary Angle Trigonometric Identity:
+  $$\\sin(x) = \\cos(90^\\circ - x) \\quad \\text{or} \\quad \\sin(x) = \\cos\\left(\\frac{\\pi}{2} - x\\right)$$
+  If $\\sin(A) = \\cos(B)$ in an acute triangle, then $A + B = 90^\\circ$.`,
+        ocrText: 'Circle equation, completing the square for circles, arc length, sector area, sine cosine complementary identity, radians.',
+        sections: [
+          {
+            heading: '3.1 Circle Equation by Completing the Square',
+            text: `Problem: Find the radius and center of the circle given by $x^2 + y^2 - 8x + 6y - 11 = 0$.
+Step-by-step Solution:
+1. Group $x$ and $y$ terms: $(x^2 - 8x) + (y^2 + 6y) = 11$
+2. Complete the square for $x$: half of $-8$ is $-4$, squared is $16$.
+3. Complete the square for $y$: half of $6$ is $3$, squared is $9$.
+4. Balance equation: $(x^2 - 8x + 16) + (y^2 + 6y + 9) = 11 + 16 + 9$
+5. Factor: $(x - 4)^2 + (y + 3)^2 = 36$
+6. The center is $(4, -3)$ and the radius is $r = \\sqrt{36} = 6$.`
+          },
+          {
+            heading: '3.2 Complementary Angle Identity (Medium Tier)',
+            text: `Problem: In a right triangle, $\\sin(3x - 12^\\circ) = \\cos(2x + 7^\\circ)$. What is the value of $x$?
+Step-by-step Solution:
+1. Apply the identity: Since $\\sin(A) = \\cos(B)$, $A + B = 90^\\circ$.
+2. Set up sum: $(3x - 12) + (2x + 7) = 90$
+3. Combine terms: $5x - 5 = 90 \\implies 5x = 95 \\implies x = 19^\\circ$.`
           }
         ]
       }
     ]
   },
+
+  // =========================================================================
+  // TEXTBOOK 3: Mastering Digital SAT Reading & Writing
+  // =========================================================================
   {
-    id: 'sat-rw-mastery',
+    id: 'sat-reading-writing-mastery',
     title: 'Mastering Digital SAT Reading & Writing',
-    author: 'AIES Humanities Editorial Board',
-    publisherOrOwner: 'AIES Academic Press (Original Content)',
-    coverColor: 'from-emerald-600 to-teal-700',
+    author: 'AIES Humanities & Evidence-Based Reading Faculty',
+    publisherOrOwner: 'AIES Academic Press (Original Curriculum Series)',
+    coverColor: 'from-emerald-700 via-teal-800 to-cyan-950',
     pages: [
       {
-        pageNumber: 12,
-        content: 'Information & Ideas questions test your ability to synthesize central themes, evaluate textual evidence, and complete logical conclusions. When determining the main idea of a scientific passage, look beyond supporting data points and identify the overarching hypothesis and experimental validation.',
+        pageNumber: 1,
+        content: `CHAPTER 1: INFORMATION & IDEAS — CENTRAL IDEAS AND SUPPORTING DETAILS
+
+1. Concept Introduction
+Central Ideas questions assess your ability to synthesize the primary argument or overarching theme of a short passage (25–150 words). Supporting Details questions require identifying specific factual claims explicitly established in the text.
+
+2. The Core 4-Step Method:
+Step 1: Read for the Macro-Claim — Summarize the passage in one sentence before looking at the choices. Ask: "What is the author ultimately trying to prove or describe?"
+Step 2: Differentiate Thesis from Evidence — Do not mistake an illustrative piece of evidence (e.g. an experiment participant count or a single character action) for the central idea.
+Step 3: Check Answer Scope — The correct answer must match the entire scope of the passage:
+  * Too Narrow: Accurate to one sentence, but misses the broader conclusion.
+  * Too Extreme: Introduces unsupported absolutes ("always", "never", "only", "proved definitively").
+  * Inverted Relationship: Swaps cause and effect or reverses character dynamics.
+Step 4: Verify Direct Textual Grounding — Every claim in the correct option must be supported by words in the text.`,
+        ocrText: 'Central ideas, main idea, supporting details, too narrow trap, too extreme trap, scope check, textual grounding.',
         sections: [
           {
-            heading: 'Command of Textual Evidence',
-            text: 'An answer choice is valid only if it directly substantiates the specific claim without introducing extraneous assumptions. Avoid choices that state true facts not directly cited in the prompt.'
+            heading: '1.1 Worked Example (Easy Tier — Literature)',
+            text: `Passage: In an 1890 novella, Arthur reflects on his quiet country cottage. While his urban acquaintances frequently pity his isolation, Arthur finds deep tranquility in tending his vegetable garden and observing the migrating swallows. The daily routine, far from feeling monotonous, provides him with a profound sense of purpose.
+Question: Which choice best states the main idea of the text?
+(A) Arthur regrets leaving his busy life in the city.
+(B) Arthur's acquaintances visit him regularly to help with his garden.
+(C) Arthur derives genuine fulfillment and peace from his quiet rural lifestyle. [CORRECT]
+(D) Arthur plans to return to the city once his swallow observations conclude.
+Analysis: Choice C captures the full passage theme (tranquility, purpose, rural life). Choice A is directly contradicted; Choice B and D introduce unsupported assumptions.`
           },
           {
-            heading: 'Completing Logical Inferences',
-            text: 'When completing a sentence at the end of a passage, the correct option must act as the natural deduction of the preceding evidence rather than introducing an unsupported pivot.'
+            heading: '1.2 Worked Example (Medium Tier — Science)',
+            text: `Passage: Marine biologist Dr. Elena Rostova investigated bioluminescent signaling in deep-sea cephalopods. While previous researchers hypothesized that photophore flashing served primarily to attract prey, Rostova's synchronized camera footage revealed that squid flash patterns became active predominantly when predators were detected within 5 meters. This strongly indicates that the glowing flashes function as an antipredator startle mechanism.
+Question: Which choice best describes the main discovery of Rostova's research?
+(A) Deep-sea squid utilize bioluminescence primarily to disorient and deter predators. [CORRECT]
+(B) Cephalopod photophores are more complex than those found in shallow-water organisms.
+(C) Deep-sea predators are incapable of detecting light within a 5-meter radius.
+(D) Squid flash patterns fail to attract prey in deep oceanic trenches.
+Analysis: Choice A directly summarizes the main discovery (flashing functions as an antipredator mechanism). Choice B and C introduce false comparisons.`
+          },
+          {
+            heading: '1.3 Common Traps to Eliminate Instantly',
+            text: `1. The "True But Secondary" Trap: An answer option repeats a verbatim fact from sentence 2, but ignores the pivot in sentence 4.
+2. The "Speculative Leap" Trap: An answer option sounds logical in the real world, but cannot be proven strictly from the passage text.`
           }
         ]
       },
       {
-        pageNumber: 34,
-        content: 'Craft & Structure questions evaluate vocabulary in context, text structure, and rhetorical purpose. High-scoring SAT test takers recognize that common words frequently carry nuanced, domain-specific definitions (e.g., "qualify" meaning to limit or moderate a claim rather than to meet criteria).',
+        pageNumber: 2,
+        content: `CHAPTER 1: INFORMATION & IDEAS — COMMAND OF EVIDENCE & INFERENCES
+
+1. Concept Introduction
+Command of Evidence questions require selecting the specific textual finding or quantitative data point (from tables/charts) that most directly supports or weakens a researcher's hypothesis. Inference questions test your ability to logically complete an unfinished line of reasoning.
+
+2. The Core Hypothesis-Evidence Matching Method:
+Step 1: Isolate the Specific Hypothesis — Underline the exact claim: "Dr. X claims that Y causes Z under condition W."
+Step 2: Formulate the Expected Evidence — What finding would prove this? (e.g. Group Y must show higher Z than control Group without Y).
+Step 3: Reject "Side-Topic" Options — Eliminate choices that discuss related topics but do not test the exact variables in the hypothesis.
+Step 4: Strict Logical Extension (Inferences) — The missing conclusion must be the inevitable, conservative result of the preceding sentences, not a speculative leap.`,
+        ocrText: 'Command of evidence, textual evidence, quantitative evidence, charts and tables, logical inferences, hypothesis testing.',
         sections: [
           {
-            heading: 'Words in Context Methodology',
-            text: 'Always mask the target word with a blank before looking at options. Identify tone, direction, and semantic clues in the sentence to supply your own synonym before comparing with choices.'
+            heading: '2.1 Worked Example: Quantitative Evidence from Tables (Medium Tier)',
+            text: `Hypothesis: Bird species with higher wing-aspect ratios migrate longer annual distances.
+Data Table:
+- Arctic Tern: Aspect Ratio 11.2 | Migration 44,000 km
+- Wandering Albatross: Aspect Ratio 12.5 | Migration 30,000 km
+- Ruffed Grouse: Aspect Ratio 5.1 | Migration 0 km
+- House Sparrow: Aspect Ratio 5.8 | Migration 50 km
+
+Valid Supporting Finding: Species with aspect ratios above 11.0 exhibited migration distances exceeding 30,000 km, whereas species with aspect ratios below 6.0 migrated under 100 km, substantiating the positive correlation between wing ratio and flight range.`
           },
           {
-            heading: 'Cross-Text Connections',
-            text: 'When comparing Text 1 and Text 2, note whether Author 2 extends, refutes, or qualifies Author 1. Summarize both authors in two words (e.g. "Optimistic" vs "Skeptical").'
+            heading: '2.2 Worked Example: Logical Completion / Inference (Hard Tier)',
+            text: `Passage: Behavioral economists tested whether cognitive fatigue impacts ethical decision-making. Participants subjected to 4 hours of intensive numerical tasks were 45% more likely to inflate their claimed rewards on an unmonitored test than were well-rested participants. However, when fatigued participants were given a 15-minute restorative mindfulness break prior to reporting, their rate of reward inflation dropped to match baseline levels. This finding suggests that _____
+Correct Completion: "...depleted self-regulatory cognitive capacity can be rapidly restored by short periods of intentional rest, reducing dishonest behavior."`
           }
         ]
       },
       {
-        pageNumber: 52,
-        content: 'Expression of Ideas evaluates transitions and rhetorical synthesis notes. Transitions create specific logical relationships: addition (furthermore, moreover), contrast (however, nevertheless), cause-and-effect (consequently, thus), or exemplification (for instance, specifically). Choose the transition that precisely reflects the logical relationship between adjacent ideas.',
+        pageNumber: 3,
+        content: `CHAPTER 2: CRAFT & STRUCTURE — WORDS IN CONTEXT & CROSS-TEXT CONNECTIONS
+
+1. Concept Introduction
+Craft & Structure questions assess high-utility academic vocabulary used in specific disciplinary contexts and cross-text synthesis between two paired perspectives.
+
+2. The 3-Step "Mask and Predict" Vocabulary Method:
+Step 1: Cover the Target Word with a Blank — Read the sentence without looking at the 4 options.
+Step 2: Harvest Clues from Context — Identify transition words, synonyms, antonyms, or explanatory clauses that define the blank's meaning.
+Step 3: Plug in Your Own Word — Generate a simple synonym (e.g. "limit", "clear", "intense") and match it with the choices.
+
+3. Cross-Text Connections Framework (Text 1 vs Text 2):
+- Step 1: Label Author 1's Stance (+ / - / Neutral).
+- Step 2: Label Author 2's Stance (+ / - / Neutral).
+- Step 3: Determine the Dynamic:
+  * Rebuttal: Author 2 argues Author 1's methodology or conclusion is flawed.
+  * Nuance/Qualification: Author 2 agrees with the premise but limits its applicability.
+  * Extension: Author 2 provides additional evidence supporting Author 1.`,
+        ocrText: 'Words in context, vocabulary, mask and predict, cross text connections, paired texts, author stance, text structure.',
         sections: [
           {
-            heading: 'Transition Taxonomy',
-            text: 'Never rely on sound alone. Contrast transitions require opposing claims; cause-and-effect transitions require that Sentence 2 directly follows from the causality established in Sentence 1.'
+            heading: '3.1 Words in Context Worked Example (Medium Tier)',
+            text: `Passage: Although the initial experimental results appeared promising, the lead researcher took care to qualify her conclusions in the published report, noting that the small sample size precluded definitive generalization.
+As used in the text, "qualify" most nearly means:
+(A) certify as competent
+(B) limit or moderate [CORRECT]
+(C) enthusiastically endorse
+(D) officially register
+Explanation: The context "noting that the small sample size precluded definitive generalization" indicates the researcher was restricting or moderating her claims. Thus, "limit or moderate" is the precise contextual meaning.`
           },
           {
-            heading: 'Rhetorical Synthesis Strategy',
-            text: 'Read the specific goal prompt before the bulleted notes. Eliminate any option that does not directly fulfill the prompt goal, even if the option is factually accurate according to the notes.'
+            heading: '3.2 Cross-Text Connections Worked Example (Hard Tier)',
+            text: `Text 1 argues that urban vertical farming can fully replace traditional agriculture due to high yield per square meter.
+Text 2 points out that the high electricity requirements for LED lighting make vertical farming economically unviable for calorie-dense staple crops like wheat and rice.
+Question: How would the author of Text 2 respond to Text 1?
+Correct Response: By pointing out that energy costs make vertical farming unsuited for essential staple crops, qualifying the extent to which it can replace traditional farming.`
           }
         ]
       },
       {
-        pageNumber: 76,
-        content: 'Standard English Conventions enforce grammatical boundaries, subject-verb agreement, pronoun-antecedent clarity, and modifier placement. Two independent clauses cannot be joined by a comma alone (comma splice) or without punctuation (run-on). They must be joined by a period, semicolon, or comma with a coordinating conjunction (FANBOYS).',
+        pageNumber: 4,
+        content: `CHAPTER 3: EXPRESSION OF IDEAS — TRANSITIONS & RHETORICAL SYNTHESIS
+
+1. Concept Introduction
+Expression of Ideas evaluates your ability to select precise logical transitions between ideas and synthesize bulleted research notes to achieve a specified rhetorical goal.
+
+2. Logical Transition Categories:
+- Addition / Elaboration: furthermore, moreover, additionally, in fact, indeed
+- Contrast / Pivot: however, nevertheless, on the other hand, conversely, despite this
+- Cause and Effect: consequently, therefore, thus, as a result, accordingly
+- Exemplification / Clarification: for instance, specifically, for example, in other words
+
+3. Rhetorical Synthesis 3-Step Strategy:
+Step 1: Read the Question Goal FIRST — Look at the prompt below the bullets: "The student wants to emphasize a contrast between X and Y" or "The student wants to introduce the discovery to an audience unfamiliar with the scientist."
+Step 2: Filter for the Specific Goal — 3 of the 4 choices will state true facts from the bullets, but only ONE directly achieves the prompt's stated goal.
+Step 3: Eliminate Extra Fluff — Select the concise sentence that directly fulfills the prompt requirement.`,
+        ocrText: 'Transitions, logical connectors, rhetorical synthesis, bulleted notes, prompt goal, addition, contrast, cause and effect.',
         sections: [
           {
-            heading: 'Sentence Boundaries and Semicolons',
-            text: 'A semicolon must be flanked by independent clauses on both sides. A colon must follow an independent clause and introduces an explanation, list, or dramatic elaboration.'
+            heading: '4.1 Transition Analysis Worked Example',
+            text: `Sentence 1: Early geologists believed mountain ranges formed solely through the contraction of Earth's cooling crust.
+Sentence 2: [Transition], the discovery of mantle convection and tectonic plate subduction demonstrated that mountain uplift is driven by dynamic internal heat currents.
+Analysis: Sentence 2 directly overturns the obsolete belief in Sentence 1. The required relationship is contrast. Correct transition: "However" or "Nevertheless".`
           },
           {
-            heading: 'Dangling and Misplaced Modifiers',
-            text: 'An introductory participial phrase (e.g., "Walking through the forest, ...") must be immediately followed by the noun that logically performs the action.'
+            heading: '4.2 Rhetorical Synthesis Strategy Example',
+            text: `Goal: The student wants to emphasize the difference in diet between the two bird species.
+Bullet Notes:
+- Species A lives in cloud forests and feeds exclusively on orchid nectar.
+- Species B inhabits lowland savannahs and feeds on insects and seeds.
+- Both species belong to the family Trochilidae.
+Correct Choice: "While Species A feeds exclusively on floral nectar in cloud forests, Species B subsists on insects and seeds in savannahs." (Directly fulfills the contrast in diet goal).`
           }
         ]
       }
     ]
   },
+
+  // =========================================================================
+  // TEXTBOOK 4: Standard English Conventions & Grammar Rules
+  // =========================================================================
   {
     id: 'sat-grammar-conventions',
     title: 'Standard English Conventions & Grammar Rules',
-    author: 'Panda SAT Writing & Grammar Board',
+    author: 'Panda SAT Writing & Grammar Editorial Board',
     publisherOrOwner: 'Panda SAT Writing Series',
-    coverColor: 'from-amber-600 to-orange-700',
+    coverColor: 'from-amber-600 via-orange-600 to-rose-700',
     pages: [
       {
-        pageNumber: 22,
-        content: 'Punctuation boundaries: commas, semicolons, dashes, and colons. A single dash or colon requires an independent clause preceding it. Paired dashes, paired commas, or paired parentheses enclose non-essential parenthetical information that can be removed without breaking sentence structure.',
+        pageNumber: 1,
+        content: `CHAPTER 1: SENTENCE BOUNDARIES — INDEPENDENT CLAUSES, RUN-ONS & COMMA SPLICES
+
+1. Concept Introduction
+Every complete English sentence requires at least one independent clause containing a subject and a conjugated verb that expresses a complete thought. Joining two independent clauses incorrectly produces a comma splice (joined only by a comma) or a run-on (joined with no punctuation).
+
+2. The 4 Valid Ways to Connect Two Independent Clauses:
+Method 1: Period and Capital Letter ($[IC]. [IC].$)
+Method 2: Semicolon ($[IC]; [IC].$)
+Method 3: Comma + Coordinating Conjunction (FANBOYS: For, And, Nor, But, Or, Yet, So) ($[IC], \\text{ and } [IC].$)
+Method 4: Colon or Single Dash (When the second clause explains, defines, or illustrates the first) ($[IC]: [IC].$)
+
+3. Essential Punctuation Rules:
+- Semicolons must be flanked by complete independent clauses on both sides.
+- A comma alone CANNOT separate two independent clauses without a FANBOYS conjunction.
+- Conjunctive Adverbs (however, therefore, furthermore) are NOT coordinating conjunctions. When placed between two independent clauses, they must be preceded by a semicolon and followed by a comma ($[IC]; \\text{however}, [IC].$).`,
+        ocrText: 'Sentence boundaries, independent clauses, comma splices, run on sentences, semicolons, colons, FANBOYS conjunctions.',
         sections: [
           {
-            heading: 'Non-Essential Clauses & Paired Punctuation',
-            text: 'If a descriptive phrase is set off by commas or dashes, test it by mentally removing the clause. The remaining sentence must be grammatically complete.'
+            heading: '1.1 Comma Splice Identification & Fix (Easy Tier)',
+            text: `Incorrect: The telescope was calibrated by the engineering team, it captured clear images of Jupiter's moons. [Comma Splice!]
+Correct Fixes:
+1. Semicolon: The telescope was calibrated by the engineering team; it captured clear images of Jupiter's moons.
+2. Comma + FANBOYS: The telescope was calibrated by the engineering team, and it captured clear images of Jupiter's moons.
+3. Subordination: After the telescope was calibrated by the engineering team, it captured clear images of Jupiter's moons.`
           },
           {
-            heading: 'Subject-Verb Agreement Across Prepositional Phrases',
-            text: 'The verb must agree with the true head subject, not the intervening nouns within prepositional phrases (e.g., "The box of old books is heavy", not "are heavy").'
+            heading: '1.2 Colons and Single Dashes (Medium Tier)',
+            text: `Rule: A colon (:) or single dash (—) MUST follow a complete independent clause and introduces an elaboration, list, or dramatic reveal.
+Correct: Dr. Hernandez discovered the unexpected cause of the alloy's failure: microscopic air pockets trapped during cooling.
+Incorrect: The causes of the failure were: microscopic air pockets and poor cooling. (Faulty: "The causes of the failure were" is not an independent clause).`
           }
         ]
       },
       {
-        pageNumber: 48,
-        content: 'Pronoun ambiguity and parallelism. Every pronoun (it, they, this) must have an unambiguous, grammatically aligned antecedent noun. Parallel structure requires that lists and comparisons maintain identical grammatical forms (e.g., gerund with gerund, infinitive with infinitive).',
+        pageNumber: 2,
+        content: `CHAPTER 1: NON-ESSENTIAL ELEMENTS & PAIRED PUNCTUATION
+
+1. Concept Introduction
+Non-essential (parenthetical) clauses provide supplementary information that can be removed from a sentence without altering its core grammatical structure or meaning.
+
+2. The Symmetry Rule for Paired Punctuation:
+Non-essential modifiers must be enclosed by MATCHING punctuation marks:
+- Two commas: $\\text{Subject}, \\text{non-essential clause}, \\text{verb...}$
+- Two dashes: $\\text{Subject} - \\text{non-essential clause} - \\text{verb...}$
+- Two parentheses: $\\text{Subject } (\\text{non-essential clause}) \\text{ verb...}$
+Never mix and match (e.g. a comma on the left and a dash on the right is always incorrect).
+
+3. Essential vs Non-Essential Modifiers:
+- Essential (Restrictive): Specifies which exact person or object is meant. Do NOT use commas. (e.g. "The author George Orwell wrote 1984.")
+- Non-Essential (Non-Restrictive): Supplementary detail about a previously identified noun. Use commas. (e.g. "George Orwell, a British essayist and novelist, wrote 1984.")`,
+        ocrText: 'Non essential clauses, paired commas, paired dashes, appositives, restrictive modifiers, non restrictive modifiers.',
         sections: [
           {
-            heading: 'Pronoun Case & Number Agreement',
-            text: 'Singular indefinite pronouns (everyone, each, neither) require singular verbs and pronouns. Avoid ambiguous "this" or "they" without explicit referents.'
+            heading: '2.1 The "Finger Test" for Non-Essential Clauses',
+            text: `Method: Place your finger over the non-essential clause between the paired commas or dashes. Read the remaining sentence aloud. If the remaining words form a grammatically complete, logical sentence, the punctuation is correct.
+Example: The ancient library of Alexandria, which housed thousands of papyrus scrolls, was destroyed in antiquity.
+Test: "The ancient library of Alexandria was destroyed in antiquity." (Complete and grammatical!).`
           },
           {
-            heading: 'Comparative Parallelism & Illogical Comparisons',
-            text: 'Compare equivalent entities: "The score of student A was higher than that of student B", not "than student B".'
+            heading: '2.2 Worked Example: Names and Job Titles (Medium Tier)',
+            text: `Rule: When a descriptive title precedes a name without a comma or article, the name is essential.
+Correct: Marine ecologist Rachel Carson published Silent Spring in 1962.
+Incorrect: Marine ecologist, Rachel Carson, published Silent Spring in 1962.
+Correct: An acclaimed marine ecologist, Rachel Carson published Silent Spring in 1962.`
+          }
+        ]
+      },
+      {
+        pageNumber: 3,
+        content: `CHAPTER 2: FORM, STRUCTURE & SENSE — SUBJECT-VERB AGREEMENT & MODIFIERS
+
+1. Concept Introduction
+Conjugated verbs must agree with their grammatical head subject in number (singular vs plural). Modifier phrases must be placed immediately adjacent to the noun they logically describe.
+
+2. Subject-Verb Agreement Rules:
+- Prepositional Phrase Interrupters: Ignore words between the subject and verb:
+  * "The box of antique gold coins [is / are] heavy." $\\implies$ Subject is singular "box" $\\implies$ "is heavy."
+- Compound Subjects joined by "and" are plural ("The biologist and the chemist are collaborating").
+- Indefinite Pronouns (each, everyone, neither, either, anybody) are grammatically singular ("Each of the samples is sterile").
+
+3. Dangling & Misplaced Modifiers:
+- Dangling Modifier: An introductory participial phrase (e.g. "Walking through the dense forest, ...") MUST be followed immediately by the noun that logically performs that action.
+  * Incorrect: "Walking through the forest, the towering trees impressed Marcus." (Trees do not walk!).
+  * Correct: "Walking through the forest, Marcus was impressed by the towering trees."`,
+        ocrText: 'Subject verb agreement, prepositional phrases, dangling modifiers, misplaced modifiers, singular indefinite pronouns.',
+        sections: [
+          {
+            heading: '3.1 Inverted Sentence Structure (Hard Tier)',
+            text: `Rule: In sentences beginning with prepositional phrases of location, the subject often appears AFTER the verb.
+Example: "Beneath the roots of the ancient oak tree [lies / lie] the buried stone foundation."
+Analysis: The subject is "foundation" (singular), not "roots" (prepositional object). Correct verb: "lies".`
+          },
+          {
+            heading: '3.2 Parallel Structure and Logical Comparisons',
+            text: `Parallel Structure: Items in a series or joined by conjunctions must share identical grammatical forms.
+- Incorrect: She enjoys hiking, swimming, and to ride bicycles.
+- Correct: She enjoys hiking, swimming, and riding bicycles.
+Logical Comparisons: Compare equivalent entities using "that of" or "those of".
+- Incorrect: The battery life of Model A is longer than Model B.
+- Correct: The battery life of Model A is longer than that of Model B.`
           }
         ]
       }
     ]
   }
 ];
+
