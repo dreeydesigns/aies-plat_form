@@ -21,36 +21,169 @@ import {
   Zap, 
   Award, 
   Layers, 
-  RotateCcw, 
   SlidersHorizontal,
   ExternalLink,
   ChevronRight,
-  TrendingUp,
-  Bookmark
+  Bookmark,
+  BookMarked,
+  HelpCircle,
+  Clock,
+  Compass
 } from 'lucide-react';
 
-const domainDetails: Record<SatDomain, { name: string; section: 'math' | 'reading-writing'; color: string }> = {
-  'algebra': { name: 'Algebra', section: 'math', color: 'blue' },
-  'advanced-math': { name: 'Advanced Math', section: 'math', color: 'indigo' },
-  'problem-solving-data-analysis': { name: 'Problem-Solving & Data', section: 'math', color: 'cyan' },
-  'geometry-trigonometry': { name: 'Geometry & Trig', section: 'math', color: 'teal' },
-  'information-ideas': { name: 'Information & Ideas', section: 'reading-writing', color: 'emerald' },
-  'craft-structure': { name: 'Craft & Structure', section: 'reading-writing', color: 'green' },
-  'expression-of-ideas': { name: 'Expression of Ideas', section: 'reading-writing', color: 'amber' },
-  'standard-english-conventions': { name: 'Standard English', section: 'reading-writing', color: 'purple' }
+export type SatSubjectSection = 'math' | 'reading-writing';
+
+export const SAT_SUBJECT_DOMAINS: Record<SatSubjectSection, SatDomain[]> = {
+  'math': [
+    'algebra',
+    'advanced-math',
+    'problem-solving-data-analysis',
+    'geometry-trigonometry'
+  ],
+  'reading-writing': [
+    'information-ideas',
+    'craft-structure',
+    'expression-of-ideas',
+    'standard-english-conventions'
+  ]
 };
+
+export const DOMAIN_METADATA: Record<SatDomain, { 
+  name: string; 
+  section: SatSubjectSection; 
+  description: string;
+  defaultTextbookId: string;
+  defaultPage: number;
+}> = {
+  'algebra': { 
+    name: 'Algebra', 
+    section: 'math', 
+    description: 'Linear equations, systems, functions & inequalities',
+    defaultTextbookId: 'sat-foundations-math',
+    defaultPage: 1
+  },
+  'advanced-math': { 
+    name: 'Advanced Math', 
+    section: 'math', 
+    description: 'Nonlinear equations, quadratics, radicals & polynomials',
+    defaultTextbookId: 'sat-advanced-math-mastery',
+    defaultPage: 1
+  },
+  'problem-solving-data-analysis': { 
+    name: 'Problem-Solving & Data Analysis', 
+    section: 'math', 
+    description: 'Ratios, rates, percentages, distributions & statistics',
+    defaultTextbookId: 'sat-foundations-math',
+    defaultPage: 1
+  },
+  'geometry-trigonometry': { 
+    name: 'Geometry & Trigonometry', 
+    section: 'math', 
+    description: 'Area, volume, triangles, circles & radian ratios',
+    defaultTextbookId: 'sat-foundations-math',
+    defaultPage: 1
+  },
+  'information-ideas': { 
+    name: 'Information & Ideas', 
+    section: 'reading-writing', 
+    description: 'Central ideas, command of evidence & inferences',
+    defaultTextbookId: 'sat-reading-writing-mastery',
+    defaultPage: 1
+  },
+  'craft-structure': { 
+    name: 'Craft & Structure', 
+    section: 'reading-writing', 
+    description: 'Words in context, text structure, purpose & connections',
+    defaultTextbookId: 'sat-reading-writing-mastery',
+    defaultPage: 1
+  },
+  'expression-of-ideas': { 
+    name: 'Expression of Ideas', 
+    section: 'reading-writing', 
+    description: 'Rhetorical synthesis & logical transitions',
+    defaultTextbookId: 'sat-reading-writing-mastery',
+    defaultPage: 1
+  },
+  'standard-english-conventions': { 
+    name: 'Standard English Conventions', 
+    section: 'reading-writing', 
+    description: 'Sentence boundaries, agreement, verb tense & modifiers',
+    defaultTextbookId: 'sat-grammar-conventions',
+    defaultPage: 1
+  }
+};
+
+/**
+ * Strict filtering function for practice question pool.
+ * Guarantees that in 'topic' mode, 100% of returned questions match the exact domain requested.
+ * In 'mixed' mode, 100% of returned questions match the selected subject.
+ */
+export function buildPracticeQuestionPool(
+  mode: 'mixed' | 'topic',
+  subject: SatSubjectSection,
+  domain: SatDomain,
+  userPlacements?: Record<string, string>
+): SatQuestion[] {
+  if (mode === 'topic') {
+    // Strict domain matching - NEVER fallback to another domain or subject
+    const matching = initialSatQuestions.filter(q => q.domain === domain);
+    if (matching.length === 0) {
+      return [];
+    }
+
+    // Adaptive sorting: prioritize questions matching the student's current tier
+    const targetTier = userPlacements?.[domain] || 'intermediate';
+    const tierMatches = matching.filter(
+      q => q.difficulty === targetTier || (targetTier === 'expert' && q.difficulty === 'hard')
+    );
+
+    // If we have tier-specific questions, use them; otherwise return all questions for this exact domain
+    const pool = tierMatches.length > 0 ? tierMatches : matching;
+    return [...pool].sort(() => Math.random() - 0.5);
+  } else {
+    // Mixed mode: strictly filtered by subject section
+    const matching = initialSatQuestions.filter(q => q.section === subject);
+    return [...matching].sort(() => Math.random() - 0.5);
+  }
+}
 
 export default function SatPractice() {
   const { userProfile, updateSatPlacement, saveSatPracticeSession, logEmotionalState } = useAppContext();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Mode: 'mixed' (all domains weighted) vs 'topic' (selected domain)
-  const [practiceMode, setPracticeMode] = useState<'mixed' | 'topic'>('mixed');
-  const [selectedDomain, setSelectedDomain] = useState<SatDomain>('algebra');
+  // Step 1: Subject Selection (Math vs Reading & Writing)
+  const [selectedSubject, setSelectedSubject] = useState<SatSubjectSection>(() => {
+    const domainParam = searchParams.get('domain') as SatDomain | null;
+    if (domainParam && DOMAIN_METADATA[domainParam]) {
+      return DOMAIN_METADATA[domainParam].section;
+    }
+    const saved = localStorage.getItem('aies_practice_subject');
+    return (saved === 'math' || saved === 'reading-writing') ? saved : 'reading-writing';
+  });
+
+  // Step 2: Topic Selection (Scoped to active subject)
+  const [selectedDomain, setSelectedDomain] = useState<SatDomain>(() => {
+    const domainParam = searchParams.get('domain') as SatDomain | null;
+    if (domainParam && DOMAIN_METADATA[domainParam]) {
+      return domainParam;
+    }
+    const savedDomain = localStorage.getItem('aies_practice_domain') as SatDomain | null;
+    if (savedDomain && DOMAIN_METADATA[savedDomain]) {
+      return savedDomain;
+    }
+    return 'information-ideas';
+  });
+
+  // Mode: 'topic' (Targeted Domain) vs 'mixed' (Subject-Wide Mix)
+  const [practiceMode, setPracticeMode] = useState<'topic' | 'mixed'>(() => {
+    const saved = localStorage.getItem('aies_practice_mode');
+    return saved === 'mixed' ? 'mixed' : 'topic';
+  });
+
   const [isDataLight, setIsDataLight] = useState(false);
 
-  // Active question index and answer state
+  // Active question pool and interaction state
   const [questionPool, setQuestionPool] = useState<SatQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -80,41 +213,35 @@ export default function SatPractice() {
   const [showEmpathyModal, setShowEmpathyModal] = useState(false);
   const [levelUpData, setLevelUpData] = useState<{ domain: SatDomain; newLevel: 'beginner' | 'intermediate' | 'expert' } | null>(null);
 
-  // Filter & weight question pool
-  const buildQuestionPool = (mode: 'mixed' | 'topic', domain: SatDomain) => {
-    const placements = userProfile?.satProfile?.placementByDomain || {};
-
-    if (mode === 'topic') {
-      const targetDiff = placements[domain] || 'intermediate';
-      let matching = initialSatQuestions.filter(q => q.domain === domain && q.difficulty === targetDiff);
-      if (matching.length === 0) {
-        matching = initialSatQuestions.filter(q => q.domain === domain);
-      }
-      return matching;
-    } else {
-      // Mixed: sample questions weighted by domain placement
-      const all = [...initialSatQuestions];
-      return all.sort(() => Math.random() - 0.5);
-    }
-  };
-
-  // Initialize pool
+  // Synchronize URL search params and initialize state
   useEffect(() => {
     const domainParam = searchParams.get('domain') as SatDomain | null;
-    if (domainParam && domainDetails[domainParam]) {
-      setPracticeMode('topic');
+    if (domainParam && DOMAIN_METADATA[domainParam]) {
+      const parentSubject = DOMAIN_METADATA[domainParam].section;
+      setSelectedSubject(parentSubject);
       setSelectedDomain(domainParam);
-      setQuestionPool(buildQuestionPool('topic', domainParam));
-    } else {
-      setQuestionPool(buildQuestionPool('mixed', 'algebra'));
+      setPracticeMode('topic');
+      localStorage.setItem('aies_practice_subject', parentSubject);
+      localStorage.setItem('aies_practice_domain', domainParam);
+      localStorage.setItem('aies_practice_mode', 'topic');
     }
+  }, [searchParams]);
+
+  // Compute question pool whenever subject, domain, or mode changes
+  useEffect(() => {
+    const placements = userProfile?.satProfile?.placementByDomain || {};
+    const pool = buildPracticeQuestionPool(practiceMode, selectedSubject, selectedDomain, placements);
+    setQuestionPool(pool);
     setCurrentIdx(0);
     setSelectedOption(null);
+    setSprAnswer('');
+    setIsBookmarked(false);
+    setIsFiveFinger(false);
     setIsSubmitted(false);
     setTimeSpent(0);
-  }, [practiceMode, selectedDomain, searchParams]);
+  }, [practiceMode, selectedSubject, selectedDomain, userProfile]);
 
-  // Timer loop
+  // Timer loop for active question
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setTimeSpent(prev => prev + 1);
@@ -123,7 +250,37 @@ export default function SatPractice() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [currentIdx]);
+  }, [currentIdx, questionPool]);
+
+  // Handle Step 1 (Subject) Change
+  const handleSelectSubject = (newSubject: SatSubjectSection) => {
+    if (newSubject === selectedSubject) return;
+    setSelectedSubject(newSubject);
+    localStorage.setItem('aies_practice_subject', newSubject);
+
+    // Reset Step 2 topic to the primary domain of the newly selected subject
+    const defaultDomain = SAT_SUBJECT_DOMAINS[newSubject][0];
+    setSelectedDomain(defaultDomain);
+    localStorage.setItem('aies_practice_domain', defaultDomain);
+
+    // Update URL query param cleanly
+    setSearchParams({ domain: defaultDomain });
+  };
+
+  // Handle Step 2 (Topic) Change
+  const handleSelectDomain = (domain: SatDomain) => {
+    setSelectedDomain(domain);
+    setPracticeMode('topic');
+    localStorage.setItem('aies_practice_domain', domain);
+    localStorage.setItem('aies_practice_mode', 'topic');
+    setSearchParams({ domain });
+  };
+
+  // Handle Mode Change (Topic vs Mixed)
+  const handleTogglePracticeMode = (mode: 'topic' | 'mixed') => {
+    setPracticeMode(mode);
+    localStorage.setItem('aies_practice_mode', mode);
+  };
 
   const currentQuestion = questionPool[currentIdx];
 
@@ -131,6 +288,10 @@ export default function SatPractice() {
     if (!isSubmitted) {
       setSelectedOption(idx);
     }
+  };
+
+  const handleToggleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
   };
 
   const handleSubmitAnswer = async () => {
@@ -188,10 +349,7 @@ export default function SatPractice() {
       setShowEmpathyModal(true);
     }
 
-    // Continuous difficulty adaptation (Spec v3 Section 5):
-    // Track a rolling window of the last 8 answered questions
-    // If rolling accuracy > 85% at the current difficulty tier -> escalate one tier (Easy->Medium->Hard)
-    // If rolling accuracy < 50% at current tier -> de-escalate one tier (never below Easy)
+    // Continuous difficulty adaptation (Spec v3 Section 5)
     const domainRecent = updatedSession.filter(a => a.domain === currentQuestion.domain).slice(-8);
     if (domainRecent.length >= 8) {
       const correctCount = domainRecent.filter(a => a.correct).length;
@@ -210,7 +368,7 @@ export default function SatPractice() {
       }
     }
 
-    // Spec v3 Section 10: Track consecutive Hard-tier questions answered correctly to unlock Full-Length tests
+    // Consecutive Hard-tier tracker
     if (isCorrect && (currentQuestion.difficulty === 'expert' || currentQuestion.difficulty === 'hard')) {
       const secKey = currentQuestion.section === 'math' ? 'math' : 'rw';
       const prevConsec = userProfile?.satProfile?.consecutiveHardCorrect?.[secKey] || 0;
@@ -229,8 +387,10 @@ export default function SatPractice() {
       setIsSubmitted(false);
       setTimeSpent(0);
     } else {
-      // Loop or re-shuffle
-      setQuestionPool(buildQuestionPool(practiceMode, selectedDomain));
+      // Re-shuffle current pool
+      const placements = userProfile?.satProfile?.placementByDomain || {};
+      const newPool = buildPracticeQuestionPool(practiceMode, selectedSubject, selectedDomain, placements);
+      setQuestionPool(newPool);
       setCurrentIdx(0);
       setSelectedOption(null);
       setSprAnswer('');
@@ -241,7 +401,7 @@ export default function SatPractice() {
     }
   };
 
-  // Find referenced textbook
+  // Find referenced textbook for wrong-answer remediation
   const textbookRef = currentQuestion?.textbookRef;
   const normBookId = normalizeTextbookId(textbookRef?.textbookId);
   const referencedBook = textbookRef 
@@ -252,78 +412,168 @@ export default function SatPractice() {
     ? String(currentQuestion.correctAnswer).trim() === sprAnswer.trim()
     : selectedOption === currentQuestion?.correctAnswer;
 
+  // Compute question counts per domain for live badge counters
+  const domainCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    Object.keys(DOMAIN_METADATA).forEach(d => {
+      counts[d] = initialSatQuestions.filter(q => q.domain === d).length;
+    });
+    return counts;
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-2">
       <DataLightBanner isDataLight={isDataLight} onToggleDataLight={setIsDataLight} />
 
-      {/* Top Header & Mode Toggle */}
+      {/* Top Command Center Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 bg-blue-100 text-blue-700 rounded-xl">
-              <Zap className="w-5 h-5" />
-            </span>
-            <div>
-              <h1 className="text-2xl font-bold text-neutral-900">
-                {practiceMode === 'mixed' ? 'Adaptive Mixed SAT Practice' : `${domainDetails[selectedDomain].name} Mastery`}
-              </h1>
-              <p className="text-xs text-neutral-500">
-                Continuous difficulty calibration · Real-time explanation grounding
-              </p>
-            </div>
+        <div className="flex items-center gap-3">
+          <span className="p-2.5 bg-blue-600 text-white rounded-2xl shadow-sm">
+            <Zap className="w-5 h-5" />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold text-neutral-900 tracking-tight">
+              Practice & Prepare
+            </h1>
+            <p className="text-xs text-neutral-500 font-medium">
+              Targeted skill workouts · Continuous adaptive calibration
+            </p>
           </div>
         </div>
 
-        {/* Practice Mode Selector Pills */}
-        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-neutral-200 shadow-xs">
+        {/* Practice Mode Switcher (Targeted vs Mixed) */}
+        <div className="flex items-center gap-1.5 bg-neutral-100 p-1.5 rounded-2xl border border-neutral-200 shadow-xs">
           <button
-            onClick={() => setPracticeMode('mixed')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              practiceMode === 'mixed'
-                ? 'bg-neutral-900 text-white shadow-xs'
-                : 'text-neutral-600 hover:bg-neutral-100'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            All Topics
-          </button>
-          <button
-            onClick={() => setPracticeMode('topic')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+            onClick={() => handleTogglePracticeMode('topic')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               practiceMode === 'topic'
-                ? 'bg-neutral-900 text-white shadow-xs'
-                : 'text-neutral-600 hover:bg-neutral-100'
+                ? 'bg-white text-neutral-900 shadow-xs'
+                : 'text-neutral-600 hover:text-neutral-900'
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             Choose Topic
           </button>
+          <button
+            onClick={() => handleTogglePracticeMode('mixed')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              practiceMode === 'mixed'
+                ? 'bg-white text-neutral-900 shadow-xs'
+                : 'text-neutral-600 hover:text-neutral-900'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            All Topics ({selectedSubject === 'math' ? 'Math' : 'R&W'})
+          </button>
         </div>
       </div>
 
-      {/* Domain Selection Tabs (When in Topic mode) */}
-      {practiceMode === 'topic' && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-neutral-100/70 p-2 rounded-2xl border border-neutral-200">
-          {(Object.keys(domainDetails) as SatDomain[]).map(d => {
-            const isSelected = selectedDomain === d;
-            return (
-              <button
-                key={d}
-                onClick={() => setSelectedDomain(d)}
-                className={`py-2 px-3 rounded-xl text-xs font-bold text-left transition-all truncate ${
-                  isSelected
-                    ? 'bg-white text-blue-900 shadow-sm border border-neutral-200'
-                    : 'text-neutral-600 hover:bg-white/60'
-                }`}
-              >
-                {domainDetails[d].name}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* Step 1 & Step 2: Grouped Subject-First Topic Selector */}
+      <div className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+        {/* Step 1: Subject Segmented Control */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-neutral-100">
+          <div>
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-400">
+              Step 1: Select Subject
+            </span>
+            <p className="text-xs text-neutral-600 font-medium">
+              Practice questions are scoped strictly to the chosen subject.
+            </p>
+          </div>
 
-      {/* Main Practice Card */}
+          <div className="grid grid-cols-2 gap-2 w-full sm:w-80 bg-neutral-100 p-1 rounded-2xl border border-neutral-200">
+            <button
+              onClick={() => handleSelectSubject('math')}
+              className={`py-2 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+                selectedSubject === 'math'
+                  ? 'bg-neutral-900 text-white shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <span>📐</span>
+              <span>Math</span>
+            </button>
+            <button
+              onClick={() => handleSelectSubject('reading-writing')}
+              className={`py-2 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+                selectedSubject === 'reading-writing'
+                  ? 'bg-neutral-900 text-white shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <span>📖</span>
+              <span>Reading & Writing</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Step 2: Topic Tiles (Scoped Strictly to Active Subject) */}
+        {practiceMode === 'topic' && (
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-400">
+                Step 2: Select {selectedSubject === 'math' ? 'Math' : 'Reading & Writing'} Topic
+              </span>
+              <span className="text-[11px] font-bold text-blue-600">
+                4 Official Domains
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {SAT_SUBJECT_DOMAINS[selectedSubject].map(domainKey => {
+                const info = DOMAIN_METADATA[domainKey];
+                const isSelected = selectedDomain === domainKey;
+                const count = domainCounts[domainKey] || 0;
+                const currentTier = userProfile?.satProfile?.placementByDomain?.[domainKey] || 'intermediate';
+
+                return (
+                  <button
+                    key={domainKey}
+                    type="button"
+                    onClick={() => handleSelectDomain(domainKey)}
+                    className={`p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between space-y-3 relative group ${
+                      isSelected
+                        ? 'border-blue-600 bg-blue-50/80 shadow-xs ring-2 ring-blue-500/20'
+                        : 'border-neutral-200 hover:border-neutral-300 bg-white hover:bg-neutral-50/50'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-1">
+                        <p className="text-xs font-black text-neutral-900 tracking-tight truncate">
+                          {info.name}
+                        </p>
+                        {isSelected && (
+                          <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
+                        )}
+                      </div>
+                      <p className="text-[11px] text-neutral-500 leading-snug line-clamp-2 mt-1 font-medium">
+                        {info.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-neutral-100/80">
+                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded ${
+                        currentTier === 'expert' 
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : currentTier === 'intermediate'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-amber-100 text-amber-800'
+                      }`}>
+                        {currentTier}
+                      </span>
+                      <span className="text-[11px] font-bold text-neutral-400">
+                        {count} {count === 1 ? 'item' : 'items'}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Main Practice Question Area */}
       {currentQuestion ? (
         <div className="space-y-6">
           {/* Question Meta Bar */}
@@ -331,6 +581,9 @@ export default function SatPractice() {
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 bg-neutral-900 text-white rounded-xl text-xs font-black">
                 Question {currentIdx + 1} of {questionPool.length}
+              </span>
+              <span className="text-xs font-bold text-neutral-700 bg-neutral-100 px-2.5 py-1 rounded-lg">
+                {DOMAIN_METADATA[currentQuestion.domain]?.name || currentQuestion.domain}
               </span>
               <span
                 className={`px-2.5 py-0.5 rounded-lg text-xs font-bold uppercase tracking-wider ${
@@ -348,7 +601,7 @@ export default function SatPractice() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => setIsBookmarked(!isBookmarked)}
+                onClick={handleToggleBookmark}
                 className={`p-2 rounded-xl border transition-colors ${
                   isBookmarked
                     ? 'bg-amber-500 border-amber-600 text-white'
@@ -527,8 +780,38 @@ export default function SatPractice() {
           </div>
         </div>
       ) : (
-        <div className="bg-white p-12 text-center rounded-3xl border border-neutral-200">
-          <p className="text-neutral-500 font-medium">No questions found in this domain.</p>
+        /* Honest, Clear Empty State for Unseeded/Empty Topics */
+        <div className="bg-white p-10 md:p-14 text-center rounded-3xl border border-neutral-200 shadow-sm space-y-5 max-w-2xl mx-auto">
+          <div className="w-14 h-14 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+            <Compass className="w-7 h-7 text-amber-700" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold text-neutral-900">
+              {DOMAIN_METADATA[selectedDomain]?.name || 'Domain'} Practice Questions Coming Soon
+            </h3>
+            <p className="text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
+              Original, calibrated Digital SAT practice questions for <strong>{DOMAIN_METADATA[selectedDomain]?.name}</strong> are currently being authored and verified. In the meantime, you can explore the complete curriculum in the Textbook Library.
+            </p>
+          </div>
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              onClick={() =>
+                navigate(
+                  `/student/sat/textbooks?textbookId=${DOMAIN_METADATA[selectedDomain]?.defaultTextbookId}&page=${DOMAIN_METADATA[selectedDomain]?.defaultPage}`
+                )
+              }
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-2 shadow-xs"
+            >
+              <BookOpen className="w-4 h-4" />
+              Study in Textbook Library
+            </button>
+            <button
+              onClick={() => handleSelectDomain(selectedSubject === 'math' ? 'algebra' : 'information-ideas')}
+              className="px-5 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold rounded-xl transition-colors"
+            >
+              Switch to Available Topic
+            </button>
+          </div>
         </div>
       )}
 
