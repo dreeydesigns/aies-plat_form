@@ -138,3 +138,29 @@ export const signOut = async () => {
 };
 
 export const logout = signOut;
+
+
+/**
+ * Recursively cleans an object to ensure no `undefined` values are ever passed to Firestore setDoc/updateDoc.
+ */
+export function sanitizeFirestoreData(data: any): any {
+  if (data === null || data === undefined) return null;
+  if (Array.isArray(data)) {
+    return data.map(sanitizeFirestoreData).filter(v => v !== undefined);
+  }
+  if (typeof data === 'object' && !(data instanceof Date)) {
+    const clean: any = {};
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined) {
+        clean[key] = sanitizeFirestoreData(value);
+      }
+    }
+    return clean;
+  }
+  return data;
+}
+
+export const safeSetDoc = async (docRef: any, data: any, options?: any) => {
+  const cleanData = sanitizeFirestoreData(data);
+  return options ? setDoc(docRef, cleanData, options) : setDoc(docRef, cleanData);
+};

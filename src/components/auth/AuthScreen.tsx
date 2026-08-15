@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { googleSignIn, emailSignIn, emailSignUp, sendPasswordReset } from '../../lib/firebase';
+import { googleSignIn, emailSignIn, emailSignUp, sendPasswordReset, safeSetDoc } from '../../lib/firebase';
 import DesktopDownloadCard from '../shared/DesktopDownloadCard';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { generateLinkCode } from '../../lib/linkUtils';
 import { 
@@ -119,7 +119,7 @@ export default function AuthScreen() {
       newUser.childIds = [];
     }
 
-    await setDoc(doc(db, 'users', uid), newUser);
+    await safeSetDoc(doc(db, 'users', uid), newUser);
     return newUser;
   };
 
@@ -186,7 +186,7 @@ export default function AuthScreen() {
           enrichedUser.childIds = [];
         }
         
-        await setDoc(doc(db, 'users', signupResult.uid), enrichedUser);
+        await safeSetDoc(doc(db, 'users', signupResult.uid), enrichedUser);
         setUserProfile({ ...enrichedUser, id: signupResult.uid } as any);
         navigate(role === 'student' ? '/onboarding' : `/${role}`);
       } else {
