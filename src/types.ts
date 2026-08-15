@@ -145,6 +145,57 @@ export interface SatAttempt {
   rwScaledScore?: number;
 }
 
+export interface TextbookWorkedExample {
+  title: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  problem: string;
+  solution: string;
+  trap?: string;
+}
+
+export interface TextbookRelatedTopic {
+  title: string;
+  textbookId: string;
+  chapterId?: string;
+  sectionId?: string;
+  pageNumber?: number;
+  domain: string;
+}
+
+export interface TextbookSection {
+  id: string;
+  sectionNumber: string; // e.g. "1.1", "2.3"
+  title: string;          // e.g. "Words in Context: High-Frequency Vocabulary"
+  skill: string;          // e.g. "Words in Context"
+  pageNumber: number;     // e.g. 1
+  conceptSummary: string; // Core theory & pedagogical foundation
+  methodSteps: string[];  // Step 1, Step 2, Step 3
+  workedExamples: TextbookWorkedExample[];
+  commonMistakes: string[];
+  featuredQuestionId?: string;
+  similarQuestionIds?: string[];
+  relatedTopics?: TextbookRelatedTopic[];
+}
+
+export interface TextbookChapter {
+  id: string;
+  chapterNumber: number;
+  title: string;
+  domain: SatDomain;
+  description: string;
+  sections: TextbookSection[];
+}
+
+export interface TextbookChangelogEntry {
+  id: string;
+  date: string;
+  summary: string;
+  triggerExamTitle?: string;
+  teacherName?: string;
+  approvedBy?: string;
+  sectionsAdded: number;
+}
+
 export interface TextbookPage {
   pageNumber: number;
   content: string;
@@ -155,9 +206,15 @@ export interface TextbookPage {
 export interface Textbook {
   id: string;
   title: string;
+  subject: 'math' | 'reading-writing';
   author: string;
   publisherOrOwner: string;
   coverColor: string;
+  description?: string;
+  version?: string;
+  lastUpdated?: string;
+  changelog?: TextbookChangelogEntry[];
+  chapters?: TextbookChapter[];
   pages: TextbookPage[];
 }
 

@@ -2,13 +2,23 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { initialTextbooks } from '../../../data/textbooks';
 import { initialSatQuestions } from '../../../data/sat-questions';
-import { Textbook, TextbookPage, SatQuestion } from '../../../types';
+import { 
+  Textbook, 
+  TextbookChapter, 
+  TextbookSection, 
+  TextbookPage, 
+  SatQuestion,
+  SatSubjectSection 
+} from '../../../types';
 import { LessonContent } from '../../../components/shared/LessonContent';
+import SprInput from '../../../components/sat/SprInput';
 import { 
   BookOpen, 
   Search, 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
+  ChevronUp,
   Highlighter, 
   ArrowLeft, 
   Bookmark, 
@@ -22,7 +32,15 @@ import {
   CheckCircle2,
   XCircle,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Filter,
+  History,
+  Target,
+  BookMarked,
+  Link as LinkIcon,
+  Compass,
+  GraduationCap,
+  ExternalLink
 } from 'lucide-react';
 
 export const normalizeTextbookId = (id: string | null | undefined): string => {
@@ -34,440 +52,1226 @@ export const normalizeTextbookId = (id: string | null | undefined): string => {
   return id;
 };
 
+interface SearchSectionResult {
+  textbook: Textbook;
+  chapter: TextbookChapter;
+  section: TextbookSection;
+  matchedField: string;
+  excerpt: string;
+}
+
 export default function SatTextbooks() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const textbookIdParam = searchParams.get('textbookId') || searchParams.get('book');
+  const chapterParam = searchParams.get('chapter');
+  const sectionParam = searchParams.get('section');
   const pageParam = parseInt(searchParams.get('page') || '0', 10);
   const highlightParam = searchParams.get('highlight') || '';
 
+  // Active Navigation State
   const [selectedBook, setSelectedBook] = useState<Textbook | null>(null);
+  const [activeChapterId, setActiveChapterId] = useState<string>('');
+  const [activeSectionId, setActiveSectionId] = useState<string>('');
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
+
+  // Landing Page Subject Filter & Search
+  const [subjectFilter, setSubjectFilter] = useState<'all' | 'reading-writing' | 'math'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Reader Sidebar & Mode
+  const [expandedChapters, setExpandedChapters] = useState<Record<string, boolean>>({});
+  const [activeReaderTab, setActiveReaderTab] = useState<'lesson' | 'qa-drill' | 'ai-insights' | 'changelog'>('lesson');
   const [copiedLink, setCopiedLink] = useState(false);
-  const [showAiAssistant, setShowAiAssistant] = useState(false);
-  const [activeTab, setActiveTab] = useState<'reading' | 'questions' | 'ai'>('reading');
+
+  // Q&A Two-Pane Player State
+  const [activeDrillQuestionId, setActiveDrillQuestionId] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [sprAnswer, setSprAnswer] = useState('');
+  const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
 
   const highlightRef = useRef<HTMLDivElement | null>(null);
 
-  // Initialize selected book and page from query params
+  // Initialize and synchronize route parameters
   useEffect(() => {
     if (textbookIdParam) {
       const normId = normalizeTextbookId(textbookIdParam);
       const book = initialTextbooks.find(b => b.id === normId || b.id === textbookIdParam);
       if (book) {
         setSelectedBook(book);
-        if (pageParam > 0) {
+
+        // Expand all chapters in active book by default
+        const expandMap: Record<string, boolean> = {};
+        book.chapters?.forEach(ch => {
+          expandMap[ch.id] = true;
+        });
+        setExpandedChapters(expandMap);
+
+        // Find Chapter & Section
+        if (chapterParam && book.chapters) {
+          const ch = book.chapters.find(c => c.id === chapterParam);
+          if (ch) {
+            setActiveChapterId(ch.id);
+            if (sectionParam) {
+              const sec = ch.sections.find(s => s.id === sectionParam);
+              if (sec) {
+                setActiveSectionId(sec.id);
+                if (sec.featuredQuestionId) setActiveDrillQuestionId(sec.featuredQuestionId);
+              }
+            } else if (ch.sections[0]) {
+              setActiveSectionId(ch.sections[0].id);
+              if (ch.sections[0].featuredQuestionId) setActiveDrillQuestionId(ch.sections[0].featuredQuestionId);
+            }
+          }
+        } else if (book.chapters && book.chapters.length > 0) {
+          const firstCh = book.chapters[0];
+          setActiveChapterId(firstCh.id);
+          if (firstCh.sections[0]) {
+            setActiveSectionId(firstCh.sections[0].id);
+            if (firstCh.sections[0].featuredQuestionId) setActiveDrillQuestionId(firstCh.sections[0].featuredQuestionId);
+          }
+        }
+
+        // Backward compatibility for page param
+        if (pageParam > 0 && book.pages) {
           const pageIdx = book.pages.findIndex(p => p.pageNumber === pageParam);
           if (pageIdx !== -1) {
             setCurrentPageIndex(pageIdx);
           }
         }
       }
+    } else {
+      setSelectedBook(null);
     }
-  }, [textbookIdParam, pageParam]);
+  }, [textbookIdParam, chapterParam, sectionParam, pageParam]);
 
   // Scroll to highlight if present
   useEffect(() => {
     if (highlightParam && highlightRef.current) {
       highlightRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [highlightParam, currentPageIndex, selectedBook]);
+  }, [highlightParam, selectedBook, activeSectionId, currentPageIndex]);
 
+  // Current active Chapter & Section objects
+  const activeChapter = useMemo(() => {
+    if (!selectedBook?.chapters) return null;
+    return selectedBook.chapters.find(c => c.id === activeChapterId) || selectedBook.chapters[0] || null;
+  }, [selectedBook, activeChapterId]);
+
+  const activeSection = useMemo(() => {
+    if (!activeChapter?.sections) return null;
+    return activeChapter.sections.find(s => s.id === activeSectionId) || activeChapter.sections[0] || null;
+  }, [activeChapter, activeSectionId]);
+
+  // Handle Book Selection from Landing Page
   const handleSelectBook = (book: Textbook) => {
     setSelectedBook(book);
+    const firstChapter = book.chapters?.[0];
+    const firstSection = firstChapter?.sections?.[0];
+    
+    setActiveChapterId(firstChapter?.id || '');
+    setActiveSectionId(firstSection?.id || '');
     setCurrentPageIndex(0);
-    setSearchParams({ textbookId: book.id, page: book.pages[0]?.pageNumber.toString() || '1' });
+    setActiveReaderTab('lesson');
+    setIsAnswerSubmitted(false);
+    setSelectedOption(null);
+    setSprAnswer('');
+
+    setSearchParams({
+      textbookId: book.id,
+      chapter: firstChapter?.id || '',
+      section: firstSection?.id || '',
+      page: (firstSection?.pageNumber || 1).toString()
+    });
   };
 
-  const handlePageChange = (newIdx: number) => {
-    if (!selectedBook) return;
-    if (newIdx >= 0 && newIdx < selectedBook.pages.length) {
-      setCurrentPageIndex(newIdx);
-      const pageNum = selectedBook.pages[newIdx].pageNumber;
-      setSearchParams({ textbookId: selectedBook.id, page: pageNum.toString() });
+  // Handle Section Selection from Table of Contents
+  const handleSelectSection = (chapterId: string, sectionId: string, pageNumber: number) => {
+    setActiveChapterId(chapterId);
+    setActiveSectionId(sectionId);
+    setIsAnswerSubmitted(false);
+    setSelectedOption(null);
+    setSprAnswer('');
+
+    const targetChapter = selectedBook?.chapters?.find(c => c.id === chapterId);
+    const targetSection = targetChapter?.sections.find(s => s.id === sectionId);
+    if (targetSection?.featuredQuestionId) {
+      setActiveDrillQuestionId(targetSection.featuredQuestionId);
+    }
+
+    if (selectedBook) {
+      setSearchParams({
+        textbookId: selectedBook.id,
+        chapter: chapterId,
+        section: sectionId,
+        page: pageNumber.toString()
+      });
     }
   };
 
+  // Toggle chapter expansion in left rail
+  const toggleChapterExpand = (chapterId: string) => {
+    setExpandedChapters(prev => ({
+      ...prev,
+      [chapterId]: !prev[chapterId]
+    }));
+  };
+
+  // Share deep link to exact section / page
   const handleShareLink = () => {
     if (!selectedBook) return;
-    const pageNum = selectedBook.pages[currentPageIndex]?.pageNumber || 1;
-    const url = `${window.location.origin}/student/sat/textbooks?textbookId=${selectedBook.id}&page=${pageNum}`;
+    const url = window.location.href;
     navigator.clipboard.writeText(url);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
 
-  // Questions referenced by this book/page
-  const relatedQuestions = useMemo(() => {
-    if (!selectedBook) return [];
-    const currentPage = selectedBook.pages[currentPageIndex];
-    if (!currentPage) return [];
-    const normBookId = normalizeTextbookId(selectedBook.id);
-    return initialSatQuestions.filter(q => {
-      const qNormId = normalizeTextbookId(q.textbookRef?.textbookId);
-      return (
-        (qNormId === normBookId || q.textbookRef?.textbookId === selectedBook.id) &&
-        (q.textbookRef?.page === currentPage.pageNumber || !q.textbookRef?.page)
-      );
-    });
-  }, [selectedBook, currentPageIndex]);
+  // Semantic & Full-Text AI Search across all sections (returns top 5 ranked section results)
+  const searchResults: SearchSectionResult[] = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const q = searchQuery.toLowerCase().trim();
+    const results: SearchSectionResult[] = [];
 
-  // Filter books by search
-  const filteredBooks = useMemo(() => {
-    if (!searchQuery) return initialTextbooks;
-    const q = searchQuery.toLowerCase();
-    return initialTextbooks.filter(
-      b => b.title.toLowerCase().includes(q) || 
-           b.author.toLowerCase().includes(q) ||
-           b.pages.some(p => 
-             p.content.toLowerCase().includes(q) || 
-             (p.ocrText && p.ocrText.toLowerCase().includes(q)) ||
-             p.sections.some(s => s.heading.toLowerCase().includes(q) || s.text.toLowerCase().includes(q))
-           )
-    );
+    initialTextbooks.forEach(book => {
+      book.chapters?.forEach(chapter => {
+        chapter.sections?.forEach(section => {
+          let score = 0;
+          let matchedField = 'General Content';
+          let excerpt = section.conceptSummary;
+
+          if (section.title.toLowerCase().includes(q)) {
+            score += 100;
+            matchedField = 'Section Title';
+          }
+          if (section.skill.toLowerCase().includes(q)) {
+            score += 80;
+            matchedField = 'Tested Skill';
+          }
+          if (section.conceptSummary.toLowerCase().includes(q)) {
+            score += 60;
+            matchedField = 'Core Concept';
+          }
+          
+          // Check worked examples
+          section.workedExamples?.forEach(ex => {
+            if (ex.problem.toLowerCase().includes(q) || ex.solution.toLowerCase().includes(q)) {
+              score += 40;
+              matchedField = 'Worked Example';
+              excerpt = ex.problem;
+            }
+          });
+
+          // Check common mistakes
+          section.commonMistakes?.forEach(m => {
+            if (m.toLowerCase().includes(q)) {
+              score += 30;
+              matchedField = 'Common Trap';
+              excerpt = m;
+            }
+          });
+
+          // Semantic synonym boosting
+          if (q.includes('run-on') || q.includes('comma splice') || q.includes('semicolon')) {
+            if (section.skill.toLowerCase().includes('boundaries') || section.title.toLowerCase().includes('boundaries')) {
+              score += 90;
+              matchedField = 'Grammar Rule';
+            }
+          }
+          if (q.includes('vocab') || q.includes('word in context') || q.includes('tone')) {
+            if (section.skill.toLowerCase().includes('words in context')) {
+              score += 90;
+              matchedField = 'Vocabulary Strategy';
+            }
+          }
+          if (q.includes('parabola') || q.includes('vertex') || q.includes('max')) {
+            if (section.skill.toLowerCase().includes('vertex') || section.skill.toLowerCase().includes('quadratic')) {
+              score += 90;
+              matchedField = 'Quantitative Method';
+            }
+          }
+
+          if (score > 0) {
+            results.push({
+              textbook: book,
+              chapter,
+              section,
+              matchedField,
+              excerpt: excerpt.length > 140 ? excerpt.substring(0, 140) + '...' : excerpt
+            });
+          }
+        });
+      });
+    });
+
+    return results.slice(0, 5);
   }, [searchQuery]);
 
-  // TEXTBOOK READER VIEW
-  if (selectedBook) {
-    const currentPage: TextbookPage | undefined = selectedBook.pages[currentPageIndex];
+  // Active Drill Question for Two-Pane View
+  const featuredQuestion: SatQuestion | null = useMemo(() => {
+    if (activeDrillQuestionId) {
+      const found = initialSatQuestions.find(q => q.id === activeDrillQuestionId);
+      if (found) return found;
+    }
+    if (activeSection?.featuredQuestionId) {
+      const found = initialSatQuestions.find(q => q.id === activeSection.featuredQuestionId);
+      if (found) return found;
+    }
+    // Fallback to domain questions
+    if (activeChapter?.domain) {
+      return initialSatQuestions.find(q => q.domain === activeChapter.domain) || null;
+    }
+    return null;
+  }, [activeDrillQuestionId, activeSection, activeChapter]);
 
+  // Similar Questions list for Left Pane drill
+  const similarQuestions: SatQuestion[] = useMemo(() => {
+    if (!featuredQuestion) return [];
+    return initialSatQuestions
+      .filter(q => q.id !== featuredQuestion.id && (q.skill === featuredQuestion.skill || q.domain === featuredQuestion.domain))
+      .slice(0, 4);
+  }, [featuredQuestion]);
+
+  const handleSelectDrillQuestion = (qId: string) => {
+    setActiveDrillQuestionId(qId);
+    setSelectedOption(null);
+    setSprAnswer('');
+    setIsAnswerSubmitted(false);
+  };
+
+  const handleCheckDrillAnswer = () => {
+    if (!featuredQuestion) return;
+    setIsAnswerSubmitted(true);
+  };
+
+  // Grouped textbooks for Landing Page
+  const mathTextbooks = useMemo(() => {
+    return initialTextbooks.filter(b => b.subject === 'math');
+  }, []);
+
+  const rwTextbooks = useMemo(() => {
+    return initialTextbooks.filter(b => b.subject === 'reading-writing');
+  }, []);
+
+  // =========================================================================
+  // VIEW 1: LIBRARY LANDING PAGE (SUBJECT-FIRST + 5-RESULT AI SEARCH)
+  // =========================================================================
+  if (!selectedBook) {
     return (
-      <div className="space-y-6 max-w-6xl mx-auto pb-16">
-        {/* Navigation bar */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => setSelectedBook(null)}
-            className="flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-neutral-900 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Textbook Library
-          </button>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleShareLink}
-              className="px-3 py-1.5 rounded-xl border border-neutral-200 text-neutral-700 hover:bg-neutral-50 text-xs font-bold flex items-center gap-1.5 transition-colors"
-            >
-              {copiedLink ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700">Link Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span>Share Page</span>
-                </>
-              )}
-            </button>
+      <div className="max-w-6xl mx-auto space-y-8 py-4">
+        {/* Landing Header */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest">
+            <BookOpen className="w-4 h-4" />
+            <span>Digital SAT Curriculum & Reference Library</span>
           </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-900 tracking-tight">
+            Official Textbook Library
+          </h1>
+          <p className="text-sm md:text-base text-neutral-600 max-w-3xl leading-relaxed">
+            Multi-tier pedagogical reference manuals with step-by-step methods, worked examples, common trap breakdowns, and living question integrations.
+          </p>
         </div>
 
-        {/* Reader Layout Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Table of Contents / Sidebar */}
-          <div className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm space-y-4 md:col-span-1 h-fit">
-            <div className="flex items-center gap-2 pb-3 border-b border-neutral-100">
-              <BookOpen className="w-4 h-4 text-blue-600" />
-              <h3 className="font-bold text-neutral-900 text-sm">Table of Contents</h3>
-            </div>
-
-            <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1">
-              {selectedBook.pages.map((p, idx) => (
-                <button
-                  key={p.pageNumber}
-                  onClick={() => handlePageChange(idx)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition-all flex items-center justify-between ${
-                    currentPageIndex === idx
-                      ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200 shadow-xs'
-                      : 'text-neutral-600 hover:bg-neutral-50'
-                  }`}
-                >
-                  <span className="truncate">{p.sections[0]?.heading || `Page ${p.pageNumber}`}</span>
-                  <span className="text-[10px] text-neutral-400">p.{p.pageNumber}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Quick Practice Launcher */}
-            <div className="pt-4 border-t border-neutral-100 space-y-2">
+        {/* AI-Enabled Full-Text & Semantic Search Bar */}
+        <div className="relative">
+          <div className="relative flex items-center bg-white rounded-2xl border-2 border-neutral-200 focus-within:border-blue-600 focus-within:ring-4 focus-within:ring-blue-500/10 shadow-sm transition-all">
+            <Search className="w-5 h-5 text-neutral-400 ml-4 shrink-0" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search concepts, methods, formulas, or grammar rules (e.g. 'Words in Context', 'Quadratic Vertex', 'Comma Splices')..."
+              className="w-full px-3 py-3.5 text-sm bg-transparent outline-hidden text-neutral-900 placeholder:text-neutral-400 font-medium"
+            />
+            {searchQuery && (
               <button
-                onClick={() => navigate('/student/sat/practice')}
-                className="w-full py-2.5 px-3 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                onClick={() => setSearchQuery('')}
+                className="mr-3 px-2 py-1 text-xs text-neutral-400 hover:text-neutral-700 bg-neutral-100 rounded-lg"
               >
-                <Zap className="w-3.5 h-3.5 text-amber-400" />
-                Practice This Subject
+                Clear
               </button>
-            </div>
+            )}
           </div>
 
-          {/* Page Display & Content */}
-          <div className="bg-white p-6 md:p-10 rounded-3xl border border-neutral-200 shadow-sm md:col-span-3 space-y-8 min-h-[500px]">
-            {/* Header info */}
-            <div className="border-b border-neutral-100 pb-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-                  {selectedBook.title}
-                </p>
-                <h1 className="text-2xl font-bold text-neutral-900 mt-1">
-                  {currentPage?.sections[0]?.heading || `Page ${currentPage?.pageNumber}`}
-                </h1>
+          {/* Quick Search Suggestion Chips */}
+          <div className="flex items-center gap-2 pt-2.5 overflow-x-auto text-xs text-neutral-500">
+            <span className="font-bold text-neutral-400 shrink-0">Popular:</span>
+            {['Words in Context', 'Linear Systems', 'Sentence Boundaries', 'Vertex Form', 'Inferences', 'Dimensional Analysis'].map(chip => (
+              <button
+                key={chip}
+                onClick={() => setSearchQuery(chip)}
+                className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-blue-50 hover:text-blue-700 text-neutral-600 font-medium shrink-0 transition-colors"
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+
+          {/* Top 5 Ranked Section-Level Search Results Dropdown */}
+          {searchQuery.trim().length > 1 && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl border border-neutral-200 shadow-2xl z-50 p-4 space-y-3">
+              <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+                <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
+                  Top 5 Section-Level Results for "{searchQuery}"
+                </span>
+                <span className="text-xs text-neutral-400">
+                  {searchResults.length} {searchResults.length === 1 ? 'match' : 'matches'} found
+                </span>
               </div>
-              <span className="text-sm font-bold text-neutral-400">
-                Pg. {currentPage?.pageNumber}
+
+              {searchResults.length > 0 ? (
+                <div className="space-y-2">
+                  {searchResults.map((res, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        handleSelectBook(res.textbook);
+                        handleSelectSection(res.chapter.id, res.section.id, res.section.pageNumber);
+                        setSearchQuery('');
+                      }}
+                      className="w-full text-left p-3.5 rounded-2xl hover:bg-blue-50/60 border border-neutral-100 hover:border-blue-200 transition-all flex items-start justify-between gap-4 group"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider ${
+                            res.textbook.subject === 'math'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}>
+                            {res.textbook.subject === 'math' ? '📐 Math' : '📖 Reading & Writing'}
+                          </span>
+                          <span className="text-xs font-semibold text-neutral-400">
+                            {res.textbook.title} &gt; {res.chapter.title}
+                          </span>
+                        </div>
+
+                        <p className="text-sm font-bold text-neutral-900 group-hover:text-blue-700 transition-colors">
+                          Section {res.section.sectionNumber} — {res.section.title}
+                        </p>
+
+                        <p className="text-xs text-neutral-500 line-clamp-2 leading-relaxed">
+                          <LessonContent content={res.excerpt} />
+                        </p>
+                      </div>
+
+                      <div className="shrink-0 pt-1 text-blue-600 group-hover:translate-x-1 transition-transform">
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="py-6 text-center text-sm text-neutral-500">
+                  No matching sections found for "{searchQuery}". Try searching for broader terms like "Algebra", "Punctuation", or "Slope".
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Subject Filter Switcher */}
+        <div className="flex items-center gap-2 border-b border-neutral-200 pb-2">
+          <button
+            onClick={() => setSubjectFilter('all')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              subjectFilter === 'all'
+                ? 'bg-neutral-900 text-white shadow-xs'
+                : 'text-neutral-600 hover:bg-neutral-100'
+            }`}
+          >
+            All Textbooks ({initialTextbooks.length})
+          </button>
+          <button
+            onClick={() => setSubjectFilter('reading-writing')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              subjectFilter === 'reading-writing'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-neutral-600 hover:bg-neutral-100'
+            }`}
+          >
+            <span>📖</span>
+            <span>Reading & Writing ({rwTextbooks.length})</span>
+          </button>
+          <button
+            onClick={() => setSubjectFilter('math')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              subjectFilter === 'math'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-neutral-600 hover:bg-neutral-100'
+            }`}
+          >
+            <span>📐</span>
+            <span>Math ({mathTextbooks.length})</span>
+          </button>
+        </div>
+
+        {/* SECTION 1: Reading & Writing Textbooks */}
+        {(subjectFilter === 'all' || subjectFilter === 'reading-writing') && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="p-1.5 bg-amber-100 text-amber-800 rounded-lg">
+                  <BookMarked className="w-4 h-4" />
+                </span>
+                <h2 className="text-lg font-bold text-neutral-900">
+                  Reading & Writing Curriculum
+                </h2>
+              </div>
+              <span className="text-xs font-bold text-neutral-400">
+                {rwTextbooks.length} Volume Collections
               </span>
             </div>
 
-            {/* Highlight Alert if navigating from wrong answer remediation */}
-            {highlightParam && (
-              <div
-                ref={highlightRef}
-                className="p-4 bg-amber-50 border-2 border-amber-300 rounded-2xl text-amber-950 space-y-1.5 animate-in fade-in"
-              >
-                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-amber-800">
-                  <Highlighter className="w-4 h-4 text-amber-600" />
-                  Target Remediation Passage
-                </div>
-                <p className="text-sm font-medium italic">
-                  "{decodeURIComponent(highlightParam)}"
-                </p>
-              </div>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {rwTextbooks.map(book => {
+                const totalSections = book.chapters?.reduce((acc, c) => acc + (c.sections?.length || 0), 0) || 0;
+                const totalChapters = book.chapters?.length || 0;
 
-            {/* Mode Selector Tabs */}
-            <div className="flex items-center gap-2 border-b border-neutral-100 pb-2">
-              <button
-                onClick={() => setActiveTab('reading')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  activeTab === 'reading' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
-                }`}
-              >
-                Textbook Chapter
-              </button>
-              <button
-                onClick={() => setActiveTab('questions')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 ${
-                  activeTab === 'questions' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
-                }`}
-              >
-                <span>Linked Questions</span>
-                <span className="px-1.5 py-0.2 bg-neutral-200 text-neutral-800 rounded-full text-[10px]">
-                  {relatedQuestions.length}
+                return (
+                  <div
+                    key={book.id}
+                    className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between space-y-5 group"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-200/80 flex items-center gap-1.5">
+                          <span>📖</span>
+                          <span>Reading & Writing</span>
+                        </span>
+                        <span className="text-[11px] font-bold text-neutral-400 font-mono">
+                          {book.version || 'v1.0'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-bold text-neutral-900 group-hover:text-blue-600 transition-colors">
+                          {book.title}
+                        </h3>
+                        <p className="text-xs text-neutral-500 font-medium mt-0.5">
+                          {book.author}
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-neutral-600 leading-relaxed line-clamp-2">
+                        {book.description || 'Comprehensive curriculum with multi-tier worked examples, method steps, and living exam updates.'}
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 pt-3 border-t border-neutral-100">
+                      {/* Metric Badges */}
+                      <div className="flex items-center justify-between text-xs text-neutral-500">
+                        <span className="font-bold text-neutral-700">
+                          {totalChapters} Domains · {totalSections} Skills
+                        </span>
+                        <span className="text-[11px] text-neutral-400">
+                          {book.pages?.length || 40}+ Core Pages
+                        </span>
+                      </div>
+
+                      {/* Changelog Summary */}
+                      {book.changelog && book.changelog[0] && (
+                        <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-100 text-[11px] text-neutral-600 flex items-start gap-2">
+                          <History className="w-3.5 h-3.5 text-neutral-400 shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">
+                            <strong>Updated {book.changelog[0].date}:</strong> {book.changelog[0].summary}
+                          </span>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => handleSelectBook(book)}
+                        className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-blue-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 shadow-xs"
+                      >
+                        <span>Open Textbook</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* SECTION 2: Math Textbooks */}
+        {(subjectFilter === 'all' || subjectFilter === 'math') && (
+          <div className="space-y-4 pt-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="p-1.5 bg-blue-100 text-blue-800 rounded-lg">
+                  <Compass className="w-4 h-4" />
                 </span>
-              </button>
-              <button
-                onClick={() => setActiveTab('ai')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 ${
-                  activeTab === 'ai' ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                AI Key Takeaways
-              </button>
+                <h2 className="text-lg font-bold text-neutral-900">
+                  Math Curriculum & Quantitative Reasoning
+                </h2>
+              </div>
+              <span className="text-xs font-bold text-neutral-400">
+                {mathTextbooks.length} Volume Collections
+              </span>
             </div>
 
-            {/* Tab: Reading */}
-            {activeTab === 'reading' && (
-              <div className="space-y-6">
-                <div className="max-w-none text-neutral-800 leading-relaxed text-sm">
-                  <LessonContent content={currentPage?.content || ''} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {mathTextbooks.map(book => {
+                const totalSections = book.chapters?.reduce((acc, c) => acc + (c.sections?.length || 0), 0) || 0;
+                const totalChapters = book.chapters?.length || 0;
+
+                return (
+                  <div
+                    key={book.id}
+                    className="bg-white rounded-3xl border border-neutral-200 shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between space-y-5 group"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold uppercase tracking-wider bg-blue-100 text-blue-900 border border-blue-200/80 flex items-center gap-1.5">
+                          <span>📐</span>
+                          <span>Math</span>
+                        </span>
+                        <span className="text-[11px] font-bold text-neutral-400 font-mono">
+                          {book.version || 'v1.0'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-bold text-neutral-900 group-hover:text-blue-600 transition-colors">
+                          {book.title}
+                        </h3>
+                        <p className="text-xs text-neutral-500 font-medium mt-0.5">
+                          {book.author}
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-neutral-600 leading-relaxed line-clamp-2">
+                        {book.description || 'Algebraic foundations, linear functions, quadratic modeling, and data interpretation.'}
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 pt-3 border-t border-neutral-100">
+                      {/* Metric Badges */}
+                      <div className="flex items-center justify-between text-xs text-neutral-500">
+                        <span className="font-bold text-neutral-700">
+                          {totalChapters} Domains · {totalSections} Skills
+                        </span>
+                        <span className="text-[11px] text-neutral-400">
+                          {book.pages?.length || 50}+ Core Pages
+                        </span>
+                      </div>
+
+                      {/* Changelog Summary */}
+                      {book.changelog && book.changelog[0] && (
+                        <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-100 text-[11px] text-neutral-600 flex items-start gap-2">
+                          <History className="w-3.5 h-3.5 text-neutral-400 shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">
+                            <strong>Updated {book.changelog[0].date}:</strong> {book.changelog[0].summary}
+                          </span>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => handleSelectBook(book)}
+                        className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-blue-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 shadow-xs"
+                      >
+                        <span>Open Textbook</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 2: TEXTBOOK READER (REAL TOC RAIL + TWO-PANE Q&A DRILL + LESSON VIEW)
+  // =========================================================================
+  return (
+    <div className="max-w-7xl mx-auto space-y-4 py-2">
+      {/* Top Reader Navigation Bar */}
+      <div className="bg-white p-4 rounded-3xl border border-neutral-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => {
+              setSelectedBook(null);
+              setSearchParams({});
+            }}
+            className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition-colors flex items-center gap-1.5 text-xs font-bold"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">Library</span>
+          </button>
+
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider ${
+                selectedBook.subject === 'math'
+                  ? 'bg-blue-100 text-blue-800'
+                  : 'bg-amber-100 text-amber-800'
+              }`}>
+                {selectedBook.subject === 'math' ? '📐 Math' : '📖 Reading & Writing'}
+              </span>
+              <span className="text-xs font-bold text-neutral-400 hidden sm:inline">
+                {selectedBook.title}
+              </span>
+            </div>
+            <h2 className="text-base font-bold text-neutral-900 line-clamp-1">
+              {activeChapter?.title} &gt; {activeSection?.title || 'Section Overview'}
+            </h2>
+          </div>
+        </div>
+
+        {/* View Mode Tabs + Action Buttons */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1 bg-neutral-100 p-1 rounded-2xl border border-neutral-200">
+            <button
+              onClick={() => setActiveReaderTab('lesson')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeReaderTab === 'lesson'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              Lesson & Method
+            </button>
+            <button
+              onClick={() => setActiveReaderTab('qa-drill')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeReaderTab === 'qa-drill'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <Target className="w-3.5 h-3.5" />
+              Two-Pane Q&A Drill
+            </button>
+            <button
+              onClick={() => setActiveReaderTab('changelog')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeReaderTab === 'changelog'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              <History className="w-3.5 h-3.5" />
+              Growth Log
+            </button>
+          </div>
+
+          <button
+            onClick={handleShareLink}
+            className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-900 transition-colors"
+            title="Share Section Deep Link"
+          >
+            {copiedLink ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Main Reader Workspace (Left TOC Rail + Main Content) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Rail: Real Chapter & Section Table of Contents */}
+        <div className="lg:col-span-4 bg-white rounded-3xl border border-neutral-200 p-4 shadow-sm space-y-3 sticky top-4 max-h-[85vh] overflow-y-auto">
+          <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+            <span className="text-xs font-mono font-extrabold uppercase tracking-wider text-neutral-400">
+              TABLE OF CONTENTS
+            </span>
+            <span className="text-[11px] font-bold text-blue-600">
+              {selectedBook.chapters?.length || 0} Domains
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {selectedBook.chapters?.map(chapter => {
+              const isExpanded = expandedChapters[chapter.id] ?? true;
+              const isChapterActive = activeChapterId === chapter.id;
+
+              return (
+                <div key={chapter.id} className="rounded-2xl border border-neutral-100 overflow-hidden">
+                  {/* Chapter Header Toggle */}
+                  <button
+                    onClick={() => toggleChapterExpand(chapter.id)}
+                    className={`w-full text-left p-3 flex items-center justify-between transition-colors ${
+                      isChapterActive ? 'bg-blue-50/70 text-blue-900 font-bold' : 'bg-neutral-50/80 hover:bg-neutral-100 text-neutral-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-md bg-white border border-neutral-200 flex items-center justify-center text-[10px] font-extrabold text-neutral-700">
+                        {chapter.chapterNumber}
+                      </span>
+                      <span className="text-xs font-bold line-clamp-1">
+                        {chapter.title}
+                      </span>
+                    </div>
+                    {isExpanded ? <ChevronUp className="w-4 h-4 text-neutral-400" /> : <ChevronDown className="w-4 h-4 text-neutral-400" />}
+                  </button>
+
+                  {/* Section List */}
+                  {isExpanded && (
+                    <div className="p-1.5 space-y-1 bg-white">
+                      {chapter.sections?.map(section => {
+                        const isSectionActive = activeSectionId === section.id;
+
+                        return (
+                          <button
+                            key={section.id}
+                            onClick={() => handleSelectSection(chapter.id, section.id, section.pageNumber)}
+                            className={`w-full text-left p-2.5 rounded-xl transition-all flex items-center justify-between text-xs ${
+                              isSectionActive
+                                ? 'bg-neutral-900 text-white font-bold shadow-xs'
+                                : 'text-neutral-600 hover:bg-neutral-100'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-[11px] opacity-70">
+                                {section.sectionNumber}
+                              </span>
+                              <span className="line-clamp-1">
+                                {section.title}
+                              </span>
+                            </div>
+                            <span className="text-[10px] opacity-60 font-mono">
+                              p.{section.pageNumber}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* TAB 1: Core Lesson & Worked Examples */}
+          {activeReaderTab === 'lesson' && activeSection && (
+            <div className="space-y-6">
+              {/* Section Header Card */}
+              <div className="bg-white rounded-3xl p-6 md:p-8 border border-neutral-200 shadow-sm space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-blue-600 font-mono">
+                    SECTION {activeSection.sectionNumber} · {activeSection.skill}
+                  </span>
+                  <span className="text-xs font-bold text-neutral-400">
+                    Page {activeSection.pageNumber}
+                  </span>
                 </div>
 
-                {/* Structured Sections */}
-                {currentPage?.sections && currentPage.sections.length > 0 && (
-                  <div className="space-y-4 pt-4 border-t border-neutral-100">
-                    {currentPage.sections.map((section, idx) => (
-                      <div key={idx} className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-3">
-                        <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-blue-600" />
-                          {section.heading}
-                        </h3>
-                        <div className="text-sm text-neutral-700 leading-relaxed">
-                          <LessonContent content={section.text} />
+                <h1 className="text-2xl font-black text-neutral-900 tracking-tight">
+                  {activeSection.title}
+                </h1>
+
+                <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 text-sm text-neutral-800 leading-relaxed">
+                  <div className="font-bold text-blue-900 text-xs uppercase tracking-wider pb-1 flex items-center gap-1.5">
+                    <Lightbulb className="w-4 h-4 text-blue-600" />
+                    Concept Introduction & Theoretical Rule
+                  </div>
+                  <LessonContent content={activeSection.conceptSummary} />
+                </div>
+
+                {/* Core Method Steps */}
+                {activeSection.methodSteps && activeSection.methodSteps.length > 0 && (
+                  <div className="space-y-2.5 pt-2">
+                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-neutral-400 font-mono">
+                      THE CORE SYSTEMATIC METHOD
+                    </h3>
+                    <div className="space-y-2">
+                      {activeSection.methodSteps.map((step, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-800 leading-relaxed flex items-start gap-3"
+                        >
+                          <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                            {idx + 1}
+                          </span>
+                          <div className="pt-0.5">
+                            <LessonContent content={step} />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
-            )}
 
-            {/* Tab: Linked Questions */}
-            {activeTab === 'questions' && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-neutral-800">
-                    Official SAT Drill Items Grounded in Page {currentPage?.pageNumber}
-                  </h3>
-                  <span className="text-xs text-neutral-500">{relatedQuestions.length} questions available</span>
-                </div>
-
-                {relatedQuestions.length === 0 ? (
-                  <div className="p-8 text-center bg-neutral-50 rounded-2xl border border-neutral-200 text-neutral-500 text-xs">
-                    No individual questions mapped directly to this specific page index yet.
+              {/* Multi-Tier Worked Examples */}
+              {activeSection.workedExamples && activeSection.workedExamples.length > 0 && (
+                <div className="bg-white rounded-3xl p-6 md:p-8 border border-neutral-200 shadow-sm space-y-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-bold text-neutral-900">
+                      Step-by-Step Worked Examples
+                    </h3>
+                    <span className="text-xs font-bold text-neutral-400">
+                      {activeSection.workedExamples.length} Calibrated Models
+                    </span>
                   </div>
-                ) : (
+
                   <div className="space-y-4">
-                    {relatedQuestions.map((q, idx) => (
-                      <div key={q.id || idx} className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50 space-y-3">
+                    {activeSection.workedExamples.map((ex, idx) => (
+                      <div
+                        key={idx}
+                        className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50/50 space-y-3"
+                      >
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                            Item ID: {q.id}
+                          <span className="text-xs font-black text-neutral-900">
+                            {ex.title}
                           </span>
-                          <span className="text-xs font-extrabold uppercase text-neutral-500">
-                            {q.difficulty}
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider ${
+                            ex.difficulty === 'hard'
+                              ? 'bg-red-100 text-red-800'
+                              : ex.difficulty === 'medium'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-emerald-100 text-emerald-800'
+                          }`}>
+                            {ex.difficulty} Tier
                           </span>
                         </div>
-                        <div className="text-sm text-neutral-900 font-medium leading-relaxed">
-                          <LessonContent content={q.questionText} />
+
+                        <div className="p-3.5 rounded-xl bg-white border border-neutral-200 text-sm font-medium text-neutral-900">
+                          <LessonContent content={ex.problem} />
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                          {q.options?.map((opt, optIdx) => (
-                            <div
-                              key={optIdx}
-                              className={`p-3 rounded-xl text-xs font-semibold border flex items-center justify-between ${
-                                optIdx === q.correctAnswer
-                                  ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
-                                  : 'bg-white border-neutral-200 text-neutral-700'
-                              }`}
-                            >
-                              <span>{String.fromCharCode(65 + optIdx)}. {opt}</span>
-                              {optIdx === q.correctAnswer && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
-                            </div>
-                          ))}
+
+                        <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 leading-relaxed space-y-1">
+                          <span className="font-bold block text-emerald-900 uppercase tracking-wider text-[10px]">
+                            Model Solution:
+                          </span>
+                          <LessonContent content={ex.solution} />
                         </div>
-                        {q.explanation && (
-                          <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900 space-y-1">
-                            <span className="font-bold">Official Rationale: </span>
-                            <LessonContent content={q.explanation} />
+
+                        {ex.trap && (
+                          <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 flex items-start gap-2">
+                            <span className="font-bold text-amber-800 shrink-0">Common Trap:</span>
+                            <span>{ex.trap}</span>
                           </div>
                         )}
                       </div>
                     ))}
                   </div>
-                )}
+                </div>
+              )}
+
+              {/* Common Mistakes & Traps */}
+              {activeSection.commonMistakes && activeSection.commonMistakes.length > 0 && (
+                <div className="bg-white rounded-3xl p-6 md:p-8 border border-neutral-200 shadow-sm space-y-4">
+                  <div className="flex items-center gap-2 text-red-600 font-bold text-sm">
+                    <XCircle className="w-5 h-5" />
+                    <span>Frequently Observed Student Misconceptions</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {activeSection.commonMistakes.map((mistake, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-xl bg-red-50/60 border border-red-100 text-xs text-red-950 flex items-start gap-2.5"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 mt-1.5" />
+                        <LessonContent content={mistake} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Direct Jump to Q&A Drill Button */}
+              <div className="flex justify-end pt-2">
+                <button
+                  onClick={() => setActiveReaderTab('qa-drill')}
+                  className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 font-bold text-white text-xs transition-colors flex items-center gap-2 shadow-xs"
+                >
+                  <span>Practice Two-Pane Q&A Drill for this Section</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Tab: AI Key Takeaways */}
-            {activeTab === 'ai' && (
-              <div className="p-6 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 rounded-3xl border border-blue-200 space-y-4">
-                <div className="flex items-center gap-2 text-blue-900 font-extrabold text-sm">
-                  <Sparkles className="w-4 h-4 text-blue-600" />
-                  AI Synthesis & SAT Strategy Guide for Page {currentPage?.pageNumber}
-                </div>
-                <div className="space-y-3 text-xs text-neutral-800 leading-relaxed">
-                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
-                    <span className="font-bold text-blue-800">1. Core SAT Tested Concept</span>
-                    <p>Identify the central claim of the passage by determining what overarching idea connects every supporting sentence, rather than focusing on an isolated detail.</p>
-                  </div>
-                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
-                    <span className="font-bold text-amber-800">2. High-Frequency Trap Types</span>
-                    <p>Watch for choices that are factually accurate to the excerpt but "Too Narrow" (only stating one sentence's detail) or "Too Extreme" (introducing unsupported absolutes).</p>
-                  </div>
-                  <div className="p-4 bg-white rounded-2xl border border-blue-100 shadow-xs space-y-1">
-                    <span className="font-bold text-emerald-800">3. Rapid Elimination Method</span>
-                    <p>If a question asks "What is true according to the text?", eliminate any option where the relationship between causes or characters has been subtly reversed.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // TEXTBOOK LIBRARY LIST VIEW
-  return (
-    <div className="max-w-6xl mx-auto space-y-8 py-4">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold uppercase tracking-wider mb-2 border border-blue-200">
-            <Sparkles className="w-3.5 h-3.5" />
-            AI Remediation & Textbook Library
-          </div>
-          <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
-            Curated SAT Textbooks & Skill Manuals
-          </h1>
-          <p className="text-neutral-500 text-sm mt-1 max-w-xl">
-            Original curriculum materials with full OCR indexing, case studies, and 1-click deep-link wrong answer remediation.
-          </p>
-        </div>
-
-        {/* Search */}
-        <div className="relative w-full md:w-72">
-          <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search topics, authors, or text..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white rounded-2xl border border-neutral-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-      </div>
-
-      {/* Book Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredBooks.map((book) => (
-          <div
-            key={book.id}
-            className="bg-white rounded-3xl p-6 border border-neutral-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-6"
-          >
-            <div className="space-y-4">
-              <div
-                className={`w-full h-40 rounded-2xl bg-gradient-to-br ${book.coverColor} text-white p-6 flex flex-col justify-between shadow-inner`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 bg-black/20 backdrop-blur-md rounded-full">
-                    AIES Edition
-                  </span>
-                  <BookOpen className="w-5 h-5 opacity-90" />
-                </div>
+          {/* TAB 2: Two-Pane Q&A Drill View (Section 4 Specification) */}
+          {activeReaderTab === 'qa-drill' && (
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-neutral-200">
                 <div>
-                  <h3 className="font-extrabold text-base text-white leading-snug">
-                    {book.title}
+                  <h3 className="text-base font-bold text-neutral-900">
+                    Two-Pane Q&A Interactive Workout
                   </h3>
-                  <p className="text-xs text-white/80 mt-1">{book.author}</p>
+                  <p className="text-xs text-neutral-500 font-medium">
+                    Drill the exact question pattern with full method grounding and related topic bridges.
+                  </p>
                 </div>
+                <span className="px-2.5 py-1 rounded-lg bg-neutral-100 font-mono text-xs font-bold text-neutral-700">
+                  {activeSection?.skill || 'Section Drill'}
+                </span>
               </div>
 
-              <div className="space-y-1">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
-                  Publisher
-                </p>
-                <p className="text-xs font-semibold text-neutral-700">{book.publisherOrOwner}</p>
-              </div>
+              {/* Two-Pane Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Left Pane — Question & Similar Questions */}
+                <div className="lg:col-span-6 space-y-4">
+                  {featuredQuestion ? (
+                    <div className="bg-white rounded-3xl p-6 border border-neutral-200 shadow-sm space-y-5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-neutral-400 font-mono">
+                          FEATURED SKILL QUESTION
+                        </span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider ${
+                          featuredQuestion.difficulty === 'expert'
+                            ? 'bg-red-100 text-red-800'
+                            : featuredQuestion.difficulty === 'intermediate'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-emerald-100 text-emerald-800'
+                        }`}>
+                          {featuredQuestion.difficulty}
+                        </span>
+                      </div>
 
-              <div className="space-y-1">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
-                  Indexed Chapters & Pages
-                </p>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {book.pages.map((p) => (
-                    <span
-                      key={p.pageNumber}
-                      className="px-2 py-0.5 bg-neutral-100 text-neutral-700 rounded text-xs font-semibold"
-                    >
-                      Pg. {p.pageNumber}
-                    </span>
-                  ))}
+                      <div className="text-sm font-medium text-neutral-900 leading-relaxed">
+                        <LessonContent content={featuredQuestion.questionText} />
+                      </div>
+
+                      {/* Options or SPR */}
+                      {featuredQuestion.isSPR ? (
+                        <div className="space-y-2">
+                          <SprInput
+                            value={sprAnswer}
+                            onChange={setSprAnswer}
+                            disabled={isAnswerSubmitted}
+                            onEnterSubmit={handleCheckDrillAnswer}
+                          />
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {featuredQuestion.options.map((opt, idx) => {
+                            const isSelected = selectedOption === idx;
+                            const isCorrect = idx === featuredQuestion.correctAnswer;
+                            const letter = String.fromCharCode(65 + idx);
+
+                            let btnStyle = 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800';
+                            if (isAnswerSubmitted) {
+                              if (isCorrect) {
+                                btnStyle = 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold';
+                              } else if (isSelected && !isCorrect) {
+                                btnStyle = 'border-red-500 bg-red-50 text-red-950 font-bold';
+                              } else {
+                                btnStyle = 'border-neutral-200 opacity-50 bg-neutral-50';
+                              }
+                            } else if (isSelected) {
+                              btnStyle = 'border-blue-600 bg-blue-50 text-blue-950 font-bold';
+                            }
+
+                            return (
+                              <button
+                                key={idx}
+                                disabled={isAnswerSubmitted}
+                                onClick={() => setSelectedOption(idx)}
+                                className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-3 text-xs ${btnStyle}`}
+                              >
+                                <span className="w-5 h-5 rounded-md bg-neutral-100 flex items-center justify-center font-bold shrink-0">
+                                  {letter}
+                                </span>
+                                <span className="pt-0.5">{opt}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {!isAnswerSubmitted ? (
+                        <button
+                          onClick={handleCheckDrillAnswer}
+                          disabled={featuredQuestion.isSPR ? !sprAnswer.trim() : selectedOption === null}
+                          className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs disabled:opacity-40 transition-colors shadow-xs"
+                        >
+                          Check Solution
+                        </button>
+                      ) : (
+                        <div className="text-center">
+                          <button
+                            onClick={() => {
+                              setSelectedOption(null);
+                              setSprAnswer('');
+                              setIsAnswerSubmitted(false);
+                            }}
+                            className="text-xs font-bold text-blue-600 hover:underline"
+                          >
+                            Reset & Try Again
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="bg-white p-8 text-center rounded-3xl border border-neutral-200 text-neutral-500 text-xs">
+                      No featured question available for this skill yet.
+                    </div>
+                  )}
+
+                  {/* Similar Questions Drill Carousel (Left Pane) */}
+                  {similarQuestions.length > 0 && (
+                    <div className="bg-white rounded-3xl p-5 border border-neutral-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+                        <span className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
+                          <Layers className="w-4 h-4 text-blue-600" />
+                          Similar Questions Drill
+                        </span>
+                        <span className="text-[11px] font-bold text-neutral-400">
+                          {similarQuestions.length} Questions
+                        </span>
+                      </div>
+
+                      <div className="space-y-2">
+                        {similarQuestions.map((q, idx) => (
+                          <button
+                            key={q.id}
+                            onClick={() => handleSelectDrillQuestion(q.id)}
+                            className={`w-full text-left p-3 rounded-xl border text-xs transition-all flex items-center justify-between ${
+                              activeDrillQuestionId === q.id
+                                ? 'border-blue-600 bg-blue-50/70 font-bold text-blue-950'
+                                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                            }`}
+                          >
+                            <span className="line-clamp-1">
+                              {idx + 1}. {q.questionText.substring(0, 60)}...
+                            </span>
+                            <span className="text-[10px] uppercase font-bold text-neutral-400 shrink-0 ml-2">
+                              {q.difficulty}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right Pane — In-depth Explanation & Related Topics */}
+                <div className="lg:col-span-6 space-y-4">
+                  {featuredQuestion ? (
+                    <div className="bg-white rounded-3xl p-6 border border-neutral-200 shadow-sm space-y-4">
+                      <div className="flex items-center gap-2 font-bold text-sm text-neutral-900 pb-2 border-b border-neutral-100">
+                        <CheckCircle2 className="w-5 h-5 text-blue-600" />
+                        <span>In-Depth Step-by-Step Explanation</span>
+                      </div>
+
+                      <div className="text-xs leading-relaxed text-neutral-700 space-y-2">
+                        <LessonContent content={featuredQuestion.explanation} />
+                      </div>
+
+                      {/* Correct Answer badge */}
+                      <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-900">
+                        Correct Answer: Option {typeof featuredQuestion.correctAnswer === 'number' ? String.fromCharCode(65 + featuredQuestion.correctAnswer) : featuredQuestion.correctAnswer}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* Related Topics Block (Right Pane) */}
+                  {activeSection?.relatedTopics && activeSection.relatedTopics.length > 0 && (
+                    <div className="bg-white rounded-3xl p-5 border border-neutral-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+                        <span className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
+                          <Compass className="w-4 h-4 text-blue-600" />
+                          Related Curriculum Topics
+                        </span>
+                        <span className="text-[11px] font-bold text-blue-600">
+                          Cross-Referenced
+                        </span>
+                      </div>
+
+                      <div className="space-y-2">
+                        {activeSection.relatedTopics.map((rel, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              const targetBook = initialTextbooks.find(b => b.id === rel.textbookId);
+                              if (targetBook) {
+                                handleSelectBook(targetBook);
+                                if (rel.chapterId && rel.sectionId) {
+                                  handleSelectSection(rel.chapterId, rel.sectionId, rel.pageNumber || 1);
+                                }
+                              }
+                            }}
+                            className="w-full text-left p-3 rounded-xl border border-neutral-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all flex items-center justify-between text-xs group"
+                          >
+                            <div>
+                              <p className="font-bold text-neutral-900 group-hover:text-blue-700">
+                                {rel.title}
+                              </p>
+                              <p className="text-[11px] text-neutral-400">
+                                {rel.domain} · Page {rel.pageNumber || 1}
+                              </p>
+                            </div>
+                            <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-blue-600 shrink-0" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
+          )}
 
-            <button
-              onClick={() => handleSelectBook(book)}
-              className="w-full py-3 px-4 rounded-2xl bg-neutral-900 hover:bg-black font-bold text-white text-xs transition-colors flex items-center justify-center gap-2"
-            >
-              <BookOpen className="w-4 h-4" />
-              Open Textbook Reader
-            </button>
-          </div>
-        ))}
+          {/* TAB 3: Growth & Version Changelog */}
+          {activeReaderTab === 'changelog' && (
+            <div className="bg-white rounded-3xl p-6 md:p-8 border border-neutral-200 shadow-sm space-y-6">
+              <div className="flex items-center gap-3">
+                <span className="p-2.5 bg-blue-100 text-blue-700 rounded-2xl">
+                  <History className="w-5 h-5" />
+                </span>
+                <div>
+                  <h2 className="text-xl font-bold text-neutral-900">
+                    Living Textbook Growth & Version Log
+                  </h2>
+                  <p className="text-xs text-neutral-500 font-medium">
+                    Verified curriculum additions, teacher-created exam imports, and peer-reviewed modifications.
+                  </p>
+                </div>
+              </div>
+
+              {selectedBook.changelog && selectedBook.changelog.length > 0 ? (
+                <div className="space-y-4">
+                  {selectedBook.changelog.map((entry, idx) => (
+                    <div
+                      key={entry.id || idx}
+                      className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50/50 space-y-2 relative"
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <span className="text-xs font-mono font-bold text-neutral-400">
+                          {entry.date}
+                        </span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-blue-100 text-blue-800">
+                          +{entry.sectionsAdded} Sections Appended
+                        </span>
+                      </div>
+
+                      <p className="text-sm font-bold text-neutral-900">
+                        {entry.summary}
+                      </p>
+
+                      <div className="flex items-center gap-4 text-xs text-neutral-500 pt-1">
+                        {entry.triggerExamTitle && (
+                          <span>Source Exam: <strong>{entry.triggerExamTitle}</strong></span>
+                        )}
+                        {entry.teacherName && (
+                          <span>Instructor: <strong>{entry.teacherName}</strong></span>
+                        )}
+                        {entry.approvedBy && (
+                          <span className="text-emerald-700 font-bold">Approved by {entry.approvedBy}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-neutral-500">No changelog entries recorded yet.</p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
