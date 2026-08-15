@@ -75,9 +75,6 @@ export default function AuthScreen() {
     selectedRole: 'student' | 'teacher' | 'parent',
     isGuest: boolean = false
   ) => {
-    const studentIdNumber = selectedRole === 'student' ? generateStudentId() : undefined;
-    const linkCode = generateLinkCode();
-
     let institutionId: string | null = null;
     let institutionName: string | null = null;
 
@@ -103,7 +100,6 @@ export default function AuthScreen() {
       institutionName: institutionName,
       isGuest: isGuest,
       isSubscribed: !isGuest && !!institutionId,
-      studentNumber: studentIdNumber,
       satProfile: {
         diagnosticCompleted: false,
         placementByDomain: {}
@@ -113,10 +109,11 @@ export default function AuthScreen() {
     };
 
     if (selectedRole === 'student') {
+      newUser.studentNumber = generateStudentId();
       newUser.points = 0;
       newUser.level = 1;
       newUser.streak = 1;
-      newUser.linkCode = linkCode;
+      newUser.linkCode = generateLinkCode();
       newUser.parentIds = [];
     } else if (selectedRole === 'parent') {
       newUser.childIds = [];
@@ -162,17 +159,14 @@ export default function AuthScreen() {
           institutionName = `School (${codeClean})`;
         }
 
-        const enrichedUser = {
+        const enrichedUser: any = {
           name: email.split('@')[0],
           role: role,
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${signupResult.uid}`,
           institutionId: institutionId,
           institutionName: institutionName,
-          studentNumber: studentIdNum,
-          linkCode: generateLinkCode(),
-          points: 0,
-          level: 1,
-          streak: 1,
+          isGuest: false,
+          isSubscribed: !!institutionId,
           satProfile: {
             diagnosticCompleted: false,
             placementByDomain: {}
@@ -181,6 +175,17 @@ export default function AuthScreen() {
           updatedAt: new Date().toISOString()
         };
 
+        if (role === 'student') {
+          enrichedUser.studentNumber = generateStudentId();
+          enrichedUser.linkCode = generateLinkCode();
+          enrichedUser.points = 0;
+          enrichedUser.level = 1;
+          enrichedUser.streak = 1;
+          enrichedUser.parentIds = [];
+        } else if (role === 'parent') {
+          enrichedUser.childIds = [];
+        }
+        
         await setDoc(doc(db, 'users', signupResult.uid), enrichedUser);
         setUserProfile({ ...enrichedUser, id: signupResult.uid } as any);
         navigate(role === 'student' ? '/onboarding' : `/${role}`);

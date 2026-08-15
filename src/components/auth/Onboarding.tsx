@@ -153,25 +153,29 @@ export default function Onboarding() {
       const validBaseline = (parsedBaseline && parsedBaseline >= 400 && parsedBaseline <= 1600) ? parsedBaseline : undefined;
 
       if (userProfile.id) {
-        await updateDoc(doc(db, 'users', userProfile.id), {
+        const updatePayload: any = {
           targetScore,
           targetTestDate,
-          baselineScore: validBaseline,
           studentNumber: studentIdNumber,
           updatedAt: new Date().toISOString()
-        });
+        };
+        if (validBaseline) {
+          updatePayload.baselineScore = validBaseline;
+        }
+
+        await updateDoc(doc(db, 'users', userProfile.id), updatePayload);
 
         setUserProfile({
           ...userProfile,
           targetScore,
           targetTestDate,
-          baselineScore: validBaseline,
+          baselineScore: validBaseline || userProfile.baselineScore,
           studentNumber: studentIdNumber,
           satProfile: {
             ...(userProfile.satProfile || {}),
             targetScore,
             targetTestDate,
-            baselineScore: validBaseline
+            baselineScore: validBaseline || userProfile.satProfile?.baselineScore
           }
         });
       }
