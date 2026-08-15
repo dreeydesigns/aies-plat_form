@@ -246,6 +246,8 @@ export interface AppContextType {
   saveSatPracticeTest: (test: Omit<SatPracticeTest, 'id'>) => Promise<string>;
   assignSatTest: (assignment: Omit<AssignedTest, 'id'>) => Promise<string>;
   updateSatPlacement: (domain: SatDomain, level: 'beginner' | 'intermediate' | 'expert') => Promise<void>;
+  recordSkillAttempt: (skill: string, domain: SatDomain, correct: boolean, paceSeconds: number, difficulty: string) => Promise<void>;
+  recordTextbookFollowThrough: (skill: string, domain: SatDomain, reattemptCorrect?: boolean) => Promise<void>;
   updateCognitiveProfile: (profile: Partial<CognitiveProfile>) => Promise<void>;
   updateConsent: (consent: Partial<NonNullable<User['consent']>>) => Promise<void>;
 }
@@ -569,6 +571,158 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const recordSkillAttempt = async (
+    skill: string,
+    domain: SatDomain,
+    correct: boolean,
+    paceSeconds: number,
+    difficulty: string
+  ) => {
+    if (!userProfile?.id) return;
+    try {
+      const existing = userProfile.satProfile?.skillUnderstanding?.[skill];
+      const prevAttempts = existing?.attempts || 0;
+      const prevCorrect = existing?.correct || 0;
+      const newAttempts = prevAttempts + 1;
+      const newCorrect = prevCorrect + (correct ? 1 : 0);
+      const newAccuracy = Math.round((newCorrect / newAttempts) * 100);
+
+      const prevPace = existing?.averagePaceSeconds || paceSeconds;
+      const newAvgPace = Math.round((prevPace * prevAttempts + paceSeconds) / newAttempts);
+      const expectedPace = domain === 'algebra' || domain === 'advanced-math' || domain === 'problem-solving-data-analysis' || domain === 'geometry-trigonometry' ? 75 : 50;
+
+      let paceStatus: 'fast' | 'optimal' | 'deliberate' | 'slow' = 'optimal';
+      if (newAvgPace < 30) paceStatus = 'fast';
+      else if (newAvgPace <= 75) paceStatus = 'optimal';
+      else if (newAvgPace <= 110) paceStatus = 'deliberate';
+      else paceStatus = 'slow';
+
+      let tier: 'beginner' | 'intermediate' | 'expert' = 'intermediate';
+      if (newAccuracy >= 80 && newAttempts >= 4) tier = 'expert';
+      else if (newAccuracy < 50 && newAttempts >= 4) tier = 'beginner';
+
+      // Growth-oriented framing (Framing Rule: non-negotiable)
+      let growthFraming = `${skill}: steady progression.`;
+      if (newAccuracy >= 80) growthFraming = `${skill}: strong mastery. Ready for advanced timed challenges.`;
+      else if (newAccuracy >= 50) growthFraming = `${skill}: consistent practice building precision. Focus this week: timed accuracy.`;
+      else growthFraming = `${skill}: this week's active focus area. Recommended: explore step-by-step textbook models.`;
+
+      const updatedSkill: SkillUnderstandingMetrics = {
+        skill,
+        domain,
+        attempts: newAttempts,
+        correct: newCorrect,
+        accuracy: newAccuracy,
+        averagePaceSeconds: newAvgPace,
+        expectedPaceSeconds: expectedPace,
+        paceStatus,
+        textbookReviewCount: existing?.textbookReviewCount || 0,
+        remediationAttempts: existing?.remediationAttempts || 0,
+        remediationSuccessCount: existing?.remediationSuccessCount || 0,
+        errorClassification: existing?.errorClassification || (correct ? 'none' : 'conceptual'),
+        currentPacingTier: tier,
+        growthFraming,
+        lastAttemptAt: new Date().toISOString()
+      };
+
+      const newUnderstanding = {
+        ...(userProfile.satProfile?.skillUnderstanding || {}),
+        [skill]: updatedSkill
+      };
+
+      const updatedSatProfile = {
+        ...(userProfile.satProfile || {}),
+        skillUnderstanding: newUnderstanding
+      };
+
+      await updateDoc(doc(db, 'users', userProfile.id), {
+        'satProfile.skillUnderstanding': newUnderstanding
+      });
+
+      setUserProfile({
+        ...userProfile,
+        satProfile: updatedSatProfile
+      });
+    } catch (e) {
+      console.error('Error recording skill attempt:', e);
+    }
+  };
+
+  const recordTextbookFollowThrough = async (
+    skill: string,
+    domain: SatDomain,
+    reattemptCorrect?: boolean
+  ) => {
+    if (!userProfile?.id) return;
+    try {
+      const existing = userProfile.satProfile?.skillUnderstanding?.[skill];
+      const prevReviewCount = existing?.textbookReviewCount || 0;
+      const newReviewCount = prevReviewCount + 1;
+
+      let prevRemedAttempts = existing?.remediationAttempts || 0;
+      let prevRemedSuccess = existing?.remediationSuccessCount || 0;
+      if (reattemptCorrect !== undefined) {
+        prevRemedAttempts += 1;
+        if (reattemptCorrect) prevRemedSuccess += 1;
+      }
+
+      // Diagnose error type:
+      // If student reviews textbook and solves reattempt correctly -> Retrieval error
+      // If student reviews textbook and still misses -> Conceptual error
+      let errorClassification: 'none' | 'retrieval' | 'conceptual' | 'fluency' = 'none';
+      if (existing && existing.accuracy < 60) {
+        if (prevRemedSuccess > 0 && prevRemedSuccess / Math.max(1, prevRemedAttempts) >= 0.6) {
+          errorClassification = 'retrieval';
+        } else {
+          errorClassification = 'conceptual';
+        }
+      } else if (existing && existing.paceStatus === 'slow') {
+        errorClassification = 'fluency';
+      }
+
+      const updatedSkill: SkillUnderstandingMetrics = {
+        skill,
+        domain,
+        attempts: existing?.attempts || 1,
+        correct: existing?.correct || 0,
+        accuracy: existing?.accuracy || 0,
+        averagePaceSeconds: existing?.averagePaceSeconds || 60,
+        expectedPaceSeconds: existing?.expectedPaceSeconds || 60,
+        paceStatus: existing?.paceStatus || 'optimal',
+        textbookReviewCount: newReviewCount,
+        remediationAttempts: prevRemedAttempts,
+        remediationSuccessCount: prevRemedSuccess,
+        errorClassification,
+        currentPacingTier: existing?.currentPacingTier || 'intermediate',
+        growthFraming: errorClassification === 'retrieval'
+          ? `${skill}: strong concept grasp after review. Target: speed up cold recall.`
+          : `${skill}: active mastery focus. Exploring worked models in Textbook Library.`,
+        lastAttemptAt: new Date().toISOString()
+      };
+
+      const newUnderstanding = {
+        ...(userProfile.satProfile?.skillUnderstanding || {}),
+        [skill]: updatedSkill
+      };
+
+      await updateDoc(doc(db, 'users', userProfile.id), {
+        'satProfile.skillUnderstanding': newUnderstanding,
+        'satProfile.textbookFollowThroughTotal': (userProfile.satProfile?.textbookFollowThroughTotal || 0) + 1
+      });
+
+      setUserProfile({
+        ...userProfile,
+        satProfile: {
+          ...(userProfile.satProfile || {}),
+          skillUnderstanding: newUnderstanding,
+          textbookFollowThroughTotal: (userProfile.satProfile?.textbookFollowThroughTotal || 0) + 1
+        }
+      });
+    } catch (e) {
+      console.error('Error recording textbook follow through:', e);
+    }
+  };
+
   const updateCognitiveProfile = async (profile: Partial<CognitiveProfile>) => {
     if (!userProfile?.id) return;
     try {
@@ -662,6 +816,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       saveSatPracticeTest,
       assignSatTest,
       updateSatPlacement,
+      recordSkillAttempt,
+      recordTextbookFollowThrough,
       updateCognitiveProfile,
       updateConsent
     }}>

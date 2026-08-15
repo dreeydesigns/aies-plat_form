@@ -148,7 +148,14 @@ export function buildPracticeQuestionPool(
 }
 
 export default function SatPractice() {
-  const { userProfile, updateSatPlacement, saveSatPracticeSession, logEmotionalState } = useAppContext();
+  const { 
+    userProfile, 
+    updateSatPlacement, 
+    saveSatPracticeSession, 
+    logEmotionalState,
+    recordSkillAttempt,
+    recordTextbookFollowThrough 
+  } = useAppContext();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -325,6 +332,15 @@ export default function SatPractice() {
 
     const updatedSession = [...sessionAnswers, record];
     setSessionAnswers(updatedSession);
+
+    // Continuous Student Understanding Engine Telemetry
+    await recordSkillAttempt(
+      currentQuestion.skill,
+      currentQuestion.domain,
+      isCorrect,
+      timeSpent,
+      currentQuestion.difficulty
+    );
 
     // Emotional telemetry logging
     if (userProfile?.id) {
@@ -738,13 +754,14 @@ export default function SatPractice() {
                     </div>
 
                     <button
-                      onClick={() =>
+                      onClick={async () => {
+                        await recordTextbookFollowThrough(currentQuestion.skill, currentQuestion.domain);
                         navigate(
                           `/student/sat/textbooks?textbookId=${normBookId || textbookRef.textbookId}&page=${textbookRef.page}&highlight=${encodeURIComponent(
                             textbookRef.highlightedText
                           )}`
-                        )
-                      }
+                        );
+                      }}
                       className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <span>Jump to Page {textbookRef.page}</span>

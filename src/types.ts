@@ -250,6 +250,24 @@ export interface AssignedTest {
   completedBy?: string[];
 }
 
+export interface SkillUnderstandingMetrics {
+  skill: string;
+  domain: SatDomain;
+  attempts: number;
+  correct: number;
+  accuracy: number;
+  averagePaceSeconds: number;
+  expectedPaceSeconds: number;
+  paceStatus: 'fast' | 'optimal' | 'deliberate' | 'slow';
+  textbookReviewCount: number;
+  remediationAttempts: number;
+  remediationSuccessCount: number;
+  errorClassification: 'none' | 'retrieval' | 'conceptual' | 'fluency';
+  currentPacingTier: 'beginner' | 'intermediate' | 'expert';
+  growthFraming: string;
+  lastAttemptAt: string;
+}
+
 export interface SatProfile {
   diagnosticCompleted?: boolean;
   targetScore?: number;
@@ -258,6 +276,8 @@ export interface SatProfile {
   classificationMath?: 'beginner' | 'intermediate' | 'expert';
   classificationRW?: 'beginner' | 'intermediate' | 'expert';
   placementByDomain?: Partial<Record<SatDomain, 'beginner' | 'intermediate' | 'expert'>>;
+  skillUnderstanding?: Record<string, SkillUnderstandingMetrics>;
+  textbookFollowThroughTotal?: number;
   consecutiveHardCorrect?: {
     math: number;
     rw: number;
