@@ -20,7 +20,8 @@ import {
   ShieldCheck, 
   Building2,
   ChevronRight,
-  UserCheck
+  UserCheck,
+  KeyRound
 } from 'lucide-react';
 
 export default function AuthScreen() {
@@ -31,15 +32,14 @@ export default function AuthScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(searchParams.get('mode') === 'signup');
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  // URL Param pre-population (e.g. ?role=teacher&school=KILIMA-882&invite=...)
+  // URL Param pre-population (e.g. ?role=teacher&school=KILIMA-882)
   const initialRoleParam = searchParams.get('role');
   const initialSchoolParam = searchParams.get('school') || searchParams.get('code') || '';
-  const initialInviteParam = searchParams.get('invite') || searchParams.get('token') || '';
 
   const [role, setRole] = useState<'student' | 'teacher' | 'parent'>(
     initialRoleParam === 'teacher' ? 'teacher' : initialRoleParam === 'parent' ? 'parent' : 'student'
@@ -48,6 +48,8 @@ export default function AuthScreen() {
 
   // New Google Sign-in Account Type Chooser State
   const [pendingGoogleUser, setPendingGoogleUser] = useState<any | null>(null);
+  const [googleSchoolCode, setGoogleSchoolCode] = useState('');
+  const [googleSelectedRole, setGoogleSelectedRole] = useState<'student' | 'teacher' | 'parent' | null>(null);
 
   useEffect(() => {
     if (userProfile) {
@@ -68,29 +70,28 @@ export default function AuthScreen() {
     return `#AIES-STU-${randomNum}`;
   };
 
+  const parseSchoolCode = (code: string) => {
+    if (!code || !code.trim()) return { institutionId: null, institutionName: null };
+    const clean = code.trim().toUpperCase();
+    if (clean.includes('KILIMA')) {
+      return { institutionId: 'inst_kilima', institutionName: 'Kilima Academy' };
+    } else if (clean.includes('GREEN')) {
+      return { institutionId: 'inst_greensprings', institutionName: 'Green Springs School' };
+    }
+    return {
+      institutionId: `inst_${clean.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+      institutionName: `School (${clean})`
+    };
+  };
+
   const handleCreateNewUserDoc = async (
     uid: string, 
     displayName: string | null, 
     photoURL: string | null = null, 
     selectedRole: 'student' | 'teacher' | 'parent',
-    isGuest: boolean = false
+    codeToUse: string = ''
   ) => {
-    let institutionId: string | null = null;
-    let institutionName: string | null = null;
-
-    if (schoolCode.trim()) {
-      const codeClean = schoolCode.trim().toUpperCase();
-      if (codeClean.includes('KILIMA')) {
-        institutionId = 'inst_kilima';
-        institutionName = 'Kilima Academy';
-      } else if (codeClean.includes('GREEN')) {
-        institutionId = 'inst_greensprings';
-        institutionName = 'Green Springs School';
-      } else {
-        institutionId = `inst_${codeClean.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
-        institutionName = `School (${codeClean})`;
-      }
-    }
+    const { institutionId, institutionName } = parseSchoolCode(codeToUse);
 
     const newUser: any = {
       name: displayName || email.split('@')[0] || (selectedRole === 'student' ? 'SAT Student' : selectedRole === 'teacher' ? 'SAT Educator' : 'Parent'),
@@ -98,8 +99,8 @@ export default function AuthScreen() {
       avatar: photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${uid}`,
       institutionId: institutionId,
       institutionName: institutionName,
-      isGuest: isGuest,
-      isSubscribed: !isGuest && !!institutionId,
+      isGuest: false,
+      isSubscribed: !!institutionId,
       satProfile: {
         diagnosticCompleted: false,
         placementByDomain: {}
@@ -125,14 +126,16 @@ export default function AuthScreen() {
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [schoolCodeError, setSchoolCodeError] = useState('');
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setEmailError('');
     setPasswordError('');
+    setSchoolCodeError('');
     setError('');
 
-    const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email.trim())) {
       setEmailError('Please enter a valid email address.');
       return;
@@ -143,21 +146,21 @@ export default function AuthScreen() {
       return;
     }
 
+    // MANDATORY SCHOOL CODE VALIDATION FOR STUDENTS & EDUCATORS ON SIGNUP
+    if (isSignUp && (role === 'student' || role === 'teacher')) {
+      if (!schoolCode || !schoolCode.trim()) {
+        setSchoolCodeError('School code is required. Please enter your valid school code to create an account.');
+        return;
+      }
+    }
+
     try {
       setLoading(true);
       setError('');
       
       if (isSignUp) {
         const signupResult = await emailSignUp(email.trim(), password, role, generateLinkCode());
-        const studentIdNum = role === 'student' ? generateStudentId() : undefined;
-        
-        let institutionId: string | null = null;
-        let institutionName: string | null = null;
-        if (schoolCode.trim()) {
-          const codeClean = schoolCode.trim().toUpperCase();
-          institutionId = `inst_${codeClean.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
-          institutionName = `School (${codeClean})`;
-        }
+        const { institutionId, institutionName } = parseSchoolCode(schoolCode);
 
         const enrichedUser: any = {
           name: email.split('@')[0],
@@ -208,7 +211,7 @@ export default function AuthScreen() {
           }
         } else {
           // Self-heal profile
-          const recoveredUser = await handleCreateNewUserDoc(user.uid, user.displayName, user.photoURL, role);
+          const recoveredUser = await handleCreateNewUserDoc(user.uid, user.displayName, user.photoURL, role, schoolCode);
           setUserProfile({ ...recoveredUser, id: user.uid } as any);
           navigate(role === 'student' ? '/onboarding' : `/${role}`);
         }
@@ -249,7 +252,7 @@ export default function AuthScreen() {
             navigate('/student');
           }
         } else {
-          // Brand new Google user -> Prompt explicit role selection
+          // Brand new Google user -> Prompt explicit role selection & school code
           setPendingGoogleUser(result.user);
         }
       }
@@ -264,8 +267,13 @@ export default function AuthScreen() {
     }
   };
 
-  const handleFinalizeGoogleAccountChoice = async (chosenRole: 'student' | 'teacher' | 'parent') => {
-    if (!pendingGoogleUser) return;
+  const handleFinalizeGoogleAccountChoice = async () => {
+    if (!pendingGoogleUser || !googleSelectedRole) return;
+
+    if ((googleSelectedRole === 'student' || googleSelectedRole === 'teacher') && !googleSchoolCode.trim()) {
+      setError('School code is required for students and educators.');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -274,13 +282,14 @@ export default function AuthScreen() {
         pendingGoogleUser.uid,
         pendingGoogleUser.displayName,
         pendingGoogleUser.photoURL,
-        chosenRole
+        googleSelectedRole,
+        googleSchoolCode
       );
       setUserProfile({ ...newUser, id: pendingGoogleUser.uid } as any);
 
-      if (chosenRole === 'student') {
+      if (googleSelectedRole === 'student') {
         navigate('/onboarding');
-      } else if (chosenRole === 'teacher') {
+      } else if (googleSelectedRole === 'teacher') {
         navigate('/teacher');
       } else {
         navigate('/parent');
@@ -290,6 +299,7 @@ export default function AuthScreen() {
     } finally {
       setLoading(false);
       setPendingGoogleUser(null);
+      setGoogleSelectedRole(null);
     }
   };
 
@@ -341,7 +351,7 @@ export default function AuthScreen() {
     }
   };
 
-  // EXPLICIT ACCOUNT TYPE CHOOSER FOR BRAND NEW GOOGLE ACCOUNTS
+  // EXPLICIT ACCOUNT TYPE CHOOSER & SCHOOL CODE FOR NEW GOOGLE ACCOUNTS
   if (pendingGoogleUser) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
@@ -354,7 +364,7 @@ export default function AuthScreen() {
             What type of account is this?
           </h1>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
-            Welcome, <strong>{pendingGoogleUser.displayName || pendingGoogleUser.email}</strong>. Select your primary role to configure your workspace.
+            Welcome, <strong>{pendingGoogleUser.displayName || pendingGoogleUser.email}</strong>. Select your role to configure your workspace.
           </p>
         </div>
 
@@ -365,77 +375,95 @@ export default function AuthScreen() {
             </div>
           )}
 
-          {/* Student Choice */}
-          <button
-            onClick={() => handleFinalizeGoogleAccountChoice('student')}
-            disabled={loading}
-            className="w-full p-4 bg-slate-900/90 hover:bg-blue-600/20 border border-slate-700 hover:border-blue-500/60 rounded-2xl text-left transition-all group flex items-center justify-between"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
-                <GraduationCap className="w-6 h-6" />
+          {/* Role Choice Cards */}
+          <div className="space-y-3">
+            <button
+              onClick={() => setGoogleSelectedRole('student')}
+              className={`w-full p-4 rounded-2xl text-left transition-all border flex items-center justify-between ${
+                googleSelectedRole === 'student'
+                  ? 'bg-blue-600/20 border-blue-500 ring-2 ring-blue-500/30'
+                  : 'bg-slate-900/90 border-slate-700 hover:border-blue-500/40'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                  <GraduationCap className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">I am a Student</h3>
+                  <p className="text-[11px] text-slate-400">Practice SAT questions & take adaptive tests</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
-                  I am a Student
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Take adaptive diagnostic tests, practice SAT questions, and study textbooks.
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all" />
-          </button>
+              {googleSelectedRole === 'student' && <CheckCircle2 className="w-5 h-5 text-blue-400" />}
+            </button>
 
-          {/* Teacher Choice */}
-          <button
-            onClick={() => handleFinalizeGoogleAccountChoice('teacher')}
-            disabled={loading}
-            className="w-full p-4 bg-slate-900/90 hover:bg-emerald-600/20 border border-slate-700 hover:border-emerald-500/60 rounded-2xl text-left transition-all group flex items-center justify-between"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-                <BookOpen className="w-6 h-6" />
+            <button
+              onClick={() => setGoogleSelectedRole('teacher')}
+              className={`w-full p-4 rounded-2xl text-left transition-all border flex items-center justify-between ${
+                googleSelectedRole === 'teacher'
+                  ? 'bg-emerald-600/20 border-emerald-500 ring-2 ring-emerald-500/30'
+                  : 'bg-slate-900/90 border-slate-700 hover:border-emerald-500/40'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">I am an Educator / Teacher</h3>
+                  <p className="text-[11px] text-slate-400">Assign workouts & inspect student mastery</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
-                  I am an Educator / Teacher
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Assign workouts, manage class rosters, and review student mastery telemetry.
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
-          </button>
+              {googleSelectedRole === 'teacher' && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+            </button>
 
-          {/* Parent Choice */}
-          <button
-            onClick={() => handleFinalizeGoogleAccountChoice('parent')}
-            disabled={loading}
-            className="w-full p-4 bg-slate-900/90 hover:bg-amber-600/20 border border-slate-700 hover:border-amber-500/60 rounded-2xl text-left transition-all group flex items-center justify-between"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
-                <Users className="w-6 h-6" />
+            <button
+              onClick={() => setGoogleSelectedRole('parent')}
+              className={`w-full p-4 rounded-2xl text-left transition-all border flex items-center justify-between ${
+                googleSelectedRole === 'parent'
+                  ? 'bg-amber-600/20 border-amber-500 ring-2 ring-amber-500/30'
+                  : 'bg-slate-900/90 border-slate-700 hover:border-amber-500/40'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">I am a Parent / Guardian</h3>
+                  <p className="text-[11px] text-slate-400">Connect to your child's progress digest</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors">
-                  I am a Parent / Guardian
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Connect your student's account to view scaled score trajectories and weekly reports.
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
-          </button>
+              {googleSelectedRole === 'parent' && <CheckCircle2 className="w-5 h-5 text-amber-400" />}
+            </button>
+          </div>
 
-          {loading && (
-            <div className="text-center py-2 text-xs text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin text-blue-400" />
-              <span>Configuring your workspace...</span>
+          {/* School Code Input if Student or Teacher selected */}
+          {googleSelectedRole && (googleSelectedRole === 'student' || googleSelectedRole === 'teacher') && (
+            <div className="pt-2">
+              <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <KeyRound className="w-3.5 h-3.5 text-blue-400" />
+                <span>Enter Your School Code (Required)</span>
+              </label>
+              <input
+                type="text"
+                value={googleSchoolCode}
+                onChange={(e) => setGoogleSchoolCode(e.target.value.toUpperCase())}
+                placeholder="e.g. AIES-FITNI-144"
+                className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs font-mono font-bold text-white uppercase focus:outline-none focus:border-blue-500"
+              />
+              <p className="text-[10px] text-slate-400 mt-1">Provided by your school administrator to bind your account.</p>
             </div>
+          )}
+
+          {googleSelectedRole && (
+            <button
+              onClick={handleFinalizeGoogleAccountChoice}
+              disabled={loading}
+              className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl text-xs uppercase tracking-wider shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 mt-4"
+            >
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>Complete Setup & Enter</span>}
+            </button>
           )}
         </div>
       </div>
@@ -592,22 +620,30 @@ export default function AuthScreen() {
             {passwordError && <p className="text-red-400 text-[10px] mt-1">{passwordError}</p>}
           </div>
 
-          {/* School Code Input for Student / Teacher Signup */}
+          {/* Mandatory School Code Input for Student / Educator Signup */}
           {isSignUp && (role === 'student' || role === 'teacher') && (
             <div>
-              <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">
-                School Code (Optional)
+              <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1 flex items-center justify-between">
+                <span>School Code (Required)</span>
+                <span className="text-[10px] text-amber-400 font-normal">Mandatory for {role === 'student' ? 'Students' : 'Educators'}</span>
               </label>
               <input
                 type="text"
                 value={schoolCode}
-                onChange={(e) => setSchoolCode(e.target.value.toUpperCase())}
-                placeholder="e.g. AIES-KILIMA-882"
+                onChange={(e) => {
+                  setSchoolCode(e.target.value.toUpperCase());
+                  setSchoolCodeError('');
+                }}
+                placeholder="e.g. AIES-FITNI-144"
                 className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs font-mono font-bold text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 uppercase transition-colors"
               />
-              <p className="text-[10px] text-slate-400 mt-1">
-                Provided by your school administrator. You can also enter this during onboarding.
-              </p>
+              {schoolCodeError ? (
+                <p className="text-red-400 text-[10px] mt-1 font-semibold">{schoolCodeError}</p>
+              ) : (
+                <p className="text-[10px] text-slate-400 mt-1">
+                  Issued by your school administration to bind your account to your institution.
+                </p>
+              )}
             </div>
           )}
 
@@ -637,6 +673,7 @@ export default function AuthScreen() {
               setError('');
               setEmailError('');
               setPasswordError('');
+              setSchoolCodeError('');
               setMessage('');
             }}
             className="text-blue-400 font-bold hover:underline"
