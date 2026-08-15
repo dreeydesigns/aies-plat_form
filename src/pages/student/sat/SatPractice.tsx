@@ -469,57 +469,51 @@ export default function SatPractice() {
       </div>
 
       {/* Step 1 & Step 2: Grouped Subject-First Topic Selector */}
-      <div className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
-        {/* Step 1: Subject Segmented Control */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-neutral-100">
-          <div>
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-400">
-              Step 1: Select Subject
-            </span>
-            <p className="text-xs text-neutral-600 font-medium">
-              Practice questions are scoped strictly to the chosen subject.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 w-full sm:w-80 bg-neutral-100 p-1 rounded-2xl border border-neutral-200">
+      <div className="bg-neutral-900 text-white p-6 rounded-3xl border border-neutral-800 shadow-md space-y-5">
+        {/* Step 1: Subject Selector */}
+        <div className="space-y-2.5">
+          <label className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-neutral-400">
+            STEP 1 — SUBJECT
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
+              type="button"
               onClick={() => handleSelectSubject('math')}
-              className={`py-2 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3.5 px-6 rounded-2xl text-sm font-black transition-all flex items-center justify-center gap-2.5 ${
                 selectedSubject === 'math'
-                  ? 'bg-neutral-900 text-white shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/30'
+                  : 'bg-neutral-800/80 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60'
               }`}
             >
-              <span>📐</span>
               <span>Math</span>
             </button>
             <button
+              type="button"
               onClick={() => handleSelectSubject('reading-writing')}
-              className={`py-2 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3.5 px-6 rounded-2xl text-sm font-black transition-all flex items-center justify-center gap-2.5 ${
                 selectedSubject === 'reading-writing'
-                  ? 'bg-neutral-900 text-white shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/30'
+                  : 'bg-neutral-800/80 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60'
               }`}
             >
-              <span>📖</span>
               <span>Reading & Writing</span>
             </button>
           </div>
         </div>
 
-        {/* Step 2: Topic Tiles (Scoped Strictly to Active Subject) */}
+        {/* Step 2: Topic Selector (Scoped Strictly to Active Subject) */}
         {practiceMode === 'topic' && (
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 pt-2 border-t border-neutral-800/80">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-400">
-                Step 2: Select {selectedSubject === 'math' ? 'Math' : 'Reading & Writing'} Topic
-              </span>
-              <span className="text-[11px] font-bold text-blue-600">
-                4 Official Domains
+              <label className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-neutral-400">
+                STEP 2 — TOPIC IN {selectedSubject === 'math' ? 'MATH' : 'READING & WRITING'}
+              </label>
+              <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                {selectedSubject === 'math' ? '4 Math Topics' : '4 R&W Topics'}
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {SAT_SUBJECT_DOMAINS[selectedSubject].map(domainKey => {
                 const info = DOMAIN_METADATA[domainKey];
                 const isSelected = selectedDomain === domainKey;
@@ -531,37 +525,36 @@ export default function SatPractice() {
                     key={domainKey}
                     type="button"
                     onClick={() => handleSelectDomain(domainKey)}
-                    className={`p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between space-y-3 relative group ${
+                    className={`p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between space-y-2 relative ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50/80 shadow-xs ring-2 ring-blue-500/20'
-                        : 'border-neutral-200 hover:border-neutral-300 bg-white hover:bg-neutral-50/50'
+                        ? 'border-blue-500 bg-blue-950/40 text-white ring-2 ring-blue-500/20 shadow-sm'
+                        : 'border-neutral-800 bg-neutral-800/60 hover:bg-neutral-800 text-neutral-200'
                     }`}
                   >
-                    <div>
-                      <div className="flex items-center justify-between gap-1">
-                        <p className="text-xs font-black text-neutral-900 tracking-tight truncate">
-                          {info.name}
-                        </p>
-                        {isSelected && (
-                          <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
-                        )}
-                      </div>
-                      <p className="text-[11px] text-neutral-500 leading-snug line-clamp-2 mt-1 font-medium">
-                        {info.description}
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-sm font-bold tracking-tight truncate text-white">
+                        {info.name}
                       </p>
+                      {isSelected && (
+                        <span className="w-2 h-2 rounded-full bg-blue-400 shrink-0" />
+                      )}
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-neutral-100/80">
-                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded ${
+                    <p className="text-xs text-neutral-400 leading-snug line-clamp-1">
+                      {info.description}
+                    </p>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-neutral-700/40 text-[11px]">
+                      <span className={`font-extrabold uppercase tracking-wider px-2 py-0.5 rounded text-[10px] ${
                         currentTier === 'expert' 
-                          ? 'bg-emerald-100 text-emerald-800'
+                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/60'
                           : currentTier === 'intermediate'
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-amber-100 text-amber-800'
+                          ? 'bg-blue-950/80 text-blue-300 border border-blue-800/60'
+                          : 'bg-amber-950/80 text-amber-300 border border-amber-800/60'
                       }`}>
                         {currentTier}
                       </span>
-                      <span className="text-[11px] font-bold text-neutral-400">
+                      <span className="font-mono text-neutral-400">
                         {count} {count === 1 ? 'item' : 'items'}
                       </span>
                     </div>
@@ -571,6 +564,11 @@ export default function SatPractice() {
             </div>
           </div>
         )}
+
+        {/* Explainer Caption */}
+        <p className="text-xs text-neutral-400 leading-relaxed pt-1">
+          Switching to {selectedSubject === 'math' ? 'Reading & Writing' : 'Math'} in Step 1 swaps Step 2 to its four topics — Math and R&W topics are never shown in the same row.
+        </p>
       </div>
 
       {/* Main Practice Question Area */}
