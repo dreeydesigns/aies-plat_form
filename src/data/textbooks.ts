@@ -416,30 +416,53 @@ Analysis: Choice B is correct because holding the species composition constant p
         content: `CHAPTER 1: INFORMATION & IDEAS — COMMAND OF EVIDENCE & INFERENCES
 
 1. Concept Introduction
-Command of Evidence questions require selecting the specific textual finding or quantitative data point (from tables/charts) that most directly supports or weakens a researcher's hypothesis. Inference questions test your ability to logically complete an unfinished line of reasoning.
+Inferences and Logical Completion questions test your capacity to determine the single unavoidable conclusion from a set of premises. On the Digital SAT, these questions often end with an unfilled blank ("This finding suggests that ______" or "It can therefore be inferred that ______").
 
-2. The Core Hypothesis-Evidence Matching Method:
-Step 1: Isolate the Specific Hypothesis — Underline the exact claim: "Dr. X claims that Y causes Z under condition W."
-Step 2: Formulate the Expected Evidence — What finding would prove this? (e.g. Group Y must show higher Z than control Group without Y).
-Step 3: Reject "Side-Topic" Options — Eliminate choices that discuss related topics but do not test the exact variables in the hypothesis.
-Step 4: Strict Logical Extension (Inferences) — The missing conclusion must be the inevitable, conservative result of the preceding sentences, not a speculative leap.`,
-        ocrText: 'Command of evidence, textual evidence, quantitative evidence, charts and tables, logical inferences, hypothesis testing.',
+2. The 3-Step "Premise-Bridge" Inferences Method:
+Step 1: Identify the Established Premises — Pinpoint the core facts: Fact A (the baseline condition) and Fact B (the observed outcome or trade-off).
+Step 2: Trace the Direction of the Bridge — Where does Fact A + Fact B logically point?
+  * If an impediment/cost is eliminated $\\implies$ activity increases or becomes more accessible.
+  * If a physical trait confers stability in storms at the cost of height $\\implies$ survival rate offsets lower individual yield.
+  * If animals safeguard a specific crafted tool over basic sticks $\\implies$ the crafted tool holds higher perceived utility/value.
+Step 3: Reject Speculative & Extreme Leaps — The correct inference is CONSERVATIVE. It never assumes unstated future events, universal replacements, or moral motivations unless explicitly given.`,
+        ocrText: 'Inferences, logical completions, command of evidence, premise bridge, trade-off reasoning, conservative deduction.',
         sections: [
           {
-            heading: '2.1 Worked Example: Quantitative Evidence from Tables (Medium Tier)',
-            text: `Hypothesis: Bird species with higher wing-aspect ratios migrate longer annual distances.
+            heading: '2.1 Worked Example: Inferences & Economic Trade-Offs (Easy Tier)',
+            text: `Passage: In an experiment, researchers allowed one group of shoppers to physically touch and examine ceramic mugs before purchasing, while a second group was permitted only to view images on a screen. When participants recorded the maximum price they would pay, the tactile group offered an average of 40% more than the visual-only group.
+Question: Which choice most logically completes the text?
+(A) People who shop online purchase fewer household items per year than in-person shoppers do.
+(B) Physical tactile interaction with a product can elevate its perceived monetary value. [CORRECT]
+(C) Online retailers should reduce prices across all product categories.
+(D) Consumers will refuse to buy products online if they cannot touch them first.
+Analysis: Choice B is the precise, conservative inference directly supported by the 40% price difference. Choice A, C, and D make unsupported, extreme speculative claims.`
+          },
+          {
+            heading: '2.2 Worked Example: Biological Trade-Offs & Agricultural Inferences (Medium Tier)',
+            text: `Passage: Agricultural botanists developing dwarf crop varieties observed that while taller sorghum plants develop more grain heads per stalk, their height makes them highly susceptible to lodging (stalk breakage and uprooting) during autumnal squalls. Because unharvested broken stalks represent total crop loss, researchers argue that cultivating shorter sorghum varieties will actually _____
+Question: Which choice most logically completes the text?
+(A) produce taller individual plants during severe wind storms.
+(B) enhance total harvested yield by increasing the proportion of plants that withstand storm winds until harvest. [CORRECT]
+(C) require significantly more acreage than traditional cereal crops.
+(D) develop more grain heads per individual stalk than any existing variety.
+Analysis: Choice B correctly synthesizes the trade-off: despite fewer grains per stalk, greater wind resistance prevents catastrophic loss, maximizing net harvested yield.`
+          },
+          {
+            heading: '2.3 Worked Example: Quantitative Evidence & Hypothesis Testing (Hard Tier)',
+            text: `Hypothesis: Bird species with higher wing-aspect ratios migrate longer annual distances due to aerodynamic lift efficiency.
 Data Table:
 - Arctic Tern: Aspect Ratio 11.2 | Migration 44,000 km
 - Wandering Albatross: Aspect Ratio 12.5 | Migration 30,000 km
 - Ruffed Grouse: Aspect Ratio 5.1 | Migration 0 km
 - House Sparrow: Aspect Ratio 5.8 | Migration 50 km
 
-Valid Supporting Finding: Species with aspect ratios above 11.0 exhibited migration distances exceeding 30,000 km, whereas species with aspect ratios below 6.0 migrated under 100 km, substantiating the positive correlation between wing ratio and flight range.`
+Valid Supporting Finding: Species with aspect ratios above 11.0 exhibited migration distances exceeding 30,000 km, whereas species with aspect ratios below 6.0 migrated under 100 km, directly corroborating the hypothesis that high aspect ratios correlate with long-distance flight efficiency.`
           },
           {
-            heading: '2.2 Worked Example: Logical Completion / Inference (Hard Tier)',
-            text: `Passage: Behavioral economists tested whether cognitive fatigue impacts ethical decision-making. Participants subjected to 4 hours of intensive numerical tasks were 45% more likely to inflate their claimed rewards on an unmonitored test than were well-rested participants. However, when fatigued participants were given a 15-minute restorative mindfulness break prior to reporting, their rate of reward inflation dropped to match baseline levels. This finding suggests that _____
-Correct Completion: "...depleted self-regulatory cognitive capacity can be rapidly restored by short periods of intentional rest, reducing dishonest behavior."`
+            heading: '2.4 The Inferences Trap Elimination Protocol',
+            text: `1. The "Too Far" Extrapolation Trap: Inferring that because a trait is advantageous in one setting, it will universally take over the global population.
+2. The "Prescriptive" Trap: Assuming that because an effect occurs, policymakers or companies "should" or "must" enact specific regulations.
+3. The "Opposite Implication" Trap: Flipping the sign of the causal relationship (e.g. claiming a deterrent actually encourages an activity).`
           }
         ]
       },
