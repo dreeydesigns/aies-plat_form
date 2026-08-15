@@ -413,7 +413,56 @@ Analysis: Choice B is correct because holding the species composition constant p
       },
       {
         pageNumber: 2,
-        content: `CHAPTER 1: INFORMATION & IDEAS — COMMAND OF EVIDENCE & INFERENCES
+        content: `CHAPTER 1: INFORMATION & IDEAS — COMMAND OF EVIDENCE (TEXTUAL & QUANTITATIVE)
+
+1. Concept Introduction
+Command of Evidence questions require identifying the exact piece of textual evidence (e.g. literary quotations, scientific trial results) or quantitative data (from charts and tables) that directly substantiates, illustrates, or undermines a specific claim.
+
+2. The 3 Core Rules for Command of Evidence:
+Rule 1 (Literary Quotation Matching): Look at the precise claim in the prompt (e.g., "feels protected by the mountain" or "praises the person who built the fire"). The correct quotation must DIRECTLY describe that exact feeling or praise—not just describe the mountain or fire.
+Rule 2 (Quantitative Chart / Table Decoupling):
+  * Step A: Check axes and column labels carefully (Units: millions vs thousands; percentages vs raw counts).
+  * Step B: Identify the specific row/column/condition mentioned in the prompt (e.g. Year 2019, Area South West).
+  * Step C: Eliminate choices that misread numbers, swap categories, or state an inaccurate comparison.
+Rule 3 (Hypothesis Support & Refutation): The correct finding must create a contrast between the experimental condition and the control condition that aligns with the hypothesis.`,
+        ocrText: 'Command of evidence, textual evidence, quantitative evidence, data tables, line graphs, bar charts, quotation matching, hypothesis verification.',
+        sections: [
+          {
+            heading: '2.1 Worked Example: Literary Quotation Command of Evidence (Easy Tier)',
+            text: `Prompt Claim: In a 1914 poem, the speaker visits a rural valley and claims to feel protected by the nearby mountain.
+Which quotation most effectively illustrates the claim?
+(A) "The dry ravine emerged under boughs / Into the pasture."
+(B) "The mountain stood there to be pointed at."
+(C) "I felt it like a wall / Behind which I was sheltered from a wind." [CORRECT]
+(D) "I crossed the river and swung round the mountain."
+Analysis: Choice C is the only line that explicitly states the sensation of protection and shelter ("sheltered from a wind"). Choices A, B, and D describe physical setting without expressing protection.`
+          },
+          {
+            heading: '2.2 Worked Example: Scientific Hypothesis & Biological Support (Medium Tier)',
+            text: `Prompt: Biologists hypothesized that jaguars in wetland habitats can sustain themselves on aquatic reptiles and fish rather than land mammals.
+Which finding, if true, most directly supports the claim?
+(A) Aquatic reptile and fish remains were detected more frequently than mammal remains in dietary waste analyses of the wetland jaguars. [CORRECT]
+(B) High densities of caimans inhabit the river channels.
+(C) Semiaquatic capybaras are the primary prey of other predators in the region.
+(D) Jaguars in dry savannah habitats prey exclusively on ungulates.
+Analysis: Choice A provides direct empirical evidence of diet composition (waste analysis). Choice B shows prey presence, but not that jaguars actually consume them.`
+          },
+          {
+            heading: '2.3 Worked Example: Quantitative Table & Graph Analysis (Easy/Medium Tier)',
+            text: `Table: Clamshell Tools Found at Cave Depths
+- Depth 2–3m: Beach Clams = 7 | Seafloor Clams = 0
+- Depth 3–4m: Beach Clams = 99 | Seafloor Clams = 33
+- Depth 4–5m: Beach Clams = 2 | Seafloor Clams = 0
+- Depth 5–6m: Beach Clams = 18 | Seafloor Clams = 7
+Prompt: The highest number of tools made from clamshells collected from the beach was found at a depth of:
+Answer: 3–4 meters below the surface (99 beach tools).
+Core Skill: Direct table coordinate lookup without confusing row labels.`
+          }
+        ]
+      },
+      {
+        pageNumber: 3,
+        content: `CHAPTER 1: INFORMATION & IDEAS — INFERENCES & LOGICAL COMPLETIONS
 
 1. Concept Introduction
 Inferences and Logical Completion questions test your capacity to determine the single unavoidable conclusion from a set of premises. On the Digital SAT, these questions often end with an unfilled blank ("This finding suggests that ______" or "It can therefore be inferred that ______").
@@ -424,11 +473,12 @@ Step 2: Trace the Direction of the Bridge — Where does Fact A + Fact B logical
   * If an impediment/cost is eliminated $\\implies$ activity increases or becomes more accessible.
   * If a physical trait confers stability in storms at the cost of height $\\implies$ survival rate offsets lower individual yield.
   * If animals safeguard a specific crafted tool over basic sticks $\\implies$ the crafted tool holds higher perceived utility/value.
+  * If material composition in ancient ink includes a 20th-century compound $\\implies$ artifact could not have been produced in the 1400s.
 Step 3: Reject Speculative & Extreme Leaps — The correct inference is CONSERVATIVE. It never assumes unstated future events, universal replacements, or moral motivations unless explicitly given.`,
-        ocrText: 'Inferences, logical completions, command of evidence, premise bridge, trade-off reasoning, conservative deduction.',
+        ocrText: 'Inferences, logical completions, premise bridge, trade-off reasoning, conservative deduction, artifact dating, causal reasoning.',
         sections: [
           {
-            heading: '2.1 Worked Example: Inferences & Economic Trade-Offs (Easy Tier)',
+            heading: '3.1 Worked Example: Inferences & Economic Trade-Offs (Easy Tier)',
             text: `Passage: In an experiment, researchers allowed one group of shoppers to physically touch and examine ceramic mugs before purchasing, while a second group was permitted only to view images on a screen. When participants recorded the maximum price they would pay, the tactile group offered an average of 40% more than the visual-only group.
 Question: Which choice most logically completes the text?
 (A) People who shop online purchase fewer household items per year than in-person shoppers do.
@@ -438,28 +488,22 @@ Question: Which choice most logically completes the text?
 Analysis: Choice B is the precise, conservative inference directly supported by the 40% price difference. Choice A, C, and D make unsupported, extreme speculative claims.`
           },
           {
-            heading: '2.2 Worked Example: Biological Trade-Offs & Agricultural Inferences (Medium Tier)',
-            text: `Passage: Agricultural botanists developing dwarf crop varieties observed that while taller sorghum plants develop more grain heads per stalk, their height makes them highly susceptible to lodging (stalk breakage and uprooting) during autumnal squalls. Because unharvested broken stalks represent total crop loss, researchers argue that cultivating shorter sorghum varieties will actually _____
+            heading: '3.2 Worked Example: Material Provenance & Negative Inferences (Medium Tier)',
+            text: `Passage: When a purported 15th-century parchment map surfaced in 1957, scholars believed it proved pre-Columbian European exploration of North America. However, in 2021, chemical spectroscopy revealed that the map's ink contains synthetic anatase titanium dioxide, a pigment first synthesized in commercial laboratories in the 1920s. Therefore, the researchers concluded that _____
 Question: Which choice most logically completes the text?
-(A) produce taller individual plants during severe wind storms.
-(B) enhance total harvested yield by increasing the proportion of plants that withstand storm winds until harvest. [CORRECT]
-(C) require significantly more acreage than traditional cereal crops.
-(D) develop more grain heads per individual stalk than any existing variety.
-Analysis: Choice B correctly synthesizes the trade-off: despite fewer grains per stalk, greater wind resistance prevents catastrophic loss, maximizing net harvested yield.`
+(A) Europeans could not have sailed to North America in the 15th century.
+(B) the parchment map could not have been drawn by 15th-century cartographers. [CORRECT]
+(C) titanium dioxide pigments were secretly manufactured in medieval Europe.
+(D) historical maps from the 1920s are less accurate than 15th-century maps.
+Analysis: Choice B is unavoidable: because the ink contains a 20th-century compound, the map cannot be a genuine 15th-century document.`
           },
           {
-            heading: '2.3 Worked Example: Quantitative Evidence & Hypothesis Testing (Hard Tier)',
-            text: `Hypothesis: Bird species with higher wing-aspect ratios migrate longer annual distances due to aerodynamic lift efficiency.
-Data Table:
-- Arctic Tern: Aspect Ratio 11.2 | Migration 44,000 km
-- Wandering Albatross: Aspect Ratio 12.5 | Migration 30,000 km
-- Ruffed Grouse: Aspect Ratio 5.1 | Migration 0 km
-- House Sparrow: Aspect Ratio 5.8 | Migration 50 km
-
-Valid Supporting Finding: Species with aspect ratios above 11.0 exhibited migration distances exceeding 30,000 km, whereas species with aspect ratios below 6.0 migrated under 100 km, directly corroborating the hypothesis that high aspect ratios correlate with long-distance flight efficiency.`
+            heading: '3.3 Worked Example: Ecological & Evolutionary Adaptations (Hard Tier)',
+            text: `Passage: In South Africa's fynbos shrubland, adjacent to Afro-temperate forests with virtually no transitional boundary, fynbos shrubs possess exceptionally dense, lateral root networks specialized for rapid soil nutrient depletion. When ecologists planted forest seedlings into plots isolated from fynbos roots, the seedlings grew at 5x the rate of seedlings planted in proximity to fynbos roots. This suggests that the fynbos roots maintain the sharp habitat boundary by _____
+Correct Completion: "...absorbing soil nutrients so intensively that forest trees are prevented from establishing and flourishing within the fynbos zone."`
           },
           {
-            heading: '2.4 The Inferences Trap Elimination Protocol',
+            heading: '3.4 The Inferences Trap Elimination Protocol',
             text: `1. The "Too Far" Extrapolation Trap: Inferring that because a trait is advantageous in one setting, it will universally take over the global population.
 2. The "Prescriptive" Trap: Assuming that because an effect occurs, policymakers or companies "should" or "must" enact specific regulations.
 3. The "Opposite Implication" Trap: Flipping the sign of the causal relationship (e.g. claiming a deterrent actually encourages an activity).`
@@ -467,28 +511,20 @@ Valid Supporting Finding: Species with aspect ratios above 11.0 exhibited migrat
         ]
       },
       {
-        pageNumber: 3,
-        content: `CHAPTER 2: CRAFT & STRUCTURE — WORDS IN CONTEXT & CROSS-TEXT CONNECTIONS
+        pageNumber: 4,
+        content: `CHAPTER 2: CRAFT & STRUCTURE — WORDS IN CONTEXT & VOCABULARY PRECISION
 
 1. Concept Introduction
-Craft & Structure questions assess high-utility academic vocabulary used in specific disciplinary contexts and cross-text synthesis between two paired perspectives.
+Craft & Structure questions assess high-utility academic vocabulary used in specific disciplinary contexts. Words are evaluated for subtle connotative precision and domain-specific idiomatic meaning.
 
 2. The 3-Step "Mask and Predict" Vocabulary Method:
 Step 1: Cover the Target Word with a Blank — Read the sentence without looking at the 4 options.
 Step 2: Harvest Clues from Context — Identify transition words, synonyms, antonyms, or explanatory clauses that define the blank's meaning.
-Step 3: Plug in Your Own Word — Generate a simple synonym (e.g. "limit", "clear", "intense") and match it with the choices.
-
-3. Cross-Text Connections Framework (Text 1 vs Text 2):
-- Step 1: Label Author 1's Stance (+ / - / Neutral).
-- Step 2: Label Author 2's Stance (+ / - / Neutral).
-- Step 3: Determine the Dynamic:
-  * Rebuttal: Author 2 argues Author 1's methodology or conclusion is flawed.
-  * Nuance/Qualification: Author 2 agrees with the premise but limits its applicability.
-  * Extension: Author 2 provides additional evidence supporting Author 1.`,
-        ocrText: 'Words in context, vocabulary, mask and predict, cross text connections, paired texts, author stance, text structure.',
+Step 3: Plug in Your Own Word — Generate a simple synonym (e.g. "limit", "clear", "intense") and match it with the choices.`,
+        ocrText: 'Words in context, academic vocabulary, mask and predict, secondary definitions, nuance.',
         sections: [
           {
-            heading: '3.1 Words in Context Worked Example (Medium Tier)',
+            heading: '4.1 Words in Context Worked Example',
             text: `Passage: Although the initial experimental results appeared promising, the lead researcher took care to qualify her conclusions in the published report, noting that the small sample size precluded definitive generalization.
 As used in the text, "qualify" most nearly means:
 (A) certify as competent
@@ -496,9 +532,27 @@ As used in the text, "qualify" most nearly means:
 (C) enthusiastically endorse
 (D) officially register
 Explanation: The context "noting that the small sample size precluded definitive generalization" indicates the researcher was restricting or moderating her claims. Thus, "limit or moderate" is the precise contextual meaning.`
-          },
+          }
+        ]
+      },
+      {
+        pageNumber: 5,
+        content: `CHAPTER 2: CRAFT & STRUCTURE — TEXT STRUCTURE & CROSS-TEXT CONNECTIONS
+
+1. Concept Introduction
+Text Structure questions evaluate the functional progression of paragraphs (e.g., from an established theory, to a surprising anomaly, to an experimental resolution). Cross-Text Connections evaluate the relationship between two paired perspectives.
+
+2. Cross-Text Connections Framework (Text 1 vs Text 2):
+- Step 1: Label Author 1's Stance (+ / - / Neutral).
+- Step 2: Label Author 2's Stance (+ / - / Neutral).
+- Step 3: Determine the Dynamic:
+  * Rebuttal: Author 2 argues Author 1's methodology or conclusion is flawed.
+  * Nuance/Qualification: Author 2 agrees with the premise but limits its applicability.
+  * Extension: Author 2 provides additional evidence supporting Author 1.`,
+        ocrText: 'Cross text connections, paired texts, author stance, text structure, rhetorical purpose.',
+        sections: [
           {
-            heading: '3.2 Cross-Text Connections Worked Example (Hard Tier)',
+            heading: '5.1 Cross-Text Connections Worked Example',
             text: `Text 1 argues that urban vertical farming can fully replace traditional agriculture due to high yield per square meter.
 Text 2 points out that the high electricity requirements for LED lighting make vertical farming economically unviable for calorie-dense staple crops like wheat and rice.
 Question: How would the author of Text 2 respond to Text 1?
@@ -507,7 +561,7 @@ Correct Response: By pointing out that energy costs make vertical farming unsuit
         ]
       },
       {
-        pageNumber: 4,
+        pageNumber: 6,
         content: `CHAPTER 3: EXPRESSION OF IDEAS — TRANSITIONS & RHETORICAL SYNTHESIS
 
 1. Concept Introduction
@@ -526,13 +580,13 @@ Step 3: Eliminate Extra Fluff — Select the concise sentence that directly fulf
         ocrText: 'Transitions, logical connectors, rhetorical synthesis, bulleted notes, prompt goal, addition, contrast, cause and effect.',
         sections: [
           {
-            heading: '4.1 Transition Analysis Worked Example',
+            heading: '6.1 Transition Analysis Worked Example',
             text: `Sentence 1: Early geologists believed mountain ranges formed solely through the contraction of Earth's cooling crust.
 Sentence 2: [Transition], the discovery of mantle convection and tectonic plate subduction demonstrated that mountain uplift is driven by dynamic internal heat currents.
 Analysis: Sentence 2 directly overturns the obsolete belief in Sentence 1. The required relationship is contrast. Correct transition: "However" or "Nevertheless".`
           },
           {
-            heading: '4.2 Rhetorical Synthesis Strategy Example',
+            heading: '6.2 Rhetorical Synthesis Strategy Example',
             text: `Goal: The student wants to emphasize the difference in diet between the two bird species.
 Bullet Notes:
 - Species A lives in cloud forests and feeds exclusively on orchid nectar.
