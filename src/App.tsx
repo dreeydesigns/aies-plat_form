@@ -26,6 +26,7 @@ import { BookOpen, LogIn } from 'lucide-react';
 
 
 import EmptyState from './components/shared/EmptyState';
+import LandingPage from './pages/public/LandingPage';
 import AuthScreen from './components/auth/AuthScreen';
 import AdminConsole from './components/auth/AdminConsole';
 import Onboarding from './components/auth/Onboarding';
@@ -122,7 +123,11 @@ function AppContent() {
   return (
     <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-neutral-500 font-medium">Loading...</div>}>
     <Routes>
-      <Route path="/" element={<AuthScreen />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/auth" element={<AuthScreen />} />
+      <Route path="/login" element={<AuthScreen />} />
+      <Route path="/signin" element={<AuthScreen />} />
+      <Route path="/signup" element={<AuthScreen />} />
       <Route path="/admin-console" element={<AdminConsole />} />
       <Route path="/onboarding" element={<Onboarding />} />
       

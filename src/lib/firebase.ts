@@ -1,8 +1,24 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { 
+  getAuth, 
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  onAuthStateChanged, 
+  User, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  sendPasswordResetEmail,
+  signInWithCredential
+} from 'firebase/auth';
+import { 
+  initializeFirestore, 
+  persistentLocalCache, 
+  persistentMultipleTabManager,
+  doc, 
+  setDoc,
+  getFirestore
+} from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAnalytics } from 'firebase/analytics';
 
 const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : ((typeof process !== 'undefined' && process.env) ? process.env : {} as any);
 
@@ -18,13 +34,25 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+
+// Enable robust offline local cache for Practice Questions, Textbooks & History
+let dbInstance;
+try {
+  dbInstance = initializeFirestore(app, {
+    localCache: persistentLocalCache({
+      tabManager: persistentMultipleTabManager()
+    })
+  });
+} catch (e) {
+  // Fallback to standard firestore instance if indexedDB is already initialized
+  dbInstance = getFirestore(app);
+}
+
+export const db = dbInstance;
 export const storage = getStorage(app);
-// Do not leave users waiting for the SDK's default multi-minute retry period
-// when Storage has not yet been enabled or the network is unavailable.
 storage.maxUploadRetryTime = 20_000;
-let analyticsInstance = null;
-export const analytics = analyticsInstance;
+
+export const analytics = null;
 
 const provider = new GoogleAuthProvider();
 provider.addScope('https://www.googleapis.com/auth/drive.readonly');
@@ -45,9 +73,31 @@ export const initAuth = (
   });
 };
 
+/**
+ * Google Sign-In with Electron System-Browser Protocol Support.
+ * If running inside the packaged Electron app, opens the system browser to bypass
+ * Google OAuth embedded webview restrictions (disallowed_useragent policy).
+ */
 export const googleSignIn = async (): Promise<{ user: User; accessToken: string } | null> => {
   try {
     isSigningIn = true;
+
+    // Check if running inside Electron wrapper
+    const isElectron = typeof window !== 'undefined' && (
+      (window as any).electronAPI !== undefined || 
+      navigator.userAgent.toLowerCase().includes('electron')
+    );
+
+    if (isElectron && (window as any).electronAPI?.openExternalOAuth) {
+      // Delegate to Electron system-browser OAuth protocol handoff
+      const result = await (window as any).electronAPI.openExternalOAuth('google');
+      if (result?.credential) {
+        const userCredential = await signInWithCredential(auth, result.credential);
+        return { user: userCredential.user, accessToken: result.accessToken || '' };
+      }
+    }
+
+    // Standard Browser OAuth popup flow
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     if (!credential?.accessToken) {
@@ -57,100 +107,34 @@ export const googleSignIn = async (): Promise<{ user: User; accessToken: string 
     cachedAccessToken = credential.accessToken;
     return { user: result.user, accessToken: cachedAccessToken };
   } catch (error: any) {
-    if (error.code === 'auth/popup-blocked') { alert('Popup was blocked by the browser. Please open this app in a new tab (using the button in the top right) to sign in.'); } console.error('Sign in error:', error);
+    if (error.code === 'auth/popup-blocked') {
+      alert('Popup was blocked by the browser. Please allow popups to sign in with Google.');
+    }
+    console.error('Sign in error:', error);
     throw error;
   } finally {
     isSigningIn = false;
   }
 };
 
-export const getAccessToken = async (): Promise<string | null> => {
-  return cachedAccessToken;
-};
-
-export const logout = async () => {
-  await auth.signOut();
-  cachedAccessToken = null;
-};
-
-
-export const emailSignIn = async (email: string, password: string): Promise<User> => {
-  const result = await signInWithEmailAndPassword(auth, email, password);
+export const emailSignUp = async (email: string, pass: string, name: string, role: string = 'student') => {
+  const result = await createUserWithEmailAndPassword(auth, email, pass);
   return result.user;
 };
 
-export const sendPasswordReset = async (email: string): Promise<void> => {
+export const emailSignIn = async (email: string, pass: string) => {
+  const result = await signInWithEmailAndPassword(auth, email, pass);
+  return result.user;
+};
+
+export const resetPassword = async (email: string) => {
   await sendPasswordResetEmail(auth, email);
 };
 
-export const emailSignUp = async (
-  email: string, 
-  password: string, 
-  role: string, 
-  linkCode?: string, 
-  dateOfBirth?: string,
-  sensoryProfile?: any,
-  socialPersonality?: any
-): Promise<{user: User, userData: any}> => {
-  const result = await createUserWithEmailAndPassword(auth, email, password);
-  const uid = result.user.uid;
+export const sendPasswordReset = resetPassword;
 
-  let age: number | undefined = undefined;
-  if (dateOfBirth) {
-    const birthDate = new Date(dateOfBirth);
-    const today = new Date();
-    age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-  }
-
-  const userData: any = {
-    name: 'New User',
-    role: role,
-    email: email,
-    dateOfBirth: dateOfBirth || undefined,
-    age: age,
-    isParentManaged: role === 'student' && age !== undefined && age < 14,
-    sensoryProfile: sensoryProfile || {
-      primary: 'visual',
-      pacing: 'medium',
-      complexityTolerance: 3,
-      rewardSensitivity: 3,
-      neurodivergentFlags: { adhd: false, dyslexia: false, dyscalculia: false }
-    },
-    socialPersonality: socialPersonality || {
-      leadershipDrive: 'medium',
-      anxietyTendency: 'low',
-      collaborationPreference: 'pairs'
-    },
-    cognitiveProfile: {
-      primaryLearningStyle: sensoryProfile?.primary || 'visual',
-      pacing: sensoryProfile?.pacing || 'medium',
-      anxietyTendency: socialPersonality?.anxietyTendency || 'low',
-      neurodivergentFlags: sensoryProfile?.neurodivergentFlags || { adhd: false, dyslexia: false, dyscalculia: false }
-    },
-    satProfile: {
-      diagnosticCompleted: false,
-      placementByDomain: {}
-    },
-    consent: {
-      deviceSync: false,
-      cameraWellness: false,
-      whatsappNotifications: false,
-      updatedAt: new Date().toISOString()
-    },
-    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${uid}`,
-
-    points: role === 'student' ? 0 : undefined,
-    level: role === 'student' ? 1 : undefined,
-    streak: role === 'student' ? 0 : undefined,
-    linkCode: role === 'student' ? (linkCode || Math.random().toString(36).substring(2, 8).toUpperCase()) : undefined,
-    parentIds: [],
-    childIds: []
-  };
-
-  await setDoc(doc(db, 'users', uid), userData);
-
-  return { user: result.user, userData };
+export const signOut = async () => {
+  await auth.signOut();
 };
 
+export const logout = signOut;

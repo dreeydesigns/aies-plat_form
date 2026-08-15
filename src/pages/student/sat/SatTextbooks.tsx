@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../../context/AppContext';
+import SubscriptionModal from '../../../components/shared/SubscriptionModal';
 import { initialTextbooks } from '../../../data/textbooks';
 import { initialSatQuestions } from '../../../data/sat-questions';
 import { 
@@ -87,6 +89,8 @@ interface SearchSectionResult {
 }
 
 export default function SatTextbooks() {
+  const { userProfile } = useAppContext();
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -319,6 +323,10 @@ export default function SatTextbooks() {
 
   // Open Section in Reader
   const handleOpenSectionInReader = (book: Textbook, chapterId: string, sectionId: string, pageNumber: number) => {
+    if (userProfile?.isGuest) {
+      setShowSubscriptionModal(true);
+      return;
+    }
     setSelectedBook(book);
     setActiveChapterId(chapterId);
     setActiveSectionId(sectionId);
@@ -343,6 +351,10 @@ export default function SatTextbooks() {
 
   // Open Book from Landing Card
   const handleSelectBook = (book: Textbook) => {
+    if (userProfile?.isGuest) {
+      setShowSubscriptionModal(true);
+      return;
+    }
     setSelectedBook(book);
     const firstChapter = book.chapters?.[0];
     const firstSection = firstChapter?.sections?.[0];
@@ -1668,6 +1680,13 @@ export default function SatTextbooks() {
           )}
         </div>
       </div>
+
+      <SubscriptionModal
+        isOpen={showSubscriptionModal}
+        onClose={() => setShowSubscriptionModal(false)}
+        featureTitle="Interactive Textbook Library"
+        featureDescription="Guest accounts have trial access to practice tests. To unlock all 4 SAT textbooks and full worked solutions, enter your School Code or upgrade to a Student Pro Pass."
+      />
     </div>
   );
 }

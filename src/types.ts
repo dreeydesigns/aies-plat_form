@@ -10,7 +10,16 @@ export interface DriveFile {
   webViewLink: string;
 }
 
-export type UserRole = 'student' | 'parent' | 'teacher' | 'admin';
+export type UserRole = 
+  | 'aies_central' 
+  | 'principal' 
+  | 'deputy_principal' 
+  | 'hod' 
+  | 'class_teacher' 
+  | 'student' 
+  | 'parent' 
+  | 'teacher' 
+  | 'admin';
 
 export interface CognitiveProfile {
   workingMemory: 'standard' | 'high' | 'extended';
@@ -28,6 +37,9 @@ export interface UserProfile {
   photoURL: string | null;
   avatar?: string;
   role: UserRole;
+  institutionId?: string | null;     // Multi-tenancy grouping (null for AIES Central)
+  departmentId?: string | null;      // hod, class_teacher only
+  classIds?: string[];               // class_teacher (assigned), student (enrolled)
   dateOfBirth?: string;
   linkedParentUid?: string;          // student only
   linkedStudentUids?: string[];      // parent only
@@ -418,3 +430,110 @@ export interface InterventionRecord {
   resolvedState: boolean;
   timestamp: string;
 }
+
+// ==========================================
+// INSTITUTION & CONTENT AUTHORITY LADDER DATA MODEL
+// ==========================================
+
+export interface Institution {
+  id: string;
+  name: string;
+  principalUid: string;
+  deputyPrincipalUid?: string | null;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface Department {
+  id: string;
+  institutionId: string;
+  subject: 'math' | 'rw' | 'all';
+  name: string;
+  hodUid: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface ClassGroup {
+  id: string;
+  institutionId: string;
+  departmentId: string;
+  name: string;                      // e.g. "Grade 11 — Section A"
+  classTeacherUid: string;
+  studentUids: string[];
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export type ContentScope = 'global' | 'institution' | 'class';
+export type ContentStatus = 'draft' | 'pending_hod_review' | 'pending_central_review' | 'published' | 'rejected';
+
+export interface LibraryContent {
+  id: string;
+  scope: ContentScope;
+  institutionId?: string | null;     // null if scope=global
+  classId?: string | null;           // populated if scope=class
+  status: ContentStatus;
+  uploadedByUid: string;
+  reviewedByUid?: string | null;
+  rejectionReason?: string;
+  sourceFileRef?: string;
+  subject: 'math' | 'rw';
+  domain: string;
+  skill: string;
+  textbookId?: string;
+  chapterId?: string;
+  sectionId?: string;
+  title: string;
+  extractedMetadata?: {
+    questionCount?: number;
+    skillsIdentified?: string[];
+    difficultyDistribution?: Record<string, number>;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SchoolCode {
+  id?: string;
+  code: string;                      // e.g. "AIES-KILIMA-882"
+  institutionId: string;
+  institutionName: string;
+  roleAllowed?: 'student' | 'teacher' | 'all';
+  createdByUid: string;
+  expiresAt: string;                 // ISO 8601 string (defaults to 48 hours / 2 days from creation)
+  maxUses?: number;
+  usesCount: number;
+  active: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface ParentLinkRequest {
+  id: string;
+  studentUid: string;
+  studentName: string;
+  studentEmail: string;
+  parentEmail: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  resolvedAt?: string;
+}
+
+export interface GuestSession {
+  id: string;
+  guestId: string;
+  startedAt: string;
+  testCount: number;
+  convertedToUserUid?: string;
+}
+
+export interface SubscriptionTier {
+  id: string;
+  name: string;
+  priceMonthly: number;
+  priceQuarterly: number;
+  features: string[];
+  roleTarget: 'student' | 'institution';
+}
+
