@@ -8,6 +8,7 @@ import DesmosCalculator from '../../../components/sat/DesmosCalculator';
 import EmpathyResetModal from '../../../components/sat/EmpathyResetModal';
 import FiveFingerWidget, { FiveFingerReason } from '../../../components/sat/FiveFingerWidget';
 import SprInput from '../../../components/sat/SprInput';
+import { LessonContent } from '../../../components/shared/LessonContent';
 import { 
   Calculator, 
   Clock, 
@@ -499,8 +500,8 @@ export default function SatTestRunner() {
           {activeQuestion.skill}
         </div>
 
-        <div className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed whitespace-pre-line">
-          {activeQuestion.questionText}
+        <div className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed">
+          <LessonContent content={activeQuestion.questionText} />
         </div>
 
         {/* Options or SPR Input */}

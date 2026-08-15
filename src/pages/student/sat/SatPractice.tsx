@@ -9,6 +9,8 @@ import EmpathyResetModal from '../../../components/sat/EmpathyResetModal';
 import LevelUpModal from '../../../components/sat/LevelUpModal';
 import DataLightBanner from '../../../components/sat/DataLightBanner';
 import SprInput from '../../../components/sat/SprInput';
+import { LessonContent } from '../../../components/shared/LessonContent';
+import { normalizeTextbookId } from './SatTextbooks';
 import { 
   Calculator, 
   ArrowRight, 
@@ -241,7 +243,10 @@ export default function SatPractice() {
 
   // Find referenced textbook
   const textbookRef = currentQuestion?.textbookRef;
-  const referencedBook = textbookRef ? initialTextbooks.find(b => b.id === textbookRef.textbookId) : null;
+  const normBookId = normalizeTextbookId(textbookRef?.textbookId);
+  const referencedBook = textbookRef 
+    ? initialTextbooks.find(b => b.id === textbookRef.textbookId || b.id === normBookId) 
+    : null;
 
   const isCurrentCorrect = currentQuestion?.isSPR
     ? String(currentQuestion.correctAnswer).trim() === sprAnswer.trim()
@@ -259,81 +264,84 @@ export default function SatPractice() {
               <Zap className="w-5 h-5" />
             </span>
             <div>
-              <h1 className="text-2xl font-bold text-neutral-900">SAT Practice Studio</h1>
-              <p className="text-xs text-neutral-500">Continuous adaptive re-calibration & textbook-deep remediation</p>
+              <h1 className="text-2xl font-bold text-neutral-900">
+                {practiceMode === 'mixed' ? 'Adaptive Mixed SAT Practice' : `${domainDetails[selectedDomain].name} Mastery`}
+              </h1>
+              <p className="text-xs text-neutral-500">
+                Continuous difficulty calibration · Real-time explanation grounding
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Tabs: Mixed vs Choose Topic */}
-        <div className="bg-neutral-100 p-1 rounded-2xl flex items-center gap-1 border border-neutral-200">
+        {/* Practice Mode Selector Pills */}
+        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-neutral-200 shadow-xs">
           <button
             onClick={() => setPracticeMode('mixed')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               practiceMode === 'mixed'
-                ? 'bg-white text-neutral-900 shadow-sm'
-                : 'text-neutral-600 hover:text-neutral-900'
+                ? 'bg-neutral-900 text-white shadow-xs'
+                : 'text-neutral-600 hover:bg-neutral-100'
             }`}
           >
-            All Topics (Adaptive Mix)
+            <Layers className="w-3.5 h-3.5" />
+            All Topics
           </button>
           <button
             onClick={() => setPracticeMode('topic')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               practiceMode === 'topic'
-                ? 'bg-white text-neutral-900 shadow-sm'
-                : 'text-neutral-600 hover:text-neutral-900'
+                ? 'bg-neutral-900 text-white shadow-xs'
+                : 'text-neutral-600 hover:bg-neutral-100'
             }`}
           >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
             Choose Topic
           </button>
         </div>
       </div>
 
-      {/* Topic selector if mode === 'topic' */}
+      {/* Domain Selection Tabs (When in Topic mode) */}
       {practiceMode === 'topic' && (
-        <div className="bg-white p-4 rounded-2xl border border-neutral-200 shadow-sm">
-          <p className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3">
-            Select SAT Domain
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {(Object.keys(domainDetails) as SatDomain[]).map(domainKey => {
-              const info = domainDetails[domainKey];
-              const isSelected = selectedDomain === domainKey;
-              const currentTier = userProfile?.satProfile?.placementByDomain?.[domainKey] || 'intermediate';
-
-              return (
-                <button
-                  key={domainKey}
-                  onClick={() => setSelectedDomain(domainKey)}
-                  className={`p-3 rounded-xl border text-left transition-all ${
-                    isSelected
-                      ? 'border-blue-600 bg-blue-50/70 text-blue-900 font-bold'
-                      : 'border-neutral-200 hover:border-neutral-300 text-neutral-700'
-                  }`}
-                >
-                  <p className="text-xs font-extrabold truncate">{info.name}</p>
-                  <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-600">
-                    {currentTier}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-neutral-100/70 p-2 rounded-2xl border border-neutral-200">
+          {(Object.keys(domainDetails) as SatDomain[]).map(d => {
+            const isSelected = selectedDomain === d;
+            return (
+              <button
+                key={d}
+                onClick={() => setSelectedDomain(d)}
+                className={`py-2 px-3 rounded-xl text-xs font-bold text-left transition-all truncate ${
+                  isSelected
+                    ? 'bg-white text-blue-900 shadow-sm border border-neutral-200'
+                    : 'text-neutral-600 hover:bg-white/60'
+                }`}
+              >
+                {domainDetails[d].name}
+              </button>
+            );
+          })}
         </div>
       )}
 
-      {/* Question Card */}
+      {/* Main Practice Card */}
       {currentQuestion ? (
-        <div className="space-y-4">
-          {/* Question Sub-Header */}
-          <div className="bg-white px-5 py-3 rounded-2xl border border-neutral-200 flex items-center justify-between">
+        <div className="space-y-6">
+          {/* Question Meta Bar */}
+          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-neutral-200 shadow-xs">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 rounded-lg bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider">
-                {domainDetails[currentQuestion.domain]?.name || currentQuestion.domain}
+              <span className="px-3 py-1 bg-neutral-900 text-white rounded-xl text-xs font-black">
+                Question {currentIdx + 1} of {questionPool.length}
               </span>
-              <span className="text-xs font-semibold text-neutral-500">
-                Difficulty: <span className="font-bold text-neutral-800 capitalize">{currentQuestion.difficulty}</span>
+              <span
+                className={`px-2.5 py-0.5 rounded-lg text-xs font-bold uppercase tracking-wider ${
+                  currentQuestion.difficulty === 'expert'
+                    ? 'bg-red-100 text-red-800'
+                    : currentQuestion.difficulty === 'intermediate'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-emerald-100 text-emerald-800'
+                }`}
+              >
+                {currentQuestion.difficulty}
               </span>
             </div>
 
@@ -341,12 +349,12 @@ export default function SatPractice() {
               <button
                 type="button"
                 onClick={() => setIsBookmarked(!isBookmarked)}
-                className={`p-2 rounded-xl border text-xs font-bold transition-colors ${
+                className={`p-2 rounded-xl border transition-colors ${
                   isBookmarked
-                    ? 'bg-blue-600 text-white border-blue-700'
-                    : 'bg-white text-neutral-500 border-neutral-300 hover:bg-neutral-50'
+                    ? 'bg-amber-500 border-amber-600 text-white'
+                    : 'border-neutral-200 text-neutral-500 hover:bg-neutral-50'
                 }`}
-                title="Mark for review"
+                title="Bookmark for review"
               >
                 <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white' : ''}`} />
               </button>
@@ -369,8 +377,8 @@ export default function SatPractice() {
               {currentQuestion.skill}
             </div>
 
-            <div className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed whitespace-pre-line">
-              {currentQuestion.questionText}
+            <div className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed">
+              <LessonContent content={currentQuestion.questionText} />
             </div>
 
             {/* Options or SPR Input */}
@@ -459,9 +467,9 @@ export default function SatPractice() {
                   )}
                 </div>
 
-                <p className="text-sm leading-relaxed text-neutral-700">
-                  {currentQuestion.explanation}
-                </p>
+                <div className="text-sm leading-relaxed text-neutral-700">
+                  <LessonContent content={currentQuestion.explanation} />
+                </div>
 
                 {/* Deep Textbook Remediation Link */}
                 {textbookRef && (
@@ -481,7 +489,7 @@ export default function SatPractice() {
                     <button
                       onClick={() =>
                         navigate(
-                          `/student/sat/textbooks?textbookId=${textbookRef.textbookId}&page=${textbookRef.page}&highlight=${encodeURIComponent(
+                          `/student/sat/textbooks?textbookId=${normBookId || textbookRef.textbookId}&page=${textbookRef.page}&highlight=${encodeURIComponent(
                             textbookRef.highlightedText
                           )}`
                         )

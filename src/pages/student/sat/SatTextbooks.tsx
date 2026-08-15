@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { initialTextbooks } from '../../../data/textbooks';
 import { initialSatQuestions } from '../../../data/sat-questions';
 import { Textbook, TextbookPage, SatQuestion } from '../../../types';
+import { LessonContent } from '../../../components/shared/LessonContent';
 import { 
   BookOpen, 
   Search, 
@@ -24,6 +25,15 @@ import {
   ArrowRight
 } from 'lucide-react';
 
+export const normalizeTextbookId = (id: string | null | undefined): string => {
+  if (!id) return '';
+  if (id === 'sat-math-foundations' || id === 'sat-foundations-math') return 'sat-foundations-math';
+  if (id === 'sat-rw-mastery' || id === 'sat-reading-writing-mastery') return 'sat-reading-writing-mastery';
+  if (id === 'sat-adv-math' || id === 'sat-advanced-math-mastery') return 'sat-advanced-math-mastery';
+  if (id === 'sat-grammar' || id === 'sat-grammar-conventions') return 'sat-grammar-conventions';
+  return id;
+};
+
 export default function SatTextbooks() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -44,7 +54,8 @@ export default function SatTextbooks() {
   // Initialize selected book and page from query params
   useEffect(() => {
     if (textbookIdParam) {
-      const book = initialTextbooks.find(b => b.id === textbookIdParam);
+      const normId = normalizeTextbookId(textbookIdParam);
+      const book = initialTextbooks.find(b => b.id === normId || b.id === textbookIdParam);
       if (book) {
         setSelectedBook(book);
         if (pageParam > 0) {
@@ -93,10 +104,14 @@ export default function SatTextbooks() {
     if (!selectedBook) return [];
     const currentPage = selectedBook.pages[currentPageIndex];
     if (!currentPage) return [];
-    return initialSatQuestions.filter(
-      q => q.textbookRef?.textbookId === selectedBook.id && 
-          (q.textbookRef?.page === currentPage.pageNumber || !q.textbookRef?.page)
-    );
+    const normBookId = normalizeTextbookId(selectedBook.id);
+    return initialSatQuestions.filter(q => {
+      const qNormId = normalizeTextbookId(q.textbookRef?.textbookId);
+      return (
+        (qNormId === normBookId || q.textbookRef?.textbookId === selectedBook.id) &&
+        (q.textbookRef?.page === currentPage.pageNumber || !q.textbookRef?.page)
+      );
+    });
   }, [selectedBook, currentPageIndex]);
 
   // Filter books by search
@@ -119,82 +134,54 @@ export default function SatTextbooks() {
     const currentPage: TextbookPage | undefined = selectedBook.pages[currentPageIndex];
 
     return (
-      <div className="max-w-6xl mx-auto space-y-6 py-2">
-        {/* Top Reader Navigation Bar */}
-        <div className="bg-white p-4 rounded-3xl border border-neutral-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-6 max-w-6xl mx-auto pb-16">
+        {/* Navigation bar */}
+        <div className="flex items-center justify-between">
           <button
-            onClick={() => {
-              setSelectedBook(null);
-              setSearchParams({});
-            }}
+            onClick={() => setSelectedBook(null)}
             className="flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-neutral-900 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Library
+            Back to Textbook Library
           </button>
 
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-bold text-neutral-500">
-              Page {currentPage?.pageNumber} of {selectedBook.pages[selectedBook.pages.length - 1]?.pageNumber}
-            </span>
-
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => handlePageChange(currentPageIndex - 1)}
-                disabled={currentPageIndex === 0}
-                className="p-2 rounded-xl border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
-                title="Previous Page"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handlePageChange(currentPageIndex + 1)}
-                disabled={currentPageIndex === selectedBook.pages.length - 1}
-                className="p-2 rounded-xl border border-neutral-200 disabled:opacity-30 hover:bg-neutral-50 transition-colors"
-                title="Next Page"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-
+          <div className="flex items-center gap-2">
             <button
               onClick={handleShareLink}
-              className="p-2 rounded-xl border border-neutral-200 text-neutral-600 hover:text-neutral-900 text-xs font-semibold flex items-center gap-1.5 transition-colors"
-              title="Copy deep-link to this page"
+              className="px-3 py-1.5 rounded-xl border border-neutral-200 text-neutral-700 hover:bg-neutral-50 text-xs font-bold flex items-center gap-1.5 transition-colors"
             >
-              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span className="hidden sm:inline">{copiedLink ? 'Copied!' : 'Share'}</span>
-            </button>
-
-            <button
-              onClick={() => setShowAiAssistant(!showAiAssistant)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
-                showAiAssistant
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>AI Study Co-Pilot</span>
+              {copiedLink ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-700">Link Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span>Share Page</span>
+                </>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Reader Layout: Sidebar TOC + Page Content + Optional AI Co-Pilot */}
+        {/* Reader Layout Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Table of Contents */}
+          {/* Table of Contents / Sidebar */}
           <div className="bg-white p-5 rounded-3xl border border-neutral-200 shadow-sm space-y-4 md:col-span-1 h-fit">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
-              <Bookmark className="w-3.5 h-3.5 text-neutral-500" /> Table of Contents
-            </h3>
-            <div className="space-y-1.5">
+            <div className="flex items-center gap-2 pb-3 border-b border-neutral-100">
+              <BookOpen className="w-4 h-4 text-blue-600" />
+              <h3 className="font-bold text-neutral-900 text-sm">Table of Contents</h3>
+            </div>
+
+            <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1">
               {selectedBook.pages.map((p, idx) => (
                 <button
                   key={p.pageNumber}
                   onClick={() => handlePageChange(idx)}
-                  className={`w-full text-left p-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
-                    idx === currentPageIndex
-                      ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200'
+                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition-all flex items-center justify-between ${
+                    currentPageIndex === idx
+                      ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200 shadow-xs'
                       : 'text-neutral-600 hover:bg-neutral-50'
                   }`}
                 >
@@ -284,22 +271,22 @@ export default function SatTextbooks() {
             {/* Tab: Reading */}
             {activeTab === 'reading' && (
               <div className="space-y-6">
-                <div className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed text-sm whitespace-pre-line">
-                  {currentPage?.content}
+                <div className="max-w-none text-neutral-800 leading-relaxed text-sm">
+                  <LessonContent content={currentPage?.content || ''} />
                 </div>
 
                 {/* Structured Sections */}
                 {currentPage?.sections && currentPage.sections.length > 0 && (
                   <div className="space-y-4 pt-4 border-t border-neutral-100">
                     {currentPage.sections.map((section, idx) => (
-                      <div key={idx} className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-2">
+                      <div key={idx} className="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 space-y-3">
                         <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                           <FileText className="w-4 h-4 text-blue-600" />
                           {section.heading}
                         </h3>
-                        <p className="text-sm text-neutral-700 leading-relaxed">
-                          {section.text}
-                        </p>
+                        <div className="text-sm text-neutral-700 leading-relaxed">
+                          <LessonContent content={section.text} />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -333,11 +320,11 @@ export default function SatTextbooks() {
                             {q.difficulty}
                           </span>
                         </div>
-                        <p className="text-sm text-neutral-900 font-medium whitespace-pre-line leading-relaxed">
-                          {q.questionText}
-                        </p>
+                        <div className="text-sm text-neutral-900 font-medium leading-relaxed">
+                          <LessonContent content={q.questionText} />
+                        </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                          {q.options.map((opt, optIdx) => (
+                          {q.options?.map((opt, optIdx) => (
                             <div
                               key={optIdx}
                               className={`p-3 rounded-xl text-xs font-semibold border flex items-center justify-between ${
@@ -352,9 +339,9 @@ export default function SatTextbooks() {
                           ))}
                         </div>
                         {q.explanation && (
-                          <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900">
+                          <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900 space-y-1">
                             <span className="font-bold">Official Rationale: </span>
-                            {q.explanation}
+                            <LessonContent content={q.explanation} />
                           </div>
                         )}
                       </div>
