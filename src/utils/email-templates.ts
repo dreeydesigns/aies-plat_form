@@ -205,3 +205,70 @@ Keep learning and growing!
     `
   };
 }
+
+
+export interface EmailVerificationParams {
+  recipientName: string;
+  verificationCode: string;
+  expiresInMinutes?: number;
+}
+
+export function generateEmailVerificationEmail({
+  recipientName,
+  verificationCode,
+  expiresInMinutes = 15
+}: EmailVerificationParams) {
+  return {
+    subject: `Your AIES SAT Verification Code: ${verificationCode}`,
+    text: `Dear ${recipientName},
+
+Your verification code for AIES SAT is: ${verificationCode}
+
+This code will expire in ${expiresInMinutes} minutes. Please enter it in the application to complete your email verification.
+
+If you did not sign up for AIES SAT, please disregard this email.
+
+— The AIES SAT Security Team`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: #0f172a; color: #f8fafc; border-radius: 16px;">
+        <h2 style="color: #38bdf8;">Verify Your AIES SAT Account</h2>
+        <p>Dear ${recipientName},</p>
+        <p>Thank you for signing up for AIES SAT. Please verify your email address to activate your account:</p>
+        
+        <div style="background: #1e293b; border: 1px solid #334155; padding: 18px; border-radius: 12px; text-align: center; margin: 20px 0;">
+          <span style="font-size: 12px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Your 6-Digit Verification Code</span>
+          <div style="font-size: 32px; font-weight: bold; color: #38bdf8; font-family: monospace; letter-spacing: 4px; margin: 8px 0;">${verificationCode}</div>
+          <span style="color: #f59e0b; font-size: 12px;">⚠️ Code expires in ${expiresInMinutes} minutes</span>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 12px;">If you did not request this code, no further action is required.</p>
+      </div>
+    `
+  };
+}
+
+export function generateEmailVerificationSuccessEmail({
+  recipientName,
+  platformUrl = 'https://aies-plat-form.vercel.app'
+}: { recipientName: string; platformUrl?: string }) {
+  return {
+    subject: `You've successfully verified your AIES SAT account`,
+    text: `Dear ${recipientName},
+
+Your AIES SAT account email has been successfully verified and activated!
+
+You can now sign in anytime at: ${platformUrl}
+
+— The AIES SAT Team`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: #0f172a; color: #f8fafc; border-radius: 16px;">
+        <h2 style="color: #10b981;">✓ Email Verified Successfully</h2>
+        <p>Dear ${recipientName},</p>
+        <p>Your AIES SAT account has been verified and is active. You can now access your diagnostic assessments, interactive textbooks, and adaptive SAT preparation.</p>
+        <div style="text-align: center; margin: 24px 0;">
+          <a href="${platformUrl}" style="display: inline-block; padding: 12px 24px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 12px; font-weight: bold;">Go to AIES SAT</a>
+        </div>
+      </div>
+    `
+  };
+}
