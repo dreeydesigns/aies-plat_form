@@ -49,9 +49,6 @@ export default function SubscriptionModal({
     try {
       // Standard school code resolution
       const cleanCode = schoolCode.trim().toUpperCase();
-      let institutionName = 'Enrolled Institution';
-      let institutionId = 'inst_standard';
-
       const institutionId = `inst_${cleanCode.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
       const institutionName = `School (${cleanCode})`;
 
