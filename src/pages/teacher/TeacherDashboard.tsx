@@ -82,11 +82,11 @@ export default function TeacherDashboard() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <button
-            onClick={() => navigate('/teacher/courses/new')}
+            onClick={() => navigate('/teacher/sat/assign')}
             className="px-6 py-3 bg-white text-blue-900 font-bold rounded-2xl shadow-lg hover:bg-blue-50 transition-all active:scale-95 flex items-center gap-2 text-sm"
           >
             <PlusCircle className="w-4 h-4 text-blue-600" />
-            AI Co-Teacher Course Builder
+            Assign SAT Workout / Test
           </button>
           <button
             onClick={() => navigate('/teacher/students')}
