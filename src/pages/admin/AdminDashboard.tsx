@@ -56,76 +56,52 @@ export interface SchoolPipelineRecord {
   createdAt: string;
 }
 
-const initialPipelineData: SchoolPipelineRecord[] = [
-  {
-    id: 'inst_kilima',
-    name: 'Kilima Academy',
-    location: 'Nairobi, Kenya',
-    primaryContactName: 'Dr. Arthur Mwangi (Principal)',
-    primaryContactEmail: 'arthur.mwangi@kilima.ac.ke',
-    primaryContactPhone: '+254 712 345 678',
-    estimatedStudentCount: 320,
-    stage: 'active',
-    tier: 'premium',
-    has30DayTrial: false,
-    billingCycle: 'termly',
-    paymentMethod: 'invoice',
-    paymentStatus: 'paid',
-    schoolCode: 'AIES-KILIMA-882',
-    principalInviteSent: true,
-    principalInviteUrl: 'https://aies-plat-form.vercel.app/?role=principal&school=AIES-KILIMA-882',
-    lastActivity: '2 hours ago',
-    createdAt: '2026-07-10T09:00:00Z'
-  },
-  {
-    id: 'inst_greensprings',
-    name: 'Green Springs School',
-    location: 'Karen, Nairobi',
-    primaryContactName: 'Mrs. Florence Kamau',
-    primaryContactEmail: 'fkamau@greensprings.edu',
-    primaryContactPhone: '+254 722 987 654',
-    estimatedStudentCount: 180,
-    stage: 'trial',
-    tier: 'standard',
-    has30DayTrial: true,
-    trialExpiresAt: '2026-09-15',
-    billingCycle: 'termly',
-    paymentMethod: 'mpesa',
-    paymentStatus: 'pending',
-    schoolCode: 'AIES-GREEN-101',
-    principalInviteSent: true,
-    principalInviteUrl: 'https://aies-plat-form.vercel.app/?role=principal&school=AIES-GREEN-101',
-    lastActivity: 'Yesterday',
-    createdAt: '2026-08-01T14:30:00Z'
-  },
-  {
-    id: 'inst_st_andrews',
-    name: 'St. Andrew Prep',
-    location: 'Runda, Nairobi',
-    primaryContactName: 'Mr. David Mutiso (HOD Math)',
-    primaryContactEmail: 'mutiso@standrew.ac.ke',
-    primaryContactPhone: '+254 733 112 233',
-    estimatedStudentCount: 250,
-    stage: 'prospect',
-    tier: 'foundation',
-    has30DayTrial: true,
-    billingCycle: 'termly',
-    paymentMethod: 'bank_transfer',
-    paymentStatus: 'pending',
-    schoolCode: 'AIES-STAND-404',
-    principalInviteSent: false,
-    lastActivity: '3 days ago',
-    createdAt: '2026-08-12T11:00:00Z'
-  }
-];
-
 export default function AdminDashboard() {
-  const [pipeline, setPipeline] = useState<SchoolPipelineRecord[]>(initialPipelineData);
+  const [pipeline, setPipeline] = useState<SchoolPipelineRecord[]>([]);
+  const [loadingPipeline, setLoadingPipeline] = useState(true);
   const [selectedStage, setSelectedStage] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [inviteSentFor, setInviteSentFor] = useState<string | null>(null);
+
+  // Subscribe to live Firestore institutions
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, 'institutions'), (snapshot) => {
+      const records: SchoolPipelineRecord[] = snapshot.docs.map(docSnap => {
+        const data = docSnap.data();
+        return {
+          id: docSnap.id,
+          name: data.name || 'Unnamed Institution',
+          location: data.location || 'Not Specified',
+          primaryContactName: data.primaryContactName || '',
+          primaryContactEmail: data.primaryContactEmail || '',
+          primaryContactPhone: data.primaryContactPhone || '',
+          estimatedStudentCount: data.estimatedStudentCount || 0,
+          stage: data.stage || 'active',
+          tier: data.tier || 'standard',
+          has30DayTrial: !!data.has30DayTrial,
+          trialExpiresAt: data.trialExpiresAt,
+          billingCycle: data.billingCycle || 'termly',
+          paymentMethod: data.paymentMethod || 'invoice',
+          paymentStatus: data.paymentStatus || 'pending',
+          schoolCode: data.schoolCode || docSnap.id.replace('inst_', '').toUpperCase(),
+          principalInviteSent: !!data.principalInviteSent,
+          principalInviteUrl: data.principalInviteUrl,
+          lastActivity: data.updatedAt ? new Date(data.updatedAt).toLocaleDateString() : 'Recently',
+          createdAt: data.createdAt || new Date().toISOString()
+        };
+      });
+      setPipeline(records);
+      setLoadingPipeline(false);
+    }, (err) => {
+      console.warn('Error fetching institutions:', err);
+      setPipeline([]);
+      setLoadingPipeline(false);
+    });
+
+    return () => unsub();
+  }, []);
 
   // Add Institution Wizard State (Steps 1 to 5)
   const [wizardStep, setWizardStep] = useState<number>(1);

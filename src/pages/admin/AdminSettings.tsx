@@ -63,32 +63,22 @@ export default function AdminSettings() {
   const [error, setError] = useState('');
 
   // School Code Generation State
-  const [schoolCodes, setSchoolCodes] = useState<SchoolCode[]>([
-    {
-      code: 'AIES-KILIMA-882',
-      institutionId: 'inst_kilima',
-      institutionName: 'Kilima Academy',
-      createdByUid: 'admin',
-      expiresAt: new Date(Date.now() + 48 * 3600 * 1000).toISOString(),
-      usesCount: 14,
-      active: true,
-      createdAt: new Date().toISOString()
-    },
-    {
-      code: 'AIES-GREEN-101',
-      institutionId: 'inst_greensprings',
-      institutionName: 'Green Springs School',
-      createdByUid: 'admin',
-      expiresAt: new Date(Date.now() + 48 * 3600 * 1000).toISOString(),
-      usesCount: 8,
-      active: true,
-      createdAt: new Date().toISOString()
-    }
-  ]);
+  const [schoolCodes, setSchoolCodes] = useState<SchoolCode[]>([]);
   const [newSchoolName, setNewSchoolName] = useState('');
   const [newCodeSuffix, setNewCodeSuffix] = useState('');
   const [generatingCode, setGeneratingCode] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubCodes = onSnapshot(collection(db, 'schoolCodes'), (snapshot) => {
+      const codes = snapshot.docs.map(d => ({ ...(d.data() as any), code: d.data().code || d.id }));
+      setSchoolCodes(codes);
+    }, () => {
+      setSchoolCodes([]);
+    });
+
+    return () => unsubCodes();
+  }, []);
 
   useEffect(() => {
     const unsub = onSnapshot(

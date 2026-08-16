@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../context/AppContext';
 import SubscriptionModal from '../../../components/shared/SubscriptionModal';
+import AskAiesTutor from '../../../components/sat/AskAiesTutor';
 import { initialTextbooks } from '../../../data/textbooks';
 import { initialSatQuestions } from '../../../data/sat-questions';
 import { 
@@ -615,6 +616,9 @@ export default function SatTextbooks() {
             </div>
           )}
         </div>
+
+        {/* Conversational Socratic Intelligence: Ask AIES */}
+        <AskAiesTutor />
 
         {/* 2. DYNAMIC 4-STAGE NAVIGATOR (Sticky Filter Bar) */}
         <div className="sticky top-2 z-40 bg-white/95 backdrop-blur-md rounded-3xl border border-neutral-200/90 shadow-sm p-4 space-y-3">

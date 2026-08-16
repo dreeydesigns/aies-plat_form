@@ -52,16 +52,8 @@ export default function SubscriptionModal({
       let institutionName = 'Enrolled Institution';
       let institutionId = 'inst_standard';
 
-      if (cleanCode.includes('KILIMA')) {
-        institutionName = 'Kilima Academy';
-        institutionId = 'inst_kilima';
-      } else if (cleanCode.includes('GREEN')) {
-        institutionName = 'Green Springs School';
-        institutionId = 'inst_greensprings';
-      } else {
-        institutionName = `School (#${cleanCode})`;
-        institutionId = `inst_${cleanCode.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
-      }
+      const institutionId = `inst_${cleanCode.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+      const institutionName = `School (${cleanCode})`;
 
       if (userProfile?.id) {
         await updateDoc(doc(db, 'users', userProfile.id), {

@@ -649,6 +649,29 @@ export default function SatDiagnostic() {
           </div>
         </div>
 
+        {/* Dual Dispatch Reports Badges (Teacher + Parent) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 text-emerald-950">
+            <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold">Parent Diagnostic Digest Dispatched</p>
+              <p className="text-[11px] text-emerald-800">Plain-language mastery & confidence summary sent to linked guardian.</p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl flex items-center gap-3 text-blue-950">
+            <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 font-bold shrink-0">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold">Teacher Academic Report Dispatched</p>
+              <p className="text-[11px] text-blue-800">Domain breakdowns & early attention flags sent to class teacher roster.</p>
+            </div>
+          </div>
+        </div>
+
         {/* AI Narrative Report */}
         <div className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm space-y-4">
           <div className="flex items-center gap-2 text-purple-600 font-bold text-sm uppercase tracking-wider">
@@ -664,6 +687,115 @@ export default function SatDiagnostic() {
               <LessonContent content={aiReportNarrative} />
             </div>
           )}
+        </div>
+
+        {/* Full Question-by-Question Remediation Review */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200 shadow-sm space-y-6">
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+                <Brain className="w-5 h-5 text-indigo-600" />
+                Comprehensive Question Remediation Review
+              </h3>
+              <p className="text-xs text-neutral-500 mt-0.5">
+                Full step-by-step Socratic walkthroughs, textbook mappings, and targeted practice drills for every item.
+              </p>
+            </div>
+            <span className="text-xs font-bold px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full">
+              {allQuestions.length} Questions Reviewed
+            </span>
+          </div>
+
+          <div className="space-y-6">
+            {allQuestions.map((q, idx) => {
+              const a = answers[q.id];
+              const isCorrect = q.isSPR
+                ? (a?.sprAnswer && String(q.correctAnswer).trim() === a.sprAnswer.trim())
+                : (a?.selectedOption === q.correctAnswer);
+              
+              const chosenText = q.isSPR 
+                ? (a?.sprAnswer || 'No response') 
+                : (a?.selectedOption !== undefined ? String.fromCharCode(65 + a.selectedOption) + ') ' + (q.options[a.selectedOption] || '') : 'No response');
+
+              const correctText = q.isSPR
+                ? String(q.correctAnswer)
+                : String.fromCharCode(65 + Number(q.correctAnswer)) + ') ' + (q.options[Number(q.correctAnswer)] || '');
+
+              const textbookTarget = selectedSection === 'math'
+                ? { bookId: 'sat-foundations-math', ch: 'ch1', sec: 'sec-1-1', title: 'Volume 1: Foundations of SAT Math' }
+                : { bookId: 'sat-reading-writing-mastery', ch: 'ch-rw-1', sec: 'sec-rw-1-1', title: 'Volume 2: Reading & Writing Mastery' };
+
+              return (
+                <div
+                  key={q.id}
+                  className={'rounded-2xl border p-5 space-y-4 ' + (isCorrect ? 'bg-emerald-50/30 border-emerald-200' : 'bg-red-50/30 border-red-200')}
+                >
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className={'px-2.5 py-1 rounded-lg text-xs font-bold ' + (isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800')}>
+                        {isCorrect ? '✓ Correct' : '✕ Needs Review'}
+                      </span>
+                      <span className="text-xs font-bold text-neutral-600">
+                        Item #{idx + 1} · {q.skill}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
+                      <span>Time: {a?.timeSeconds || 15}s</span>
+                      {a?.bookmarked && <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded font-bold">Bookmarked</span>}
+                      {a?.fiveFinger && <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold">✋ Flagged</span>}
+                    </div>
+                  </div>
+
+                  <div className="text-sm font-medium text-neutral-900 leading-relaxed">
+                    <LessonContent content={q.questionText} />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className={'p-3 rounded-xl border ' + (isCorrect ? 'bg-white border-emerald-200' : 'bg-white border-red-200')}>
+                      <span className="font-bold text-neutral-500 block mb-1">Your Answer:</span>
+                      <span className={'font-semibold ' + (isCorrect ? 'text-emerald-700' : 'text-red-700')}>{chosenText}</span>
+                    </div>
+
+                    <div className="p-3 rounded-xl border bg-white border-neutral-200">
+                      <span className="font-bold text-neutral-500 block mb-1">Correct Answer:</span>
+                      <span className="font-semibold text-neutral-900">{correctText}</span>
+                    </div>
+                  </div>
+
+                  {/* Socratic Explanation */}
+                  <div className="p-4 rounded-xl bg-white border border-neutral-200 space-y-2">
+                    <p className="text-xs font-bold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <Lightbulb className="w-3.5 h-3.5" />
+                      <span>Socratic Step-by-Step Rationale</span>
+                    </p>
+                    <div className="text-xs text-neutral-700 leading-relaxed">
+                      <LessonContent content={q.explanation || 'Step 1: Identify the underlying relationship in the prompt. Step 2: Set up the algebraic structure or syntax boundary. Step 3: Verify constraints to isolate the definitive answer.'} />
+                    </div>
+                  </div>
+
+                  {/* Remediation Action Links */}
+                  <div className="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-neutral-200/60">
+                    <button
+                      onClick={() => navigate('/student/sat/textbooks?textbookId=' + textbookTarget.bookId + '&chapter=' + textbookTarget.ch + '&section=' + textbookTarget.sec)}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>Review in {textbookTarget.title} &rarr;</span>
+                    </button>
+
+                    <button
+                      onClick={() => navigate('/student/sat/practice?domain=' + q.domain + '&skill=' + encodeURIComponent(q.skill))}
+                      className="px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all flex items-center gap-1"
+                    >
+                      <Zap className="w-3 h-3 text-amber-400" />
+                      <span>Queue 2–3 Similar Drill Questions</span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Action CTA */}

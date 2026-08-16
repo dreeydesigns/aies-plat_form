@@ -279,7 +279,7 @@ export default function Onboarding() {
             </div>
           )}
 
-          {/* STEP 2: Parent Linking (Minors only, Non-blocking) */}
+          {/* STEP 2: Mandatory Parent Linking Gate (Blocking for minors; 18+ can self-attest) */}
           {currentStep === 'parent_link' && (
             <div className="space-y-5">
               <div className="text-center space-y-2">
@@ -287,10 +287,10 @@ export default function Onboarding() {
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <h2 className="text-xl font-extrabold text-white">
-                  Link Parent or Guardian
+                  Mandatory Parent / Guardian Link
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
-                  Connect a parent to share your weekly progress, growth reports, and score summaries.
+                  Per security policy, student accounts must be linked to a parent or guardian before trial exam and platform access can unlock.
                 </p>
               </div>
 
@@ -312,15 +312,15 @@ export default function Onboarding() {
               )}
 
               {inviteSent ? (
-                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center gap-2.5 text-emerald-300 text-xs font-semibold">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                  <span>Parent invite sent! Proceeding to target setup...</span>
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center gap-2.5 text-emerald-300 text-xs font-semibold">
+                  <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />
+                  <span>Parent invite link created and recorded! Proceeding to target score calibration...</span>
                 </div>
               ) : (
                 <div className="space-y-3">
                   <div>
                     <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">
-                      Parent Email Address
+                      Parent Email Address (Required)
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -332,23 +332,33 @@ export default function Onboarding() {
                         className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
                       />
                     </div>
+                    <p className="text-[10px] text-slate-400 mt-1">We will send your guardian a secure verification link to activate parent oversight.</p>
                   </div>
 
                   <div className="pt-2 flex flex-col gap-2.5">
                     <button
                       onClick={handleSendParentInvite}
-                      disabled={loading || !parentEmail}
-                      className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all disabled:opacity-40"
+                      disabled={loading || !parentEmail.trim()}
+                      className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all disabled:opacity-40 shadow-lg shadow-indigo-600/30"
                     >
-                      {loading ? 'Sending...' : 'Send 2-Day Parent Invite Link'}
+                      {loading ? 'Validating & Linking...' : 'Send Parent Link & Continue'}
                     </button>
 
-                    <button
-                      onClick={() => setCurrentStep('sat_target')}
-                      className="w-full py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
-                    >
-                      Link later (Non-blocking reminder on dashboard)
-                    </button>
+                    <div className="p-3 bg-slate-900/60 border border-slate-700/60 rounded-xl flex items-center justify-between mt-2">
+                      <div>
+                        <p className="text-xs font-bold text-slate-200">Are you 18 or older?</p>
+                        <p className="text-[10px] text-slate-400">Adult students can self-attest adulthood.</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setIsAdult(true);
+                          setCurrentStep('sat_target');
+                        }}
+                        className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-indigo-300 font-bold rounded-lg text-xs transition-colors"
+                      >
+                        Self-Attest 18+
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
