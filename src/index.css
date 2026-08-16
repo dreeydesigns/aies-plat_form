@@ -73,6 +73,33 @@ html {
   outline: 3px solid #000 !important;
 }
 
+/* Assistive Accessibility Styles for Challenged Learners */
+.font-dyslexic {
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
+}
+
+.filter-amber {
+  filter: sepia(35%) saturate(120%) brightness(95%);
+}
+
+.filter-blue-reducer {
+  filter: sepia(20%) hue-rotate(15deg) brightness(97%);
+}
+
+.filter-invert {
+  filter: invert(90%) hue-rotate(180deg);
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
 @media print {
   aside, nav {
     display: none !important;

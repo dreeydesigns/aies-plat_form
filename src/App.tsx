@@ -86,6 +86,9 @@ const SatChooseSubject = React.lazy(() => import('./pages/student/sat/SatChooseS
 const SatPreviewRunner = React.lazy(() => import('./pages/student/sat/SatPreviewRunner'));
 const TeacherContentStudio = React.lazy(() => import('./pages/teacher/sat/TeacherContentStudio'));
 
+import AppLoadingScreen from './components/shared/AppLoadingScreen';
+import AccessibilityFloatingTrigger from './components/shared/AccessibilityFloatingTrigger';
+
 function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, allowedRole: string }) {
   const { currentUser, userProfile } = useAppContext();
   const location = useLocation();
@@ -97,10 +100,8 @@ function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode, 
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  // If we have a user but no profile yet, maybe return null or loading, but let's assume if currentUser is there, userProfile is mostly there, unless not loaded. 
-  // Wait, if not loaded, AppContent shouldn't render yet because of isAuthReady, but let's be safe.
   if (!userProfile) {
-     return <div className="min-h-screen flex items-center justify-center text-neutral-500 font-medium">Loading profile...</div>;
+     return <AppLoadingScreen message="Verifying secure credentials..." />;
   }
 
   if (userProfile.role !== allowedRole) {
@@ -117,13 +118,14 @@ function AppContent() {
   const { isAuthReady } = useAppContext();
 
   if (!isAuthReady) {
-    return <div className="min-h-screen flex items-center justify-center text-neutral-500 font-medium">Loading...</div>;
+    return <AppLoadingScreen message="Initializing AIES Adaptive Engine..." />;
   }
 
   return (
-    <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-neutral-500 font-medium">Loading...</div>}>
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
+    <>
+      <React.Suspense fallback={<AppLoadingScreen message="Loading module..." />}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
       <Route path="/auth" element={<AuthScreen />} />
       <Route path="/login" element={<AuthScreen />} />
       <Route path="/signin" element={<AuthScreen />} />
@@ -188,9 +190,11 @@ function AppContent() {
         <Route path="settings" element={<AdminSettings />} />
       </Route>
       
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </React.Suspense>
+    <AccessibilityFloatingTrigger />
+    </>
   );
 }
 
