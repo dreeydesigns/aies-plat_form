@@ -6,7 +6,6 @@ import { SatDomain } from '../../../types';
 import { 
   Award, 
   TrendingUp, 
-  Calendar, 
   Target, 
   CheckCircle2, 
   ArrowRight, 
@@ -15,7 +14,10 @@ import {
   BarChart2, 
   ShieldAlert,
   Clock,
-  Zap
+  Zap,
+  Hand,
+  BookOpen,
+  HelpCircle
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
@@ -31,11 +33,12 @@ const domainNames: Record<SatDomain, string> = {
 };
 
 export default function SatScores() {
-  const { userProfile, satTests, satDiagnostics } = useAppContext();
+  const { userProfile, satTests = [], satDiagnostics = [] } = useAppContext();
   const navigate = useNavigate();
 
   const targetScore = userProfile?.satProfile?.targetScore || 1450;
   const placements = userProfile?.satProfile?.placementByDomain || {};
+  const hasCompletedDiagnostic = !!userProfile?.satProfile?.diagnosticCompleted || satDiagnostics.length > 0;
 
   // Find highest & latest scores
   const scoreStats = useMemo(() => {
@@ -92,18 +95,22 @@ export default function SatScores() {
     };
   }, [satTests]);
 
-  // Domain Proficiency Data for Charts
+  // Domain Proficiency Data for Charts (0 if unassessed)
   const domainProficiencyData = useMemo(() => {
+    if (!hasCompletedDiagnostic && Object.keys(placements).length === 0) {
+      return [];
+    }
+
     return Object.entries(domainNames).map(([key, label]) => {
-      const tier = placements[key as SatDomain] || 'intermediate';
-      const score = tier === 'expert' ? 95 : tier === 'intermediate' ? 70 : 40;
+      const tier = placements[key as SatDomain];
+      const score = tier === 'expert' ? 95 : tier === 'intermediate' ? 70 : tier === 'beginner' ? 40 : 0;
       return {
         domain: label,
-        tier,
+        tier: tier || 'Unassessed',
         score
       };
     });
-  }, [placements]);
+  }, [placements, hasCompletedDiagnostic]);
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 py-4">
@@ -166,133 +173,154 @@ export default function SatScores() {
         </div>
       </div>
 
-      {/* Score Progress Chart */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-6">
-        <div className="flex items-center justify-between">
+      {/* Score History & Progression */}
+      <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-bold text-neutral-900">Score History & Progression</h3>
             <p className="text-xs text-neutral-500">Scaled score trajectory across completed test sessions</p>
           </div>
           <button
-            onClick={() => navigate('/student/sat/tests')}
-            className="px-4 py-2 bg-neutral-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
+            onClick={() => navigate('/student/sat/practice')}
+            className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-1.5 self-start sm:self-auto"
           >
-            <Layers className="w-3.5 h-3.5" /> Take Another Test
+            <Zap className="w-3.5 h-3.5" />
+            Take Practice Test
           </button>
         </div>
 
-        {scoreStats.testHistory.length > 0 ? (
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={[...scoreStats.testHistory].reverse()}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                <XAxis dataKey="attempt" tick={{ fill: '#737373', fontSize: 12 }} />
-                <YAxis domain={[400, 1600]} tick={{ fill: '#737373', fontSize: 12 }} />
-                <Tooltip
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                />
-                <Line type="monotone" dataKey="totalScore" name="Total Scaled Score" stroke="#2563eb" strokeWidth={3} dot={{ r: 5 }} />
-              </LineChart>
-            </ResponsiveContainer>
+        {scoreStats.testHistory.length === 0 ? (
+          <div className="h-44 flex flex-col items-center justify-center bg-neutral-50 rounded-2xl border border-neutral-100 text-center p-6 space-y-2">
+            <p className="text-xs text-neutral-500">
+              No full practice tests completed yet. Take a test to view your score trend line.
+            </p>
           </div>
         ) : (
-          <div className="p-10 text-center bg-neutral-50 rounded-2xl border border-dashed border-neutral-200 text-neutral-500 text-sm">
-            No full practice tests completed yet. Take a test to view your score trend line.
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={scoreStats.testHistory.slice().reverse()}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e5e5" />
+                <XAxis dataKey="attempt" axisLine={false} tickLine={false} tick={{ fill: '#737373', fontSize: 12 }} />
+                <YAxis domain={[400, 1600]} axisLine={false} tickLine={false} tick={{ fill: '#737373', fontSize: 12 }} />
+                <Tooltip 
+                  contentStyle={{ borderRadius: '16px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)' }}
+                />
+                <Line type="monotone" dataKey="totalScore" name="Total Scaled Score" stroke="#2563eb" strokeWidth={3} dot={{ r: 5, strokeWidth: 2 }} activeDot={{ r: 7 }} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         )}
       </div>
 
-      {/* Domain Mastery Bar Breakdown */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-6">
-        <h3 className="text-lg font-bold text-neutral-900">Domain-by-Domain Proficiency Breakdown</h3>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={domainProficiencyData}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-              <XAxis dataKey="domain" tick={{ fill: '#737373', fontSize: 11 }} />
-              <YAxis domain={[0, 100]} unit="%" tick={{ fill: '#737373', fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-              />
-              <Bar dataKey="score" name="Mastery %" fill="#4f46e5" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+      {/* Domain Proficiency Breakdown */}
+      <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+        <div>
+          <h3 className="text-lg font-bold text-neutral-900">Domain-by-Domain Proficiency Breakdown</h3>
+          <p className="text-xs text-neutral-500">Mastery calibration across the 8 official Digital SAT domains</p>
         </div>
+
+        {domainProficiencyData.length === 0 ? (
+          <div className="h-48 flex flex-col items-center justify-center bg-neutral-50 rounded-2xl border border-neutral-100 text-center p-6 space-y-2">
+            <BarChart2 className="w-8 h-8 text-neutral-300" />
+            <p className="text-sm font-semibold text-neutral-700">No Diagnostic Calibration Data Yet</p>
+            <p className="text-xs text-neutral-500 max-w-sm">
+              Complete your diagnostic trial exam to calibrate your skills across all 8 SAT domains.
+            </p>
+            <button
+              onClick={() => navigate('/student/sat/diagnostic')}
+              className="mt-2 px-4 py-2 bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-blue-700 transition-colors"
+            >
+              Start Diagnostic Exam
+            </button>
+          </div>
+        ) : (
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={domainProficiencyData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                <XAxis dataKey="domain" axisLine={false} tickLine={false} tick={{ fill: '#737373', fontSize: 10 }} />
+                <YAxis domain={[0, 100]} unit="%" axisLine={false} tickLine={false} tick={{ fill: '#737373', fontSize: 12 }} />
+                <Tooltip 
+                  formatter={(val: any, _name: any, item: any) => [`${val}% (${item.payload.tier} Tier)`, 'Estimated Mastery']}
+                  contentStyle={{ borderRadius: '16px', border: '1px solid #e5e7eb' }}
+                />
+                <Bar dataKey="score" fill="#4f46e5" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
 
-      {/* Targeted Textbook Remediation Links (Spec v3 Section 12) */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
+      {/* Recommended Textbook Remediation */}
+      <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-500" />
-              Recommended Textbook Remediation
-            </h3>
-            <p className="text-xs text-neutral-500 mt-0.5">
-              Direct links to high-yield chapters and pages in the Textbook Library for your weakest domains.
-            </p>
+          <div className="flex items-center gap-2 font-bold text-neutral-900 text-base">
+            <Sparkles className="w-5 h-5 text-amber-500" />
+            Recommended Textbook Remediation
           </div>
-          <button
+          <button 
             onClick={() => navigate('/student/sat/textbooks')}
-            className="px-4 py-2 bg-neutral-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-colors"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
           >
-            Open Library →
+            Open Library <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
-          <div
-            onClick={() => navigate('/student/sat/textbooks?book=sat-foundations-math&page=1')}
-            className="p-4 bg-neutral-50 hover:bg-blue-50 border border-neutral-200 hover:border-blue-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
-          >
-            <span className="text-[10px] font-extrabold uppercase text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Algebra</span>
-            <p className="text-xs font-bold text-neutral-900 group-hover:text-blue-700">Linear Systems & Slope-Intercept</p>
-            <p className="text-[11px] text-neutral-500">Foundations of SAT Math · Page 1</p>
+        {!hasCompletedDiagnostic ? (
+          <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100 text-center space-y-2">
+            <BookOpen className="w-8 h-8 text-neutral-300 mx-auto" />
+            <p className="text-xs text-neutral-500 max-w-md mx-auto">
+              Personalized textbook remediation recommendations will generate automatically after your diagnostic trial.
+            </p>
           </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
+            <div
+              onClick={() => navigate('/student/sat/textbooks?book=sat-foundations-math&page=1')}
+              className="p-4 bg-neutral-50 hover:bg-blue-50 border border-neutral-200 hover:border-blue-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+            >
+              <span className="text-[10px] font-extrabold uppercase text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Algebra</span>
+              <p className="text-xs font-bold text-neutral-900 group-hover:text-blue-700">Linear Systems & Slope-Intercept</p>
+              <p className="text-[11px] text-neutral-500">Foundations of SAT Math · Page 1</p>
+            </div>
 
-          <div
-            onClick={() => navigate('/student/sat/textbooks?book=sat-grammar-conventions&page=1')}
-            className="p-4 bg-neutral-50 hover:bg-emerald-50 border border-neutral-200 hover:border-emerald-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
-          >
-            <span className="text-[10px] font-extrabold uppercase text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Conventions</span>
-            <p className="text-xs font-bold text-neutral-900 group-hover:text-emerald-700">Sentence Boundaries & Semicolons</p>
-            <p className="text-[11px] text-neutral-500">Standard English Conventions · Page 1</p>
-          </div>
+            <div
+              onClick={() => navigate('/student/sat/textbooks?book=sat-grammar-conventions&page=1')}
+              className="p-4 bg-neutral-50 hover:bg-emerald-50 border border-neutral-200 hover:border-emerald-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+            >
+              <span className="text-[10px] font-extrabold uppercase text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Conventions</span>
+              <p className="text-xs font-bold text-neutral-900 group-hover:text-emerald-700">Sentence Boundaries & Semicolons</p>
+              <p className="text-[11px] text-neutral-500">Standard English Conventions · Page 1</p>
+            </div>
 
-          <div
-            onClick={() => navigate('/student/sat/textbooks?book=sat-advanced-math-mastery&page=1')}
-            className="p-4 bg-neutral-50 hover:bg-purple-50 border border-neutral-200 hover:border-purple-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
-          >
-            <span className="text-[10px] font-extrabold uppercase text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Advanced Math</span>
-            <p className="text-xs font-bold text-neutral-900 group-hover:text-purple-700">Nonlinear Systems & Quadratics</p>
-            <p className="text-[11px] text-neutral-500">SAT Advanced Math Mastery · Page 1</p>
+            <div
+              onClick={() => navigate('/student/sat/textbooks?book=sat-advanced-math-mastery&page=1')}
+              className="p-4 bg-neutral-50 hover:bg-purple-50 border border-neutral-200 hover:border-purple-300 rounded-2xl cursor-pointer transition-all space-y-1 group"
+            >
+              <span className="text-[10px] font-extrabold uppercase text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Advanced Math</span>
+              <p className="text-xs font-bold text-neutral-900 group-hover:text-purple-700">Nonlinear Systems & Quadratics</p>
+              <p className="text-[11px] text-neutral-500">SAT Advanced Math Mastery · Page 1</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 5-Finger & Metacognitive Error Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
           <div className="flex items-center gap-2 font-bold text-neutral-900 text-base">
-            <span className="text-xl">✋</span>
+            <Hand className="w-5 h-5 text-purple-600" />
             5-Finger Strategy Diagnostic History
           </div>
           <p className="text-xs text-neutral-500">
             Metacognitive tracking of struggle points flagged during Module 1 sessions.
           </p>
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs font-semibold p-3 bg-neutral-50 rounded-xl">
-              <span>Avg Module 1 Flags Used:</span>
-              <span className="font-bold text-neutral-900">2.4 / 5</span>
-            </div>
-            <div className="flex justify-between text-xs font-semibold p-3 bg-emerald-50 text-emerald-900 rounded-xl">
-              <span>Lucky Guesses (Flagged & Correct):</span>
-              <span className="font-bold text-emerald-700">38% of flags</span>
-            </div>
-            <div className="flex justify-between text-xs font-semibold p-3 bg-amber-50 text-amber-900 rounded-xl">
-              <span>Confirmed Skill Gaps (Flagged & Wrong):</span>
-              <span className="font-bold text-amber-700">62% of flags</span>
-            </div>
+          
+          <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100 text-center space-y-1">
+            <p className="text-xs font-bold text-neutral-700">No Metacognitive Flags Stored Yet</p>
+            <p className="text-[11px] text-neutral-500">
+              When you flag hard questions with the 5-Finger Struggle tool in Module 1, your accuracy on flagged vs unflagged questions will render here.
+            </p>
           </div>
         </div>
 
@@ -304,15 +332,12 @@ export default function SatScores() {
           <p className="text-xs text-neutral-500">
             Comparing bookmarked struggles against unbookmarked blind spots.
           </p>
-          <div className="space-y-2">
-            <div className="p-3 bg-blue-50 text-blue-900 rounded-xl text-xs flex justify-between items-center font-semibold">
-              <span>Expected Struggles (Bookmarked & Wrong):</span>
-              <span className="font-bold text-blue-800">44%</span>
-            </div>
-            <div className="p-3 bg-red-50 text-red-900 rounded-xl text-xs flex justify-between items-center font-semibold">
-              <span>Careless Blindspots (Not Bookmarked & Wrong):</span>
-              <span className="font-bold text-red-800">56%</span>
-            </div>
+
+          <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100 text-center space-y-1">
+            <p className="text-xs font-bold text-neutral-700">No Error Distribution Data</p>
+            <p className="text-[11px] text-neutral-500">
+              After submitting timed practice tests, careless blindspots vs expected struggles will be categorized here.
+            </p>
           </div>
         </div>
       </div>

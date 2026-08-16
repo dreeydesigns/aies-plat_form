@@ -23,6 +23,9 @@ import {
   AlertCircle,
   Bookmark,
   TrendingUp,
+  Hand,
+  ShieldCheck,
+  Send,
   ShieldAlert,
   AlertTriangle,
   HelpCircle
@@ -597,7 +600,7 @@ export default function SatDiagnostic() {
           {/* 5-Finger Formula Breakdown */}
           <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm space-y-4">
             <div className="flex items-center gap-2 font-bold text-neutral-900 text-base">
-              <span className="text-xl">✋</span>
+              <Hand className="w-5 h-5 text-purple-600" />
               5-Finger Metacognitive Analysis
             </div>
             <p className="text-xs text-neutral-500">
@@ -743,7 +746,7 @@ export default function SatDiagnostic() {
                     <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
                       <span>Time: {a?.timeSeconds || 15}s</span>
                       {a?.bookmarked && <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded font-bold">Bookmarked</span>}
-                      {a?.fiveFinger && <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold">✋ Flagged</span>}
+                      {a?.fiveFinger && <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold inline-flex items-center gap-1"><Hand className="w-3 h-3" /> Flagged</span>}
                     </div>
                   </div>
 

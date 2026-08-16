@@ -82,7 +82,7 @@ export default function FiveFingerWidget({
             : 'bg-white text-neutral-700 border-neutral-300 hover:border-amber-400 hover:bg-amber-50/50'
         }`}
       >
-        <span className="text-sm">✋</span>
+        <Hand className="w-3.5 h-3.5" />
         <span>
           {isFlagged ? '5-Finger Active' : '5-Finger?'}
         </span>
@@ -99,8 +99,8 @@ export default function FiveFingerWidget({
           <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl border border-neutral-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl shadow-xs">
-                  ✋
+                <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shadow-xs">
+                  <Hand className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-extrabold text-neutral-900 text-lg">5-Finger Strategy</h3>
