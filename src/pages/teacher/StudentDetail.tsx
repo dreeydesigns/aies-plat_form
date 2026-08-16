@@ -146,34 +146,36 @@ export default function StudentDetail() {
                 ? 'bg-purple-100 text-purple-800'
                 : student.classificationMath === 'intermediate'
                 ? 'bg-blue-100 text-blue-800'
-                : 'bg-amber-100 text-amber-800'
+                : student.classificationMath === 'beginner'
+                ? 'bg-amber-100 text-amber-800'
+                : 'bg-neutral-100 text-neutral-600'
             }`}>
-              {student.classificationMath || 'Intermediate'}
+              {student.classificationMath ? `${student.classificationMath} Tier` : 'Not Yet Assessed'}
             </span>
           </div>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Algebra</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['algebra'] || 'Proficient'}
+                {student.satProfile?.placementByDomain?.['algebra'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Advanced Math</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['advanced-math'] || 'Mastered'}
+                {student.satProfile?.placementByDomain?.['advanced-math'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Problem-Solving & Data</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['problem-solving-data-analysis'] || 'Developing'}
+                {student.satProfile?.placementByDomain?.['problem-solving-data-analysis'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Geometry & Trig</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['geometry-trigonometry'] || 'Proficient'}
+                {student.satProfile?.placementByDomain?.['geometry-trigonometry'] || 'Pending Diagnostic'}
               </span>
             </div>
           </div>
@@ -190,34 +192,36 @@ export default function StudentDetail() {
                 ? 'bg-purple-100 text-purple-800'
                 : student.classificationRW === 'intermediate'
                 ? 'bg-emerald-100 text-emerald-800'
-                : 'bg-amber-100 text-amber-800'
+                : student.classificationRW === 'beginner'
+                ? 'bg-amber-100 text-amber-800'
+                : 'bg-neutral-100 text-neutral-600'
             }`}>
-              {student.classificationRW || 'Intermediate'}
+              {student.classificationRW ? `${student.classificationRW} Tier` : 'Not Yet Assessed'}
             </span>
           </div>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Information & Ideas</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['information-ideas'] || 'Mastered'}
+                {student.satProfile?.placementByDomain?.['information-ideas'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Craft & Structure</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['craft-structure'] || 'Proficient'}
+                {student.satProfile?.placementByDomain?.['craft-structure'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Expression of Ideas</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['expression-of-ideas'] || 'Developing'}
+                {student.satProfile?.placementByDomain?.['expression-of-ideas'] || 'Pending Diagnostic'}
               </span>
             </div>
             <div className="flex justify-between font-semibold text-neutral-600">
               <span>Standard English Conventions</span>
               <span className="font-bold text-neutral-900">
-                {student.satProfile?.placementByDomain?.['standard-english-conventions'] || 'Proficient'}
+                {student.satProfile?.placementByDomain?.['standard-english-conventions'] || 'Pending Diagnostic'}
               </span>
             </div>
           </div>
